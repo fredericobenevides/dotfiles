@@ -6,6 +6,9 @@ echo "Installing rbenv and ruby-build"
 brew install rbenv
 brew install ruby-build
 
+echo "Copying gemrc to $HOME/.gemrc"
+cp gemrc ~/.gemrc
+
 echo "Adding rbenv to .zshrc"
 echo 'eval "$(rbenv init -)"' >> ~/.zshrc
 
