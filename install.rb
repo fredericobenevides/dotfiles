@@ -1,3 +1,5 @@
+$:<< File.join(File.dirname(__FILE__))
+
 require 'file'
 
 Dir.glob("packages/**/*.rb") do |package|
