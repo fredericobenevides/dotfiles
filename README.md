@@ -10,9 +10,6 @@ First install the Command Line Tools if you are using Mac OS
 
 Now download the dotfiles and run using ruby
 
-`$ git clone git://github.com/fredericobenevides/dotfiles ~/dotfiles
-$ cd ~/dotfiles
-$ ruby install.rb
-`
+`$ git clone git://github.com/fredericobenevides/dotfiles ~/dotfiles && cd ~/dotfiles && ruby install.rb`
 
 ** Have Fun **
