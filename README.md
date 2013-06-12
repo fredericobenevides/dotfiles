@@ -12,4 +12,4 @@ Now download the dotfiles and run using ruby
 
 `$ git clone git://github.com/fredericobenevides/dotfiles ~/dotfiles && cd ~/dotfiles && ruby install.rb`
 
-** Have Fun **
+**Have Fun**
