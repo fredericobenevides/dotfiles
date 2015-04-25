@@ -22,5 +22,5 @@ local current_dir='${bold_red}%~${reset_color}'
 local rbenv="$(rbenv_prompt_info)"
 local git_branch='${bold_white}$(git_prompt_info)${reset_color}'
 
-PROMPT="╭─${user_host} ${current_dir} ${rbenv} ${git_branch} 
+PROMPT="╭─${user_host} ${current_dir} ${rbenv} ${git_branch}
 ╰─%# "
