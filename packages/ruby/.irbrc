@@ -10,3 +10,4 @@ if defined? Rails
 end
 
 require 'awesome_print'
+require 'interactive_editor'

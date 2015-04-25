@@ -54,6 +54,7 @@ def install_gems
     gem install awesome_print
     gem install bundler
     gem install hirb
+    gem install interactive_editor
     gem install ruby_clone
   EOF
 end
