@@ -9,5 +9,5 @@ module OS
 end
 
 MODULES = [
-  :homebrew, :git, :zsh, :ruby
+  :homebrew, :git, :zsh, :ruby, :vim
 ]
