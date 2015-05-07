@@ -55,6 +55,7 @@ def install_gems
     gem install bundler
     gem install hirb
     gem install interactive_editor
+    gem install rubocop
     gem install ruby_clone
   EOF
 end
