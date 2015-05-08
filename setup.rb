@@ -1,8 +1,8 @@
-$:<< File.join(File.dirname(__FILE__))
+$LOAD_PATH << File.join(File.dirname(__FILE__))
 
 require 'file'
 
-Dir.glob("packages/**/*.rb") do |package|
+Dir.glob('packages/**/*.rb') do |package|
   require package
 end
 
