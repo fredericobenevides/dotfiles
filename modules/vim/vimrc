@@ -1,84 +1,94 @@
-"-------------------------------------------------------------------------------
-"  CtrlP Settings with Ag
-"-------------------------------------------------------------------------------
+set nocompatible
+filetype off
 
-let g:ctrlp_show_hidden = 1 " show hidden files
-let g:ctrlp_use_caching = 0 " ag is fast, no need cache
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 "-------------------------------------------------------------------------------
-"  Easy-align Settings
+"  Vundle manage Vundle, required
 "-------------------------------------------------------------------------------
-vmap <Enter> <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+Plugin 'gmarik/Vundle.vim'
 
 "-------------------------------------------------------------------------------
-"  Emmet Settings
+"  Colors and themes
 "-------------------------------------------------------------------------------
-let g:user_emmet_leader_key='<c-e>'
-let g:user_emmet_expandabbr_key='<c-e>'
+Plugin 'tomasr/molokai'
+Plugin 'bling/vim-airline'
 
 "-------------------------------------------------------------------------------
-"  Git Mapping on Fugitive
+"  Git
 "-------------------------------------------------------------------------------
-map <leader>gb :Gblame<cr>
-map <leader>gB :Gbrowse<cr>
-map <leader>gc :Gcommit<cr>
-map <leader>gd :Gvdiff<cr>
-map <leader>ge :Gedit<cr>
-map <leader>gl :Glog<cr>
-map <leader>gp :Gpush<cr>
-map <leader>gP :Gpull<cr>
-map <leader>gr :Gread<cr>
-map <leader>gs :Gstatus<cr>
-map <leader>gw :Gwrite<cr>
+Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim' " dependency for gist-vim
 
 "-------------------------------------------------------------------------------
-"  Grep Settings
+"  Html
 "-------------------------------------------------------------------------------
-set grepprg=ag\ --nogroup\ --nocolor
+Plugin 'othree/html5.vim'
+Plugin 'mattn/emmet-vim'
 
 "-------------------------------------------------------------------------------
-"  Gundo Settings
+"  Javascript
 "-------------------------------------------------------------------------------
-nnoremap <F5> :GundoToggle<cr>
+Plugin 'pangloss/vim-javascript'
+Plugin 'burnettk/vim-angular'
+Plugin 'kchmck/vim-coffee-script'"
 
 "-------------------------------------------------------------------------------
-"  NERDTree Settings
+"  Ruby and Rails
 "-------------------------------------------------------------------------------
-map <c-n> :NERDTreeToggle<cr>
-let NERDTreeShowHidden = 1 " show hidden files
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'thoughtbot/vim-rspec'
 
 "-------------------------------------------------------------------------------
-"  RSpec.vim mappings
+"  Search & Navigation
 "-------------------------------------------------------------------------------
-map <Leader>t :call RunCurrentSpecFile()<cr>
-map <Leader>s :call RunNearestSpec()<cr>
-map <Leader>l :call RunLastSpec()<cr>
-map <Leader>a :call RunAllSpecs()<cr>
+Plugin 'scrooloose/nerdtree'
+Plugin 'justinmk/vim-sneak'
+Plugin 'rking/ag.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'sjl/gundo.vim'
 
 "-------------------------------------------------------------------------------
-"  Syntastic Settings
+"  Snippets
 "-------------------------------------------------------------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 "-------------------------------------------------------------------------------
-"  UltiSnips Settings
+"  Syntax Checker
 "-------------------------------------------------------------------------------
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
+Plugin 'scrooloose/syntastic'
 
 "-------------------------------------------------------------------------------
-"  YouCompleteMe Settings
+"  Tpope Utilities
 "-------------------------------------------------------------------------------
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+
+"-------------------------------------------------------------------------------
+"  Text & Utilities
+"-------------------------------------------------------------------------------
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/vim-easy-align'
+
+call vundle#end()
+filetype plugin indent on
+
+" override default configurations
+source $HOME/.vim/colors.vim
+source $HOME/.vim/config.vim
+source $HOME/.vim/shortcuts.vim
+source $HOME/.vim/plugins.vim
+source $HOME/.vim/autocommands.vim

@@ -1,22 +1,53 @@
-" Remap leader to <space>
+"-------------------------------------------------------------------------------
+"  Remap leader to <space>
+"-------------------------------------------------------------------------------
 let mapleader = " "
 
-" Double spaces remove highligh
-map <silent> <leader><space> :noh<CR>
+"-------------------------------------------------------------------------------
+"  Double spaces remove highlight
+"-------------------------------------------------------------------------------
+map <silent> <leader><space> :noh<cr>
 
-" Disable arrow key
-nnoremap <Up>    :echoe "Use k"<CR>
-nnoremap <Down>  :echoe "Use j"<CR>
-nnoremap <Left>  :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up>    <NOP>
-nnoremap <Down>  <NOP>
-nnoremap <Left>  <NOP>
-nnoremap <Right> <NOP>
-inoremap <Up>    <NOP>
-inoremap <Down>  <NOP>
-inoremap <Left>  <NOP>
-inoremap <Right> <NOP>
+"-------------------------------------------------------------------------------
+"  Disable Arrow Keys
+"-------------------------------------------------------------------------------
+nnoremap <Up> :echoe "Use k"<cr>
+nnoremap <Down> :echoe "Use j"<cr>
+nnoremap <Left> :echoe "Use h"<cr>
+nnoremap <Right> :echoe "Use l"<cr>
+nnoremap <Up> <nop>
+nnoremap <Down> <nop>
+nnoremap <Left> <nop>
+nnoremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+"-------------------------------------------------------------------------------
+"  Disable F1 to not call help
+"-------------------------------------------------------------------------------
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+"-------------------------------------------------------------------------------
+"  Editing a file
+"-------------------------------------------------------------------------------
+
+" Treat long lines as break lines
+map j gj
+map k gk
+
+" Move current line to the bottom
+nnoremap <silent> <c-j> :m .+1<cr>==
+inoremap <silent> <c-j> <Esc>:m .+1<cr>==gi
+vnoremap <silent> <c-j> :m '>+1<cr>gv=gv
+
+" Move current line to the top
+nnoremap <silent> <c-k> :m .-2<cr>==
+inoremap <silent> <c-k> <Esc>:m .-2<cr>==gi
+vnoremap <silent> <c-k> :m '<-2<cr>gv=gv
 
 " Save files with sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -24,55 +55,88 @@ cmap w!! w !sudo tee % >/dev/null
 " Quit all windows
 map Q :qall<cr>
 
-" Treat long lines as break lines
-map j gj
-map k gk
-
-" Move lines
-nnoremap <silent> <C-j> :m .+1<CR>==
-nnoremap <silent> <C-k> :m .-2<CR>==
-inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
-inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
-vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
-
-" Paste
+" Toggle paste
 noremap <F2> :set invpaste paste?<cr>
 set pastetoggle=<F2>
 
-" Buffers Management
-map <leader>bn :vnew<cr>
-map <leader>bd :bd!<cr>
-map <leader>bh :bp<cr>
-map <leader>bl :bn<cr>
-map <leader>bs <c-^><cr>
+"-------------------------------------------------------------------------------
+"  Buffer Mappings
+"-------------------------------------------------------------------------------
 
-" Tabs management
-map <leader>tc :tabclose<cr>
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>th :tabmove -1<cr>
-map <leader>tl :tabmove +1<cr>
-noremap <c-h> :tabp<cr>
-noremap <c-l> :tabn<cr>
+" Creating a new buffer
+map <leader>bn :vnew<cr>| " Open a new buffer in a new vertical window
+map <leader>bN :new<cr>|  " Open a new buffer in a new horizontal window
 
-" Windows Management
-map [w  <c-w>W
-map ]w  <c-w><c-w>
-map <leader>wj <c-w>j
-map <leader>wk <c-w>k
-map <leader>wh <c-w>h
-map <leader>wl <c-w>l
-map <leader>wo <c-w>o
-map <leader>wr <c-w>r
-map <leader>wt <c-w>T
-map <leader>wc <c-w><c-v>
+" Deleting the buffer
+map <leader>bd :bd<cr>|  " Delete the buffer
+map <leader>bD :bd!<cr>| " Forces to delete the buffer
 
-" Window Resizing
-map <leader>- <C-w>3-
-map <leader>= <C-w>=
-map <leader>+ <C-w>3+
+" Moving around the buffers
+map <leader>bh :bp<cr>|   "Move to the previous buffer
+map <leader>bl :bn<cr>|   " Move to the next buffer
+map <leader>bs <c-^><cr>| " Switch between buffers
 
-" Vimrc
-nmap <leader>vl :tabe $MYVIMRC<CR>
-nmap <leader>vs :so $MYVIMRC<CR>
+"-------------------------------------------------------------------------------
+"  Windows Mappings
+"-------------------------------------------------------------------------------
+
+" Opening and closing a window
+map <leader>wc <c-w>c|    " close the window
+map <leader>wn :vnew<cr>| " new horizontally window
+map <leader>wN :new<cr>|  " new vertically window
+
+" splitting current window
+map <leader>ws <c-w><c-s><cr>| " split curent window horizontally
+map <leader>wv <c-w><c-v><cr>| " split current window vertically
+
+" change cursor around windows
+map [w <c-w>W|             " go to the previous window
+map ]w <c-w><c-w>|         " go to the next window
+map <leader>wj <c-w>j|     " change to bottom window
+map <leader>wk <c-w>k|     " change to top window
+map <leader>wh <c-w>h|     " change to left window
+map <leader>wl <c-w>l|     " change to right window
+map <leader>wp <c-w><c-p>| " go to the last accessed window
+map <leader>wo <c-w>o|     " window only
+map <leader>wr <c-w>r|     " window rotate
+map <leader>wx <c-w>x|     " window eXchange
+
+" move windows around the screen
+map <leader>wmj <c-w>J| " move to bottom window
+map <leader>wmk <c-w>K| " move to top window
+map <leader>wmh <c-w>H| " move to left window
+map <leader>wml <c-w>L| " move to right window
+map <leader>wmt <c-w>T| " move current window to a tab
+
+" resize windows
+map <leader>wW <C-w>\||  " Expand the width of the Window
+map <leader>w= <C-w>=|   " Make all windows equally high and wide
+map <leader>w- <C-w>10-| " Decrease current window height
+map <leader>w+ <C-w>10+| " Increase current window height
+map <leader>w< <C-w>10<| " Decrease current window width
+map <leader>w> <C-w>10>| " Increase current window width
+
+"-------------------------------------------------------------------------------
+"  Tabs Mappings
+"-------------------------------------------------------------------------------
+
+" Opening and closing a tab
+map <leader>tc :tabclose<cr>| " close current tab
+map <leader>tn :tabnew<cr>|   " create a new empty tab
+map <leader>to :tabonly<cr>|  " close all others tab but this
+
+" Moving betwen tabs
+map <leader>th :tabp<cr>| " go to the previous tab
+map <leader>tl :tabn<cr>| " go to the next tab
+noremap <c-h> :tabp<cr>|  " go to the previous tab
+noremap <c-l> :tabn<cr>|  " go to the next tab
+
+" Moving the tabs
+map <leader>tmh :tabmove -1<cr>| " move tab to the left
+map <leader>tml :tabmove +1<cr>| " move tab to the right
+
+"-------------------------------------------------------------------------------
+"  Vim Mappings
+"-------------------------------------------------------------------------------
+nmap <leader>vo :tabe $MYVIMRC<cr>| " Open the vim file in a new tab
+nmap <leader>vs :so $MYVIMRC<cr>|   " Source/Load the vim file

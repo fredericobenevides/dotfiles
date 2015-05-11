@@ -1,4 +1,6 @@
-" Syntax highlighting and theme
+"-------------------------------------------------------------------------------
+"  Syntax highlighting and theme
+"-------------------------------------------------------------------------------
 syntax on
 set t_Co=256
 colorscheme molokai
