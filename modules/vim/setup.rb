@@ -15,8 +15,8 @@ def install_vim
     end
 
     when_os :linux do
-      description 'Installing gvim'
-      run 'sudo apt-get install gvim'
+      description 'Installing vim-gtk'
+      run 'sudo apt-get install vim-gtk'
 
       description 'Adding alias to gvim in .zshrc'
       run %q(echo 'alias vim="gvim"' >> ~/.zshrc)
@@ -60,8 +60,8 @@ def uninstall_vim
     when_os :linux do
       run delete_alias.gsub('gsed', 'sed')
 
-      description 'Uninstalling gvim'
-      run 'sudo apt-get purge gvim'
+      description 'Uninstalling vim-gtk'
+      run 'sudo apt-get purge vim-gtk'
     end
 
     description 'Unlinking vimrc file'
