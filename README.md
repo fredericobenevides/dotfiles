@@ -4,12 +4,18 @@ Config files to set up my system.
 
 ## Installation
 
-First install the Command Line Tools if you are using Mac OS
+For Mac OS:
 
-`Download from http://developer.apple.com/downloads`
+Install the xcode com the App Store
 
-Now download the dotfiles and run using ruby
+Download the dotfiles to the root path and run the install ruby script
 
-`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles && ruby setup.rb`
+`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles && ./install.rb`
+
+For Linux:
+
+Download the dotfiles to the root path and run the shell script
+
+`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles && ./install_base.rb`
 
 **Have Fun**
