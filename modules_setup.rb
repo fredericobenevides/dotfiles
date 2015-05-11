@@ -2,5 +2,5 @@
 # The order installation is from left ro right.
 # PS: For uninstallation, the order will be change automatically to inverse
 MODULES = [
-  :homebrew, :git, :zsh, :ruby, :vim
+  :homebrew, :git, :ag_silver_searcher, :zsh, :ruby, :vim
 ]
