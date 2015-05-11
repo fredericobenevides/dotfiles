@@ -29,9 +29,9 @@ class Runner
   end
 
   def execute
-    puts %Q{\n---> Running the command: \n\t"#{@command}"}
+    puts "\n---> Running the command:\n#{@command}"
 
-    output = system "#{@command}"
+    output = system @command
     if output
       puts '   * Command status: Success'
     else
