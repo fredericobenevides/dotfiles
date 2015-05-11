@@ -1,21 +1,38 @@
-def setup_zsh
-  system 'curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | bash'
+def install_zsh
+  install 'ZSH' do
+    description 'Installing zsh'
+    run 'curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sed "s/exit/exit -1/" | bash'
 
-  copy_file   :from => 'zsh/themes/fredericobenevides.zsh-theme', :to => '~/.oh-my-zsh/themes/fredericobenevides.zsh-theme'
-  copy_folder :from => 'zsh/plugins', :to => '~/.oh-my-zsh/custom'
+    description 'Linking theme'
+    link from: 'zsh/themes/fredericobenevides.zsh-theme', to: '~/.oh-my-zsh/themes/fredericobenevides.zsh-theme'
 
-  puts '==> Updating the .zshrc to have the new plugins and theme'
+    description 'Linking with the plugins folder'
+    link from: 'zsh/plugins/*', to: '~/.oh-my-zsh/custom/plugins'
 
-  command_plugin = 'gsed -i "s/plugins=(git)/plugins=(brew bundler gem git fredericobenevides)/g" ~/.zshrc'
-  command_theme  = 'gsed -i "s/robbyrussell/fredericobenevides/g" ~/.zshrc'
+    command_plugin = 'gsed -i "s/plugins=(git)/plugins=(brew bundler gem git fredericobenevides)/g" ~/.zshrc'
+    command_theme  = 'gsed -i "s/robbyrussell/fredericobenevides/g" ~/.zshrc'
 
-  if OS.mac?
-    system 'brew install gnu-sed'
+    description 'Changing zsh to use the new theme and plugins'
 
-    system command_plugin
-    system command_theme
-  else
-    system command_plugin.gsub('gsed', 'sed')
-    system command_theme.gsub('gsed', 'sed')
+    when_os OS.mac? do
+      run command_plugin
+      run command_theme
+    end
+
+    when_os OS.linux? do
+      run command_plugin.gsub('gsed', 'sed')
+      run command_theme.gsub('gsed', 'sed')
+    end
+
+  end
+end
+
+def uninstall_zsh
+  uninstall 'ZSH' do
+    description 'Removing the oh-my-zsh folder'
+    run 'rm -rf ~/.oh-my-zsh'
+
+    description 'Removing the .zshrc file'
+    run 'rm ~/.zshrc'
   end
 end
