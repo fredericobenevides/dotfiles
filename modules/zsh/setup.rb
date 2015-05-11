@@ -14,12 +14,12 @@ def install_zsh
 
     description 'Changing zsh to use the new theme and plugins'
 
-    when_os OS.mac? do
+    when_os :mac do
       run command_plugin
       run command_theme
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       run command_plugin.gsub('gsed', 'sed')
       run command_theme.gsub('gsed', 'sed')
     end

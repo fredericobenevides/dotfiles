@@ -147,8 +147,8 @@ lambda {
     @module_manager.next_execution description
   end
 
-  define_method :when_os do |execute, &block|
-    if execute
+  define_method :when_os do |os, &block|
+    if OS.send "#{os}?"
       block.call
     end
   end

@@ -26,11 +26,11 @@ def uninstall_ruby
     description %Q(Removing rbenv path from "#{File.join(File.expand_path('~/'), '.zshrc')}")
     remove_rbenv_zsh = "gsed -i '/export RBENV/,+5d' ~/.zshrc"
 
-    when_os OS.mac? do
+    when_os :mac do
       run remove_rbenv_zsh
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       run remove_rbenv_zsh.gsub('gsed', 'sed')
     end
 
@@ -54,7 +54,7 @@ export RBENV_ROOT="${HOME}/.rbenv"
 if [ -d "${RBENV_ROOT}" ]; then
   export PATH="${RBENV_ROOT}/bin:${PATH}"
   eval \"$(rbenv init -)"
-fi ' >> ${HOME}/.zshrc
+fi' >> ${HOME}/.zshrc
     fi
   EOF
 

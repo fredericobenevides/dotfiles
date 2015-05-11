@@ -1,6 +1,6 @@
 def install_vim
   install 'VIM' do
-    when_os OS.mac? do
+    when_os :mac do
       description 'Installing MacVim'
       run 'brew install macvim'
 
@@ -11,7 +11,7 @@ def install_vim
       run 'brew linkapps macvim'
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       description 'Installing vim'
       run 'sudo apt-get install gvim'
 
@@ -44,7 +44,7 @@ def uninstall_vim
     description 'Removing alias of vim in .zshrc'
     delete_alias = 'gsed -i "/vim=/d" ~/.zshrc'
 
-    when_os OS.mac? do
+    when_os :mac do
       run delete_alias
 
       description 'Unlinking MacVim to Applications'
@@ -54,7 +54,7 @@ def uninstall_vim
       run 'brew uninstall macvim'
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       run delete_alias.gsub('gsed', 'sed')
 
       description 'Uninstalling vim'

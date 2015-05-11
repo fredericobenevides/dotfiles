@@ -1,7 +1,7 @@
 def install_homebrew
   install 'HOMEBREW' do
 
-    when_os OS.mac? do
+    when_os :mac do
       run %(ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
 
       username = `whoami`.chomp
@@ -12,7 +12,7 @@ def install_homebrew
       run 'brew install gnu-sed'
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       description '******** Skipping HOMEBREW for linux ********'
     end
   end
@@ -20,12 +20,12 @@ end
 
 def uninstall_homebrew
   uninstall 'HOMEBREW' do
-    when_os OS.mac? do
+    when_os :mac do
       description 'Removing the folder /usr/local created by homebrew'
       run 'sudo rm -rf /usr/local'
     end
 
-    when_os OS.linux? do
+    when_os :linux do
       description '******** Skipping HOMEBREW for linux ********'
     end
   end
