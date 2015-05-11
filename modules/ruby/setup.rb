@@ -33,9 +33,7 @@ def uninstall_ruby
     when_os :linux do
       run remove_rbenv_zsh.gsub('gsed', 'sed')
     end
-
   end
-
 end
 
 def install_rbenv
@@ -46,53 +44,55 @@ end
 
 def add_rbenv_to_zsh
   command = <<-EOF
-    grep "rbenv init -" ${HOME}/.zshrc
-    if [ $? -ne 0 ]; then
-      echo '
+grep "rbenv init -" ${HOME}/.zshrc
+if [ $? -ne 0 ]; then
+
+  echo '
 export RBENV_ROOT="${HOME}/.rbenv"
 
 if [ -d "${RBENV_ROOT}" ]; then
   export PATH="${RBENV_ROOT}/bin:${PATH}"
   eval \"$(rbenv init -)"
 fi' >> ${HOME}/.zshrc
-    fi
+
+fi
   EOF
 
-  description %Q(Adding rbenv path to "#{File.join(File.expand_path('~/'), '.zshrc')}")
+  description %(Adding rbenv path to "#{File.join(File.expand_path('~/'), '.zshrc')}")
   run command
 end
 
 def run_rbenv
   <<-EOF
-    export RBENV_ROOT="${HOME}/.rbenv"
-    export PATH="${RBENV_ROOT}/bin:${PATH}"
-    eval "$(rbenv init -)"
+export RBENV_ROOT="${HOME}/.rbenv"
+export PATH="${RBENV_ROOT}/bin:${PATH}"
+eval "$(rbenv init -)"
   EOF
 end
 
 def install_ruby_with_rbenv(ruby_version)
   command = <<-EOF
-    #{run_rbenv}
+#{run_rbenv}
 
-    rbenv install #{ruby_version}
-    rbenv global  #{ruby_version}
+rbenv install #{ruby_version}
+rbenv global  #{ruby_version}
   EOF
 
-  description %Q(Installing ruby "#{ruby_version} and setting as global")
+  description %(Installing ruby "#{ruby_version} and setting as global")
   run command
 end
 
 def install_gems
   command = <<-EOF
-    #{run_rbenv}
+#{run_rbenv}
 
-    gem install awesome_print
-    gem install bundler
-    gem install hirb
-    gem install interactive_editor
-    gem install rails
-    gem install rubocop
-    gem install ruby_clone
+gem install awesome_print
+gem install bundler
+gem install hirb
+gem install interactive_editor
+gem install rails
+gem install rubocop
+gem install ruby_clone
   EOF
 
   description 'Installing default gems'
