@@ -1,5 +1,6 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__))
+#!/usr/bin/env ruby
 
+$LOAD_PATH << File.join(File.dirname(__FILE__))
 
 require 'lib/os_detection'
 require 'lib/module_manager'
