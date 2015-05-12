@@ -2,20 +2,24 @@
 
 Config files to set up my system.
 
-## Installation
+## Before Installation
 
 For Mac OS:
 
-Install the xcode com the App Store
+Install the xcode from the App Store
 
-Download the dotfiles to the root path and run the install ruby script
+## Installation
 
-`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles && ./install.rb`
+Download the dotfiles to the root path and goes to the dotfiles folder
 
-For Linux:
+`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles`
 
-Download the dotfiles to the root path and run the shell script
+If you have git and ruby on your machine, run:
 
-`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles && ./install_base.rb`
+`./install.rb`
+
+Otherwise
+
+`./install.sh`
 
 **Have Fun**
