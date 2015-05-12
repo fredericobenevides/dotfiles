@@ -1,4 +1,4 @@
-def install_homebrew
+def install_module
   install 'HOMEBREW' do
 
     when_os :mac do
@@ -18,7 +18,7 @@ def install_homebrew
   end
 end
 
-def uninstall_homebrew
+def uninstall_module
   uninstall 'HOMEBREW' do
     when_os :mac do
       description 'Removing the folder /usr/local created by homebrew'

@@ -1,4 +1,4 @@
-def install_zsh
+def install_module
   install 'ZSH' do
     description 'Installing zsh'
     run 'curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sed "s/exit/exit -1/" | bash'
@@ -27,7 +27,7 @@ def install_zsh
   end
 end
 
-def uninstall_zsh
+def uninstall_module
   uninstall 'ZSH' do
     description 'Removing the oh-my-zsh folder'
     run 'rm -rf ~/.oh-my-zsh'

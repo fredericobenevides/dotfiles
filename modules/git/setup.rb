@@ -1,4 +1,4 @@
-def install_git
+def install_module
   install 'GIT' do
     description 'Installing git'
 
@@ -15,7 +15,7 @@ def install_git
   end
 end
 
-def uninstall_git
+def uninstall_module
   uninstall 'GIT' do
     description 'Uninstalling git'
 

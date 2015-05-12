@@ -1,4 +1,4 @@
-def install_vim
+def install_module
   install 'VIM' do
     when_os :mac do
       description 'Installing MacVim'
@@ -39,7 +39,7 @@ def install_vim
   end
 end
 
-def uninstall_vim
+def uninstall_module
   uninstall 'VIM' do
     description 'Removing alias of vim in .zshrc'
     delete_alias = 'gsed -i "/vim=/d" ~/.zshrc'

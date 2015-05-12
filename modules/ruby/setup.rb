@@ -1,4 +1,4 @@
-def install_ruby
+def install_module
   install 'RUBY' do
     description 'Linking configs files for gems and irb'
     link from: 'ruby/gemrc', to: '~/', make_hidden: true
@@ -11,7 +11,7 @@ def install_ruby
   end
 end
 
-def uninstall_ruby
+def uninstall_module
   uninstall 'RUBY' do
     description 'Unlinking configs files for gems and irb'
     unlink from: 'ruby/gemrc', to: '~/', make_hidden: true

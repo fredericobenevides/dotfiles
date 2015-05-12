@@ -6,12 +6,10 @@ require 'lib/os_detection'
 require 'lib/module_manager'
 
 require 'modules_setup'
-Dir.glob("modules/**/*.rb") do |package|
-  require package
-end
 
 system 'clear'
 
 MODULES.each do |m|
-  Kernel.send "install_#{m}"
+  load "modules/#{m}/setup.rb"
+  Kernel.send 'install_module'
 end

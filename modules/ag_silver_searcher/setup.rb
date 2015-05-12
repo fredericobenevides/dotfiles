@@ -1,4 +1,4 @@
-def install_ag_silver_searcher
+def install_module
   install 'AG - Silver Searcher'do
     description 'Installing the fast searcher'
 
@@ -12,7 +12,7 @@ def install_ag_silver_searcher
   end
 end
 
-def uninstall_ag_silver_searcher
+def uninstall_module
   uninstall 'AG - Silver Searcher'do
     description 'Installing the fast searcher'
 
