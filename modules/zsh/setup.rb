@@ -8,6 +8,8 @@ def install_module
 
     description 'Linking with the plugins folder'
     link from: 'zsh/plugins/*', to: '~/.oh-my-zsh/custom/plugins'
+    
+    add_locales_to_zshrc
 
     command_plugin = 'gsed -i "s/plugins=(git)/plugins=(brew bundler gem git fredericobenevides)/g" ~/.zshrc'
     command_theme  = 'gsed -i "s/robbyrussell/fredericobenevides/g" ~/.zshrc'
@@ -35,4 +37,21 @@ def uninstall_module
     description 'Removing the .zshrc file'
     run 'rm ~/.zshrc'
   end
+end
+
+def add_locales_to_zshrc
+  command = <<-EOF
+grep "LC_ALL" ${HOME}/.zshrc
+if [ $? -ne 0 ]; then
+
+  echo '
+export LC_ALL="en_us.UTF-8"  
+export LANG="en_us.UTF-8"
+export LANGUAGE="en_us.UTF-8"
+' >> ${HOME}/.zshrc
+fi
+  EOF
+
+  description 'Adding locales in .zshrc'  
+  run command
 end
