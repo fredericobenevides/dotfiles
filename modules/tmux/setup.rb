@@ -9,6 +9,9 @@ def install_module
     when_os :linux do
       run 'sudo apt-get install tmux'
     end
+
+    description 'Linking tmux configuration file'
+    link from: 'tmux/tmux.conf', to: '~/', make_hidden: true
   end
 end
 
@@ -23,5 +26,8 @@ def uninstall_module
     when_os :linux do
       run 'sudo apt-get purge tmux'
     end
+
+    description 'Unlinking tmux configuration file'
+    unlink from: 'tmux/tmux.conf', to: '~/', make_hidden: true
   end
 end
