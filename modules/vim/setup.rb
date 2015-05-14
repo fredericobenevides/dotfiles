@@ -2,10 +2,7 @@ def install_module
   install 'VIM' do
     when_os :mac do
       description 'Installing MacVim'
-      run 'brew install macvim'
-
-      description 'Adding alias to mvim in .zshrc'
-      run %q(echo 'alias vim="mvim"' >> ~/.zshrc)
+      run 'brew install macvim --override-system-vim'
 
       description 'Linking MacVim to Applications'
       run 'brew linkapps macvim'
@@ -17,9 +14,6 @@ def install_module
     when_os :linux do
       description 'Installing vim-gtk'
       run 'sudo apt-get install vim-gtk'
-
-      description 'Adding alias to gvim in .zshrc'
-      run %q(echo 'alias vim="gvim"' >> ~/.zshrc)
     end
 
     description 'Installing the plugin Vundle to manage the vim plugins'
@@ -41,12 +35,8 @@ end
 
 def uninstall_module
   uninstall 'VIM' do
-    description 'Removing alias of vim in .zshrc'
-    delete_alias = 'gsed -i "/vim=/d" ~/.zshrc'
 
     when_os :mac do
-      run delete_alias
-
       description 'Unlinking MacVim to Applications'
       run 'brew unlinkapps macvim'
 
@@ -58,8 +48,6 @@ def uninstall_module
     end
 
     when_os :linux do
-      run delete_alias.gsub('gsed', 'sed')
-
       description 'Uninstalling vim-gtk'
       run 'sudo apt-get purge vim-gtk'
     end
