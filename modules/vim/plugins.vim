@@ -54,6 +54,7 @@ let NERDTreeQuitOnOpen = 1 " close after opening a file
 "-------------------------------------------------------------------------------
 "  RSpec.vim mappings
 "-------------------------------------------------------------------------------
+let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 map <Leader>t :call RunCurrentSpecFile()<cr>
 map <Leader>s :call RunNearestSpec()<cr>
 map <Leader>l :call RunLastSpec()<cr>
@@ -84,3 +85,13 @@ let g:UltiSnipsEditSplit="vertical"
 "-------------------------------------------------------------------------------
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
+
+"-------------------------------------------------------------------------------
+"  Vimux
+"-------------------------------------------------------------------------------
+map <Leader>vp :VimuxPromptCommand<cr>     " Prompt for a command to run
+map <Leader>vl :VimuxRunLastCommand<cr>    " Run last command executed
+map <Leader>vi :VimuxInspectRunner<cr>     " Inspect runner pane
+map <Leader>vq :VimuxCloseRunner<cr>       " Close vim tmux runner opened
+map <Leader>vx :VimuxInterruptRunner<cr>   " Interrupt any command running
+map <Leader>vz :call VimuxZoomRunner()<cr> " Zoom the runner pane

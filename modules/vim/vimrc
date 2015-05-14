@@ -83,6 +83,11 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 
+"-------------------------------------------------------------------------------
+"  Tmux integration
+"-------------------------------------------------------------------------------
+Plugin 'benmills/vimux'
+
 call vundle#end()
 filetype plugin indent on
 
