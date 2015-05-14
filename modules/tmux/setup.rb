@@ -8,6 +8,9 @@ def install_module
 
     when_os :linux do
       run 'sudo apt-get install tmux'
+
+      description 'Added the TERM environment in ~/.zshrc'
+      run %q(echo 'export TERM="screen-256color"' >> ~/.zshrc)
     end
 
     description 'Linking tmux configuration file'
@@ -25,6 +28,9 @@ def uninstall_module
 
     when_os :linux do
       run 'sudo apt-get purge tmux'
+
+      description 'Removing the TERM environment from ~/.zshrc'
+      run 'sed -i "/TERM/d" ~/.zshrc'
     end
 
     description 'Unlinking tmux configuration file'
