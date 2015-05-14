@@ -47,7 +47,9 @@ nnoremap <F5> :GundoToggle<cr>
 "  NERDTree Settings
 "-------------------------------------------------------------------------------
 map <c-n> :NERDTreeToggle<cr>
+nmap <leader>nf :NERDTreeFind<cr>
 let NERDTreeShowHidden = 1 " show hidden files
+let NERDTreeQuitOnOpen = 1 " close after opening a file
 
 "-------------------------------------------------------------------------------
 "  RSpec.vim mappings
