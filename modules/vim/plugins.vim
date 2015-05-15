@@ -89,9 +89,9 @@ let g:ycm_key_list_previous_completion = []
 "-------------------------------------------------------------------------------
 "  Vimux
 "-------------------------------------------------------------------------------
-map <Leader>vp :VimuxPromptCommand<cr>     " Prompt for a command to run
-map <Leader>vl :VimuxRunLastCommand<cr>    " Run last command executed
-map <Leader>vi :VimuxInspectRunner<cr>     " Inspect runner pane
-map <Leader>vq :VimuxCloseRunner<cr>       " Close vim tmux runner opened
-map <Leader>vx :VimuxInterruptRunner<cr>   " Interrupt any command running
-map <Leader>vz :call VimuxZoomRunner()<cr> " Zoom the runner pane
+map <Leader>vp :VimuxPromptCommand<cr>|     " Prompt for a command to run
+map <Leader>vl :VimuxRunLastCommand<cr>|    " Run last command executed
+map <Leader>vi :VimuxInspectRunner<cr>|     " Inspect runner pane
+map <Leader>vq :VimuxCloseRunner<cr>|       " Close vim tmux runner opened
+map <Leader>vx :VimuxInterruptRunner<cr>|   " Interrupt any command running
+map <Leader>vz :call VimuxZoomRunner()<cr>| " Zoom the runner pane
