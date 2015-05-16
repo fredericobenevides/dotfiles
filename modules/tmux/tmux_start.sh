@@ -4,12 +4,11 @@ export PATH=$PATH:/usr/local/bin
 # abort if we're already inside a TMUX session
 [[ "$TMUX" == "" ]] || exit 0
 
-# startup a "default" session if none currently exists
-tmux has-session -t _default || tmux new-session -s _default -d
+clear
 
 # present menu for user to choose which workspace to open
 PS3="Please choose your session: "
-options=($(tmux list-sessions -F "#S") "New session" "zsh")
+options=($(tmux list-sessions -F "#S" 2> /dev/null) "New session" "zsh")
 
 echo "Available sessions"
 echo "------------------"
