@@ -94,6 +94,7 @@ gem install interactive_editor
 gem install rails
 gem install rubocop
 gem install ruby_clone
+gem install tmuxinator
   EOF
 
   description 'Installing default gems'
