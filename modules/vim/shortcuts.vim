@@ -39,15 +39,23 @@ vnoremap <F1> <ESC>
 map j gj
 map k gk
 
-" Move current line to the bottom
-nnoremap <silent> <c-j> :m .+1<cr>==
-inoremap <silent> <c-j> <Esc>:m .+1<cr>==gi
-vnoremap <silent> <c-j> :m '>+1<cr>gv=gv
+" Move current line to the bottom.
+nnoremap <silent> <M-j> :m .+1<cr>==
+inoremap <silent> <M-j> <Esc>:m .+1<cr>==gi
+vnoremap <silent> <M-j> :m '>+1<cr>gv=gv
+" Mac mapping
+nnoremap <silent> ∆ :m .+1<cr>==
+inoremap <silent> ∆ <Esc>:m .+1<cr>==gi
+vnoremap <silent> ∆ :m '>+1<cr>gv=gv
 
-" Move current line to the top
-nnoremap <silent> <c-k> :m .-2<cr>==
-inoremap <silent> <c-k> <Esc>:m .-2<cr>==gi
-vnoremap <silent> <c-k> :m '<-2<cr>gv=gv
+" Move current line to the top.
+nnoremap <silent> <M-k> :m .-2<cr>==
+inoremap <silent> <M-k> <Esc>:m .-2<cr>==gi
+vnoremap <silent> <M-k> :m '<-2<cr>gv=gv
+" Mac mapping
+nnoremap <silent> ˚ :m .-2<cr>==
+inoremap <silent> ˚ <Esc>:m .-2<cr>==gi
+vnoremap <silent> ˚ :m '<-2<cr>gv=gv
 
 " Save files with sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -128,8 +136,10 @@ map <leader>to :tabonly<cr>|  " close all others tab but this
 " Moving betwen tabs
 map <leader>th :tabp<cr>| " go to the previous tab
 map <leader>tl :tabn<cr>| " go to the next tab
-noremap <c-h> :tabp<cr>|  " go to the previous tab
-noremap <c-l> :tabn<cr>|  " go to the next tab
+map <M-h> :tabp<cr>| " go to the previous tab. Map to Alt+h
+map <M-l> :tabn<cr>| " go to the next tab. Map to Alt+l
+map ˙ :tabp<cr>| " go to the previous tab. Map to Alt+h
+map ¬ :tabn<cr>| " go to the next tab. Map to Alt+l
 
 " Moving the tabs
 map <leader>tmh :tabmove -1<cr>| " move tab to the left

@@ -87,6 +87,7 @@ Plugin 'junegunn/vim-easy-align'
 "  Tmux integration
 "-------------------------------------------------------------------------------
 Plugin 'benmills/vimux'
+Plugin 'christoomey/vim-tmux-navigator'
 
 call vundle#end()
 filetype plugin indent on
