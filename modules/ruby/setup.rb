@@ -5,6 +5,7 @@ def install_module
     link from: 'ruby/irbrc', to: '~/', make_hidden: true
 
     install_rbenv
+    add_rbenv_to_zsh
 
     install_ruby_with_rbenv '2.2.2'
     install_gems
@@ -17,50 +18,25 @@ def uninstall_module
     unlink from: 'ruby/gemrc', to: '~/', make_hidden: true
     unlink from: 'ruby/irbrc', to: '~/', make_hidden: true
 
+    description 'Unlinking the rbenv.zsh to .zsh configs folder'
+    unlink from: 'ruby/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
+
     description 'Removing the rbenv folder'
     run 'rm -rf ~/.rbenv'
 
     description 'Removing the gem folder'
     run 'rm -rf ~/.gem'
-
-    description %Q(Removing rbenv path from "#{File.join(File.expand_path('~/'), '.zshrc')}")
-    remove_rbenv_zsh = "gsed -i '/export RBENV/,+5d' ~/.zshrc"
-
-    when_os :mac do
-      run remove_rbenv_zsh
-    end
-
-    when_os :linux do
-      run remove_rbenv_zsh.gsub('gsed', 'sed')
-    end
   end
 end
 
 def install_rbenv
   description 'Installing rbenv using rbenv-installer'
   run 'curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash'
-  add_rbenv_to_zsh
 end
 
 def add_rbenv_to_zsh
-  command = <<-EOF
-grep "rbenv init -" ${HOME}/.zshrc
-if [ $? -ne 0 ]; then
-
-  echo '
-export RBENV_ROOT="${HOME}/.rbenv"
-
-if [ -d "${RBENV_ROOT}" ]; then
-  export PATH="${RBENV_ROOT}/bin:${PATH}"
-  eval \"$(rbenv init -)"
-fi
-' >> ${HOME}/.zshrc
-
-fi
-  EOF
-
-  description %(Adding rbenv path to "#{File.join(File.expand_path('~/'), '.zshrc')}")
-  run command
+  description 'Linking the rbenv.zsh to .zsh configs folder'
+  link from: 'ruby/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
 end
 
 def run_rbenv

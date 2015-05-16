@@ -9,12 +9,15 @@ def install_module
     when_os :linux do
       run 'sudo apt-get install tmux'
 
-      description 'Added the TERM environment in ~/.zshrc'
-      run %q(echo 'export TERM="screen-256color"' >> ~/.zshrc)
+      description 'Linking the tmux.zsh to .zsh configs folder'
+      link from: 'tmux/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Linking tmux configuration file'
     link from: 'tmux/tmux.conf', to: '~/', make_hidden: true
+
+    description 'Linking tmux_start.sh to /usr/local/bin/tm'
+    link from: 'tmux/tmux_start.sh', to: '/usr/local/bin/tm'
   end
 end
 
@@ -29,11 +32,14 @@ def uninstall_module
     when_os :linux do
       run 'sudo apt-get purge tmux'
 
-      description 'Removing the TERM environment from ~/.zshrc'
-      run 'sed -i "/TERM/d" ~/.zshrc'
+      description 'Unlinking the tmux.zsh to .zsh configs folder'
+      link from: 'tmux/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Unlinking tmux configuration file'
     unlink from: 'tmux/tmux.conf', to: '~/', make_hidden: true
+
+    description 'Unlinking tmux_start.sh to /usr/local/bin/tm'
+    unlink from: 'tmux/tmux_start.sh', to: '/usr/local/bin/tm'
   end
 end
