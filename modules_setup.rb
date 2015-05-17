@@ -9,5 +9,6 @@ MODULES = [
   :zsh,
   :ruby,
   :tmux,
-  :vim
+  :vim,
+  :docker
 ]
