@@ -10,6 +10,9 @@ def install_module
 
       description 'Installing the gnu-sed that is the same sed for linux!'
       run 'brew install gnu-sed'
+
+      description 'Installing brew cask'
+      run 'brew install caskroom/cask/brew-cask'
     end
 
     when_os :linux do
