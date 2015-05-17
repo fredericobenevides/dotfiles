@@ -3,6 +3,8 @@ def install_module
     description 'Installing zsh'
     run 'curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sed "s/exit/exit -1/" | bash'
 
+    add_default_editor
+
     change_zshr_to_use_theme_plugins
 
     create_zsh_folder
@@ -20,6 +22,18 @@ def uninstall_module
 
     description 'Removing the .zsh folder'
     run 'rm -rf ~/.zsh'
+  end
+end
+
+def add_default_editor
+  command = %q(gsed -i "s/#   export EDITOR='mvim'/export EDITOR='vim'/g" ~/.zshrc)
+
+  when_os :mac do
+    run command
+  end
+
+  when_os :linux do
+    run command.gsub('gsed', 'sed')
   end
 end
 
