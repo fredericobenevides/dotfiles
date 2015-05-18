@@ -11,6 +11,11 @@ def install_module
       description 'Init boot2docker'
       run '/usr/local/bin/boot2docker init'
     end
+
+    when_os :linux do
+      description 'Installing docker'
+      run 'sudo apt-get install docker'
+    end
   end
 end
 
@@ -27,6 +32,10 @@ def uninstall_module
       remove_boot2docker_folder
     end
 
+    when_os :linux do
+      description 'Uninstalling docker'
+      run 'sudo apt-get purge docker'
+    end
   end
 end
 
