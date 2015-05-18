@@ -23,28 +23,13 @@ def uninstall_module
       description 'Uninstalling docker'
       run 'brew uninstall docker'
       run 'brew uninstall boot2docker'
+
+      remove_boot2docker_folder
     end
 
-    remove_virtualbox_folder
   end
 end
 
-def remove_virtualbox_folder
-  command = <<-EOF
-    output=`ls ~/"VirtualBox VMs" | wc -l`
-    if [ $output -eq "1" ]; then
-      boot2docker=`ls ~/"VirtualBox VMs/" | grep boot2docker-vm | wc -l`
-      if [ $boot2docker -eq "1" ]; then
-        rm -rf ~/"VirtualBox VMs"
-      else
-        echo "Can't remove all the images, since the installed image is not the boot2docker"
-        exit -1
-      fi
-    else
-      echo "Can't remove the VirtualBox folder since has more than 1 image"
-      exit -1
-    fi
-  EOF
-
-  run command
+def remove_boot2docker_folder
+  run 'rm -rf ~/"VirtualBox VMs"/boot2docker-vm'
 end
