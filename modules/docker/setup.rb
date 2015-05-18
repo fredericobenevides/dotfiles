@@ -29,7 +29,8 @@ def uninstall_module
       run 'brew uninstall docker'
       run 'brew uninstall boot2docker'
 
-      remove_boot2docker_folder
+      description 'Removing boot2docker-vm folder'
+      run 'rm -rf ~/"VirtualBox VMs"/boot2docker-vm'
     end
 
     when_os :linux do
@@ -37,8 +38,4 @@ def uninstall_module
       run 'sudo apt-get purge docker'
     end
   end
-end
-
-def remove_boot2docker_folder
-  run 'rm -rf ~/"VirtualBox VMs"/boot2docker-vm'
 end
