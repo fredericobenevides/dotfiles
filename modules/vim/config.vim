@@ -11,6 +11,7 @@ set noswapfile
 set autoread " Automatically read a file that has changed on disk
 set backspace=indent,eol,start " backspace working like other apps
 set hidden " Allow unsaved buffers to be put in background
+set clipboard=unnamed " copy default to clipboard
 set cursorline
 set cpoptions+=$ " put $ at the end of the changed word
 
