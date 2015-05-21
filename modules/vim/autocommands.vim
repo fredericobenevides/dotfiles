@@ -9,9 +9,13 @@ autocmd BufWritePre * :%s/\s\+$//ge
 autocmd FocusLost * :wa
 
 "-------------------------------------------------------------------------------
-"  Open help in bottom window
+"  Settings for Filetype
 "-------------------------------------------------------------------------------
-autocmd FileType help wincmd J
+autocmd FileType help wincmd J " Open help in bottom window
+
+autocmd FileType java setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType java highlight SpecialKey ctermbg=bg guibg=bg
+
 
 "-------------------------------------------------------------------------------
 "  Disable flash error
