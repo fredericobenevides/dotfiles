@@ -40,7 +40,7 @@ set expandtab
 "  List Settings
 "-------------------------------------------------------------------------------
 set list
-set listchars=tab:»·,trail:·
+set listchars=tab:»\ ,trail:·
 
 "-------------------------------------------------------------------------------
 "  Mouse settings
