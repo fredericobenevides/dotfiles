@@ -51,7 +51,11 @@ if [ $? -ne 0 ]; then
   echo '
 for config_file ($HOME/.zsh/**/*.zsh); do
   source $config_file
-done' >> ${HOME}/.zshrc
+done
+
+if [ -f $HOME/.zshrc.local ]
+  source $HOME/.zshrc.local
+fi' >> ${HOME}/.zshrc
 fi
     EOF
 
