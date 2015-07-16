@@ -8,6 +8,7 @@ MODULES = [
   :ag_silver_searcher,
   :zsh,
   :ruby,
+  :golang,
   :tmux,
   :vim,
   :docker
