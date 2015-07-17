@@ -32,6 +32,15 @@ map <leader>gP :Gpull<cr>
 map <leader>gr :Gread<cr>
 map <leader>gs :Gstatus<cr>
 map <leader>gw :Gwrite<cr>
+"
+"-------------------------------------------------------------------------------
+"  Go
+"-------------------------------------------------------------------------------
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
 "-------------------------------------------------------------------------------
 "  Grep Settings
