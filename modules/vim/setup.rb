@@ -9,11 +9,17 @@ def install_module
 
       description 'Installing cmake to use with the plugin YouCompleteMe'
       run 'brew install cmake'
+
+      description 'Installing Exuberant Ctags'
+      run 'brew install ctags-exuberant'
     end
 
     when_os :linux do
       description 'Installing vim-gtk'
       run 'sudo apt-get install vim-gtk'
+
+      description 'Installing Exuberant Ctags'
+      run 'sudo apt-get install exuberant-ctags'
     end
 
     description 'Installing the plugin Vundle to manage the vim plugins'
@@ -45,11 +51,17 @@ def uninstall_module
 
       description 'Uninstalling cmake'
       run 'brew uninstall cmake'
+
+      description 'Uninstalling Exuberant Ctags'
+      run 'brew uninstall ctags-exuberant'
     end
 
     when_os :linux do
       description 'Uninstalling vim-gtk'
       run 'sudo apt-get purge vim-gtk'
+
+      description 'Uninstalling Exuberant Ctags'
+      run 'sudo apt-get purge exuberant-ctags'
     end
 
     description 'Unlinking vimrc file'
