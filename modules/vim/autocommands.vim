@@ -25,28 +25,4 @@ autocmd VimEnter * set vb t_vb= " gvim resets it, so I set it up again
 "-------------------------------------------------------------------------------
 "  NERDTree
 "-------------------------------------------------------------------------------
-autocmd VimEnter * call s:OpenNerdTree()
-
-
-
-
-
-" Open NERDTree and put the focus on the next window
-function s:OpenNerdTree()
-
-  " if is a directory, open the NERDTree
-  let path = expand("%")
-  if path =~ "NERD_tree_1"
-    NERDTree
-  end
-
-  " NERDtree is open? move to next window, deletes the buffer and goes back
-  let path = expand("%")
-  if path =~ "NERD_tree_2"
-    wincmd p
-    bd
-    wincmd p
-  else
-    wincmd p
-  end
-endfunction
+autocmd VimEnter * call g:OpenNerdTree()
