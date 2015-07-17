@@ -44,3 +44,8 @@ autocmd FileType go nmap <Leader>db <Plug>(go-doc-browser)
 "  NERDTree
 "-------------------------------------------------------------------------------
 autocmd VimEnter * call g:OpenNerdTree()
+
+"-------------------------------------------------------------------------------
+"  UltiSnips
+"-------------------------------------------------------------------------------
+autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
