@@ -14,6 +14,7 @@ set hidden " Allow unsaved buffers to be put in background
 set clipboard=unnamed " copy default to clipboard
 set cursorline
 set cpoptions+=$ " put $ at the end of the changed word
+let loaded_matchparen = 1 " disable the match for parentheses
 
 "-------------------------------------------------------------------------------
 "  Enconding Settings
