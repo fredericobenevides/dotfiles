@@ -80,9 +80,9 @@ map <leader>bd :bd<cr>|  " Delete the buffer
 map <leader>bD :bd!<cr>| " Forces to delete the buffer
 
 " Moving around the buffers
-map <leader>bh :bp<cr>|   "Move to the previous buffer
+map <leader>bh :bp<cr>|   " Move to the previous buffer
 map <leader>bl :bn<cr>|   " Move to the next buffer
-map <leader>bs <c-^><cr>| " Switch between buffers
+map <leader>ba <c-^><cr>| " Alternate between buffers
 
 "-------------------------------------------------------------------------------
 "  Windows Mappings
