@@ -38,8 +38,10 @@ Plugin 'mattn/emmet-vim'
 "  Javascript
 "-------------------------------------------------------------------------------
 Plugin 'pangloss/vim-javascript'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'kchmck/vim-coffee-script'
 Plugin 'burnettk/vim-angular'
-Plugin 'kchmck/vim-coffee-script'"
+Plugin 'matthewsimo/angular-vim-snippets'
 
 "-------------------------------------------------------------------------------
 "  Ruby and Rails
