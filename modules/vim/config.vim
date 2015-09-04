@@ -11,11 +11,17 @@ set noswapfile
 set autoread " Automatically read a file that has changed on disk
 set backspace=indent,eol,start " backspace working like other apps
 set hidden " Allow unsaved buffers to be put in background
-set clipboard=unnamed " copy default to clipboard
 set cursorline
 set completeopt-=preview " stop showing the preview window using YCM
 set cpoptions+=$ " put $ at the end of the changed word
 let loaded_matchparen = 1 " disable the match for parentheses
+
+" copy default to clipboard
+if has('unnamedplus')
+  set clipboard=unnamedplus
+else
+  set clipboard=unnamed
+endif
 
 "-------------------------------------------------------------------------------
 "  Enconding Settings
