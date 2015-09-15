@@ -11,7 +11,7 @@ def install_module
     end
 
     description 'Linking golang files'
-    link from: 'golang/golang.zsh', to: '~/.zsh/configs/golang.zsh'
+    link from: 'golang/files/golang.zsh', to: '~/.zsh/configs/golang.zsh'
   end
 end
 
@@ -28,7 +28,6 @@ def uninstall_module
     end
 
     description 'Unlinking golang files'
-    unlink from: 'golang/golang.zsh', to: '~/.zsh/configs/golang.zsh'
+    unlink from: 'golang/files/golang.zsh', to: '~/.zsh/configs/golang.zsh'
   end
-
 end

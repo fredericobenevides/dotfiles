@@ -1,8 +1,8 @@
 def install_module
   install 'RUBY' do
     description 'Linking configs files for gems and irb'
-    link from: 'ruby/gemrc', to: '~/', make_hidden: true
-    link from: 'ruby/irbrc', to: '~/', make_hidden: true
+    link from: 'ruby/files/gemrc', to: '~/', make_hidden: true
+    link from: 'ruby/files/irbrc', to: '~/', make_hidden: true
 
     install_rbenv
     add_rbenv_to_zsh
@@ -15,11 +15,11 @@ end
 def uninstall_module
   uninstall 'RUBY' do
     description 'Unlinking configs files for gems and irb'
-    unlink from: 'ruby/gemrc', to: '~/', make_hidden: true
-    unlink from: 'ruby/irbrc', to: '~/', make_hidden: true
+    unlink from: 'ruby/files/gemrc', to: '~/', make_hidden: true
+    unlink from: 'ruby/files/irbrc', to: '~/', make_hidden: true
 
     description 'Unlinking the rbenv.zsh to .zsh configs folder'
-    unlink from: 'ruby/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
+    unlink from: 'ruby/files/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
 
     description 'Removing the rbenv folder'
     run 'rm -rf ~/.rbenv'
@@ -36,7 +36,7 @@ end
 
 def add_rbenv_to_zsh
   description 'Linking the rbenv.zsh to .zsh configs folder'
-  link from: 'ruby/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
+  link from: 'ruby/files/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
 end
 
 def run_rbenv

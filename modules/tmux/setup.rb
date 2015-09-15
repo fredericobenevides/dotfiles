@@ -12,17 +12,17 @@ def install_module
       run 'sudo apt-get install xclip'
 
       description 'Linking the tmux.zsh to .zsh configs folder'
-      link from: 'tmux/tmux.zsh', to: '~/.zsh/configs'
+      link from: 'tmux/files/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Linking tmux configuration file'
-    link from: 'tmux/tmux.conf', to: '~/', make_hidden: true
+    link from: 'tmux/files/tmux.conf', to: '~/', make_hidden: true
 
     description 'Linking tmux_clipboard.sh to /usr/local/bin/tm'
-    link from: 'tmux/tmux_clipboard.sh', to: '/usr/local/bin/'
+    link from: 'tmux/files/tmux_clipboard.sh', to: '/usr/local/bin/'
 
     description 'Linking tmux_start.sh to /usr/local/bin/tm'
-    link from: 'tmux/tmux_start.sh', to: '/usr/local/bin/tm'
+    link from: 'tmux/files/tmux_start.sh', to: '/usr/local/bin/tm'
   end
 end
 
@@ -38,13 +38,13 @@ def uninstall_module
       run 'sudo apt-get purge tmux'
 
       description 'Unlinking the tmux.zsh to .zsh configs folder'
-      link from: 'tmux/tmux.zsh', to: '~/.zsh/configs'
+      link from: 'tmux/files/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Unlinking tmux configuration file'
-    unlink from: 'tmux/tmux.conf', to: '~/', make_hidden: true
+    unlink from: 'tmux/files/tmux.conf', to: '~/', make_hidden: true
 
     description 'Unlinking tmux_start.sh to /usr/local/bin/tm'
-    unlink from: 'tmux/tmux_start.sh', to: '/usr/local/bin/tm'
+    unlink from: 'tmux/files/tmux_start.sh', to: '/usr/local/bin/tm'
   end
 end

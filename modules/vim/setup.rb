@@ -26,10 +26,10 @@ def install_module
     run 'git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
 
     description 'Linking vimrc file'
-    link from: 'vim/vimrc', to: '~/', make_hidden: true
+    link from: 'vim/files/vimrc', to: '~/', make_hidden: true
 
     description 'Linking .vim files'
-    link from: 'vim/*.vim', to: '~/.vim/'
+    link from: 'vim/files/*.vim', to: '~/.vim/'
 
     description 'Launching vim to install the plugins'
     run 'vim +PluginInstall +qall'
@@ -41,7 +41,6 @@ end
 
 def uninstall_module
   uninstall 'VIM' do
-
     when_os :mac do
       description 'Unlinking MacVim to Applications'
       run 'brew unlinkapps macvim'
@@ -65,7 +64,7 @@ def uninstall_module
     end
 
     description 'Unlinking vimrc file'
-    unlink from: 'vim/vimrc', to: '~/', make_hidden: true
+    unlink from: 'vim/files/vimrc', to: '~/', make_hidden: true
 
     description 'Removing the .vim folder'
     run 'rm -rf ~/.vim'

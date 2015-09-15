@@ -11,7 +11,7 @@ def install_module
     end
 
     description 'Linking git files'
-    link from: 'git/git*', to: '~/', make_hidden: true
+    link from: 'git/files/git*', to: '~/', make_hidden: true
   end
 end
 
@@ -28,6 +28,6 @@ def uninstall_module
     end
 
     description 'Unlinking git files'
-    unlink from: 'git/git*', to: '~/', make_hidden: true
+    unlink from: 'git/files/git*', to: '~/', make_hidden: true
   end
 end
