@@ -9,9 +9,6 @@ def install_module
     when_os :linux do
       run 'sudo apt-get install golang'
     end
-
-    description 'Linking golang files'
-    link from: 'golang/files/golang.zsh', to: '~/.zsh/configs/golang.zsh'
   end
 end
 
@@ -26,8 +23,5 @@ def uninstall_module
     when_os :linux do
       run 'sudo apt-get purge golang'
     end
-
-    description 'Unlinking golang files'
-    unlink from: 'golang/files/golang.zsh', to: '~/.zsh/configs/golang.zsh'
   end
 end

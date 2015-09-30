@@ -10,9 +10,6 @@ def install_module
     when_os :linux do
       run 'sudo apt-get install tmux'
       run 'sudo apt-get install xclip'
-
-      description 'Linking the tmux.zsh to .zsh configs folder'
-      link from: 'tmux/files/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Linking tmux configuration file'
@@ -36,9 +33,6 @@ def uninstall_module
 
     when_os :linux do
       run 'sudo apt-get purge tmux'
-
-      description 'Unlinking the tmux.zsh to .zsh configs folder'
-      link from: 'tmux/files/tmux.zsh', to: '~/.zsh/configs'
     end
 
     description 'Unlinking tmux configuration file'

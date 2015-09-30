@@ -67,10 +67,34 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-for config_file ($HOME/.zsh/**/*.zsh); do
-  source $config_file
-done
 
+
+### GOLANG
+export GOPATH="$HOME/code/go"
+export PATH="$GOPATH/bin:$PATH"
+
+
+
+### RBENV
+export RBENV_ROOT="${HOME}/.rbenv"
+
+if [ -d "${RBENV_ROOT}" ]; then
+  export PATH="${RBENV_ROOT}/bin:${PATH}"
+  eval "$(rbenv init -)"
+fi
+
+
+
+### TMUX
+# Work around when opening tmux to set the new environment to fix the colors
+export TERM="xterm-256color"
+if [ "$TMUX" ] && [ $TERM = "xterm-256color" ]; then
+  export TERM="screen-256color"
+fi
+
+
+
+# Load local environment
 if [ -f $HOME/.zshrc.local ]; then
   source $HOME/.zshrc.local
 fi

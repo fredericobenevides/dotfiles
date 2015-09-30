@@ -11,10 +11,6 @@ def install_module
 
     description 'Linking with the plugins folder'
     link from: 'zsh/plugins/*', to: '~/.oh-my-zsh/custom/plugins'
-
-    description 'Creating the .zsh folder and the subfolders'
-    run 'mkdir -p ~/.zsh/aliases'
-    run 'mkdir -p ~/.zsh/configs'
   end
 end
 
@@ -25,8 +21,5 @@ def uninstall_module
 
     description 'Removing the .zshrc file'
     run 'rm ~/.zshrc'
-
-    description 'Removing the .zsh folder'
-    run 'rm -rf ~/.zsh'
   end
 end

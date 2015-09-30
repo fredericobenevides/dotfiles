@@ -5,7 +5,6 @@ def install_module
     link from: 'ruby/files/irbrc', to: '~/', make_hidden: true
 
     install_rbenv
-    add_rbenv_to_zsh
 
     install_ruby_with_rbenv '2.2.2'
     install_gems
@@ -18,9 +17,6 @@ def uninstall_module
     unlink from: 'ruby/files/gemrc', to: '~/', make_hidden: true
     unlink from: 'ruby/files/irbrc', to: '~/', make_hidden: true
 
-    description 'Unlinking the rbenv.zsh to .zsh configs folder'
-    unlink from: 'ruby/files/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
-
     description 'Removing the rbenv folder'
     run 'rm -rf ~/.rbenv'
 
@@ -32,11 +28,6 @@ end
 def install_rbenv
   description 'Installing rbenv using rbenv-installer'
   run 'curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash'
-end
-
-def add_rbenv_to_zsh
-  description 'Linking the rbenv.zsh to .zsh configs folder'
-  link from: 'ruby/files/rbenv.zsh', to: '~/.zsh/configs/rbenv.zsh'
 end
 
 def run_rbenv
