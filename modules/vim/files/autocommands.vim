@@ -4,9 +4,10 @@
 autocmd BufWritePre * :%s/\s\+$//ge
 
 "-------------------------------------------------------------------------------
-"  Auto save
+"  Auto save and Auto Reload
 "-------------------------------------------------------------------------------
-autocmd FocusLost * :wa
+autocmd FocusGained, BufEnter * :silent! !
+autocmd FocusLost, WinLeave * :silent! w
 
 "-------------------------------------------------------------------------------
 "  Settings for Filetype
