@@ -56,6 +56,7 @@ Plugin 'thoughtbot/vim-rspec'
 "  Search & Navigation
 "-------------------------------------------------------------------------------
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'justinmk/vim-sneak'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
