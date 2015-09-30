@@ -24,12 +24,22 @@ inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
 
+
 "-------------------------------------------------------------------------------
-"  Disable F1 to not call help
+"  Mappings for F1-12
 "-------------------------------------------------------------------------------
+" disable F1 to not call help
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
+
+" Toggle paste
+noremap <F2> :set invpaste paste?<cr>
+set pastetoggle=<F2>
+
+" ToggleWrap
+noremap <F3> :call g:ToggleWrap()<cr>
+
 
 "-------------------------------------------------------------------------------
 "  Editing a file
@@ -63,9 +73,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Quit all windows
 map Q :qall<cr>
 
-" Toggle paste
-noremap <F2> :set invpaste paste?<cr>
-set pastetoggle=<F2>
 
 "-------------------------------------------------------------------------------
 "  Buffer Mappings
