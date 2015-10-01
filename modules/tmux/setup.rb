@@ -20,6 +20,9 @@ def install_module
 
     description 'Linking tmux_start.sh to /usr/local/bin/tm'
     link from: 'tmux/files/tmux_start.sh', to: '/usr/local/bin/tm'
+
+    description 'Linking tmuxinator_start.sh to /usr/local/bin/tmr'
+    link from: 'tmux/files/tmuxinator_start.sh', to: '/usr/local/bin/tmr'
   end
 end
 
@@ -40,5 +43,8 @@ def uninstall_module
 
     description 'Unlinking tmux_start.sh to /usr/local/bin/tm'
     unlink from: 'tmux/files/tmux_start.sh', to: '/usr/local/bin/tm'
+
+    description 'Unlinking tmuxinator_start.sh to /usr/local/bin/tmr'
+    unlink from: 'tmux/files/tmuxinator_start.sh', to: '/usr/local/bin/tmr'
   end
 end
