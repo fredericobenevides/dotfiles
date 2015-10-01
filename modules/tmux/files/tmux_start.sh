@@ -23,7 +23,8 @@ do
       ;;
     "zsh")
       zsh
-      break;;
+      break
+      ;;
     *)
       tmux attach-session -t $opt
       break
