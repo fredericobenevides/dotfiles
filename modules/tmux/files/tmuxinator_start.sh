@@ -1,14 +1,11 @@
 #!/bin/bash
 export PATH=$PATH:/usr/local/bin
 
-# abort if we're already inside a TMUX session
-[[ "$TMUX" == "" ]] || exit 0
-
 clear
 
 # present menu for user to choose which workspace to open
 PS3="Please choose your tmuxinator: "
-options=("zsh" "New tmuxinator" $(tmuxinator list | tail -1) )
+options=("zsh" "New tmuxinator" $(tmuxinator list | sed '1d') )
 
 echo "Available tmuxinator"
 echo "------------------"
