@@ -5,7 +5,7 @@ clear
 
 # present menu for user to choose which workspace to open
 PS3="Please choose your tmuxinator: "
-options=("zsh" "New tmuxinator" $(tmuxinator list | sed '1d') )
+options=("zsh" "New tmuxinator" $(tmuxinator list | tail -n +2) )
 
 echo "Available tmuxinator"
 echo "------------------"
