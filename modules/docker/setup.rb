@@ -16,7 +16,7 @@ def install_module
 
     when_os :linux do
       description 'Installing docker'
-      run 'sudo apt-get install docker'
+      run 'wget -qO- https://get.docker.com/ | sh'
     end
   end
 end
@@ -40,7 +40,7 @@ def uninstall_module
 
     when_os :linux do
       description 'Uninstalling docker'
-      run 'sudo apt-get purge docker'
+      run 'sudo apt-get purge docker-engine'
     end
   end
 end
