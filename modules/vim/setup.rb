@@ -36,6 +36,10 @@ def install_module
 
     description 'Installing the plugin YouCompleteMe'
     run '~/.vim/bundle/YouCompleteMe/install.py --gocode-completer'
+
+    description 'Installing the plugin tern_for_vim'
+    run 'echo "npm install" > ~/.vim/bundle/tern_for_vim/install.sh'
+    run 'sh ~/.vim/bundle/tern_for_vim/install.sh'
   end
 end
 

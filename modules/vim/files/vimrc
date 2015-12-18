@@ -42,6 +42,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'burnettk/vim-angular'
 Plugin 'matthewsimo/angular-vim-snippets'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'ternjs/tern_for_vim'
 
 "-------------------------------------------------------------------------------
 "  Ruby and Rails
