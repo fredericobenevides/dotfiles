@@ -47,6 +47,8 @@ Plugin 'leafgarland/typescript-vim'
 "  Ruby and Rails
 "-------------------------------------------------------------------------------
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-bundler.git'
+Plugin 'tpope/vim-endwise.git'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'thoughtbot/vim-rspec'
