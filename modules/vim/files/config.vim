@@ -15,6 +15,7 @@ set cursorline
 set completeopt-=preview " stop showing the preview window using YCM
 set cpoptions+=$ " put $ at the end of the changed word
 let loaded_matchparen = 1 " disable the match for parentheses
+set nrformats= " treat all numerals as decimal
 
 " copy default to clipboard
 if has('unnamedplus')
