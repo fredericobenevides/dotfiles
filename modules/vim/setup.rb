@@ -35,7 +35,7 @@ def install_module
     run 'vim +PluginInstall +qall'
 
     description 'Installing the plugin YouCompleteMe'
-    run '~/.vim/bundle/YouCompleteMe/install.sh'
+    run '~/.vim/bundle/YouCompleteMe/install.py --gocode-completer'
   end
 end
 
