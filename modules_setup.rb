@@ -9,6 +9,7 @@ MODULES = [
   :zsh,
   :ruby,
   :golang,
+  :node,
   :tmux,
   :vim,
   :docker
