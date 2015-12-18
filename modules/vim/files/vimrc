@@ -19,7 +19,6 @@ Plugin 'bling/vim-airline'
 "  Git
 "-------------------------------------------------------------------------------
 Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim' " dependency for gist-vim
 
@@ -57,7 +56,6 @@ Plugin 'thoughtbot/vim-rspec'
 "-------------------------------------------------------------------------------
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'justinmk/vim-sneak'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Valloric/YouCompleteMe'
@@ -82,7 +80,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
