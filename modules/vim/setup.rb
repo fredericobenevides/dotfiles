@@ -38,7 +38,7 @@ def install_module
     run '~/.vim/bundle/YouCompleteMe/install.py --gocode-completer'
 
     description 'Installing the plugin tern_for_vim'
-    run 'echo "npm install" > ~/.vim/bundle/tern_for_vim/install.sh'
+    run 'echo "npm --prefix ~/.vim/bundle/tern_for_vim install ~/.vim/bundle/tern_for_vim" > ~/.vim/bundle/tern_for_vim/install.sh'
     run 'sh ~/.vim/bundle/tern_for_vim/install.sh'
 
     description 'Copying matchit plugin from $VIMRUNTIME'
