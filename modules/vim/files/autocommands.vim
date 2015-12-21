@@ -53,3 +53,9 @@ autocmd VimEnter * call g:OpenNerdTree()
 "  UltiSnips
 "-------------------------------------------------------------------------------
 autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+"-------------------------------------------------------------------------------
+"  vim-indent-guides
+"-------------------------------------------------------------------------------
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=234 ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=235 ctermbg=235

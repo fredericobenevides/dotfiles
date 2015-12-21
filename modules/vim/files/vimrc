@@ -92,6 +92,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'majutsushi/tagbar'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 "-------------------------------------------------------------------------------
 "  Tmux integration
