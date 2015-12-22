@@ -45,9 +45,11 @@ noremap <F3> :call g:ToggleWrap()<cr>
 "  Editing a file
 "-------------------------------------------------------------------------------
 
-" Treat long lines as break lines
-map j gj
-map k gk
+" Remap Line motion commands
+nnoremap k gk
+nnoremap gk k
+nnoremap j gj
+nnoremap gj j
 
 " Move current line to the bottom.
 nnoremap <silent> <M-j> :m .+1<cr>==
