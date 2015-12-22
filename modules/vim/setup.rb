@@ -40,6 +40,15 @@ def install_module
     description 'Installing the plugin tern_for_vim'
     run 'echo "npm install" > ~/.vim/bundle/tern_for_vim/install.sh'
     run 'sh ~/.vim/bundle/tern_for_vim/install.sh'
+
+    description 'Copying matchit plugin from $VIMRUNTIME'
+    run 'mkdir -p ~/.vim/plugin'
+    run %q(vim -e --cmd 'exe "set t_cm=\<C-M>"|!cp $VIMRUNTIME/macros/matchit.vim ~/.vim/plugin' +visual +qall)
+
+    description 'Copying matchit doc plugin from $VIMRUNTIME'
+    run 'mkdir -p ~/.vim/doc'
+    run %q(vim -e --cmd 'exe "set t_cm=\<C-M>"|!cp $VIMRUNTIME/macros/matchit.txt ~/.vim/doc' +visual +qall)
+    run %q(vim -e --cmd 'exe "set t_cm=\<C-M>"|helptags ~/.vim/doc' +visual +qall)
   end
 end
 
