@@ -57,5 +57,5 @@ autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <
 "-------------------------------------------------------------------------------
 "  vim-indent-guides
 "-------------------------------------------------------------------------------
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=234 ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=235 ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235 guibg=#262626
