@@ -19,6 +19,7 @@ autocmd VimEnter * set vb t_vb= " gvim resets it, so I set it up again
 "-------------------------------------------------------------------------------
 autocmd FileType go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType go highlight SpecialKey ctermbg=bg guibg=bg
+autocmd FileType go setlocal listchars+=tab:\ \ , " don't show tabs for go files
 
 autocmd FileType go nmap <leader>r <Plug>(go-run)
 autocmd FileType go nmap <leader>b <Plug>(go-build)
