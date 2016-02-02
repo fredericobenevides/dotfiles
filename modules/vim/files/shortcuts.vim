@@ -40,6 +40,10 @@ set pastetoggle=<F2>
 " ToggleWrap
 nmap <F3> :call g:ToggleWrap()<cr>
 
+" Toggle Folding
+inoremap <F4> <C-O>za
+nnoremap <F4> za
+
 
 "-------------------------------------------------------------------------------
 "  Editing a file
