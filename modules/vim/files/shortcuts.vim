@@ -34,11 +34,11 @@ nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
 " Toggle paste
-noremap <F2> :set invpaste paste?<cr>
+nmap <F2> :set invpaste paste?<cr>
 set pastetoggle=<F2>
 
 " ToggleWrap
-noremap <F3> :call g:ToggleWrap()<cr>
+nmap <F3> :call g:ToggleWrap()<cr>
 
 
 "-------------------------------------------------------------------------------

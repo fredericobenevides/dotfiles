@@ -1,6 +1,9 @@
 "-------------------------------------------------------------------------------
 "  Mappings for F1-12
 "-------------------------------------------------------------------------------
+nmap <F5> :GundoToggle<cr>
+nmap <F6> :NERDTreeToggle<cr>
+nmap <F7> :NERDTreeFind<cr>
 nmap <F8> :TagbarToggle<CR>
 
 "-------------------------------------------------------------------------------
@@ -44,15 +47,8 @@ map <leader>gw :Gwrite<cr>
 set grepprg=ag\ --nogroup\ --nocolor
 
 "-------------------------------------------------------------------------------
-"  Gundo Settings
-"-------------------------------------------------------------------------------
-nnoremap <F5> :GundoToggle<cr>
-
-"-------------------------------------------------------------------------------
 "  NERDTree Settings
 "-------------------------------------------------------------------------------
-map <F6> :NERDTreeToggle<cr>
-nmap <F7> :NERDTreeFind<cr>
 let NERDTreeShowHidden = 1 " show hidden files
 let NERDTreeQuitOnOpen = 1 " close after opening a file
 let NERDTreeIgnore=['\.class$']
