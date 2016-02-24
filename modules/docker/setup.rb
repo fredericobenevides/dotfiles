@@ -34,8 +34,11 @@ def uninstall_module
       description 'Uninstalling docker machine'
       run 'brew cask uninstall docker-machine'
 
-      description 'Removing boot2docker-vm folder'
-      run 'rm -rf ~/"VirtualBox VMs"/boot2docker-vm'
+      description 'Removing .docker folder'
+      run 'rm -rf ~/.docker'
+
+      description 'Removing .dockercfg'
+      run 'rm -rf ~/.dockercfg'
     end
 
     when_os :linux do
