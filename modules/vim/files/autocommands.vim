@@ -60,3 +60,12 @@ autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <
 "-------------------------------------------------------------------------------
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235 guibg=#262626
+
+"-------------------------------------------------------------------------------
+"  View Save and Restore
+"-------------------------------------------------------------------------------
+
+" View save and restore is used for saving and restoring folding
+autocmd BufWrite * mkview
+autocmd BufRead * silent loadview
+
