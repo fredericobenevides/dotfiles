@@ -19,6 +19,7 @@ Plugin 'bling/vim-airline'
 "  Git
 "-------------------------------------------------------------------------------
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim' " dependency for gist-vim
 
