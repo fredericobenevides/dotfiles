@@ -1,17 +1,8 @@
 def install_module
   install 'DOCKER' do
     when_os :mac do
-      description 'Installing  VirtualBox'
-      run 'brew cask install virtualbox'
-
-      description 'Installing docker'
-      run 'brew install docker'
-
-      description 'Installing docker machine'
-      run 'brew cask install docker-machine'
-
-      description 'Init boot2docker'
-      run '/usr/local/bin/boot2docker init'
+      description 'Installing dockertoolbox'
+      run 'brew cask install dockertoolbox'
     end
 
     when_os :linux do
@@ -24,21 +15,11 @@ end
 def uninstall_module
   uninstall 'DOCKER' do
     when_os :mac do
-      description 'Uninstalling  VirtualBox'
-      run 'brew cask uninstall virtualbox'
-
-      description 'Uninstalling docker'
-      run 'brew uninstall docker'
-      run 'brew uninstall boot2docker'
-
-      description 'Uninstalling docker machine'
-      run 'brew cask uninstall docker-machine'
+      description 'Installing dockertoolbox'
+      run 'brew cask uninstall dockertoolbox'
 
       description 'Removing .docker folder'
       run 'rm -rf ~/.docker'
-
-      description 'Removing .dockercfg'
-      run 'rm -rf ~/.dockercfg'
     end
 
     when_os :linux do
