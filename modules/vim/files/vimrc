@@ -29,10 +29,12 @@ Plugin 'mattn/webapi-vim' " dependency for gist-vim
 Plugin 'fatih/vim-go'
 
 "-------------------------------------------------------------------------------
-"  Html
+"  Html & css
 "-------------------------------------------------------------------------------
 Plugin 'othree/html5.vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'cakebaker/scss-syntax.vim'
 
 "-------------------------------------------------------------------------------
 "  Javascript
@@ -44,6 +46,7 @@ Plugin 'burnettk/vim-angular'
 Plugin 'matthewsimo/angular-vim-snippets'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'ternjs/tern_for_vim'
+Plugin 'mustache/vim-mustache-handlebars'
 
 "-------------------------------------------------------------------------------
 "  Ruby and Rails
