@@ -10,6 +10,15 @@ autocmd FocusGained, BufEnter * :silent! !
 autocmd FocusLost, WinLeave * :silent! w
 
 "-------------------------------------------------------------------------------
+"  Number and Relative number
+"-------------------------------------------------------------------------------
+autocmd FocusGained * :set relativenumber
+autocmd FocusLost * :set number norelativenumber
+
+autocmd InsertEnter * :set number norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+"-------------------------------------------------------------------------------
 "  Disable flash error
 "-------------------------------------------------------------------------------
 autocmd VimEnter * set vb t_vb= " gvim resets it, so I set it up again
