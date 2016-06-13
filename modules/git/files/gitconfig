@@ -6,6 +6,6 @@
 [github]
 	user = fredericobenevides
 [alias]
-	ignored = !git ls-files -v | grep "^[[:lower:]]"
-	ignore-file = !git update-index --assume-unchanged
-	no-ignore-file = !git update-index --no-assume-unchanged
+	assumed = !git ls-files -v | grep "^[[:lower:]]"
+	assume = !git update-index --assume-unchanged
+	unassume = !git update-index --no-assume-unchanged
