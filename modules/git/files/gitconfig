@@ -9,3 +9,14 @@
 	assumed = !git ls-files -v | grep "^[[:lower:]]"
 	assume = !git update-index --assume-unchanged
 	unassume = !git update-index --no-assume-unchanged
+	lg = log --pretty=format:'%C(yellow)%h%Creset%d -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --decorate
+	lt = describe --tags --abbrev=0
+	sa = stash apply
+	sl = stash list
+	ss = stash save
+	st = status -s
+	rs = reset --soft HEAD~1
+	rh = reset --hard HEAD~1
+	r = reset
+	dc = diff --cached
+	dh = diff HEAD
