@@ -2,7 +2,7 @@ def install_module
   install 'DOCKER' do
     when_os :mac do
       description 'Installing dockertoolbox'
-      run 'brew cask install dockertoolbox'
+      run 'brew cask install docker-toolbox'
     end
 
     when_os :linux do
@@ -16,7 +16,7 @@ def uninstall_module
   uninstall 'DOCKER' do
     when_os :mac do
       description 'Installing dockertoolbox'
-      run 'brew cask uninstall dockertoolbox'
+      run 'brew cask uninstall docker-toolbox'
 
       description 'Removing .docker folder'
       run 'rm -rf ~/.docker'
