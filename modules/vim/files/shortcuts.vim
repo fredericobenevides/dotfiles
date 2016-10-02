@@ -79,7 +79,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Quit all windows
 map Q :qall<cr>
 
-
 "-------------------------------------------------------------------------------
 "  Buffer Mappings
 "-------------------------------------------------------------------------------
@@ -161,5 +160,5 @@ map <leader>tml :tabmove +1<cr>| " move tab to the right
 "-------------------------------------------------------------------------------
 "  Vim Mappings
 "-------------------------------------------------------------------------------
-nmap <leader>vo :tabe $MYVIMRC<cr>| " Open the vim file in a new tab
-nmap <leader>vs :so $MYVIMRC<cr>|   " Source/Load the vim file
+nmap <leader>ev :tabe $MYVIMRC<cr>| " Edit vimrc file in a new tab
+nmap <leader>sv :so $MYVIMRC<cr>|   " Source vimrc
