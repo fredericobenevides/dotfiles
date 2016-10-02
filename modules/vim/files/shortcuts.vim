@@ -79,6 +79,9 @@ cmap w!! w !sudo tee % >/dev/null
 " Quit all windows
 map Q :qall<cr>
 
+" Add ';' at the end of line
+inoremap <leader>; <C-o>m`<C-o>A;<C-o>``
+
 "-------------------------------------------------------------------------------
 "  Buffer Mappings
 "-------------------------------------------------------------------------------
