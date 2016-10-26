@@ -24,6 +24,11 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 " }}}2
+"
+" FZF {{{2}}}
+Plugin 'junegunn/fzf.vim'
+set rtp+=~/.fzf
+" }}}2
 
 " Git {{{2
 Plugin 'tpope/vim-fugitive'
@@ -339,6 +344,33 @@ nmap ga <Plug>(EasyAlign)
 " Plugin Emmet {{{2
 let g:user_emmet_leader_key='<c-e>'
 let g:user_emmet_expandabbr_key='<c-e>'
+" }}}2
+
+" Plugin FZF {{{2
+map <C-p> :Files<cr>
+nmap <C-p> :Files<cr>
+
+" View commits in fzf
+nmap <Leader>c :Commits<cr>
+
+" Complete from open tmux panes (from @junegunn)
+inoremap <expr> <C-x><C-t> fzf#complete( 'tmuxwords.rb -all-but-current --scroll 499 --min 5')
+
+inoremap <expr> <C-x><C-k> fzf#complete ('cat /usr/share/dict/words')
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " }}}2
 
 " Plugin NERDTree {{{2
