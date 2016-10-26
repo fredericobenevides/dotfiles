@@ -23,7 +23,7 @@ def install_module
     end
 
     description 'Installing the plugin Vundle to manage the vim plugins'
-    run 'git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
+    run 'curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     description 'Linking vimrc file'
     link from: 'vim/files/vimrc', to: '~/', make_hidden: true
@@ -32,10 +32,7 @@ def install_module
     link from: 'vim/files/*.vim', to: '~/.vim/'
 
     description 'Launching vim to install the plugins'
-    run 'vim +PluginInstall +qall'
-
-    description 'Installing the plugin YouCompleteMe'
-    run '~/.vim/bundle/YouCompleteMe/install.py --gocode-completer'
+    run 'vim +PlugInstall +qall'
 
     description 'Installing the plugin tern_for_vim'
     run 'echo "npm --prefix ~/.vim/bundle/tern_for_vim install ~/.vim/bundle/tern_for_vim" > ~/.vim/bundle/tern_for_vim/install.sh'
