@@ -14,7 +14,7 @@ end
 
 def uninstall_module
   uninstall 'AG - Silver Searcher'do
-    description 'Installing the fast searcher'
+    description 'Uninstalling the fast searcher'
 
     when_os :mac do
       run 'brew uninstall the_silver_searcher'
