@@ -18,7 +18,7 @@ Plug 'nathanaelkane/vim-indent-guides', { 'on': '<Plug>IndentGuidesToggle' }
 " }}}2
 
 " FZF {{{2}}}
-Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '~/.dotfiles/modules/fzf/files/install.sh' }
 Plug 'junegunn/fzf.vim'
 " }}}2
 

@@ -93,10 +93,10 @@ if [ "$TMUX" ] && [ $TERM = "xterm-256color" ]; then
 fi
 
 ### FZF
-export PATH="$PATH:/Users/frederico/.fzf/bin"
-export MANPATH="$MANPATH:/Users/frederico/.fzf/man"
-source "/Users/frederico/.fzf/shell/completion.zsh" 2> /dev/null
-source "/Users/frederico/.fzf/shell/key-bindings.zsh"
+export PATH="$PATH:$HOME/.fzf/bin"
+export MANPATH="$MANPATH:$HOME/.fzf/man"
+source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
+source "$HOME/.fzf/shell/key-bindings.zsh"
 export FZF_COMPLETION_TRIGGER='~~'
 
 # Load local environment

@@ -2,8 +2,8 @@
 
 set -u
 
-[[ "$@" =~ --pre ]] && version=0.15.5 pre=1 ||
-                       version=0.15.5 pre=0
+[[ "$@" =~ --pre ]] && pre=1 || pre=0
+version=`grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+' ~/.fzf/install  | head -1`
 
 binary_arch=
 fzf_base="$HOME/.fzf"
