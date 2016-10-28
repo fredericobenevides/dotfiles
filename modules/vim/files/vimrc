@@ -240,7 +240,7 @@ inoremap <leader>; <C-o>m`<C-o>A;<C-o>``
 nnoremap <leader>tp :set invpaste paste?<cr>
 set pastetoggle=<leader>tp
 
-nnoremap <leader>tw :call g:ToggleWrap()<cr>
+nnoremap <leader>tw :set wrap! wrap?<cr>
 " }}}2
 
 " Buffer Mappings {{{2
@@ -505,22 +505,6 @@ augroup END
 " }}}1
 
 " Functions {{{1
-
-" ToggleWrap {{{2
-function! g:ToggleWrap()
-  let wrap = &wrap
-
-  " if  is enable? disable...
-  if wrap == 1
-    set nowrap
-  else
-    set wrap
-  end
-
-  " print which wrap is using
-  set wrap?
-endfunction
-" }}}2
 
 " NERDTree {{{2
 
