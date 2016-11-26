@@ -13,6 +13,9 @@ def install_module
 
       description 'Installing brew cask'
       run 'brew install caskroom/cask/brew-cask'
+
+      description 'Installing iterm2'
+      run 'brew cask install iterm2'
     end
 
     when_os :linux do
