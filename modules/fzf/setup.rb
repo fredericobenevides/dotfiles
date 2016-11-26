@@ -3,7 +3,9 @@ def install_module
     description 'Installing the fzf'
 
     description 'Cloning its repository'
+
     run 'git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf 2> /dev/null'
+    run '~/.dotfiles/modules/fzf/files/install.sh'
   end
 end
 
