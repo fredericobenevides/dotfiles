@@ -11,6 +11,9 @@ def install_module
 
     description 'Linking with the plugins folder'
     link from: 'zsh/plugins/*', to: '~/.oh-my-zsh/custom/plugins'
+
+    description 'Changing current shell to zsh'
+    run 'chsh -u frederico -s /bin/zsh'
   end
 end
 
