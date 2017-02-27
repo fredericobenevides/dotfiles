@@ -43,7 +43,8 @@ Plug 'cakebaker/scss-syntax.vim'
 " Javascript {{{2
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'ternjs/tern_for_vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
 " }}}2
 
 " Ruby and Rails {{{2
