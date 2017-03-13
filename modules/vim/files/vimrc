@@ -44,6 +44,7 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'maxmellon/vim-jsx-pretty'
 " }}}2
 
 " Ruby and Rails {{{2
