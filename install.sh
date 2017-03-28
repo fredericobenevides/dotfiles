@@ -10,7 +10,7 @@ curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rben
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-rbenv install 2.2.2
-rbenv global  2.2.2
+rbenv install 2.4.1
+rbenv global  2.4.1
 
 ./install.rb

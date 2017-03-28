@@ -6,7 +6,7 @@ def install_module
     end
 
     when_os :linux do
-      version = 'v4.2.3'
+      version = 'v6.10.1'
 
       description 'Installing Node'
       run "wget -q -O- https://nodejs.org/dist/#{version}/node-#{version}-linux-x64.tar.gz | tar xzvf - -C /tmp"

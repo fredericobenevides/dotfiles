@@ -6,7 +6,7 @@ def install_module
 
     install_rbenv
 
-    install_ruby_with_rbenv '2.2.2'
+    install_ruby_with_rbenv '2.4.1'
     install_gems
   end
 end
