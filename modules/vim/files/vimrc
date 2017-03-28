@@ -238,11 +238,21 @@ cnoremap w!! w !sudo tee % >/dev/null
 " Add ';' at the end of line
 inoremap <leader>; <C-o>m`<C-o>A;<C-o>``
 
-" Toggles Commands 2
+" Toggle Paste
 nnoremap <leader>tp :set invpaste paste?<cr>
 set pastetoggle=<leader>tp
 
+" Toggle Wrap
 nnoremap <leader>tw :set wrap! wrap?<cr>
+
+" Find duplicate words
+nnoremap <leader>dw /\v<(\w+)\_s+\1><cr>
+
+" Find current word
+nnoremap <leader>fw /\v<C-r><C-w><cr>
+
+" Substitute current word
+nnoremap <leader>sw :%s\v<C-r><C-w>
 " }}}2
 
 " Buffer Mappings {{{2
