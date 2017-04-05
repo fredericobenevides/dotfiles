@@ -252,7 +252,7 @@ nnoremap <leader>dw /\v<(\w+)\_s+\1><cr>
 nnoremap <leader>fw /\v<C-r><C-w><cr>
 
 " Substitute current word
-nnoremap <leader>sw :%s\v<C-r><C-w>
+nnoremap <leader>sw :%s/\v<C-r><C-w>
 " }}}2
 
 " Buffer Mappings {{{2
