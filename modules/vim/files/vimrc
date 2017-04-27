@@ -437,6 +437,9 @@ augroup vimrc
   " Delete trailing spaces before saving
   autocmd BufWritePre * :%s/\s\+$//ge
 
+  " Delete tabs
+  autocmd BufWritePre *.js :%s/\t\+/ /ge
+
   " Auto save and Auto Reload
   autocmd FocusGained, BufEnter * :silent! !
   autocmd FocusLost, WinLeave * :silent! w
