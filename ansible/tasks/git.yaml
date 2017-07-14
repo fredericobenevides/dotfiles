@@ -1,0 +1,8 @@
+- name: Link git files
+  file: src={{ dotfilespath }}/files/git/{{ item }}
+        dest=~/.{{item}}
+        state=link
+        force=yes
+  with_items:
+    - gitconfig
+    - gitignore

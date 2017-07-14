@@ -1,0 +1,19 @@
+- name: Link zshrc file
+  file: src={{ dotfilespath }}/files/zsh/zshrc
+        dest=~/.zshrc
+        state=link
+        force=yes
+
+- name: Link oh-my-zsh plugin's file
+  file: src={{ dotfilespath }}/files/zsh/plugins/{{ item }}
+        dest=~/.oh-my-zsh/custom/plugins/{{item}}
+        state=link
+        force=yes
+  with_items:
+    - fredericobenevides
+
+- name: Link oh-my-zsh theme's file
+  file: src={{ dotfilespath }}/files/zsh/themes/fredericobenevides.zsh-theme
+        dest=~/.oh-my-zsh/themes/fredericobenevides.zsh-theme
+        state=link
+        force=yes

@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+
+  pre_tasks:
+    - include: tasks/os_mac.yaml
+      when: ansible_distribution == "MacOSX"
+
+    - include: tasks/os_linux.yaml
+      when: ansible_distribution == "\"bunsenlabs\""
+
+    - include: tasks/os_mac_linux.yaml
+
+  tasks:
+    - include: tasks/git.yaml
+    - include: tasks/ohmyzsh.yaml

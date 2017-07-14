@@ -1,0 +1,8 @@
+- name: Mac or Linux - Verify if install Ruby
+  shell: rv=`head -1 {{ dotfilespath }}/files/ruby/install.sh | awk -F '=' '{print $2}'`; ruby --version | grep $rv
+  ignore_errors: yes
+  register: ruby_version
+
+- name: Mac or Linux - Install Ruby
+  shell: exec {{ dotfilespath }}/files/ruby/install.sh
+  when: ruby_version.rc != 0
