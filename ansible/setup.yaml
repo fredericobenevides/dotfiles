@@ -11,6 +11,6 @@
     - include: tasks/os_mac_linux.yaml
 
   tasks:
-    - include: tasks/git.yaml
-    - include: tasks/ohmyzsh.yaml
-    - include: tasks/ruby.yaml
+    - include: tasks/configs/git.yaml
+    - include: tasks/configs/ohmyzsh.yaml
+    - include: tasks/configs/ruby.yaml
