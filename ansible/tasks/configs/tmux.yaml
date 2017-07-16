@@ -1,0 +1,23 @@
+- name: Link tmux.conf file
+  file: src={{ dotfilespath }}/files/tmux/tmux.conf
+        dest=~/.tmux.conf
+        state=link
+        force=yes
+
+- name: Link tmux_clipboard file
+  file: src={{ dotfilespath }}/files/tmux/tmux_clipboard.sh
+        dest=/usr/local/bin/tmux_clipboard.sh
+        state=link
+        force=yes
+
+- name: Link tmux_start file
+  file: src={{ dotfilespath }}/files/tmux/tmux_start.sh
+        dest=/usr/local/bin/tm
+        state=link
+        force=yes
+
+- name: Link tmuxinator_start file
+  file: src={{ dotfilespath }}/files/tmux/tmuxinator_start.sh
+        dest=/usr/local/bin/tmr
+        state=link
+        force=yes

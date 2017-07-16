@@ -28,6 +28,13 @@
   shell: exec {{ dotfilespath }}/files/node/install.sh
   when: node_version.rc != 0
 
+- name: Linux - Make sure "tmux" is present
+  apt: name=zsh state=present
+  become: true
+- name: Linux - Make sure "xclip" is present
+  apt: name=zsh state=present
+  become: true
+
 - name: Linux - Make sure "zsh" is present
   apt: name=zsh state=present
   become: true

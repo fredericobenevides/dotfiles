@@ -18,3 +18,8 @@
 
 - name: Mac - Make sure "node" is present
   homebrew: name=node state=present
+
+- name: Mac - Make sure "tmux" is present
+  homebrew: name=tmux state=present
+- name: Mac - Make sure "reattach-to-user-namespace" is present
+  homebrew: name=reattach-to-user-namespace state=present
