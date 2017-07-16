@@ -1,3 +1,12 @@
+- name: Mac or Linux - Verify if install FZF - Fuzzy Finder
+  shell: fzf --version
+  ignore_errors: yes
+  register: fzf_version
+
+- name: Mac or Linux - Install FZF - Fuzzy Finder
+  shell: exec {{ dotfilespath }}/files/fzf/install.sh
+  when: fzf_version.rc != 0
+
 - name: Mac or Linux - Verify if install Ruby
   shell: rv=`head -1 {{ dotfilespath }}/files/ruby/install.sh | awk -F '=' '{print $2}'`; ruby --version | grep $rv
   ignore_errors: yes
@@ -6,3 +15,4 @@
 - name: Mac or Linux - Install Ruby
   shell: exec {{ dotfilespath }}/files/ruby/install.sh
   when: ruby_version.rc != 0
+
