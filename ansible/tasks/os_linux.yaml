@@ -10,6 +10,15 @@
   apt: name=git state=present
   become: true
 
+- name: Linux - Verify if install Go
+  shell: gv=`head -1 {{ dotfilespath }}/files/go/install.sh | awk -F '=' '{print $2}'`; go version | grep $gv
+  ignore_errors: yes
+  register: go_version
+
+- name: Linux - Install Go
+  shell: exec {{ dotfilespath }}/files/go/install.sh
+  when: go_version.rc != 0
+
 - name: Linux - Make sure "zsh" is present
   apt: name=zsh state=present
   become: true
