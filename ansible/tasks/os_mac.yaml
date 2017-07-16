@@ -5,7 +5,7 @@
   homebrew: name=curl state=present
 
 - name: Mac - Make sure "git" is present
-  homebrew: name=gnu-sed state=present
+  homebrew: name=git state=present
 
 - name: Mac - Make sure "gnu-sed" is present
   homebrew: name=gnu-sed state=present

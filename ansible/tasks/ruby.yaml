@@ -1,0 +1,8 @@
+- name: Link ruby files
+  file: src={{ dotfilespath }}/files/ruby/{{ item }}
+        dest=~/.{{item}}
+        state=link
+        force=yes
+  with_items:
+    - irbrc
+    - gemrc

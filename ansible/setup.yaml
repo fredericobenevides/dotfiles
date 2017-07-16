@@ -13,3 +13,4 @@
   tasks:
     - include: tasks/git.yaml
     - include: tasks/ohmyzsh.yaml
+    - include: tasks/ruby.yaml
