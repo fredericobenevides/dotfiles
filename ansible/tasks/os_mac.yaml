@@ -15,3 +15,6 @@
 
 - name: Mac - Make sure "iterm2" is present
   homebrew_cask: name=iterm2 state=present
+
+- name: Mac - Make sure "node" is present
+  homebrew: name=node state=present
