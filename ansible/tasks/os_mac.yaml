@@ -28,3 +28,10 @@
   homebrew: name=tmux state=present
 - name: Mac - Make sure "reattach-to-user-namespace" is present
   homebrew: name=reattach-to-user-namespace state=present
+
+- name: Mac - Make sure "macvim" is present
+  homebrew: name=macvim state=present install_options=with-override-system-vim
+- name: Mac - Make sure "cmake" is present
+  homebrew: name=cmake state=present
+- name: Mac - Make sure "ctags-exuberant" is present
+  homebrew: name=ctags-exuberant state=present

@@ -50,3 +50,10 @@
 - name: Linux - Make sure "zsh" is present
   apt: name=zsh state=present
   become: true
+
+- name: Linux - Make sure "vim-gtk" is present
+  apt: name=vim-gtk state=present
+  become: true
+- name: Linux - Make sure "exuberant-ctags" is present
+  apt: name=exuberant-ctags state=present
+  become: true
