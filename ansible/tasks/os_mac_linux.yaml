@@ -18,3 +18,12 @@
 
 - name: Mac or Linux - Complete Installation for Vim
   shell: exec {{ dotfilespath }}/files/vim/install.sh
+
+- name: Mac or Linux -  Get the current shell
+  command: echo $SHELL
+  register: shell
+
+- name: Mac or Linux -  Set the default shell to ZSH
+  command: chsh -s /bin/zsh
+  when: shell.stdout != "/bin/zsh"
+  become: true
