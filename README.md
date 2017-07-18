@@ -14,12 +14,12 @@ Download the dotfiles to the root path and goes to the dotfiles folder
 
 `$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles`
 
-If you have git and ruby on your machine, run:
+If is the first installation run:
 
-`./install.rb`
+`./pre_setup.sh`
 
 Otherwise
 
-`./install.sh`
+`./setup.sh`
 
 **Have Fun**
