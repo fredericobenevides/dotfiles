@@ -14,11 +14,7 @@ Download the dotfiles to the root path and goes to the dotfiles folder
 
 `$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles`
 
-If is the first installation run:
-
-`./pre_setup.sh`
-
-Otherwise
+Run with the command:
 
 `./setup.sh`
 
