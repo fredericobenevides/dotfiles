@@ -49,7 +49,7 @@ ZSH_THEME="fredericobenevides"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew bundler gem git fredericobenevides)
+plugins=(brew bundler docker docker-compose gem git go kubectl node npm postgres fredericobenevides)
 
 # User configuration
 
