@@ -14,7 +14,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'majutsushi/tagbar'
-Plug 'nathanaelkane/vim-indent-guides', { 'on': '<Plug>IndentGuidesToggle' }
+Plug 'nathanaelkane/vim-indent-guides'
 " }}}2
 
 " FZF {{{2}}}
