@@ -44,7 +44,9 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'mxw/vim-jsx'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 " }}}2
 
 " Ruby and Rails {{{2
@@ -418,6 +420,15 @@ let g:go_highlight_build_constraints = 1
 let g:indent_guides_auto_colors = 0
 " }}}2
 
+" Plugin vim-jsx {{{2
+let g:jsx_ext_required = 0
+" }}}2
+
+" Plugin vim-prettier {{{2
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat = 0
+" }}}2
+
 " Plugin Vimux {{{2
 map <Leader>vp :VimuxPromptCommand<cr>      |" Prompt for a command to run
 map <Leader>vl :VimuxRunLastCommand<cr>     |" Run last command executed
@@ -473,6 +484,9 @@ augroup vimrc
   " Plugin vim-indent-guides
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235 guibg=#262626
+
+  " Plugin vim-prettier
+  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql PrettierAsync
   " }}}2
 
 augroup END
