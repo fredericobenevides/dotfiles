@@ -354,6 +354,11 @@ nmap ga <Plug>(EasyAlign)
 " Plugin Emmet {{{2
 let g:user_emmet_leader_key='<c-e>'
 let g:user_emmet_expandabbr_key='<c-e>'
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
 " }}}2
 
 " Plugin FZF {{{2
