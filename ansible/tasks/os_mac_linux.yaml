@@ -8,7 +8,7 @@
   when: fzf_version.rc != 0
 
 - name: Mac or Linux - Verify if install Ruby
-  shell: rv=`head -1 {{ dotfilespath }}/files/ruby/install.sh | awk -F '=' '{print $2}'`; ruby --version | grep $rv
+  shell: rv=`awk -F '=' '/RUBY_VERSION=/{print $2}' {{ dotfilespath }}/files/ruby/install.sh`; ruby --version | grep $rv
   ignore_errors: yes
   register: ruby_version
 

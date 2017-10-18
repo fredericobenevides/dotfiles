@@ -23,7 +23,7 @@
   become: true
 
 - name: Linux - Verify if install Go
-  shell: gv=`head -1 {{ dotfilespath }}/files/go/install.sh | awk -F '=' '{print $2}'`; go version | grep $gv
+  shell: gv=`awk -F '=' '/GO_VERSION=/{print $2}' {{ dotfilespath }}/files/go/install.sh`; go version | grep $gv
   ignore_errors: yes
   register: go_version
 
@@ -32,7 +32,7 @@
   when: go_version.rc != 0
 
 - name: Linux - Verify if install Node
-  shell: nv=`head -1 {{ dotfilespath }}/files/node/install.sh | awk -F '=' '{print $2}'`; node --version | grep $nv
+  shell: nv=`awk -F '=' '/NODE_VERSION=/{print $2}' {{ dotfilespath }}/files/node/install.sh`; node --version | grep $nv
   ignore_errors: yes
   register: node_version
 
