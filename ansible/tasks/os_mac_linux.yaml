@@ -16,6 +16,9 @@
   shell: exec {{ dotfilespath }}/files/ruby/install.sh
   when: ruby_version.rc != 0
 
+- name: Mac or Linux - Install Node packages
+  npm: name=prettier global=yes state=present
+
 - name: Mac or Linux - Complete Installation for Vim
   shell: exec {{ dotfilespath }}/files/vim/install.sh
 
