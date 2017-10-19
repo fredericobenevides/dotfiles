@@ -20,7 +20,7 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'type
 " }}}2
 
 " FZF {{{2}}}
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '~/.dotfiles/modules/fzf/files/install.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '~/.dotfiles/files/fzf/install.sh' }
 Plug 'junegunn/fzf.vim'
 " }}}2
 
