@@ -13,6 +13,7 @@
   tasks:
     - include: tasks/configs/git.yaml
     - include: tasks/configs/ohmyzsh.yaml
+    - include: tasks/configs/python.yaml
     - include: tasks/configs/ruby.yaml
     - include: tasks/configs/tmux.yaml
     - include: tasks/configs/vim.yaml

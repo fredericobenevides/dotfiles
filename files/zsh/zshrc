@@ -75,6 +75,11 @@ export PATH="$GOPATH/bin:$PATH"
 
 
 
+### PYTHON
+export PYTHONSTARTUP="$HOME/.pythonrc"
+
+
+
 ### RBENV
 export RBENV_ROOT="${HOME}/.rbenv"
 

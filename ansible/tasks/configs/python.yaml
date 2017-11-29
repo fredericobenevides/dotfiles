@@ -1,0 +1,7 @@
+- name: Link python files
+  file: src={{ dotfilespath }}/files/python/{{ item }}
+        dest=~/.{{item}}
+        state=link
+        force=yes
+  with_items:
+    - pythonrc
