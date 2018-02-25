@@ -1,15 +1,22 @@
-RUBY_VERSION=2.4.1
+#!/bin/bash
+set -e
+
+homebrew=
+type -p brew >/dev/null && homebrew=1
+
+RUBY_VERSION=2.5.0
 
 download_ruby() {
-  curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+  curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 }
 
 load_rbenv() {
-  <<-EOF
-  export RBENV_ROOT="${HOME}/.rbenv"
-  export PATH="${RBENV_ROOT}/bin:${PATH}"
+  if [ ! -n "$homebrew" ]; then
+    export RBENV_ROOT="${HOME}/.rbenv"
+    export PATH="${RBENV_ROOT}/bin:${PATH}"
+  fi
+
   eval "$(rbenv init -)"
-EOF
 }
 
 install_ruby() {
