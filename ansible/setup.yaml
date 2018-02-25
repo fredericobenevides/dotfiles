@@ -2,18 +2,18 @@
 - hosts: localhost
 
   pre_tasks:
-    - include: tasks/os_mac.yaml
+    - import_tasks: tasks/os_mac.yaml
       when: ansible_distribution == "MacOSX"
 
-    - include: tasks/os_linux.yaml
+    - import_tasks: tasks/os_linux.yaml
       when: ansible_distribution == "\"bunsenlabs\""
 
-    - include: tasks/os_mac_linux.yaml
+    - import_tasks: tasks/os_mac_linux.yaml
 
   tasks:
-    - include: tasks/configs/git.yaml
-    - include: tasks/configs/ohmyzsh.yaml
-    - include: tasks/configs/python.yaml
-    - include: tasks/configs/ruby.yaml
-    - include: tasks/configs/tmux.yaml
-    - include: tasks/configs/vim.yaml
+    - import_tasks: tasks/configs/git.yaml
+    - import_tasks: tasks/configs/ohmyzsh.yaml
+    - import_tasks: tasks/configs/python.yaml
+    - import_tasks: tasks/configs/ruby.yaml
+    - import_tasks: tasks/configs/tmux.yaml
+    - import_tasks: tasks/configs/vim.yaml
