@@ -30,3 +30,12 @@
   command: chsh -s /bin/zsh
   when: shell.stdout != "/bin/zsh"
   become: true
+
+- name: Mac or Linux - Verify if install oh-my-zsh
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmyzsh
+
+- name: Mac or Linux - Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  when: ohmyzsh.stat.exists != true
