@@ -35,3 +35,9 @@
   homebrew: name=cmake state=present
 - name: Mac - Make sure "ctags-exuberant" is present
   homebrew: name=ctags-exuberant state=present
+
+- name: Mac - Make sure "miniconda" is present
+  homebrew_cask: name=miniconda state=present
+
+- name: Mac - Install tensorflow_gpu
+  shell: exec {{ dotfilespath }}/files/python/tensorflow_gpu
