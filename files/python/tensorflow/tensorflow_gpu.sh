@@ -12,8 +12,10 @@ CUDA_URL="https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/$C
 CUDA_DRIVER_FILE="cudadriver_387.128_macos.dmg"
 CUDA_DRIVER_URL="http://us.download.nvidia.com/Mac/cuda_387/$CUDA_DRIVER_FILE"
 
-TENSORFLOW_VERSION=r1.6
-TENSORFLOW_COMMIT_VERSION="3ba1f72f8829c566372208062fcea04ab5695dc6"
+TENSORFLOW_VERSION="r1.6"
+TENSORFLOW_COMMIT_VERSION="5aee07fd0462d00c52efb5d3c86bfb955a9d976e"
+TENSORFLOW_TMP_FOLDER="/tmp/tensorflow_pkg"
+
 COMPUTE_CAPABILITY=5.2 # Geforce GTX 980
 CPU_FEATURES='--copt=-msse4.2 --copt=-mpopcnt --copt=-maes' # sysctl -a | grep machdep.cpu.features
 
@@ -21,7 +23,13 @@ XCODE_VERSION=8.2
 XCODE_FILE='Xcode_8.2'
 XCODE_URL="https://download.developer.apple.com/Developer_Tools/Xcode_8.2/$XCODE_FILE.xip"
 
+function clean() {
+  rm -rf $TENSORFLOW_TMP_FOLDER
+}
+
 function install_requirements() {
+  sudo xcode-select -s /Applications/Xcode.app
+
   pip install six numpy wheel
 
   brew tap caskroom/versions
@@ -49,10 +57,11 @@ function install_xcode() {
     mv "$DOWNLOADS_FOLDER/$XCODE_FILE.app" /Applications
 
     echo "xcode-select in /Applications/$XCODE_FILE.app"
-    sudo xcode-select -s "/Applications/$XCODE_FILE.app"
   else
     echo "Skipping - File don't exist"
   fi
+
+  sudo xcode-select -s "/Applications/$XCODE_FILE.app"
 
   xcode_version=`xcodebuild -version | grep $XCODE_VERSION`
   if [[ -z ${xcode_version} ]]; then
@@ -195,16 +204,27 @@ function clone_tensorflow() {
     echo "Skipping - Already exists"
 
     echo "Just checking out to $TENSORFLOW_VERSION"
+
+    cd $DOWNLOADS_FOLDER/tensorflow
+
+    git fetch --all --tags --prune
+
+    git stash
+    git checkout master
+    git branch -D $TENSORFLOW_VERSION 2> /dev/null
+    git checkout $TENSORFLOW_VERSION
+    git reset --hard $TENSORFLOW_COMMIT_VERSION
   else
     echo "Cloning tensorflow"
     git clone https://github.com/tensorflow/tensorflow $DOWNLOADS_FOLDER/tensorflow
-  fi
 
-  echo "Checkout of branch: $TENSORFLOW_VERSION"
-  cd $DOWNLOADS_FOLDER/tensorflow
-  git stash
-  git reset --hard $TENSORFLOW_COMMIT_VERSION
-  # git checkout $TENSORFLOW_VERSION
+    cd $DOWNLOADS_FOLDER/tensorflow
+
+    echo "Checkout of branch: $TENSORFLOW_VERSION"
+    git fetch --all --tags --prune
+    git checkout $TENSORFLOW_VERSION
+    git reset --hard $TENSORFLOW_COMMIT_VERSION
+  fi
 
   cd $PWD
 }
@@ -217,10 +237,12 @@ function install_tensorflow() {
   current_folder=$PWD
   cd $DOWNLOADS_FOLDER/tensorflow
 
+  echo "Applyting patch of protobuf_archive"
   patch -p1 < patch1_workspace.bzl
+  echo "Applyting patch of eigen_archive"
   patch -p1 < patch2_workspace.bzl
 
-  echo "Removing the patch files that were copied"
+  # echo "Removing the patch files that were copied"
   rm patch1_workspace.bzl
   rm patch2_workspace.bzl
 
@@ -261,6 +283,8 @@ function install_tensorflow() {
 
   cd $current_folder
 }
+
+clean
 
 install_requirements
 
