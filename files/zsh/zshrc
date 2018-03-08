@@ -107,9 +107,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER='~~'
 
 
-### MINICONDA
-export PATH="/usr/local/miniconda3/bin:$PATH"
-
+### ANACONDA
+export PATH="/usr/local/anaconda3/bin:$PATH"
 
 # Load local environment
 if [ -f $HOME/.zshrc.local ]; then
