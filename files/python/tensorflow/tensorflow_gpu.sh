@@ -9,9 +9,6 @@ CUDA_VERSION=9.1
 CUDA_FILE="cuda_9.1.128_mac"
 CUDA_URL="https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/$CUDA_FILE"
 
-CUDA_DRIVER_FILE="cudadriver_387.128_macos.dmg"
-CUDA_DRIVER_URL="http://us.download.nvidia.com/Mac/cuda_387/$CUDA_DRIVER_FILE"
-
 TENSORFLOW_VERSION="r1.6"
 TENSORFLOW_COMMIT_VERSION="5aee07fd0462d00c52efb5d3c86bfb955a9d976e"
 TENSORFLOW_TMP_FOLDER="/tmp/tensorflow_pkg"
@@ -104,38 +101,6 @@ function install_cuda() {
     hdiutil detach $cuda_disk
   fi
 }
-
-# function download_cuda_driver() {
-#   echo "\nVerifying if download cuda driver"
-#   cuda_destination="$HOME/Downloads/$CUDA_DRIVER_FILE"
-
-#   if [ -f $cuda_destination ]; then
-#     echo "Skipping - Already exist"
-#   else
-#     echo "Downloading $CUDA_DRIVER_FILE"
-#     curl -fsSL ${CUDA_DRIVER_URL} -o "$HOME/Downloads/$CUDA_DRIVER_FILE.dmg"
-#   fi
-# }
-
-# function install_cuda_driver() {
-#   echo "\nVerifying if install cuda driver"
-#   cuda_destination=/usr/local/cuda
-
-#   # if [ -d $cuda_destination ]; then
-#   #   echo "Skipping - Already exists"
-#   # else
-#     echo "Installing cuda driver"
-
-#     cuda_destination="$HOME/Downloads/$CUDA_DRIVER_FILE.dmg"
-#     hdiutil attach $cuda_destination
-
-#     cuda_volume=`hdiutil info | awk '/CUDADriver/ {print $3}'`
-#     open "$cuda_volume/CUDADriver.pkg"
-
-#     cuda_disk=`hdiutil info | awk '/CUDADriver/ {print $3}'`
-#     hdiutil detach $cuda_disk
-#   # fi
-# }
 
 function download_cudnn() {
   echo "\nDownload the last cuDNN on https://developer.nvidia.com/cudnn"
@@ -237,14 +202,11 @@ function install_tensorflow() {
   current_folder=$PWD
   cd $DOWNLOADS_FOLDER/tensorflow
 
-  echo "Applyting patch of protobuf_archive"
-  patch -p1 < patch1_workspace.bzl
-  echo "Applyting patch of eigen_archive"
-  patch -p1 < patch2_workspace.bzl
+  echo "Applyting patch of protobuf_archive and eigen_archive"
+  patch -p1 < patch_workspace.bzl
 
-  # echo "Removing the patch files that were copied"
-  rm patch1_workspace.bzl
-  rm patch2_workspace.bzl
+  echo "Removing the patch files that were copied"
+  rm patch_workspace.bzl
 
   echo "Installing Tensorflow with GPU"
 
@@ -255,9 +217,6 @@ function install_tensorflow() {
 
   echo "Fixing -lgomp issue"
   sed -i.bu '/linkopts = [“-lgomp”]/d' third_party/gpus/cuda/BUILD.tpl
-
-  # echo "Fixing eigen bug"
-  # sudo ln -sf /usr/local/cuda/include/crt/math_functions.hpp /usr/local/cuda/include/math_functions.hpp 2> /dev/null
 
   echo "*****************************"
   echo "Configuring tensorflow"
