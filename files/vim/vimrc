@@ -48,6 +48,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'mxw/vim-jsx'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'posva/vim-vue'
 " }}}2
 
 " Ruby and Rails {{{2
