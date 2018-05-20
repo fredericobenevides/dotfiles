@@ -1,5 +1,9 @@
 " Vim-plug Configs {{{1
-call plug#begin('~/.vim/plugged')
+if has('nvim')
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 " Colors and themes {{{2
 Plug 'tomasr/molokai'
@@ -9,14 +13,19 @@ Plug 'bling/vim-airline'
 " Editor Utilities {{{2
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
+endif
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 
-Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+"Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'vue'] }
 " }}}2
 
 " FZF {{{2}}}
@@ -62,7 +71,7 @@ Plug 'tpope/vim-rake'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 " }}}2
-
+"
 " Tpope Utilities {{{2
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -72,11 +81,17 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+
+if has('nvim')
+  Plug 'radenling/vim-dispatch-neovim'
+endif
 " }}}2
 
 " Tmux integration {{{2
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
+if !has('nvim')
+  Plug 'benmills/vimux'
+  Plug 'christoomey/vim-tmux-navigator'
+endif
 "}}}2
 
 call plug#end()
@@ -149,6 +164,13 @@ set listchars=tab:»\ ,trail:·
 
 " Mouse settings {{{2
 set mousehide " hide the cursor while typing
+" }}}2
+
+" Neovim's  Terminal settings {{{2
+if has('nvim')
+  highlight! link TermCursor Cursor
+  highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+endif
 " }}}2
 
 " Search Settings {{{2
@@ -315,6 +337,19 @@ nnoremap <Up>    <c-w>-              |" Decrease current window width
 nnoremap <Down>  <c-w>+              |" Decrease current window width
 nnoremap <Left>  <c-w>>              |" Decrease current window width
 nnoremap <Right> <c-w><              |" Decrease current window width
+
+" windows switching
+nnoremap <C-h> <c-w>h
+nnoremap <C-j> <c-w>j
+nnoremap <C-k> <c-w>k
+nnoremap <C-l> <c-w>l
+if has('nvim')
+  tnoremap <C-h> <c-\><c-n><c-w>h
+  tnoremap <C-j> <c-\><c-n><c-w>j
+  tnoremap <C-k> <c-\><c-n><c-w>k
+  tnoremap <C-l> <c-\><c-n><c-w>l
+endif
+
 " }}}2
 
 " Tabs Mappings {{{2
@@ -338,6 +373,13 @@ nnoremap <leader>tL :tablast<cr>   |" go to the next tab
 nnoremap <leader>tmh :tabmove -1<cr>  |" move tab to the left
 nnoremap <leader>tml :tabmove +1<cr>  |" move tab to the right
 " }}}2
+"
+" Neovim's Terminal Mappings {{{2
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-v><Esc> <Esc>
+endif
+" }}}2
 
 " Vim Mappings {{{2
 nnoremap <leader>ev :tabe $MYVIMRC<cr>  |" Edit vimrc file in a new tab
@@ -346,6 +388,11 @@ nnoremap <leader>sv :so $MYVIMRC<cr>    |" Source vimrc
 " }}}1
 
 " Plugins Settings {{{1
+
+" Plugin deoplete {{{2
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+endif
 
 " Plugin Easy-align {{{2
 xmap ga <Plug>(EasyAlign)
@@ -486,7 +533,9 @@ augroup vimrc
   autocmd VimEnter * call g:OpenNerdTree()
 
   " Plugin UltiSnips
-  autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+  if !has('nvim')
+    autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+  endif
 
   " Plugin vim-indent-guides
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
@@ -568,19 +617,21 @@ endfunction
 " snippet for expanding, it checks for completion window and if it's
 " shown, selects first element. If there's no completion window it tries to
 " jump to next placeholder. If there's no placeholder it just returns TAB key
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
+if !has('nvim')
+  function! g:UltiSnips_Complete()
+      call UltiSnips#ExpandSnippet()
+      if g:ulti_expand_res == 0
+          if pumvisible()
+              return "\<C-n>"
+          else
+              call UltiSnips#JumpForwards()
+              if g:ulti_jump_forwards_res == 0
+                 return "\<TAB>"
+              endif
+          endif
+      endif
+      return ""
+  endfunction
+endif
 " }}}2
 " }}}1

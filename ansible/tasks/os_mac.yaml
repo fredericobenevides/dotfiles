@@ -36,8 +36,5 @@
 - name: Mac - Make sure "ctags-exuberant" is present
   homebrew: name=ctags-exuberant state=present
 
-- name: Mac - Make sure "anaconda" is present
-  homebrew_cask: name=anaconda state=present
-
-- name: Mac - Install tensorflow_gpu
-  shell: exec {{ dotfilespath }}/files/python/tensorflow_gpu
+- name: Mac - Make sure "neovim" is present
+  homebrew: name=neovim state=present
