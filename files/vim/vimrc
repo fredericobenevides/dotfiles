@@ -94,6 +94,12 @@ if !has('nvim')
 endif
 "}}}2
 
+" Neovim's terminal integration {{{2
+if has('nvim')
+  Plug 'kassio/neoterm'
+endif
+" }}}2
+
 call plug#end()
 " }}}1
 
@@ -499,6 +505,24 @@ map <Leader>vq :VimuxCloseRunner<cr>        |" Close vim tmux runner opened
 map <Leader>vx :VimuxInterruptRunner<cr>    |" Interrupt any command running
 map <Leader>vz :call VimuxZoomRunner()<cr>  |" Zoom the runner pane
 " }}}2
+
+" Plugin neoterm {{{2
+nnoremap <leader>nc :<c-u>exec v:count.'Tclear'<cr>
+nnoremap <leader>nC :<c-u>exec v:count.'Tclose'<cr>
+nnoremap <leader>nk :<c-u>exec v:count.'Tkill'<cr>
+nnoremap <leader>nn :<c-u>Tnew<cr>
+nnoremap <leader>nq :<c-u>exec v:count.'T quit'<cr>
+
+nnoremap <leader>ns :TREPLSendLine<cr>
+vnoremap <leader>ns :TREPLSendSelection<cr>
+
+nnoremap <leader>nb :<c-u>bo Tnew<cr>
+nnoremap <leader>nv :<c-u>vert Tnew<cr>
+
+nnoremap <leader>nl :<c-u>bo Tnext<cr>
+nnoremap <leader>nh :<c-u>bo Tprevious<cr>
+" }}}2
+
 " }}}1
 
 " Autocommands {{{1
