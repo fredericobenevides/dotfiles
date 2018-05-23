@@ -16,6 +16,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
 endif
@@ -68,8 +69,8 @@ Plug 'tpope/vim-rake'
 " }}}2
 
 " Snippets {{{2
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 " }}}2
 "
 " Tpope Utilities {{{2
@@ -397,7 +398,7 @@ nnoremap <leader>sv :so $MYVIMRC<cr>    |" Source vimrc
 
 " Plugin ale {{{2
 let g:ale_linteres = {
-\'javascript': ['eslint']
+\  'javascript': ['eslint']
 \}
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
@@ -407,10 +408,21 @@ let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " }}}2
 
-
 " Plugin deoplete {{{2
 if has('nvim')
+
+  " deoplete settings
   let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+
+  "Add extra filetypes
+  let g:deoplete#sources#ternjs#filetypes = [
+  \ 'javascript',
+  \ 'jsx',
+  \ 'javascript.jsx',
+  \ 'vue',
+  \ ]
+
 endif
 
 " Plugin Easy-align {{{2
@@ -455,6 +467,18 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " }}}2
 
+" Plugin neosnippet {{{2
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" }}}2
+
 " Plugin NERDTree {{{2
 let NERDTreeShowHidden = 1 " show hidden files
 let NERDTreeQuitOnOpen = 1 " close after opening a file
@@ -470,10 +494,10 @@ let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 " }}}2
 
 " Plugin UltiSnips {{{2
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsEditSplit="vertical"
 " }}}2
 
 " Plugin YouCompleteMe {{{2
