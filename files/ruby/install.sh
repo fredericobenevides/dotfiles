@@ -4,10 +4,15 @@ set -e
 homebrew=
 type -p brew >/dev/null && homebrew=1
 
+rbenv=
+type -p rbenv > /dev/null && rbenv=1
+
 RUBY_VERSION=2.5.0
 
 download_ruby() {
-  curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+  if [ ! -n "$rbenv" ]; then
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+  fi
 }
 
 load_rbenv() {
