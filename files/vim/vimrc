@@ -540,8 +540,8 @@ nnoremap <leader>nq :<c-u>exec v:count.'T quit'<cr>
 nnoremap <leader>ns :TREPLSendLine<cr>
 vnoremap <leader>ns :TREPLSendSelection<cr>
 
-nnoremap <leader>nb :<c-u>bo Tnew<cr>
-nnoremap <leader>nv :<c-u>vert Tnew<cr>
+nnoremap <leader>nb :<c-u>bo Tnew<cr><c-w>j
+nnoremap <leader>nv :<c-u>vert Tnew<cr><c-w>l
 
 nnoremap <leader>nl :<c-u>bo Tnext<cr>
 nnoremap <leader>nh :<c-u>bo Tprevious<cr>
