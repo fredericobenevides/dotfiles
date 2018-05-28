@@ -171,6 +171,7 @@ set listchars=tab:»\ ,trail:·
 
 " Mouse settings {{{2
 set mousehide " hide the cursor while typing
+set mouse=a " enable mouse inside vim
 " }}}2
 
 " Neovim's  Terminal settings {{{2
