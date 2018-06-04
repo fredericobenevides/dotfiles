@@ -19,6 +19,9 @@
 - name: Mac or Linux - Install Node packages
   npm: name=tern global=yes state=present
 
+- name: Mac or Linux - Install Python packages
+  shell: exec {{ dotfilespath }}/files/python/install.sh
+
 - name: Mac or Linux - Complete Installation for Vim
   shell: exec {{ dotfilespath }}/files/vim/install.sh
 
