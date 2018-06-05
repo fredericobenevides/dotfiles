@@ -1,5 +1,11 @@
+- name: Linux - Verify if install Anaconda
+  shell: a=`python -V 2>&1`; echo $a | grep Anaconda
+  ignore_errors: yes
+  register: anaconda_version
+
 - name: Linux - Install anaconda
   shell: exec {{ dotfilespath }}/files/python/install_anaconda_linux.sh
+  when: anaconda_version.rc != 0
 
 - name: Linux - Make sure "ag - Silver Searcher" is present
   apt: name=silversearcher-ag state=present
@@ -61,5 +67,11 @@
   apt: name=exuberant-ctags state=present
   become: true
 
+- name: Linux - Verify if install neovim
+  shell: nv=`which nvim`; echo $nv | grep nvim
+  ignore_errors: yes
+  register: nvim_version
+
 - name: Linux - Install neovim
   shell: exec {{ dotfilespath }}/files/vim/install_neovim_linux.sh
+  when: nvim_version.rc != 0
