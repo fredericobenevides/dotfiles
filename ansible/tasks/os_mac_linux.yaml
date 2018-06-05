@@ -20,7 +20,7 @@
   npm: name=tern global=yes state=present
 
 - name: Mac or Linux - Install Python packages
-  shell: exec {{ dotfilespath }}/files/python/install.sh
+  shell: exec {{ dotfilespath }}/files/python/pip_install.sh
 
 - name: Mac or Linux - Complete Installation for Vim
   shell: exec {{ dotfilespath }}/files/vim/configure.sh

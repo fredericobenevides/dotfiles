@@ -1,3 +1,6 @@
+- name: Linux - Install anaconda
+  shell: exec {{ dotfilespath }}/files/python/install_anaconda_linux.sh
+
 - name: Linux - Make sure "ag - Silver Searcher" is present
   apt: name=silversearcher-ag state=present
   become: true

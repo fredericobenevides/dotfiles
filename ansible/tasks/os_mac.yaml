@@ -1,3 +1,6 @@
+- name: Mac - Make sure "anaconda3" is present
+  homebrew_cask: name=anaconda3 state=present
+
 - name: Mac - Make sure "ag - Silver Searcher" is present
   homebrew: name=the_silver_searcher state=present
 
