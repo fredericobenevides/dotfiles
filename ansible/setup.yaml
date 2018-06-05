@@ -6,7 +6,7 @@
       when: ansible_distribution == "MacOSX"
 
     - import_tasks: tasks/os_linux.yaml
-      when: ansible_distribution == "\"bunsenlabs\""
+      when: ansible_distribution == 'BunsenLabs GNU/Linux'
 
     - import_tasks: tasks/os_mac_linux.yaml
 
