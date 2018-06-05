@@ -57,3 +57,6 @@
 - name: Linux - Make sure "exuberant-ctags" is present
   apt: name=exuberant-ctags state=present
   become: true
+
+- name: Linux - Install neovim
+  shell: exec {{ dotfilespath }}/files/vim/install_neovim_linux.sh

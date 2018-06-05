@@ -23,7 +23,7 @@
   shell: exec {{ dotfilespath }}/files/python/install.sh
 
 - name: Mac or Linux - Complete Installation for Vim
-  shell: exec {{ dotfilespath }}/files/vim/install.sh
+  shell: exec {{ dotfilespath }}/files/vim/configure.sh
 
 - name: Mac or Linux -  Get the current shell
   command: echo $SHELL

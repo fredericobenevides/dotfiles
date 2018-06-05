@@ -1,11 +1,10 @@
 #!/bin/bash
 
-set -e
-
 install_vim_plug() {
   echo "Installing the plugin vim-plug to manage the vim plugins"
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
+
 
 install_neovim_plug() {
   echo "Installing the plugin vim-plug to manage the vim plugins"
@@ -40,12 +39,10 @@ setup_vim() {
 }
 
 setup_neovim() {
-  pip install neovim
-
   mkdir -p $HOME/.config/nvim
 
   nvim=`which nvim`
-  if [ ! -n $nvim ]; then
+  if [ -z $nvim ]; then
     install_neovim_plug
     launch_neovim_to_install_all_plugins
   fi
