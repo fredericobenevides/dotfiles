@@ -8,3 +8,4 @@ pip instal pylint
 pip install autopep8
 pip install yapf
 
+pip install jedi

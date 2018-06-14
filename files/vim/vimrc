@@ -61,6 +61,13 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'posva/vim-vue'
 " }}}2
 
+" Python {{{2
+if has('nvim')
+  Plug 'neovim/python-client'
+  Plug 'zchee/deoplete-jedi'
+endif
+" }}}2
+
 " Ruby and Rails {{{2
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-bundler'
