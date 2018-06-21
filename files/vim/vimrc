@@ -27,6 +27,7 @@ Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
+Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
 " FZF {{{2}}}
