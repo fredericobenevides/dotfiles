@@ -485,8 +485,8 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " }}}2
 
 " Plugin line-mover {{{2
-let g:line_mover_key_up = '<C-S-k>'
-let g:line_mover_key_down = '<C-S-j>'
+let g:line_mover_key_up = '<F12>'
+let g:line_mover_key_down = '<F11>'
 " }}}2
 
 " Plugin neosnippet {{{2
