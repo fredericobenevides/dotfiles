@@ -27,6 +27,7 @@ Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
+Plug 'chrisbra/NrrwRgn'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -275,7 +276,8 @@ nnoremap j gj
 nnoremap gj j
 
 " Save current file
-nnoremap <leader>s :w<cr>
+" nnoremap <leader>s :w<cr>
+nnoremap <leader>s :call SaveCurrentBuffer()<cr>
 
 " Save all files
 nnoremap <leader>S :wall<cr>
@@ -569,6 +571,16 @@ nnoremap <leader>nl :<c-u>bo Tnext<cr>
 nnoremap <leader>nh :<c-u>bo Tprevious<cr>
 " }}}2
 
+" Plugin NrrwRgn {{{2
+nnoremap <leader>rh :NR<cr> :set filetype=html.html5<cr> <c-w><c-p>
+nnoremap <leader>rj :NR<cr> :set filetype=javascript.es6<cr> <c-w><c-p>
+nnoremap <leader>rc :NR<cr> :set filetype=css<cr> <c-w><c-p>
+
+vnoremap <leader>rh :NR<cr> :set filetype=html.html5<cr> <c-w><c-p>
+vnoremap <leader>rj :NR<cr> :set filetype=javascript.es6<cr> <c-w><c-p>
+vnoremap <leader>rc :NR<cr> :set filetype=css<cr> <c-w><c-p>
+" }}}2
+
 " }}}1
 
 " Autocommands {{{1
@@ -710,4 +722,19 @@ if !has('nvim')
   endfunction
 endif
 " }}}2
+
+
+" Editor Utilities {{{2
+function! g:SaveCurrentBuffer()
+  let buffer_name = @%
+
+  if buffer_name =~# '^NrrwRgn'
+    WidenRegion
+    wall
+  else
+    w
+  endif
+endfunction
+" }}}2
+
 " }}}1
