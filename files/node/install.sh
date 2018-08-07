@@ -1,4 +1,4 @@
-NODE_VERSION=6.11.1
+NODE_VERSION=8.11.3
 
 download_node() {
   wget -q -O- https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz | tar xzvf - -C /tmp
