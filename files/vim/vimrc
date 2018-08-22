@@ -573,12 +573,12 @@ nnoremap <leader>nh :<c-u>bo Tprevious<cr>
 " }}}2
 
 " Plugin NrrwRgn {{{2
-nnoremap <leader>rh :NR<cr> :set filetype=html.html5<cr> <c-w><c-p>
-nnoremap <leader>rj :NR<cr> :set filetype=javascript.es6<cr> <c-w><c-p>
-nnoremap <leader>rc :NR<cr> :set filetype=css<cr> <c-w><c-p>
+nnoremap <leader>rh :call NarrowHtml()<cr>
+nnoremap <leader>rj :call NarrowJavascript()<cr>
+nnoremap <leader>rc :call NarrowCss()<cr>
 
-vnoremap <leader>rh :NR<cr> :set filetype=html.html5<cr> <c-w><c-p>
-vnoremap <leader>rj :NR<cr> :set filetype=javascript.es6<cr> <c-w><c-p>
+vnoremap <leader>rh :NR<cr> :set filetype=html<cr> <c-w><c-p>
+vnoremap <leader>rj :NR<cr> :set filetype=javascript<cr> <c-w><c-p>
 vnoremap <leader>rc :NR<cr> :set filetype=css<cr> <c-w><c-p>
 " }}}2
 
@@ -735,6 +735,56 @@ function! g:SaveCurrentBuffer()
   else
     w
   endif
+endfunction
+" }}}2
+
+" NrrwRgn Helper Functions {{{2
+function! g:NarrowHtml()
+  normal! gg
+
+  let @/ = 'template'
+  normal! nj
+  let first_line = line('.')
+
+  normal! nk
+  let last_line = line('.')
+
+  let cmd = first_line . ',' . last_line . 'NR'
+  exec cmd
+
+  exec 'set filetype=html'
+endfunction
+
+function! g:NarrowJavascript()
+  normal! gg
+
+  let @/ = 'script'
+  normal! nj
+  let first_line = line('.')
+
+  normal! nk
+  let last_line = line('.')
+
+  let cmd = first_line . ',' . last_line . 'NR'
+  exec cmd
+
+  exec 'set filetype=javascript'
+endfunction
+
+function! g:NarrowCss()
+  normal! gg
+
+  let @/ = 'style'
+  normal! nj
+  let first_line = line('.')
+
+  normal! nk
+  let last_line = line('.')
+
+  let cmd = first_line . ',' . last_line . 'NR'
+  exec cmd
+
+  exec 'set filetype=css'
 endfunction
 " }}}2
 
