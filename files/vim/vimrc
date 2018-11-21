@@ -265,6 +265,7 @@ vnoremap <F1> <ESC>
 nnoremap <F6> :NERDTreeToggle<cr>
 nnoremap <F7> :NERDTreeFind<cr>
 nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
 " }}}2
 
 " Editing a file {{{2
@@ -390,8 +391,8 @@ nnoremap [T :tabfirst<cr>          |" go to the first tab
 nnoremap ]T :tablast<cr>           |" go to the last tab
 nnoremap <leader>th :tabp<cr>      |" go to the previous tab
 nnoremap <leader>tl :tabn<cr>      |" go to the next tab
-nnoremap <leader>tH :tabfirst<cr>  |" go to the previous tab
-nnoremap <leader>tL :tablast<cr>   |" go to the next tab
+nnoremap <leader>tH :tabfirst<cr>  |" go to the first tab
+nnoremap <leader>tL :tablast<cr>   |" go to the last tab
 
 " Moving the tabs
 nnoremap <leader>tmh :tabmove -1<cr>  |" move tab to the left
