@@ -16,6 +16,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'zchee/deoplete-go', { 'do': 'make'}
   Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
@@ -52,6 +53,7 @@ Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'KabbAmine/vCoolor.vim'
 " }}}2
 
 " Javascript {{{2
@@ -528,6 +530,11 @@ let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 " Plugin YouCompleteMe {{{2
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
+" }}}2
+
+" Plugin vColor {{{2
+nnoremap <leader>p :VCoolor<cr>
+inoremap <leader>p :VCoolor<cr>
 " }}}2
 
 " Plugin Vim-go {{{2
