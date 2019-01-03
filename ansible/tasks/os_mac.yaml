@@ -18,6 +18,12 @@
 - name: Mac - Make sure "go" is present
   homebrew: name=go state=present
 
+- name: Mac - Make sure tap of "gometalinter" is present
+  homebrew_tap: name=alecthomas/homebrew-tap state=present
+
+- name: Mac - Make sure "gometalinter" is present
+  homebrew: name=gometalinter state=present
+
 - name: Mac - Make sure "gnu-sed" is present
   homebrew: name=gnu-sed state=present
 
