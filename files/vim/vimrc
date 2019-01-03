@@ -29,6 +29,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
 Plug 'chrisbra/NrrwRgn'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -143,6 +144,7 @@ set completeopt-=preview " stop showing the preview window using YCM
 set cpoptions+=$ " put $ at the end of the changed word
 let loaded_matchparen = 1 " disable the match for parentheses
 set nrformats= " treat all numerals as decimal
+set updatetime=100 " change to 100ms for use with go_auto_type_info
 
 " copy default to clipboard
 if has('unnamedplus')
@@ -419,6 +421,7 @@ nnoremap <leader>sv :so $MYVIMRC<cr>    |" Source vimrc
 " Plugin ale {{{2
 let g:ale_linteres = {
 \  'javascript': ['eslint'],
+\  'go': ['gometalinter'],
 \  'python': ['flake8', 'pylint']
 \}
 let g:ale_fixers = {
@@ -532,17 +535,27 @@ let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 " }}}2
 
-" Plugin vColor {{{2
+" Plugin vCoolor {{{2
 nnoremap <leader>p :VCoolor<cr>
-inoremap <leader>p :VCoolor<cr>
+" inoremap <leader>p :VCoolor<cr>
 " }}}2
 
 " Plugin Vim-go {{{2
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+
+let g:go_fmt_command = "goimports"
+
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_generate_tags = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
 " }}}2
 
 " Plugin vim-indent-guides {{{2
@@ -653,19 +666,31 @@ augroup vimrc
   autocmd FileType go setlocal ts=4 sts=4 sw=4 noexpandtab
   " autocmd FileType go setlocal listchars+=tab:\ \ , " don't show tabs for go files
 
+  " Open :GoDeclsDir with ctrl-g
+  autocmd FileType go nmap <C-g> :GoDeclsDir<cr>
+  autocmd FileType go imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
+
   autocmd FileType go nmap <leader>r <Plug>(go-run)
+  autocmd FileType go nmap <leader>R <Plug>(go-run-tab)
+
   autocmd FileType go nmap <leader>b <Plug>(go-build)
   autocmd FileType go nmap <leader>t <Plug>(go-test)
-  autocmd FileType go nmap <leader>c <Plug>(go-coverage)
+  autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+  autocmd FileType go nmap <leader>i <Plug>(go-info)
+  autocmd FileType go nmap <leader>n <Plug>(go-rename)
 
-  autocmd FileType go nmap <Leader>I <Plug>(go-implements)
-  autocmd FileType go nmap <Leader>i <Plug>(go-info)
-  autocmd FileType go nmap <Leader>R <Plug>(go-rename)
+  autocmd FileType go nmap gD <Plug>(go-def-vertical)
 
   " Open documentation
-  autocmd FileType go nmap <Leader>dg <Plug>(go-doc)
-  autocmd FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  autocmd FileType go nmap <Leader>db <Plug>(go-doc-browser)
+  autocmd FileType go nmap <leader>do <Plug>(go-doc)
+  autocmd FileType go nmap <leader>dv <Plug>(go-doc-vertical)
+  autocmd FileType go nmap <leader>db <Plug>(go-doc-browser)
+
+  " :GoAlternate commands :A, :AV, :AS and :AT
+  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
   " }}}2
 
   " Filetype: Help {{{2
