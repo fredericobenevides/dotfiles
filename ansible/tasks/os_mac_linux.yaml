@@ -19,8 +19,15 @@
 - name: Mac or Linux - Install Node packages
   npm: name=tern global=yes state=present
 
-- name: Mac or Linux - Install Python packages
-  shell: exec {{ dotfilespath }}/files/python/pip_install.sh
+- name: Mac or Linux - Install pips
+  shell: "/usr/local/anaconda3/bin/pip install {{ item.extra_args }} {{ item.name }}"
+  loop:
+    - { name: 'flake8', extra_args: '' }
+    - { name: 'jedi', extra_args: '' }
+    - { name: 'neovim', extra_args: '' }
+    - { name: 'pylint', extra_args: '' }
+    - { name: 'pynvim', extra_args: '--user' }
+    - { name: 'yapf', extra_args: '' }
 
 - name: Mac or Linux - Complete Installation for Vim
   shell: exec {{ dotfilespath }}/files/vim/configure.sh

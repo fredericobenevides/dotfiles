@@ -448,6 +448,8 @@ if has('nvim')
   \ 'vue',
   \ ]
 
+  let g:python3_host_prog = '/usr/local/anaconda3/bin/python'
+
 endif
 
 " Plugin Easy-align {{{2
