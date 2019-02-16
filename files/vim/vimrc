@@ -31,6 +31,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
 Plug 'chrisbra/NrrwRgn'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'pearofducks/ansible-vim'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -434,6 +435,12 @@ let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " }}}2
 
+" Plugin airline {{{1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+" }}} 2
+
 " Plugin deoplete {{{2
 if has('nvim')
 
@@ -643,6 +650,9 @@ augroup end
 
 " Autocommands on Plugins {{{2
 augroup vimrc
+
+  " Plugin ansible=vim
+  au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
 
   " Plugin NerdTREE
   autocmd VimEnter * call g:OpenNerdTree()
