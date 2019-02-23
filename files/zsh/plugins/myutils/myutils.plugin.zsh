@@ -3,10 +3,14 @@ _ocrsync_pods() {
 }
 
 ocrsync() {
+  echo "Running the following command"
+
   if [ "$2" = "-ucd" ]; then
-    CompileDaemon -command="oc rsync . $1:"
+    echo "CompileDaemon -command=\"oc rsync . $1:$3\""
+    CompileDaemon -command="oc rsync . $1:$3"
   else
-    oc rsync . $1:
+    echo "\"oc rsync . $1:$2\""
+    oc rsync . $1:$2
   fi
 }
 
