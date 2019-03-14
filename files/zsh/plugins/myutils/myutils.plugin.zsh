@@ -1,13 +1,9 @@
-_ocrsync_pods() {
-  compadd $(oc get pods | grep Running | awk '{print $1}' | head -1 )
-}
-
 ocrsync() {
   echo "Running the following command"
 
-  if [ "$2" = "-ucd" ]; then
-    echo "CompileDaemon -command=\"oc rsync . $1:$3\""
-    CompileDaemon -command="oc rsync . $1:$3"
+  if [ "$1" = "-ucd" ]; then
+    echo "CompileDaemon -command=\"oc rsync . $2:$3\""
+    CompileDaemon -command="oc rsync . $2:$3"
   else
     echo "\"oc rsync . $1:$2\""
     oc rsync . $1:$2
@@ -15,9 +11,24 @@ ocrsync() {
 }
 
 _ocrsync() {
-  _arguments -s -C \
-    "-ucd[Use CompileDaemon]" \
-    "1:pods:_ocrsync_pods" \
+  _arguments \
+    '1:sync :->sync' \
+    '2:pods :->pods'
+
+  case "${state}" in
+    sync)
+      local commands; commands=(
+        "-ucd:Use CompileDaemon - Keep syncing"
+        "-ncd:Don't use CompileDaemon - Sync only one time"
+      )
+
+      _describe -t commands 'command' commands
+    ;;
+
+    pods)
+      compadd $(oc get pods | grep Running | awk '{print $1}' | head -1 )
+    ;;
+  esac
 }
 
 compdef _ocrsync ocrsync
