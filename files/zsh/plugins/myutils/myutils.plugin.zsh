@@ -26,7 +26,7 @@ _ocrsync() {
     ;;
 
     pods)
-      compadd $(oc get pods | grep Running | awk '{print $1}' | head -1 )
+      compadd $(oc get pods | grep Running | awk '{print $1}')
     ;;
   esac
 }
