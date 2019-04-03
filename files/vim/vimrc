@@ -382,11 +382,11 @@ if has('nvim')
 endif
 
 " mark and move between marked windows
-nnoremap <leader>mw1 :call MarkWindow('window1')<cr>
-nnoremap <leader>mw2 :call MarkWindow('window2')<cr>
-nnoremap <leader>mw3 :call MarkWindow('window3')<cr>
-nnoremap <leader>mw4 :call MarkWindow('window4')<cr>
-nnoremap <leader>mw5 :call MarkWindow('window5')<cr>
+nnoremap <leader>wm1 :call MarkWindow('window1')<cr>
+nnoremap <leader>wm2 :call MarkWindow('window2')<cr>
+nnoremap <leader>wm3 :call MarkWindow('window3')<cr>
+nnoremap <leader>wm4 :call MarkWindow('window4')<cr>
+nnoremap <leader>wm5 :call MarkWindow('window5')<cr>
 
 nnoremap <leader>w1 :call GoToWindow('window1')<cr>
 nnoremap <leader>w2 :call GoToWindow('window2')<cr>
