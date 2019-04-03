@@ -381,6 +381,19 @@ if has('nvim')
   tnoremap <C-l> <c-\><c-n><c-w>l
 endif
 
+" mark and move between marked windows
+nnoremap <leader>mw1 :call MarkWindow('window1')<cr>
+nnoremap <leader>mw2 :call MarkWindow('window2')<cr>
+nnoremap <leader>mw3 :call MarkWindow('window3')<cr>
+nnoremap <leader>mw4 :call MarkWindow('window4')<cr>
+nnoremap <leader>mw5 :call MarkWindow('window5')<cr>
+
+nnoremap <leader>w1 :call GoToWindow('window1')<cr>
+nnoremap <leader>w2 :call GoToWindow('window2')<cr>
+nnoremap <leader>w3 :call GoToWindow('window3')<cr>
+nnoremap <leader>w4 :call GoToWindow('window4')<cr>
+nnoremap <leader>w5 :call GoToWindow('window5')<cr>
+
 " }}}2
 
 " Tabs Mappings {{{2
@@ -781,6 +794,14 @@ function! g:SaveCurrentBuffer()
   else
     w
   endif
+endfunction
+
+function! g:MarkWindow(name)
+  exec "file!" . a:name
+endfunction
+
+function! g:GoToWindow(name)
+  exec "edit " . a:name
 endfunction
 " }}}2
 
