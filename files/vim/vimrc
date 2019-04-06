@@ -332,6 +332,19 @@ nnoremap <leader>bl :bn<cr>      |" Move to the next buffer
 nnoremap <leader>bH :bfirst<cr>  |" Move to the previous buffer
 nnoremap <leader>bL :blast<cr>   |" Move to the next buffer
 nnoremap <leader>ba <c-^><cr>    |" Alternate between buffers
+
+" mark and move between marked buffers
+nnoremap <silent> <leader>bm1 :call MarkBuffer('buffer_1')<cr>
+nnoremap <silent> <leader>bm2 :call MarkBuffer('buffer_2')<cr>
+nnoremap <silent> <leader>bm3 :call MarkBuffer('buffer_3')<cr>
+nnoremap <silent> <leader>bm4 :call MarkBuffer('buffer_4')<cr>
+nnoremap <silent> <leader>bm5 :call MarkBuffer('buffer_5')<cr>
+
+nnoremap <silent> <leader>b1 :call OpenBuffer('buffer_1')<cr>
+nnoremap <silent> <leader>b2 :call OpenBuffer('buffer_2')<cr>
+nnoremap <silent> <leader>b3 :call OpenBuffer('buffer_3')<cr>
+nnoremap <silent> <leader>b4 :call OpenBuffer('buffer_4')<cr>
+nnoremap <silent> <leader>b5 :call OpenBuffer('buffer_5')<cr>
 " }}}2
 
 " Windows Mappings {{{2
@@ -380,20 +393,6 @@ if has('nvim')
   tnoremap <C-k> <c-\><c-n><c-w>k
   tnoremap <C-l> <c-\><c-n><c-w>l
 endif
-
-" mark and move between marked windows
-nnoremap <leader>wm1 :call MarkWindow('window1')<cr>
-nnoremap <leader>wm2 :call MarkWindow('window2')<cr>
-nnoremap <leader>wm3 :call MarkWindow('window3')<cr>
-nnoremap <leader>wm4 :call MarkWindow('window4')<cr>
-nnoremap <leader>wm5 :call MarkWindow('window5')<cr>
-
-nnoremap <leader>w1 :call GoToWindow('window1')<cr>
-nnoremap <leader>w2 :call GoToWindow('window2')<cr>
-nnoremap <leader>w3 :call GoToWindow('window3')<cr>
-nnoremap <leader>w4 :call GoToWindow('window4')<cr>
-nnoremap <leader>w5 :call GoToWindow('window5')<cr>
-
 " }}}2
 
 " Tabs Mappings {{{2
@@ -796,12 +795,23 @@ function! g:SaveCurrentBuffer()
   endif
 endfunction
 
-function! g:MarkWindow(name)
-  exec "file!" . a:name
+function! g:MarkBuffer(name)
+  try
+    exec "file!" . a:name
+    echo ""
+  catch
+    echo "Buffer " . a:name . " already exist!"
+  endtry
 endfunction
 
-function! g:GoToWindow(name)
+function! g:OpenBuffer(name)
+  if !bufexists(a:name)
+    echo "Buffer doesn't exist"
+    return
+  endif
+
   exec "edit " . a:name
+  echo ""
 endfunction
 " }}}2
 
