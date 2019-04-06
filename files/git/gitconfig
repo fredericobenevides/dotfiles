@@ -20,3 +20,5 @@
 	r = reset
 	dc = diff --cached
 	dh = diff HEAD
+[url "git@github.com:"]
+	insteadOf = https://github.com/
