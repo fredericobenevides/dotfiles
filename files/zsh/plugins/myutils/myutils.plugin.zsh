@@ -2,8 +2,8 @@ ocrsync() {
   echo "Running the following command"
 
   if [ "$1" = "-ucd" ]; then
-    echo "CompileDaemon -command=\"oc rsync . $2:$3\""
-    CompileDaemon -command="oc rsync . $2:$3"
+    echo "CompileDaemon -command=\"oc rsync . $2:$3\" $3"
+    CompileDaemon -command="oc rsync . $2:$3" $4
   else
     echo "\"oc rsync . $1:$2\""
     oc rsync . $1:$2
