@@ -67,8 +67,13 @@ export VISUAL='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim='nvim'
 
+alias docker_env_dev='eval $(docker-machine env dev)'
+alias minishift_docker_env='eval $(minishift docker-env)'
+alias minishift_oc_env='eval $(minishift oc-env)'
+
+alias gotest="reflex -r '\.go$' -s go test ./..."
+alias vim='nvim'
 
 ### GOLANG
 export GOPATH="$HOME/code/go"
