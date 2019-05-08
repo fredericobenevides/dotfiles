@@ -1,9 +1,9 @@
 ocrsync() {
   echo "Running the following command"
 
-  if [ "$1" = "-ucd" ]; then
-    echo "CompileDaemon -command=\"oc rsync . $2:$3\" $3"
-    CompileDaemon -command="oc rsync . $2:$3" $4
+  if [ "$1" = "-sd" ]; then
+    echo "reflex -s -g '*.go' -- sh -c \"go build -o main && oc rsync . $2:$3\" $4"
+    reflex -s -g '*.go' -- sh -c "go build -o main && oc rsync . $2:$3" $4
   else
     echo "\"oc rsync . $1:$2\""
     oc rsync . $1:$2
@@ -18,8 +18,8 @@ _ocrsync() {
   case "${state}" in
     sync)
       local commands; commands=(
-        "-ucd:Use CompileDaemon - Keep syncing"
-        "-ncd:Don't use CompileDaemon - Sync only one time"
+        "-sd:Use reflex to sync directory"
+        "-none:Sync only one time"
       )
 
       _describe -t commands 'command' commands
