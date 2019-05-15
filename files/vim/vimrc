@@ -377,10 +377,10 @@ nnoremap <leader>wmt <c-w>T  |" move current window to a tab
 nnoremap <leader>wW <c-w>\|          |" Expand the width of the Window
 nnoremap <leader>wH :resize 100<cr>  |" Expand the height of the Window
 nnoremap <leader>w= <c-w>=           |" Make all windows equally high and wide
-nnoremap <Up>    <c-w>-              |" Decrease current window width
-nnoremap <Down>  <c-w>+              |" Decrease current window width
-nnoremap <Left>  <c-w>>              |" Decrease current window width
-nnoremap <Right> <c-w><              |" Decrease current window width
+" nnoremap <Up>    <c-w>-              |" Decrease current window width
+" nnoremap <Down>  <c-w>+              |" Decrease current window width
+" nnoremap <Left>  <c-w>>              |" Decrease current window width
+" nnoremap <Right> <c-w><              |" Decrease current window width
 
 " windows switching
 nnoremap <C-h> <c-w>h
@@ -411,6 +411,10 @@ nnoremap <leader>th :tabp<cr>      |" go to the previous tab
 nnoremap <leader>tl :tabn<cr>      |" go to the next tab
 nnoremap <leader>tH :tabfirst<cr>  |" go to the first tab
 nnoremap <leader>tL :tablast<cr>   |" go to the last tab
+nnoremap <Left> :tabp<cr>          |" go to the previous tab
+nnoremap <Right> :tabn<cr>         |" go to the next tab
+nnoremap <S-Left> :tabfirst<cr>    |" go to the first tab
+nnoremap <S-Right> :tablast<cr>    |" go to the last tab
 
 " Moving the tabs
 nnoremap <leader>tmh :tabmove -1<cr>  |" move tab to the left
