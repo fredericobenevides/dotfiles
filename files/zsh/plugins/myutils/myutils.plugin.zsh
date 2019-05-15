@@ -2,8 +2,8 @@ ocrsync() {
   echo "Running the following command"
 
   if [ "$1" = "-sd" ]; then
-    echo "reflex -s -g '*.go' -- sh -c \"go build -o main && oc rsync . $2:$3\" $4"
-    reflex -s -g '*.go' -- sh -c "go build -o main && oc rsync . $2:$3" $4
+    echo "reflex -s -r '\.go$' -- sh -c \"go build -o main && oc rsync . $2:$3\" $4"
+    reflex -s -r '\.go$' -- sh -c "go build -o main && oc rsync . $2:$3" $4
   else
     echo "\"oc rsync . $1:$2\""
     oc rsync . $1:$2
