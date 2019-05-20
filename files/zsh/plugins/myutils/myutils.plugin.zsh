@@ -2,10 +2,15 @@ ocrsync() {
   echo "Running the following command"
 
   if [ "$1" = "-sd" ]; then
-    echo "reflex -s -r '\.go$' -- sh -c \"go build -o main && oc rsync . $2:$3\" $4"
-    reflex -s -r '\.go$' -- sh -c "go build -o main && oc rsync . $2:$3" $4
+    command="reflex -s -r '\.go$' -- sh -c \"go build -o main && oc rsync . --no-perms=true $2:$3\" $4"
+    echo $command
+    eval $command
+  elif [ "$1" = "-sf" ]; then
+    command="reflex -s -r '\.go$' -- sh -c \"go build -o main && oc rsync . --no-perms=true --exclude=* --include=$4 $2:$3\" $5"
+    echo $command
+    eval $command
   else
-    echo "\"oc rsync . $1:$2\""
+    echo "\"oc rsync . --no-perms=true $1:$2\""
     oc rsync . $1:$2
   fi
 }
@@ -19,6 +24,7 @@ _ocrsync() {
     sync)
       local commands; commands=(
         "-sd:Use reflex to sync directory"
+        "-sf:Use reflex to sync file"
         "-none:Sync only one time"
       )
 
