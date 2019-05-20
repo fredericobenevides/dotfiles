@@ -377,9 +377,9 @@ nnoremap <leader>wmt <c-w>T  |" move current window to a tab
 nnoremap <leader>wW <c-w>\|          |" Expand the width of the Window
 nnoremap <leader>wH :resize 100<cr>  |" Expand the height of the Window
 nnoremap <leader>w= <c-w>=           |" Make all windows equally high and wide
-" nnoremap <Up>    <c-w>-              |" Decrease current window width
-" nnoremap <Down>  <c-w>+              |" Decrease current window width
-" nnoremap <Left>  <c-w>>              |" Decrease current window width
+nnoremap <Up>    <c-w>-              |" Decrease current window height
+nnoremap <Down>  <c-w>+              |" Increase current window height
+" nnoremap <Left>  <c-w>>              |" Increase current window width
 " nnoremap <Right> <c-w><              |" Decrease current window width
 
 " windows switching
@@ -452,9 +452,9 @@ let g:ale_sign_column_always = 1
 " }}}2
 
 " Plugin airline {{{1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail'
 " }}} 2
 
 " Plugin deoplete {{{2
