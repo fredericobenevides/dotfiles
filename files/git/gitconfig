@@ -18,6 +18,7 @@
 	rs = reset --soft HEAD~1
 	rh = reset --hard HEAD~1
 	r = reset
+	co = checkout
 	dc = diff --cached
 	dh = diff HEAD
 [url "git@github.com:"]
