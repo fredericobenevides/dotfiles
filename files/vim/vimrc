@@ -645,6 +645,7 @@ augroup vimrc
   " Auto save and Auto Reload
   autocmd FocusGained, BufEnter * :silent! !
   autocmd FocusLost, WinLeave * :silent! w
+  autocmd CursorHold * silent! checktime
 
   " Number and Relative number
   autocmd FocusGained * :set relativenumber
