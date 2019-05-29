@@ -1,0 +1,32 @@
+snippet     fmtp
+abbr        fmt.Println(...)
+options     head
+  fmt.Println(${0:TARGET})
+
+snippet     fmtf
+abbr        fmt.Println(...)
+options     head
+  fmt.Printf("${1}", ${0:TARGET})
+
+snippet     fmtw
+abbr        fmt.Fprint(...)
+options     head
+  fmt.Fprint(${1}, ${0:TARGET})
+
+snippet     wh
+abbr        w.WriteHeader(http status)
+options     head
+  w.WriteHeader(http.${0:TARGET})
+
+snippet     wr
+abbr        func (w http.ResponseWriter, r *http.Request) { ... }
+alias       fwr
+options     head
+  func ${1}(w http.ResponseWriter, r *http.Request) {
+    ${0:TARGET}
+  }
+
+snippet     whs
+abbr        w.Header().Set(key, value)
+options     head
+  w.Header().Set(${1}, ${0})

@@ -16,3 +16,8 @@
         state=link
         force=yes
 
+- name: Link snippets to vim's folder
+  file: src={{ dotfilespath }}/files/vim/snippets
+        dest=~/.vim/snippets
+        state=link
+        force=yes
