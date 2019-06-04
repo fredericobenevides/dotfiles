@@ -159,8 +159,8 @@ set fileencoding=utf-8
 " }}}2
 
 " Fold Settings {{{2
-set foldmethod=syntax
-set foldlevelstart=1
+"set foldmethod=syntax
+"set foldlevelstart=1
 " }}}2
 
 " History and Undo Settings {{{2
