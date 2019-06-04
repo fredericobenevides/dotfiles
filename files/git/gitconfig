@@ -14,7 +14,7 @@
 	sa = stash apply
 	sl = stash list
 	ss = stash save
-	st = status -s
+	st = status
 	rs = reset --soft HEAD~1
 	rh = reset --hard HEAD~1
 	r = reset
