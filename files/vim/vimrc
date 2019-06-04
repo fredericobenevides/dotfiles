@@ -550,13 +550,6 @@ let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 " map <Leader>a :call RunAllSpecs()<cr>
 " }}}2
 
-" Plugin UltiSnips {{{2
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsEditSplit="vertical"
-" }}}2
-
 " Plugin YouCompleteMe {{{2
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
@@ -675,11 +668,6 @@ augroup vimrc
   " Plugin NerdTREE
   autocmd VimEnter * call g:OpenNerdTree()
 
-  " Plugin UltiSnips
-  if !has('nvim')
-    autocmd InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-  endif
-
   " Plugin vim-indent-guides
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235 guibg=#262626
@@ -767,31 +755,6 @@ function! g:OpenNerdTree()
   end
 endfunction
 " }}}2
-
-" UltiSnips {{{2
-
-" UltiSnips completion function that tries to expand a snippet. If there's no
-" snippet for expanding, it checks for completion window and if it's
-" shown, selects first element. If there's no completion window it tries to
-" jump to next placeholder. If there's no placeholder it just returns TAB key
-if !has('nvim')
-  function! g:UltiSnips_Complete()
-      call UltiSnips#ExpandSnippet()
-      if g:ulti_expand_res == 0
-          if pumvisible()
-              return "\<C-n>"
-          else
-              call UltiSnips#JumpForwards()
-              if g:ulti_jump_forwards_res == 0
-                 return "\<TAB>"
-              endif
-          endif
-      endif
-      return ""
-  endfunction
-endif
-" }}}2
-
 
 " Editor Utilities {{{2
 function! g:SaveCurrentBuffer()
