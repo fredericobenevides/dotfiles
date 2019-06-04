@@ -17,8 +17,6 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-go', { 'do': 'make'}
   Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-else
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
 endif
 
 Plug 'jiangmiao/auto-pairs'
@@ -548,11 +546,6 @@ let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 " map <Leader>s :call RunNearestSpec()<cr>
 " map <Leader>l :call RunLastSpec()<cr>
 " map <Leader>a :call RunAllSpecs()<cr>
-" }}}2
-
-" Plugin YouCompleteMe {{{2
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
 " }}}2
 
 " Plugin vCoolor {{{2
