@@ -269,8 +269,7 @@ vnoremap <F1> <ESC>
 
 nnoremap <F6> :NERDTreeToggle<cr>
 nnoremap <F7> :NERDTreeFind<cr>
-nnoremap <F8> :TagbarToggle<CR>
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarOpenAutoClose<CR>
 " }}}2
 
 " Editing a file {{{2
@@ -725,6 +724,7 @@ augroup vimrc
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
   " gohtmltmpl
+  autocmd BufNewFile,BufRead *.gohtml set filetype=gohtmltmpl
   autocmd FileType gohtmltmpl setlocal ts=2 sts=2 sw=2 expandtab
   " }}}2
 
