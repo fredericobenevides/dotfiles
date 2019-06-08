@@ -490,9 +490,22 @@ let g:user_emmet_settings = {
 " Plugin FZF {{{2
 map <C-p> :Files<cr>
 nmap <C-p> :Files<cr>
-
-" View commits in fzf
-nmap <Leader>c :Commits<cr>
+nnoremap <leader>ff :files<cr>
+nnoremap <leader>fF :Gfiles<cr>
+nnoremap <leader>fb :Buffers<cr>
+nnoremap <leader>fa :Ag<cr>
+nnoremap <leader>fl :Lines<cr>
+nnoremap <leader>fL :Bines<cr>
+nnoremap <leader>ft :Tags<cr>
+nnoremap <leader>fT :BTags<cr>
+nnoremap <leader>fc :Commits<cr>
+nnoremap <leader>fC :GCommits<cr>
+nnoremap <leader>fh :History<cr>
+nnoremap <leader>fH :Helptags<cr>
+nnoremap <leader>f: :History:<cr>
+nnoremap <leader>f/ :History/<cr>
+nnoremap <leader>fm :Marks<cr>
+nnoremap <leader>fM :Maps<cr>
 
 " Complete from open tmux panes (from @junegunn)
 inoremap <expr> <C-x><C-t> fzf#complete( 'tmuxwords.rb -all-but-current --scroll 499 --min 5')
@@ -512,6 +525,9 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
 " }}}2
 
 " Plugin line-mover {{{2
