@@ -1,18 +1,6 @@
 #!/bin/bash
 
-OS=`uname -sm | awk '{print $1}'`
-
-exist_command() {
-  command -v $1 &> /dev/null
-}
-
-is_macos() {
-  if [ $OS == "Darwin" ]; then
-    return 0;
-  else
-    return 1;
-  fi
-}
+source ./helper.sh
 
 install_homebrew() {
   if ! exist_command brew; then
@@ -32,7 +20,19 @@ install_git() {
     if is_macos; then
       brew install git
     else
-      sudo apt-get install git
+      case "$OS_LINUX" in
+        "ubuntu")
+          sudo add-apt-repository --yes --update ppa:git-core/ppa
+          sudo apt-get update
+          sudo apt-get install git
+          ;;
+        "debian")
+          sudo apt-get install git
+          ;;
+        *)
+          echo "I don't know how to install git for $OS_LINUX"
+          exit 1
+      esac
     fi
   fi
 
@@ -45,18 +45,31 @@ install_ansible() {
     if is_macos; then
       brew install ansible
     else
-      sudo apt-get install ansible
+      case "$OS_LINUX" in
+        "ubuntu")
+          sudo add-apt-repository --yes --update ppa:git-core/ppa
+          sudo apt-get update
+          sudo apt-get install ansible
+          ;;
+        "debian")
+          value=`grep ansible/ubuntu /etc/apt/sources.list`
+          if [[ -z "$VALUE" ]]; then
+            echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 A1715D88E1DF1F24
+            sudo apt-get update
+            sudo apt-get install ansible
+          fi
+          ;;
+        *)
+          echo "I don't know how to install ansible for $OS_LINUX"
+          exit 1
+      esac
     fi
   fi
 }
 
 run_ansible() {
-  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml --extra-vars "dotfilespath=`pwd`"
-}
-
-run_zsh() {
-  env zsh
-  source ~/.zshrc
+  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml --extra-vars "dotfilespath=`pwd`" $1
 }
 
 if is_macos; then
@@ -66,5 +79,4 @@ fi
 install_git
 install_ansible
 
-run_ansible
-run_zsh
+run_ansible $1
