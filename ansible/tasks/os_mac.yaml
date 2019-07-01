@@ -1,16 +1,19 @@
+- name: Mac - Make sure "curl" is present
+  homebrew: name=curl state=present
+- name: Mac - Make sure "wget" is present
+  homebrew: name=wget state=present
+
 - name: Mac - Make sure "anaconda3" is present
   homebrew_cask: name=anaconda state=present
 
 - name: Mac - Make sure "ag - Silver Searcher" is present
   homebrew: name=the_silver_searcher state=present
 
-- name: Mac - Make sure "curl" is present
-  homebrew: name=curl state=present
-- name: Mac - Make sure "wget" is present
-  homebrew: name=wget state=present
-
 - name: Mac - Make sure "docker-toolbox" is present
   homebrew_cask: name=docker-toolbox state=present
+
+- name: Mac - Make sure "fzf" is present
+  homebrew: name=fzf state=present
 
 - name: Mac - Make sure "git" is present
   homebrew: name=git state=present

@@ -1,14 +1,15 @@
 ---
 - hosts: localhost
 
+  vars_files:
+    - vars.yaml
+
   pre_tasks:
     - import_tasks: tasks/os_mac.yaml
-      when: ansible_distribution == "MacOSX"
+      when: os == "macos"
 
     - import_tasks: tasks/os_linux.yaml
-      when: ansible_distribution == 'BunsenLabs GNU/Linux'
-
-    - import_tasks: tasks/os_mac_linux.yaml
+      when: os == "linux"
 
   tasks:
     - import_tasks: tasks/configs/git.yaml

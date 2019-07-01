@@ -30,3 +30,11 @@ is_ubuntu() {
     return 1;
   fi
 }
+
+set_env_codename_ubuntu() {
+  export OS_CODENAME=`cat /etc/os-release | grep UBUNTU_CODENAME | awk -F = '{print $2}'`
+}
+
+set_env_codename_debian() {
+  export OS_CODENAME=`cat /etc/os-release | grep VERSION= | sed -nr 's/VERSION="[0-9]+\s\(([a-zA-Z]+)\)"$/\1/p'`
+}

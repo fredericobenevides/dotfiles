@@ -1,77 +1,69 @@
-- name: Linux - Verify if install Anaconda
-  shell: a=`python -V 2>&1`; echo $a | grep Anaconda
-  ignore_errors: yes
-  register: anaconda_version
-
-- name: Linux - Install anaconda
-  shell: exec {{ dotfilespath }}/files/python/install_anaconda_linux.sh
-  when: anaconda_version.rc != 0
-
-- name: Linux - Make sure "ag - Silver Searcher" is present
-  apt: name=silversearcher-ag state=present
+- name: Linux - Make sure some base packages are installed
+  apt: name={{item}} state=present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - libreadline-dev
+    - libssl-dev
+    - man
+    - silversearcher-ag
+    - software-properties-common
+    - wget
+    - zlib1g-dev
   become: true
-
-- name: Linux - Make sure "curl" is present
-  apt: name=curl state=present
-  become: true
-- name: Linux - Make sure "wget" is present
-  apt: name=curl state=present
-  become: true
-
-- name: Linux - Verify if install Docker
-  shell: docker version
-  ignore_errors: yes
-  register: docker_version
-
-- name: Linux - Install Docker
-  shell: exec wget -qO- https://get.docker.com/ | sh
-  when: docker_version.rc != 0
-
-- name: Linux - Make sure "git" is present
-  apt: name=git state=present
-  become: true
-
-- name: Linux - Verify if install Go
-  shell: gv=`awk -F '=' '/GO_VERSION=/{print $2}' {{ dotfilespath }}/files/go/install.sh`; go version | grep $gv
-  ignore_errors: yes
-  register: go_version
-
-- name: Linux - Install Go
-  shell: exec {{ dotfilespath }}/files/go/install.sh
-  when: go_version.rc != 0
-
-- name: Linux - Verify if install Node
-  shell: nv=`awk -F '=' '/NODE_VERSION=/{print $2}' {{ dotfilespath }}/files/node/install.sh`; node --version | grep $nv
-  ignore_errors: yes
-  register: node_version
-
-- name: Linux - Install Node
-  shell: exec {{ dotfilespath }}/files/node/install.sh
-  when: node_version.rc != 0
 
 - name: Linux - Make sure "tmux" is present
-  apt: name=zsh state=present
+  apt: name=tmux state=present
   become: true
 - name: Linux - Make sure "xclip" is present
-  apt: name=zsh state=present
+  apt: name=xclip state=present
   become: true
 
 - name: Linux - Make sure "zsh" is present
   apt: name=zsh state=present
   become: true
 
-- name: Linux - Make sure "vim-gtk" is present
-  apt: name=vim-gtk state=present
-  become: true
 - name: Linux - Make sure "exuberant-ctags" is present
   apt: name=exuberant-ctags state=present
   become: true
 
-- name: Linux - Verify if install neovim
-  shell: nv=`which nvim`; echo $nv | grep nvim
-  ignore_errors: yes
-  register: nvim_version
+- name: Linux - Install anaconda
+  import_tasks: tasks/install/anaconda3.yaml
 
+- name: Linux - Install pips
+  import_tasks: tasks/install/pips.yaml
+
+- name: Linux - Install Docker
+  import_tasks: tasks/install/docker.yaml
+
+- name: Linux - Install fzf
+  import_tasks: tasks/install/fzf.yaml
+
+- name: Linux - Install Go
+  import_tasks: tasks/install/go.yaml
+
+- name: Linux - Install node
+  import_tasks: tasks/install/node.yaml
+
+- name: Linux - Install node packages
+  import_tasks: tasks/install/node_pkgs.yaml
+
+- name: Linux - Install ruby
+  import_tasks: tasks/install/ruby.yaml
+
+- name: Linux - Install ruby gems
+  import_tasks: tasks/install/ruby_gems.yaml
+
+# neo vim is on last to wait to install all the pkgs since some
+# are used in neovim
 - name: Linux - Install neovim
-  shell: exec {{ dotfilespath }}/files/vim/install_neovim_linux.sh
-  when: nvim_version.rc != 0
+  import_tasks: tasks/install/neovim.yaml
+
+- name: Linux - Install neovim's plugin
+  import_tasks: tasks/install/neovim_plugins.yaml
+
+- name: Linux - Install ohmyzsh
+  import_tasks: tasks/install/ohmyzsh.yaml
+

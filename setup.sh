@@ -2,6 +2,8 @@
 
 source ./helper.sh
 
+OS="linux"
+
 install_homebrew() {
   if ! exist_command brew; then
     echo "### Installing homebrew"
@@ -69,11 +71,16 @@ install_ansible() {
 }
 
 run_ansible() {
-  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml --extra-vars "dotfilespath=`pwd`" $1
+  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml --extra-vars "dotfilespath=`pwd`" --extra-vars "os=$OS" $1
 }
 
 if is_macos; then
   install_homebrew
+  OS="macos"
+elif is_debian; then
+  set_env_codename_debian
+else
+  set_env_codename_ubuntu
 fi
 
 install_git

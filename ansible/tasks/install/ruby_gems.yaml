@@ -1,0 +1,14 @@
+---
+- name: Ruby gems - Installing gems for ruby
+  shell: eval "$(rbenv init -)"; gem install {{ item }}
+  loop:
+    - awesome_print
+    - bundler
+    - hirb
+    - interactive_editor
+    - rails
+    - rubocop
+    - ruby_clone
+    - tmuxinator
+  environment:
+    PATH: "{{ lookup('env', 'HOME') }}/.rbenv/bin:{{ ansible_env.PATH }}"

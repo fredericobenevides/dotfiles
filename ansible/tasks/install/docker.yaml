@@ -1,0 +1,20 @@
+---
+- name: Docker - Add ppa's docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ lookup('env','OS_CODENAME') }} stable
+    state: present
+  become: true
+
+- name: Docker - Add Docker's official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+  become: true
+
+- name: Docker - Install Docker CE
+  apt: name={{item}} state=present update_cache=true
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+  become: true

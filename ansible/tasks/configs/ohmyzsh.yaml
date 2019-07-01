@@ -9,8 +9,9 @@
         dest=~/.oh-my-zsh/custom/plugins/{{item}}
         state=link
         force=yes
-  with_items:
+  loop:
     - fredericobenevides
+    - myutils
 
 - name: Link oh-my-zsh theme's file
   file: src={{ dotfilespath }}/files/zsh/themes/fredericobenevides.zsh-theme

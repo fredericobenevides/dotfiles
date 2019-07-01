@@ -1,0 +1,30 @@
+---
+- name: Fzf - Verify if install fzf
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.fzf"
+  register: verify_fzf
+
+- name: Fzf - Clone fzf to $HOME/.fzf
+  shell: warn=false git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  when: verify_fzf.stat.exists == False
+
+- name: Fzf - Load fzf version
+  shell: "grep version= {{ lookup('env', 'HOME') }}/.fzf/install  | awk -F = '{print $2}'"
+  register: fzf_version
+  when: verify_fzf.stat.exists == False
+
+- name: Fzf - Download binary file
+  get_url:
+    url: https://github.com/junegunn/fzf-bin/releases/download/{{ fzf_version.stdout }}/fzf-{{ fzf_version.stdout }}-linux_amd64.tgz
+    dest: /tmp
+  when: verify_fzf.stat.exists == False
+
+- name: Fzf - Extract binary file to ~/.fzf/bin
+  unarchive:
+    src: "/tmp/fzf-{{ fzf_version.stdout }}-linux_amd64.tgz"
+    dest: "{{ lookup('env', 'HOME') }}/.fzf/bin"
+  when: verify_fzf.stat.exists == False
+
+- name: Node - Removing download file
+  shell: warn=false rm /tmp/fzf-{{ fzf_version.stdout }}-linux_amd64.tgz 2>/dev/null
+  when: stat_result.stat.exists == False

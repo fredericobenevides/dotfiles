@@ -1,0 +1,10 @@
+---
+- name: Node pkgs - Installing global node pkgs for macos
+  npm: name=tern global=yes state=present
+  when: os == "macos"
+
+- name: Node pkgs - Installing global node pkgs for linux
+  shell: /opt/node/bin/npm install -g tern
+  environment:
+    PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
+  when: os == "linux"

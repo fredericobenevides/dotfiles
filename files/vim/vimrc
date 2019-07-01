@@ -479,7 +479,11 @@ if has('nvim')
     let b:deoplete_disable_auto_complete = 0
   endfunction
 
-  let g:python3_host_prog = '/usr/local/anaconda3/bin/python'
+  if isdirectory('/opt/anaconda3')
+    let g:python3_host_prog = '/opt/anaconda3/bin/python'
+  else
+    let g:python3_host_prog = '/usr/local/anaconda3/bin/python'
+  endif
 
 endif
 

@@ -1,0 +1,31 @@
+---
+- name: Node - Verify if install node
+  stat:
+    path: /opt/node
+  register: stat_result
+
+- name: Node - Download node
+  get_url:
+    url: https://nodejs.org/dist/v{{ node_version }}/{{ node_tar_file }}
+    dest: /tmp
+  when: stat_result.stat.exists == False
+
+- name: Node - Extract node file to /tmp
+  unarchive:
+    src: /tmp/{{ node_tar_file }}
+    dest: /tmp/
+  become: true
+  when: stat_result.stat.exists == False
+
+- name: Node - Move node folder to /opt as /opt/node
+  shell: mv /tmp/{{ node_file }} /opt/node
+  become: true
+  when: stat_result.stat.exists == False
+
+- name: Node - Change owner and group for /opt/node
+  shell: sudo chown -R `whoami`:`whoami` /opt/node
+  when: stat_result.stat.exists == False
+
+- name: Node - Removing download file
+  shell: warn=false rm /tmp/{{ node_tar_file }} 2>/dev/null
+  when: stat_result.stat.exists == False

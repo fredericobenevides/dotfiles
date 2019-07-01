@@ -42,7 +42,7 @@ setup_neovim() {
   mkdir -p $HOME/.config/nvim
 
   nvim=`which nvim`
-  if [ -z $nvim ]; then
+  if [ -n $nvim ]; then
     install_neovim_plug
     launch_neovim_to_install_all_plugins
   fi
