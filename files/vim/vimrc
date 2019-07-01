@@ -47,6 +47,7 @@ Plug 'junegunn/gv.vim'
 " Go {{{2
 Plug 'fatih/vim-go'
 Plug 'sebdah/vim-delve'
+Plug 'buoto/gotests-vim', { 'do': ':! go get -u github.com/cweill/gotests/...' }
 " }}}2
 
 " Html & css {{{2
