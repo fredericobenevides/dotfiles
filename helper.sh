@@ -1,14 +1,17 @@
 #!/bin/bash
 
-OS=`uname -sm | awk '{print $1}'`
-OS_LINUX=`cat /etc/os-release | grep ^ID | awk -F = '{print $2}'`
+OS_MAC=`uname -sm | awk '{print $1}'`
+OS_LINUX=""
+if [[ -e "/etc/os-release" ]]; then
+  OS_LINUX=`cat /etc/os-release | grep ^ID | awk -F = '{print $2}'`
+fi
 
 exist_command() {
   command -v $1 &> /dev/null
 }
 
 is_macos() {
-  if [ $OS == "Darwin" ]; then
+  if [ $OS_MAC == "Darwin" ]; then
     return 0;
   else
     return 1;
@@ -32,9 +35,13 @@ is_ubuntu() {
 }
 
 set_env_codename_ubuntu() {
-  export OS_CODENAME=`cat /etc/os-release | grep UBUNTU_CODENAME | awk -F = '{print $2}'`
+  if [[ -e "/etc/os-release" ]]; then
+    export OS_CODENAME=`cat /etc/os-release | grep UBUNTU_CODENAME | awk -F = '{print $2}'`
+  fi
 }
 
 set_env_codename_debian() {
-  export OS_CODENAME=`cat /etc/os-release | grep VERSION= | sed -nr 's/VERSION="[0-9]+\s\(([a-zA-Z]+)\)"$/\1/p'`
+  if [[ -e "/etc/os-release" ]]; then
+    export OS_CODENAME=`cat /etc/os-release | grep VERSION= | sed -nr 's/VERSION="[0-9]+\s\(([a-zA-Z]+)\)"$/\1/p'`
+  fi
 }
