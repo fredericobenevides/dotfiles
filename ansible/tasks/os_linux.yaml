@@ -30,40 +30,40 @@
   become: true
 
 - name: Linux - Install anaconda
-  import_tasks: tasks/install/anaconda3.yaml
+  import_tasks: tasks/pkgs/anaconda3.yaml
 
 - name: Linux - Install pips
-  import_tasks: tasks/install/pips.yaml
+  import_tasks: tasks/pkgs/pips.yaml
 
 - name: Linux - Install Docker
-  import_tasks: tasks/install/docker.yaml
+  import_tasks: tasks/pkgs/docker.yaml
 
 - name: Linux - Install fzf
-  import_tasks: tasks/install/fzf.yaml
+  import_tasks: tasks/pkgs/fzf.yaml
 
 - name: Linux - Install Go
-  import_tasks: tasks/install/go.yaml
+  import_tasks: tasks/pkgs/go.yaml
 
 - name: Linux - Install node
-  import_tasks: tasks/install/node.yaml
+  import_tasks: tasks/pkgs/node.yaml
 
 - name: Linux - Install node packages
-  import_tasks: tasks/install/node_pkgs.yaml
+  import_tasks: tasks/pkgs/node_pkgs.yaml
 
 - name: Linux - Install ruby
-  import_tasks: tasks/install/ruby.yaml
+  import_tasks: tasks/pkgs/ruby.yaml
 
 - name: Linux - Install ruby gems
-  import_tasks: tasks/install/ruby_gems.yaml
+  import_tasks: tasks/pkgs/ruby_gems.yaml
 
 # neo vim is on last to wait to install all the pkgs since some
 # are used in neovim
 - name: Linux - Install neovim
-  import_tasks: tasks/install/neovim.yaml
+  import_tasks: tasks/pkgs/neovim.yaml
 
 - name: Linux - Install neovim's plugin
-  import_tasks: tasks/install/neovim_plugins.yaml
+  import_tasks: tasks/pkgs/neovim_plugins.yaml
 
 - name: Linux - Install ohmyzsh
-  import_tasks: tasks/install/ohmyzsh.yaml
+  import_tasks: tasks/pkgs/ohmyzsh.yaml
 

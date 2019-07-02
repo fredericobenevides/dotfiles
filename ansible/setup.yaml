@@ -4,7 +4,10 @@
   vars_files:
     - vars.yaml
 
+
   pre_tasks:
+    - debug: var=os
+
     - import_tasks: tasks/os_mac.yaml
       when: os == "macos"
 
@@ -12,9 +15,9 @@
       when: os == "linux"
 
   tasks:
-    - import_tasks: tasks/configs/git.yaml
-    - import_tasks: tasks/configs/ohmyzsh.yaml
-    - import_tasks: tasks/configs/python.yaml
-    - import_tasks: tasks/configs/ruby.yaml
-    - import_tasks: tasks/configs/tmux.yaml
-    - import_tasks: tasks/configs/vim.yaml
+    - import_tasks: tasks/pkgs/git_link.yaml
+    - import_tasks: tasks/pkgs/ohmyzsh_link.yaml
+    - import_tasks: tasks/pkgs/python_link.yaml
+    - import_tasks: tasks/pkgs/ruby_link.yaml
+    - import_tasks: tasks/pkgs/tmux_link.yaml
+    - import_tasks: tasks/pkgs/vim_link.yaml
