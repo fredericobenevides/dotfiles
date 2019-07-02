@@ -1,22 +1,23 @@
-- name: Mac - Make sure "curl" is present
-  homebrew: name=curl state=present
-- name: Mac - Make sure "wget" is present
-  homebrew: name=wget state=present
+- name: Mac - Make sure some base packages are installed
+  homebrew: name={{ item }} state=present
+  loop:
+    - cmake
+    - curl
+    - gnu-sed
+    - the_silver_searcher
+    - wget
 
 - name: Mac - Make sure "anaconda3" is present
   homebrew_cask: name=anaconda state=present
 
-- name: Mac - Make sure "ag - Silver Searcher" is present
-  homebrew: name=the_silver_searcher state=present
+- name: Mac - Install pips
+  import_tasks: tasks/pkgs/pips.yaml
 
 - name: Mac - Make sure "docker-toolbox" is present
   homebrew_cask: name=docker-toolbox state=present
 
 - name: Mac - Make sure "fzf" is present
   homebrew: name=fzf state=present
-
-- name: Mac - Make sure "git" is present
-  homebrew: name=git state=present
 
 - name: Mac - Make sure "go" is present
   homebrew: name=go state=present
@@ -27,26 +28,35 @@
 - name: Mac - Make sure "gometalinter" is present
   homebrew: name=gometalinter state=present
 
-- name: Mac - Make sure "gnu-sed" is present
-  homebrew: name=gnu-sed state=present
-
 - name: Mac - Make sure "iterm2" is present
   homebrew_cask: name=iterm2 state=present
 
 - name: Mac - Make sure "node" is present
   homebrew: name=node state=present
 
+- name: Mac - Install node packages
+  import_tasks: tasks/pkgs/node_pkgs.yaml
+
+- name: Linux - Install ruby
+  import_tasks: tasks/pkgs/ruby.yaml
+
+- name: Linux - Install ruby gems
+  import_tasks: tasks/pkgs/ruby_gems.yaml
+
 - name: Mac - Make sure "tmux" is present
   homebrew: name=tmux state=present
 - name: Mac - Make sure "reattach-to-user-namespace" is present
   homebrew: name=reattach-to-user-namespace state=present
 
-- name: Mac - Make sure "macvim" is present
-  homebrew: name=macvim state=present install_options=with-override-system-vim
-- name: Mac - Make sure "cmake" is present
-  homebrew: name=cmake state=present
 - name: Mac - Make sure "ctags-exuberant" is present
   homebrew: name=ctags-exuberant state=present
 
 - name: Mac - Make sure "neovim" is present
   homebrew: name=neovim state=present
+
+- name: Mac - Install neovim's plugin
+  import_tasks: tasks/pkgs/neovim_plugins.yaml
+
+- name: Mac - Install ohmyzsh
+  import_tasks: tasks/pkgs/ohmyzsh.yaml
+

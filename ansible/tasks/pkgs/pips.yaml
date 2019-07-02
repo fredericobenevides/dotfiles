@@ -4,6 +4,9 @@
   loop: "{{ pips }}"
   when: os == "macos"
 
+
+
+
 - name: Pips - Installing pips for linux
   shell: "/opt/anaconda3/bin/pip install {{ item.extra_args }} {{ item.name }}"
   loop: "{{ pips }}"
