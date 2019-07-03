@@ -2,6 +2,7 @@
   apt: name={{item}} state=present
   loop:
     - apt-transport-https
+    - build-essential
     - ca-certificates
     - curl
     - gnupg2
