@@ -50,7 +50,7 @@ install_ansible() {
     else
       case "$OS_LINUX" in
         "ubuntu")
-          sudo add-apt-repository --yes --update ppa:git-core/ppa
+          sudo add-apt-repository --yes --update ppa:ansible/ansible
           sudo apt-get update
           sudo apt-get install ansible
           ;;
