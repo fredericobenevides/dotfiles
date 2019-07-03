@@ -13,4 +13,5 @@
   loop:
     - neovim
     - tern
+  become: true
   when: os == "linux"
