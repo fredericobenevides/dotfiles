@@ -3,6 +3,7 @@
 source ./helper.sh
 
 OS="linux"
+OS_DISTRO=""
 
 install_homebrew() {
   if ! exist_command brew; then
@@ -71,7 +72,11 @@ install_ansible() {
 }
 
 run_ansible() {
-  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml --extra-vars "dotfilespath=`pwd`" --extra-vars "os=$OS" $1
+  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml \
+    --extra-vars "dotfilespath=`pwd`" \
+    --extra-vars "os=$OS" \
+    --extra-vars "os_distro=$OS_DISTRO" \
+    $1
 }
 
 if is_macos; then
@@ -79,8 +84,10 @@ if is_macos; then
   OS="macos"
 elif is_debian; then
   set_env_codename_debian
+  OS_DISTRO="debian"
 else
   set_env_codename_ubuntu
+  OS_DISTRO="ubuntu"
 fi
 
 install_git
