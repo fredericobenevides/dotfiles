@@ -6,19 +6,24 @@
 
 - name: Neovim plugins - Create the config neovim's config folder
   shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.config/nvim"
+  when: stat_result.stat.exists == False
 
 - name: Neovim plugins - Create the .vim folder
   shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.vim"
+  when: stat_result.stat.exists == False
 
 - name: Neovim plugins - Create the ./local/share/nvim/site/autoload folder
   shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload"
+  when: stat_result.stat.exists == False
 
 - name: Neovim plugins - Install vim-plug
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload/plug.vim"
+  when: stat_result.stat.exists == False
 
 - name: Neovim plugins - Launch neovim to install all plugins
   shell: nvim +PlugInstall +qall
   ignore_errors: yes
+  when: stat_result.stat.exists == False
 
