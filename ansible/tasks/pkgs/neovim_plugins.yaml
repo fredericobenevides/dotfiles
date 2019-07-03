@@ -1,7 +1,7 @@
 ---
 - name: Neovim - Verify if install neovim's plugin
   stat:
-    path: /opt/neovim
+    path: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload/plug.vim
   register: stat_result
 
 - name: Neovim plugins - Create the config neovim's config folder
