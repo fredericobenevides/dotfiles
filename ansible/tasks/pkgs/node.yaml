@@ -29,3 +29,14 @@
 - name: Node - Removing download file
   shell: warn=false rm /tmp/{{ node_tar_file }} 2>/dev/null
   when: stat_result.stat.exists == False
+
+- name: Node - Link binary file to /usr/local/bin
+  file: src=/opt/node/bin/{{ item }}
+        dest=/usr/local/bin/{{ item }}
+        state=link
+        force=yes
+  loop:
+    - node
+    - npm
+  when: stat_result.stat.exists == False
+  become: true
