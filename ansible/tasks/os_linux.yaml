@@ -44,6 +44,9 @@
 - name: Linux - Install Go
   import_tasks: tasks/pkgs/go.yaml
 
+- name: Linux - Install Go packages
+  import_tasks: tasks/pkgs/go_pkgs.yaml
+
 - name: Linux - Install node
   import_tasks: tasks/pkgs/node.yaml
 

@@ -22,26 +22,11 @@
 - name: Mac - Make sure "go" is present
   homebrew: name=go state=present
 
-- name: Mac - Make sure tap of "gometalinter" is present
-  homebrew_tap: name=alecthomas/homebrew-tap state=present
-
-- name: Mac - Make sure "gometalinter" is present
-  homebrew: name=gometalinter state=present
-
 - name: Mac - Make sure "iterm2" is present
   homebrew_cask: name=iterm2 state=present
 
 - name: Mac - Make sure "node" is present
   homebrew: name=node state=present
-
-- name: Mac - Install node packages
-  import_tasks: tasks/pkgs/node_pkgs.yaml
-
-- name: Linux - Install ruby
-  import_tasks: tasks/pkgs/ruby.yaml
-
-- name: Linux - Install ruby gems
-  import_tasks: tasks/pkgs/ruby_gems.yaml
 
 - name: Mac - Make sure "tmux" is present
   homebrew: name=tmux state=present
@@ -53,6 +38,18 @@
 
 - name: Mac - Make sure "neovim" is present
   homebrew: name=neovim state=present
+
+- name: Mac - Install Go packages
+  import_tasks: tasks/pkgs/go_pkgs.yaml
+
+- name: Mac - Install node packages
+  import_tasks: tasks/pkgs/node_pkgs.yaml
+
+- name: Mac - Install ruby
+  import_tasks: tasks/pkgs/ruby.yaml
+
+- name: Mac - Install ruby gems
+  import_tasks: tasks/pkgs/ruby_gems.yaml
 
 - name: Mac - Install neovim's plugin
   import_tasks: tasks/pkgs/neovim_plugins.yaml
