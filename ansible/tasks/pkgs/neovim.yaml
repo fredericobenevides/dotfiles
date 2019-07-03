@@ -25,13 +25,6 @@
   when: stat_result.stat.exists == False
   become: true
 
-- name: Neovim - Link binary file to /usr/local/bin
-  file: src=/opt/neovim/usr/bin/nvim
-        dest=/usr/local/bin/nvim
-        state=link
-        force=yes
-  become: true
-
 - name: Neovim - Removing download file
   shell: warn=false rm /tmp/nvim.appimage
   when: stat_result.stat.exists == False
@@ -39,3 +32,13 @@
 - name: Neovim - Removing extracting folder
   shell: warn=false rm -rf /tmp/squashfs-root
   when: stat_result.stat.exists == False
+
+- name: Neovim - Link binary file to /usr/local/bin
+  file: src=/opt/neovim/usr/bin/{{ item }}
+        dest=/usr/local/bin/{{ item }}
+        state=link
+        force=yes
+  loop:
+    - nvim
+  when: stat_result.stat.exists == False
+  become: true

@@ -98,13 +98,6 @@ fi
 
 
 
-### NEOVIM
-if [ -d "/opt/neovim/nvim.desktop" ]; then
-  export PATH="/opt/neovim/usr/bin:$PATH"
-fi
-
-
-
 ### NODE
 if [ -d "/opt/node" ]; then
   export PATH="/opt/node/bin:$PATH"
