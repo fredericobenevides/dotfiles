@@ -1,9 +1,3 @@
-- name: Link macvim to Applications folder
-  file: src=/usr/local/opt/macvim/MacVim.app
-        dest=/Applications/MacVim.app
-        state=link
-  when: ansible_distribution == "MacOSX"
-
 - name: Link vimrc file
   file: src={{ dotfilespath }}/files/vim/vimrc
         dest=~/.vimrc
