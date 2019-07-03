@@ -10,6 +10,9 @@
 - name: Neovim plugins - Create the .vim folder
   shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.vim"
 
+- name: Neovim plugins - Create the ./local/share/nvim/site/autoload folder
+  shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload"
+
 - name: Neovim plugins - Install vim-plug
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
