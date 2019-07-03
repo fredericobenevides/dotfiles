@@ -92,8 +92,6 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 ### ANACONDA
 if [ -d "/opt/anaconda3" ]; then
   export PATH="/opt/anaconda3/bin:$PATH"
-else
-  export PATH="/usr/local/anaconda3/bin:$PATH"
 fi
 
 
