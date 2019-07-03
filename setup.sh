@@ -23,7 +23,7 @@ install_git() {
     if is_macos; then
       brew install git
     else
-      case "$OS_LINUX" in
+      case "$OS_DISTRO" in
         "ubuntu")
           sudo add-apt-repository --yes --update ppa:git-core/ppa
           sudo apt-get update
@@ -48,7 +48,7 @@ install_ansible() {
     if is_macos; then
       brew install ansible
     else
-      case "$OS_LINUX" in
+      case "$OS_DISTRO" in
         "ubuntu")
           sudo add-apt-repository --yes --update ppa:ansible/ansible
           sudo apt-get update
