@@ -73,6 +73,8 @@ install_ansible() {
 
 run_ansible() {
   ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml \
+    --extra-vars "username=`id -u`" \
+    --extra-vars "usergroup=`id -g`" \
     --extra-vars "dotfilespath=`pwd`" \
     --extra-vars "os=$OS" \
     --extra-vars "os_distro=$OS_DISTRO" \

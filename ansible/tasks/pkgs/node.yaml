@@ -23,7 +23,7 @@
   when: stat_result.stat.exists == False
 
 - name: Node - Change owner and group for /opt/node
-  shell: chown -R `whoami`:`whoami` /opt/node
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/node
   when: stat_result.stat.exists == False
   become: true
 

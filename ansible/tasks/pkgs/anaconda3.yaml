@@ -16,7 +16,7 @@
   become: true
 
 - name: Anaconda3 - Change owner and group for /opt/anaconda3
-  shell: chown -R `whoami`:`whoami` /opt/anaconda3
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/anaconda3
   when: stat_result.stat.exists == False
   become: true
 
