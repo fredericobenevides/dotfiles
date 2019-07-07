@@ -27,10 +27,10 @@ install_git() {
         "ubuntu")
           sudo add-apt-repository --yes --update ppa:git-core/ppa
           sudo apt-get update
-          sudo apt-get install git
+          sudo apt-get install -y git
           ;;
         "debian")
-          sudo apt-get install git
+          sudo apt-get install -y git
           ;;
         *)
           echo "I don't know how to install git for $OS_LINUX"
@@ -52,7 +52,7 @@ install_ansible() {
         "ubuntu")
           sudo add-apt-repository --yes --update ppa:ansible/ansible
           sudo apt-get update
-          sudo apt-get install ansible
+          sudo apt-get install -y ansible
           ;;
         "debian")
           value=`grep ansible/ubuntu /etc/apt/sources.list`
@@ -60,7 +60,7 @@ install_ansible() {
             echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list
             sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 A1715D88E1DF1F24
             sudo apt-get update
-            sudo apt-get install ansible
+            sudo apt-get install -y ansible
           fi
           ;;
         *)
