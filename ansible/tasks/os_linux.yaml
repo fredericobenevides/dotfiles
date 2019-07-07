@@ -15,6 +15,10 @@
     - zlib1g-dev
   become: true
 
+- name: Linux - Make sure "gitk" is present
+  apt: name=gitk state=present
+  become: true
+
 - name: Linux - Make sure "tmux" is present
   apt: name=tmux state=present
   become: true
