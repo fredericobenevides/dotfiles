@@ -46,9 +46,6 @@
 - name: Linux - Install Docker
   import_tasks: tasks/pkgs/docker.yaml
 
-- name: Linux - Install fzf
-  import_tasks: tasks/pkgs/fzf.yaml
-
 - name: Linux - Install Go
   import_tasks: tasks/pkgs/go.yaml
 
