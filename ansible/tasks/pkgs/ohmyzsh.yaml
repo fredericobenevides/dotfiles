@@ -10,7 +10,7 @@
 
 # using sed to change the file, because had problem using chsh on wsl2
 - name: Oh my zsh - Set the default shell to ZSH for linux
-  shell: warn=false sudo sed -i "s@{{ lookup('env', 'HOME') }}.*@{{ lookup('env', 'HOME') }}\:`which zsh`@" /etc/passwd
+  shell: warn=false sed -i "s@{{ lookup('env', 'HOME') }}.*@{{ lookup('env', 'HOME') }}\:`which zsh`@" /etc/passwd
   when: shell.stdout != "/bin/zsh" and os == "linux"
   become: true
 
