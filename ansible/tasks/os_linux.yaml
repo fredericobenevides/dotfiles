@@ -22,10 +22,13 @@
   apt: name=xclip state=present
   become: true
 
+- name: Linux - Make sure "yad" is present
+  apt: name=gitk state=present
+  become: true
+
 - name: Linux - Make sure "zsh" is present
   apt: name=zsh state=present
   become: true
-
 - name: Linux - Make sure "exuberant-ctags" is present
   apt: name=exuberant-ctags state=present
   become: true
