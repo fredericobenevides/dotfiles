@@ -19,6 +19,10 @@
   apt: name=gitk state=present
   become: true
 
+- name: Linux - Make sure "openjdk-8-jdk" is present
+  apt: name=openjdk-8-jdk state=present
+  become: true
+
 - name: Linux - Make sure "tmux" is present
   apt: name=tmux state=present
   become: true
