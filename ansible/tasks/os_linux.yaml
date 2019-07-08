@@ -27,7 +27,7 @@
   become: true
 
 - name: Linux - Make sure "yad" is present
-  apt: name=gitk state=present
+  apt: name=yad state=present
   become: true
 
 - name: Linux - Make sure "zsh" is present
