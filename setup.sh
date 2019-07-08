@@ -85,10 +85,8 @@ if is_macos; then
   install_homebrew
   OS="macos"
 elif is_debian; then
-  set_env_codename_debian
   OS_DISTRO="debian"
 else
-  set_env_codename_ubuntu
   OS_DISTRO="ubuntu"
 fi
 
