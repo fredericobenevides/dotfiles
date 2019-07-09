@@ -12,10 +12,14 @@
       when: os == "macos"
 
     - import_tasks: tasks/os_linux.yaml
-      when: os == "linux"
+      when: (os == "linux") and (os_distro != "manjaro")
+      
+    - import_tasks: tasks/os_linux_pacman.yaml
+      when: (os == "linux") and (os_distro == "manjaro")
 
   tasks:
     - import_tasks: tasks/pkgs/git_link.yaml
+    - import_tasks: tasks/pkgs/node_link.yaml
     - import_tasks: tasks/pkgs/ohmyzsh_link.yaml
     - import_tasks: tasks/pkgs/python_link.yaml
     - import_tasks: tasks/pkgs/ruby_link.yaml

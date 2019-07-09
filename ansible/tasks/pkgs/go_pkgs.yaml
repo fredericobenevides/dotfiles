@@ -3,3 +3,6 @@
   shell: go get -u {{ item }}
   loop:
     - github.com/golangci/golangci-lint/cmd/golangci-lint
+    - github.com/stamblerre/gocode
+  environment:
+    GOPATH: "{{ lookup('env', 'HOME') }}/code/go"

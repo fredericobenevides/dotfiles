@@ -97,6 +97,8 @@ fi
 
 
 ### NODE
+export PATH="~/.npm-global/bin:$PATH"
+
 if [ -d "/opt/node" ]; then
   export PATH="/opt/node/bin:$PATH"
 fi

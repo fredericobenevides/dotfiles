@@ -63,6 +63,9 @@ install_ansible() {
             sudo apt-get install -y ansible
           fi
           ;;
+        "manjaro")
+          sudo pacman -S ansible
+          ;;
         *)
           echo "I don't know how to install ansible for $OS_LINUX"
           exit 1
@@ -73,6 +76,7 @@ install_ansible() {
 
 run_ansible() {
   ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml \
+    --extra-vars "whoami=`whoami`" \
     --extra-vars "username=`id -u`" \
     --extra-vars "usergroup=`id -g`" \
     --extra-vars "dotfilespath=`pwd`" \
@@ -86,8 +90,13 @@ if is_macos; then
   OS="macos"
 elif is_debian; then
   OS_DISTRO="debian"
-else
+elif is_ubuntu; then
   OS_DISTRO="ubuntu"
+elif is_manjaro; then
+  OS_DISTRO="manjaro"
+else
+  echo "Can't install to the current distro since is not configured/test for this. Current distro: " + $OS_DISTRO
+  exit 1
 fi
 
 install_git

@@ -6,11 +6,20 @@
     - tern
   when: os == "macos"
 
-- name: Node pkgs - Installing global node pkgs for linux
+- name: Node pkgs (linux) - Installing global node pkgs for linux
   shell: /opt/node/bin/npm install -g {{ item }}
   environment:
     PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
   loop:
     - neovim
     - tern
-  when: os == "linux"
+  when: (os == "linux") and (os_distro != "manjaro")
+  
+- name: Node pkgs (manjaro) - Installing global node pkgs for linux manjaro
+  shell: npm install -g {{ item }}
+  loop:
+    - neovim
+    - tern
+  when: (os == "linux") and (os_distro == "manjaro")
+  environment:
+    PATH: "{{ lookup('env', 'HOME') }}/.npm-global/bin:{{ ansible_env.PATH }}"
