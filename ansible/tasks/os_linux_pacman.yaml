@@ -52,6 +52,9 @@
   
 - name: Linux - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
+  
+- name: Linux pacman - Link node files before installing packages.
+  import_tasks: tasks/pkgs/node_link.yaml
 
 - name: Linux - Install node packages
   import_tasks: tasks/pkgs/node_pkgs.yaml
