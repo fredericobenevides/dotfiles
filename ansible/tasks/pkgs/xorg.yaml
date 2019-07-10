@@ -1,0 +1,11 @@
+---
+- name: Linux pacman - Make sure some packages for xorg are installed
+  pacman: name={{item}} state=present
+  loop:
+    - xautomation
+    - xbindkeys
+    - xorg-xev
+  become: true
+
+- name: Linux - Link xorg files
+  import_tasks: tasks/pkgs/xorg_link.yaml

@@ -1,0 +1,9 @@
+---
+- name: Link xorg files
+  file: src={{ dotfilespath }}/files/xorg/{{ item }}
+        dest=~/.{{item}}
+        state=link
+        force=yes
+  with_items:
+    - xbindkeysrc
+    - xprofile

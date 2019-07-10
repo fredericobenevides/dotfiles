@@ -76,3 +76,6 @@
 
 - name: Linux - Install ohmyzsh
   import_tasks: tasks/pkgs/ohmyzsh.yaml
+
+- name: Linux - Install and configure pkgs for xorg
+  import_tasks: tasks/pkgs/xorg.yaml
