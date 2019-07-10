@@ -1,10 +1,16 @@
 ---
+- name: Linux - Make sure some base packages are installed
+  pacman: name={{item}} state=present
+  loop:
+    - the_silver_searcher
+  become: true
+
 - name: Linux pacman - Make sure some base packages are installed
   pacman: name={{item}} state=present
   loop:
     - tk
   become: true
-  
+
 - name: Linux pacman - Make sure "ctags (exuberant-ctags)" is present
   pacman: name=ctags state=present
   become: true
@@ -12,27 +18,27 @@
 - name: Linux pacman - Make sure "jdk8-openjdk" is present
   pacman: name=jdk8-openjdk state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "go" is present
   pacman: name=go state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "neovim" is present
   pacman: name=neovim state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "nodejs-lts-dubnium" is present
   pacman: name=nodejs-lts-dubnium state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "npm" is present
   pacman: name=npm state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "tmux" is present
   pacman: name=tmux state=present
   become: true
-  
+
 - name: Linux pacman - Make sure "yad" is present
   pacman: name=yad state=present
   become: true
@@ -40,33 +46,33 @@
 - name: Linux pacman - Make sure "zsh" is present
   pacman: name=zsh state=present
   become: true
-  
+
 - name: Linux - Install anaconda
   import_tasks: tasks/pkgs/anaconda3.yaml
-  
+
 - name: Linux - Install pips
   import_tasks: tasks/pkgs/pips.yaml
-  
+
 - name: Linux - Install Docker
   import_tasks: tasks/pkgs/docker.yaml
-  
+
 - name: Linux - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
-  
+
 - name: Linux pacman - Link node files before installing packages.
   import_tasks: tasks/pkgs/node_link.yaml
 
 - name: Linux - Install node packages
   import_tasks: tasks/pkgs/node_pkgs.yaml
-  
+
 - name: Linux - Install ruby
   import_tasks: tasks/pkgs/ruby.yaml
 
 - name: Linux - Install ruby gems
   import_tasks: tasks/pkgs/ruby_gems.yaml
-  
+
 - name: Linux - Install neovim's plugin
   import_tasks: tasks/pkgs/neovim_plugins.yaml
-  
+
 - name: Linux - Install ohmyzsh
   import_tasks: tasks/pkgs/ohmyzsh.yaml
