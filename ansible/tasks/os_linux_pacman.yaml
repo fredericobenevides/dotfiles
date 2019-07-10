@@ -71,11 +71,17 @@
 - name: Linux - Install ruby gems
   import_tasks: tasks/pkgs/ruby_gems.yaml
 
-- name: Linux - Install neovim's plugin
-  import_tasks: tasks/pkgs/neovim_plugins.yaml
+- name: Linux - Install snap
+  import_tasks: tasks/pkgs/snap.yaml
 
 - name: Linux - Install ohmyzsh
   import_tasks: tasks/pkgs/ohmyzsh.yaml
 
 - name: Linux - Install and configure pkgs for xorg
   import_tasks: tasks/pkgs/xorg.yaml
+
+
+# On last because neovim need some packages installed before
+- name: Linux - Install neovim's plugin
+  import_tasks: tasks/pkgs/neovim_plugins.yaml
+

@@ -1,0 +1,17 @@
+---
+- name: Snap pacman - Install snapd
+  pacman: name=snapd state=present
+  become: true
+
+- name: Snap pacman - Enable systemctl
+  shell: systemctl enable --now -f snapd.socket
+  become: true
+
+- name: Snap pacman - Install snap packages
+  snap: name={{ item }}
+  loop:
+    - snap-store
+    - spotify
+  environment:
+    PATH: "/var/lib/snapd/snap/bin:{{ ansible_env.PATH }}"
+  become: true
