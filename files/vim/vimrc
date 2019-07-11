@@ -15,7 +15,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-go', { 'do': 'make'}
+  Plug 'zchee/deoplete-go', { 'do': '~/.dotfiles/files/vim/build_deoplete_go.sh' }
   Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 endif
 
