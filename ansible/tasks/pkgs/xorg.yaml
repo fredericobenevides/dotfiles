@@ -7,5 +7,15 @@
     - xorg-xev
   become: true
 
+- name: Linux pacman - Verify if add fixes for keyboard's cedilla
+  shell: grep cedilla /etc/environment
+  ignore_errors: true
+  register: verify_cedilla
+
+- name: Linux pacman - Install fixes for keyboard's cedilla
+  shell: echo "GTK_IM_MODULE=cedilla" >> /etc/environment
+  when: verify_cedilla.rc == 1
+  become: true
+
 - name: Linux - Link xorg files
   import_tasks: tasks/pkgs/xorg_link.yaml
