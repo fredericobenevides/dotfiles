@@ -10,6 +10,7 @@
 - name: Snap pacman - Install snap packages
   snap: name={{ item }}
   loop:
+    - insomnia
     - snap-store
     - spotify
   environment:
