@@ -44,27 +44,27 @@
     - containerd.io
   when: os_distro in ['debian', 'ubuntu']
   become: true
-  
-  
-  
-  
+
+
+
+
 # manjaro
 - name: Docker pacman - Verify if load loop module
   stat:
     path: /etc/modules-load.d/loop.conf
   register: stat_result
   when: os_distro == "manjaro"
-  
+
 - name: Docker pacman - Create loop.conf
   shell: tee /etc/modules-load.d/loop.conf <<< "loop"
   when: stat_result.stat.exists == False
   become: true
-  
+
 - name: Docker pacman - modprobe loop module
   shell: modprobe loop
   when: stat_result.stat.exists == False
   become: true
-  
+
 - name: Docker pacman - Make sure "docker" is present
   pacman: name=docker state=present
   when: stat_result.stat.exists == False
@@ -74,7 +74,7 @@
   shell: systemctl start docker.service; systemctl enable docker.service
   when: stat_result.stat.exists == False
   become: true
-  
+
 - name: Docker pacman - add current user to the docker group
   shell: gpasswd -a {{ whoami }} docker
   when: stat_result.stat.exists == False
