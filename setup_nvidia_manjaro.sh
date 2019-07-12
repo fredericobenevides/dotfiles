@@ -2,12 +2,11 @@
 
 set -e
 
-kernel=5.1.16-1
-header=51
+kernel_version=`uname -a | grep Linux | awk '{print $3}' | sed -E 's/^([0-9]+)\.([0-9]+).*/\1\2/g'`
 
 sudo mhwd -i pci video-nvidia
 
-sudo pacman -S linux${header}-headers acpi_call-dkms xorg-xrandr xf86-video-intel
+sudo pacman -S linux${kernel_version}-headers acpi_call-dkms xorg-xrandr xf86-video-intel
 
 sudo modprobe acpi_call
 
