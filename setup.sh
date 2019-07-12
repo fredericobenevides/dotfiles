@@ -4,6 +4,7 @@ source ./helper.sh
 
 OS="linux"
 OS_DISTRO=""
+KERNEL_VERSION=`uname -a | awk '{print $3}' | sed -E 's/^([0-9]+)\.([0-9]+).*/\1\2/g'`
 
 install_homebrew() {
   if ! exist_command brew; then
@@ -82,6 +83,7 @@ run_ansible() {
     --extra-vars "dotfilespath=`pwd`" \
     --extra-vars "os=$OS" \
     --extra-vars "os_distro=$OS_DISTRO" \
+    --extra-vars "kernel_version=$KERNEL_VERSION" \
     $1
 }
 
