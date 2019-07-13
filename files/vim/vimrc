@@ -555,7 +555,7 @@ let g:line_mover_key_down = '<F11>'
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-nnoremap <leader>ls :call neosnippet#variables#set_snippets({})<cr>
+nnoremap <leader>ss :call neosnippet#variables#set_snippets({})<cr>
 
 imap <expr><TAB>
  \ pumvisible() ? "\<C-n>" :
