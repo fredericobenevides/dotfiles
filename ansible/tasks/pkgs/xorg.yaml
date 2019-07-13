@@ -2,8 +2,8 @@
 - name: Linux pacman - Make sure some packages for xorg are installed
   pacman: name={{item}} state=present
   loop:
-    - xautomation
     - xbindkeys
+    - xdotool
     - xorg-xev
   become: true
 
