@@ -5,5 +5,6 @@
         state=link
         force=yes
   with_items:
+    - conkyrc
     - xbindkeysrc
     - xprofile

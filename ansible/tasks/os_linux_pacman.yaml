@@ -2,6 +2,7 @@
 - name: Linux - Make sure some base packages are installed
   pacman: name={{item}} state=present
   loop:
+    - hddtemp
     - the_silver_searcher
   become: true
 
@@ -9,6 +10,10 @@
   pacman: name={{item}} state=present
   loop:
     - tk
+  become: true
+
+- name: Linux pacman - Make sure "conky" is present
+  pacman: name=conky state=present
   become: true
 
 - name: Linux pacman - Make sure "ctags (exuberant-ctags)" is present
