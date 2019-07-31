@@ -68,11 +68,13 @@ ${template1 Core\ 4}            ${template2}${cpu cpu4}%                    ${te
 ${template1 Core\ 5}            ${template2}${cpu cpu5}%                    ${template3}${cpubar cpu5}
 ${template1 Core\ 6}            ${template2}${cpu cpu6}%                    ${template3}${cpubar cpu6}
 ${template1 Core\ 7}            ${template2}${cpu cpu7}%                    ${template3}${cpubar cpu7}
+${if_existing /sys/devices/system/cpu/cpu8}\
 ${template1 Core\ 8}            ${template2}${cpu cpu8}%                    ${template3}${cpubar cpu8}
 ${template1 Core\ 9}            ${template2}${cpu cpu9}%                    ${template3}${cpubar cpu9}
 ${template1 Core\ 10}           ${template2}${cpu cpu10}%                   ${template3}${cpubar cpu10}
 ${template1 Core\ 11}           ${template2}${cpu cpu11}%                   ${template3}${cpubar cpu11}
 ${template1 Core\ 12}           ${template2}${cpu cpu12}%                   ${template3}${cpubar cpu12}
+${endif}\
 ${template1 Top}                ${template2}${top name 1}                   ${template3}${top cpu 1}
 
 ${template0 Memory}
@@ -104,7 +106,9 @@ ${template1 Upload}             ${template2}${upspeed eth0}                 ${te
 ${template1 Total Down/Up}                                                  ${template3}${totaldown eth0}↓ / ${totalup eth0}↑
 ${endif}${endif}\
 
+${if_existing /proc/acpi/battery}\
 ${template0 Battery}
 ${template1 Status}                                                         ${template3}${color}${battery_percent BAT0}%
+${endif}\
 
 ]];
