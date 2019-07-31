@@ -109,14 +109,14 @@ ${template1 Download}           ${template2}${downspeed wlp60s0}              ${
 ${template1 Upload}             ${template2}${upspeed wlp60s0}                ${template3}${upspeedgraph wlp60s0}
 ${template1 Total Down/Up}                                                  ${template3}${totaldown wlp60s0}↓ / ${totalup wlp60s0}↑
 ${endif}\
-${if_existing /proc/net/route eth0}\
-${template1 Ip}                                                             ${template3}${addr eth0}
-${template1 Download}           ${template2}${downspeed eth0}               ${template3}${downspeedgraph eth0}
-${template1 Upload}             ${template2}${upspeed eth0}                 ${template3}${upspeedgraph eth0}
-${template1 Total Down/Up}                                                  ${template3}${totaldown eth0}↓ / ${totalup eth0}↑
+${if_existing /proc/net/route enp59s0}\
+${template1 Ip}                                                             ${template3}${addr enp59s0}
+${template1 Download}           ${template2}${downspeed enp59s0}               ${template3}${downspeedgraph enp59s0}
+${template1 Upload}             ${template2}${upspeed enp59s0}                 ${template3}${upspeedgraph enp59s0}
+${template1 Total Down/Up}                                                  ${template3}${totaldown enp59s0}↓ / ${totalup enp59s0}↑
 ${endif}\
 
-${if_existing /proc/acpi/battery}\
+${if_existing /sys/class/power_supply/BAT0}\
 ${template0 Battery}
 ${template1 Status}                                                         ${template3}${color}${battery_percent BAT0}%
 ${endif}\
