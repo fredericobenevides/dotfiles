@@ -75,14 +75,22 @@ ${template1 Core\ 10}           ${template2}${cpu cpu10}%                   ${te
 ${template1 Core\ 11}           ${template2}${cpu cpu11}%                   ${template3}${cpubar cpu11}
 ${template1 Core\ 12}           ${template2}${cpu cpu12}%                   ${template3}${cpubar cpu12}
 ${endif}\
-${template1 Top}                ${template2}${top name 1}                   ${template3}${top cpu 1}
+${color #0077ff}Top Processes:
+${color1}Name              PID     CPU%   MEM%
+$color ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+$color ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+$color ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
 
 ${template0 Memory}
 ${template1 RAM}                ${template2}${memperc}% used                ${template3}${mem} / ${memmax}
                                                                             ${template3}${membar}
-${template1 Swap}               ${template2}${swapperc}% used                   ${template3}${swap} / ${swapfree}
+${template1 Swap}               ${template2}${swapperc}% used               ${template3}${swap} / ${swapfree}
                                                                             ${template3}${swapbar}
-${template1 Top}                ${template2}${top_mem name 1}               ${template3}${top_mem mem_vsize 1}
+${color #0077ff}Top Memory:
+${color1}Name              PID     CPU%   MEM%
+$color ${top_mem name 1} ${top_mem pid 1} ${top_mem cpu 1} ${top_mem mem 1}
+$color ${top_mem name 2} ${top_mem pid 2} ${top_mem cpu 2} ${top_mem mem 2}
+$color ${top_mem name 3} ${top_mem pid 3} ${top_mem cpu 3} ${top_mem mem 3}
 
 ${template0 Filesystem}
 ${template1 /}                  ${template2}${fs_free /} free               ${template3}${fs_used /} / ${fs_size /}
@@ -90,7 +98,6 @@ ${template1 /}                  ${template2}${fs_free /} free               ${te
 ${template1 IO\ Read}           ${template2}${diskio_read}                  ${template3}${diskiograph_read}
 ${template1 IO\ Write}          ${template2}$diskio_write                   ${template3}$diskiograph_write
 ${template1 Top}                ${template2}${top_io name 1}                ${template3}${top_io io_perc 1}%
-
 
 ${template0 Networking}
 ${if_existing /proc/net/route wlp2s0}\
