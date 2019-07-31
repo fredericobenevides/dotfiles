@@ -12,6 +12,10 @@
     - tk
   become: true
 
+- name: Linux pacman - Make sure "chromium" is present
+  pacman: name=chromium state=present
+  become: true
+
 - name: Linux pacman - Make sure "conky" is present
   pacman: name=conky state=present
   become: true
