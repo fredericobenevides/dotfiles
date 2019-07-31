@@ -2,6 +2,7 @@
 - name: Linux pacman - Make sure some packages for xorg are installed
   pacman: name={{item}} state=present
   loop:
+    - piper
     - xbindkeys
     - xdotool
     - xorg-xev
