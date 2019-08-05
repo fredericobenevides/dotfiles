@@ -1,6 +1,9 @@
 ---
 anaconda3_sh_file: Anaconda3-2019.03-Linux-x86_64.sh
 
+android_studio_version: 3.4.2.0
+android_studio_tar_file: 'android-studio-ide-183.5692245-linux.tar.gz'
+
 go_version: 1.12.6
 go_tar_file: go{{ go_version }}.linux-amd64.tar.gz
 

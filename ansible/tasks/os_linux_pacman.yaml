@@ -60,6 +60,9 @@
 - name: Linux - Install anaconda
   import_tasks: tasks/pkgs/anaconda3.yaml
 
+- name: Linux Pacman - Install android-studio
+  import_tasks: tasks/pkgs/android-studio.yaml
+
 - name: Linux - Install pips
   import_tasks: tasks/pkgs/pips.yaml
 
