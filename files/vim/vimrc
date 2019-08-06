@@ -772,6 +772,10 @@ augroup vimrc
   autocmd FileType vim setlocal foldmethod=marker
   " }}}2
 
+  " Filetype: Vue {{{2
+  autocmd CursorMoved,CursorMovedI *vue call s:setVueFileType()
+  " }}}2
+
 augroup END
 " }}}1
 
@@ -879,6 +883,27 @@ function! g:NarrowCss()
   exec cmd
 
   exec 'set filetype=css'
+endfunction
+
+let g:vueFileType = "vue.html"
+
+" Vue dynamic filetype
+function! s:setVueFileType()
+  if searchpair('<script', '', '</script>', 'bnW')
+    call s:setFileType("javascript")
+  elseif searchpair('<style', '', '</style>', 'bnW')
+    call s:setFileType("css")
+  else
+    call s:setFileType("vue.html")
+  endif
+endfunction
+
+function! s:setFileType(kind)
+  if g:vueFileType != a:kind
+    exec "set ft=" . a:kind
+    let g:vueFileType = a:kind
+  endif
+
 endfunction
 " }}}2
 
