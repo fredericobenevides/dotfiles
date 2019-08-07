@@ -17,6 +17,10 @@
   pacman: name=chromium state=present
   become: true
 
+- name: Linux pacman - Make sure "code (Visual Code)" is present
+  pacman: name=code state=present
+  become: true
+
 - name: Linux pacman - Make sure "conky" is present
   pacman: name=conky state=present
   become: true
