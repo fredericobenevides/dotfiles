@@ -3,6 +3,7 @@
   pacman: name={{item}} state=present
   loop:
     - hddtemp
+    - jq
     - the_silver_searcher
     - unzip
   become: true
