@@ -68,6 +68,9 @@
 - name: Linux Pacman - Install android-studio
   import_tasks: tasks/pkgs/android-studio.yaml
 
+- name: Linux - Install java_tools
+  import_tasks: tasks/pkgs/java_tools.yaml
+
 - name: Linux - Install pips
   import_tasks: tasks/pkgs/pips.yaml
 
@@ -97,6 +100,9 @@
 
 - name: Linux - Install virtualbox
   import_tasks: tasks/pkgs/virtualbox.yaml
+
+- name: Linux - Install vscode entensions
+  import_tasks: tasks/pkgs/vscode_ext.yaml
 
 - name: Linux - Install and configure pkgs for xorg
   import_tasks: tasks/pkgs/xorg.yaml

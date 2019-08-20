@@ -1,0 +1,13 @@
+---
+- name: Linux pacman - Install vscode extensions
+  shell: code --install-extension {{ item }}
+  loop:
+    - youmaycallmev.vscode-java-saber
+    - usernamehw.errorlens
+    - redhat.vscode-openshift-java-pack
+    - shengchen.vscode-checkstyle
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-maven
+
+
+
