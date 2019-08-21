@@ -550,8 +550,8 @@ let g:fzf_tags_command = 'ctags -R'
 " }}}2
 
 " Plugin line-mover {{{2
-let g:line_mover_key_up = '<F12>'
-let g:line_mover_key_down = '<F11>'
+let g:line_mover_key_up = '<A-k>'
+let g:line_mover_key_down = '<A-j>'
 " }}}2
 
 " Plugin neosnippet {{{2
