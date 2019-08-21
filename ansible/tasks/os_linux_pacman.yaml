@@ -1,5 +1,5 @@
 ---
-- name: Linux - Make sure some base packages are installed
+- name: Linux pacman - Make sure some base packages are installed
   pacman: name={{item}} state=present
   loop:
     - hddtemp
@@ -62,53 +62,53 @@
   pacman: name=zsh state=present
   become: true
 
-- name: Linux - Install anaconda
+- name: Linux pacman - Install anaconda
   import_tasks: tasks/pkgs/anaconda3.yaml
 
-- name: Linux Pacman - Install android-studio
+- name: Linux pacman - Install android-studio
   import_tasks: tasks/pkgs/android-studio.yaml
 
-- name: Linux - Install java_tools
+- name: Linux pacman - Install java_tools
   import_tasks: tasks/pkgs/java_tools.yaml
 
-- name: Linux - Install pips
+- name: Linux pacman - Install pips
   import_tasks: tasks/pkgs/pips.yaml
 
-- name: Linux - Install Docker
+- name: Linux pacman - Install Docker
   import_tasks: tasks/pkgs/docker.yaml
 
-- name: Linux - Install Go packages
+- name: Linux pacman - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
 
 - name: Linux pacman - Link node files before installing packages.
   import_tasks: tasks/pkgs/node_link.yaml
 
-- name: Linux - Install node packages
+- name: Linux pacman - Install node packages
   import_tasks: tasks/pkgs/node_pkgs.yaml
 
-- name: Linux - Install ruby
+- name: Linux pacman - Install ruby
   import_tasks: tasks/pkgs/ruby.yaml
 
-- name: Linux - Install ruby gems
+- name: Linux pacman - Install ruby gems
   import_tasks: tasks/pkgs/ruby_gems.yaml
 
-- name: Linux - Install snap
+- name: Linux pacman - Install snap
   import_tasks: tasks/pkgs/snap.yaml
 
-- name: Linux - Install ohmyzsh
+- name: Linux pacman - Install ohmyzsh
   import_tasks: tasks/pkgs/ohmyzsh.yaml
 
-- name: Linux - Install virtualbox
+- name: Linux pacman - Install virtualbox
   import_tasks: tasks/pkgs/virtualbox.yaml
 
-- name: Linux - Install vscode entensions
+- name: Linux pacman - Install vscode entensions
   import_tasks: tasks/pkgs/vscode_ext.yaml
 
-- name: Linux - Install and configure pkgs for xorg
+- name: Linux pacman - Install and configure pkgs for xorg
   import_tasks: tasks/pkgs/xorg.yaml
 
 
-# On last because neovim need some packages installed before
-- name: Linux - Install neovim's plugin
+# It's in the last because neovim need some packages installed before
+- name: Linux pacman - Install neovim's plugin
   import_tasks: tasks/pkgs/neovim_plugins.yaml
 
