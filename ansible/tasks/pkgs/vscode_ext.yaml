@@ -2,12 +2,16 @@
 - name: Linux pacman - Install vscode extensions
   shell: code --install-extension {{ item }}
   loop:
-    - youmaycallmev.vscode-java-saber
-    - usernamehw.errorlens
+    - naco-siren.gradle-language
+    - pivotal.vscode-spring-boot
     - redhat.vscode-openshift-java-pack
     - shengchen.vscode-checkstyle
+    - usernamehw.errorlens
     - vscjava.vscode-java-pack
     - vscjava.vscode-maven
+    - vscjava.vscode-spring-boot-dashboard
+    - vscjava.vscode-spring-initializr
+    - youmaycallmev.vscode-java-saber
 
 
 
