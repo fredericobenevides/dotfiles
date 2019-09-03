@@ -6,6 +6,7 @@
     - jq
     - the_silver_searcher
     - unzip
+    - xclip
   become: true
 
 - name: Linux pacman - Make sure some base packages are installed
