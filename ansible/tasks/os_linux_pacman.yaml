@@ -5,14 +5,9 @@
     - hddtemp
     - jq
     - the_silver_searcher
+    - tk
     - unzip
     - xclip
-  become: true
-
-- name: Linux pacman - Make sure some base packages are installed
-  pacman: name={{item}} state=present
-  loop:
-    - tk
   become: true
 
 - name: Linux pacman - Make sure "chromium" is present
