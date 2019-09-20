@@ -4,6 +4,7 @@
   loop:
     - hddtemp
     - jq
+    - stress
     - the_silver_searcher
     - tk
     - unzip
