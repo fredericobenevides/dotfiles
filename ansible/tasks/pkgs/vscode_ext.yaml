@@ -8,6 +8,7 @@
     - redhat.vscode-openshift-java-pack
     - shengchen.vscode-checkstyle
     - usernamehw.errorlens
+    - vscodevim.vim
     - vscjava.vscode-java-pack
     - vscjava.vscode-maven
     - vscjava.vscode-spring-boot-dashboard
