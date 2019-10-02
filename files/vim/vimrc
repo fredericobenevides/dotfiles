@@ -340,12 +340,20 @@ nnoremap <silent> <leader>bm2 :call MarkBuffer('buffer_2')<cr>
 nnoremap <silent> <leader>bm3 :call MarkBuffer('buffer_3')<cr>
 nnoremap <silent> <leader>bm4 :call MarkBuffer('buffer_4')<cr>
 nnoremap <silent> <leader>bm5 :call MarkBuffer('buffer_5')<cr>
+nnoremap <silent> <leader>bm6 :call MarkBuffer('buffer_6')<cr>
+nnoremap <silent> <leader>bm7 :call MarkBuffer('buffer_7')<cr>
+nnoremap <silent> <leader>bm8 :call MarkBuffer('buffer_8')<cr>
+nnoremap <silent> <leader>bm9 :call MarkBuffer('buffer_9')<cr>
+nnoremap <silent> <leader>bm10 :call MarkBuffer('buffer_10')<cr>
 
 nnoremap <silent> <leader>b1 :call OpenBuffer('buffer_1')<cr>
 nnoremap <silent> <leader>b2 :call OpenBuffer('buffer_2')<cr>
 nnoremap <silent> <leader>b3 :call OpenBuffer('buffer_3')<cr>
 nnoremap <silent> <leader>b4 :call OpenBuffer('buffer_4')<cr>
 nnoremap <silent> <leader>b5 :call OpenBuffer('buffer_5')<cr>
+
+nnoremap <silent> <c-Left> :call OpenDownMarkedBuffers()<cr>
+nnoremap <silent> <c-Right> :call OpenUpMarkedBuffers()<cr>
 " }}}2
 
 " Windows Mappings {{{2
@@ -833,6 +841,54 @@ function! g:OpenBuffer(name)
 
   exec "edit " . a:name
   echo ""
+endfunction
+
+function! g:OpenDownMarkedBuffers()
+  let current_buffer = @%
+
+  if matchstr(current_buffer, 'buffer_\d') == ''
+    exec "edit buffer_1"
+    return
+  endif
+
+  let id_buffer = matchstr(current_buffer, '\d')
+
+  while id_buffer != 0
+    let id_buffer = id_buffer - 1
+    let buf_to_open = 'buffer_' . id_buffer
+
+    if bufexists(buf_to_open)
+      exec "edit " . buf_to_open
+      break
+    else
+      break
+    endif
+  endwhile
+
+endfunction
+
+function! g:OpenUpMarkedBuffers()
+  let current_buffer = @%
+
+  if matchstr(current_buffer, 'buffer_\d') == ''
+    exec "edit buffer_1"
+    return
+  endif
+
+  let id_buffer = matchstr(current_buffer, '\d')
+
+  while id_buffer != 100
+    let id_buffer = id_buffer + 1
+    let buf_to_open = 'buffer_' . id_buffer
+
+    if bufexists(buf_to_open)
+      exec "edit " . buf_to_open
+      break
+    else
+      break
+    endif
+  endwhile
+
 endfunction
 " }}}2
 
