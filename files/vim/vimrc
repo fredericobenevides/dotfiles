@@ -283,6 +283,7 @@ nnoremap gj j
 " Save current file
 " nnoremap <leader>s :w<cr>
 nnoremap <leader>s :call SaveCurrentBuffer()<cr>
+nnoremap <c-s> :call SaveCurrentBuffer()<cr>
 
 " Save all files
 nnoremap <leader>S :wall<cr>
