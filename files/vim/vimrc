@@ -860,8 +860,6 @@ function! g:OpenDownMarkedBuffers()
     if bufexists(buf_to_open)
       exec "edit " . buf_to_open
       break
-    else
-      break
     endif
   endwhile
 
@@ -883,8 +881,6 @@ function! g:OpenUpMarkedBuffers()
 
     if bufexists(buf_to_open)
       exec "edit " . buf_to_open
-      break
-    else
       break
     endif
   endwhile
