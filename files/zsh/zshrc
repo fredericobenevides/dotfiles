@@ -113,6 +113,15 @@ fi
 
 
 
+### Android Studio
+if [[ -d '/opt/android-studio' ]]; then
+  export ANDROÏD_HOME="/opt/android-studio"
+  export ANDROÏD_SDK="/opt/android-sdk"
+  export PATH="$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$ANDROÏD_SDK/tools/bin:$ANDROÏD_SDK/emulator:$PATH"
+fi
+
+
+
 ### NODE
 export PATH="$HOME/.npm-global/bin:$PATH"
 

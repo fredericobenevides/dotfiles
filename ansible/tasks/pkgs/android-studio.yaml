@@ -22,7 +22,7 @@
   when: stat_result.stat.exists == False
 
 - name: Android Studio - Create the folder to save Android SDK
-  shell: warn=false mkdir -p /opt/Android/Sdk
+  shell: warn=false mkdir -p /opt/android-sdk
   when: stat_result.stat.exists == False
   become: true
 
@@ -31,8 +31,8 @@
   when: stat_result.stat.exists == False
   become: true
 
-- name: Android Studio - Change owner and group for /opt/Android
-  shell: chown -R {{ username }}:{{ usergroup }} /opt/Android
+- name: Android Studio - Change owner and group for /opt/android-sdk
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/android-sdk
   when: stat_result.stat.exists == False
   become: true
 
