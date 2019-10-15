@@ -27,8 +27,12 @@
   pacman: name=ctags state=present
   become: true
 
-- name: Linux pacman - Make sure "jdk8-openjdk" is present
-  pacman: name=jdk8-openjdk state=present
+- name: Linux pacman - Make sure "eclipse-jee" is present
+  pacman: name=eclipse-jee state=present
+  become: true
+
+- name: Linux pacman - Make sure "jdk11-openjdk" is present
+  pacman: name=jdk11-openjdk state=present
   become: true
 
 - name: Linux pacman - Make sure "go" is present
