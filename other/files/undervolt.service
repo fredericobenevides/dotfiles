@@ -1,0 +1,6 @@
+[Unit]
+Description=undervolt
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/undervolt.py --core -150 --cache -150 --gpu -150
