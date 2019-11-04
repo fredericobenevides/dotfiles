@@ -428,7 +428,9 @@ nnoremap <S-Right> :tablast<cr>    |" go to the last tab
 
 " Moving the tabs
 nnoremap <leader>tmh :tabmove -1<cr>  |" move tab to the left
+nnoremap <C-S-Left>tmh :tabmove -1<cr>  |" move tab to the left
 nnoremap <leader>tml :tabmove +1<cr>  |" move tab to the right
+nnoremap <C-S-Right>tml :tabmove +1<cr>  |" move tab to the right
 " }}}2
 "
 " Neovim's Terminal Mappings {{{2
@@ -765,7 +767,7 @@ augroup vimrc
   autocmd FileType go nnoremap <leader>rb :DlvRemoveBreakpoint<cr>
   autocmd FileType go nnoremap <leader>rp :DlvRemoveTracepoint<cr>
   autocmd FileType go nnoremap <leader>tb :DlvToggleBreakpoint<cr>
-  autocmd FileType go nnoremap <leader>tp :DlvToggleTracepoint<cr>
+  autocmd FileType go nnoremap <leader>tt :DlvToggleTracepoint<cr>
   " }}}2
   " }}}2
 
