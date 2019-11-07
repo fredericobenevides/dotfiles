@@ -4,5 +4,6 @@
   loop:
     - github.com/golangci/golangci-lint/cmd/golangci-lint
     - github.com/stamblerre/gocode
+    - github.com/cespare/reflex
   environment:
     GOPATH: "{{ lookup('env', 'HOME') }}/code/go"
