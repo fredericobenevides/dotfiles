@@ -108,7 +108,7 @@ fi
 
 ### JAVA
 if [[ -f '/usr/bin/pacman' ]]; then
-  export JAVA_HOME=/usr/lib/jvm/java-$(pacman -Q | grep -Po 'jdk\d+-openjdk' | grep -Po '\d+')-openjdk
+  export JAVA_HOME=/usr/lib/jvm/java-$(pacman -Q | grep -Po 'jdk\d+-openjdk' | grep -Po '\d+' | head -1)-openjdk
 fi
 
 
