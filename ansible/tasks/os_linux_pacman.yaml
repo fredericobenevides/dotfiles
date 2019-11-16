@@ -12,6 +12,10 @@
     - zip
   become: true
 
+- name: Linux pacman - Make sure "axel" is present
+  pacman: name=axel state=present
+  become: true
+
 - name: Linux pacman - Make sure "chromium" is present
   pacman: name=chromium state=present
   become: true
