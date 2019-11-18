@@ -1,7 +1,7 @@
 ---
 - name: IDEA - Verify if install idea
   stat:
-    path: /opt/idea2
+    path: /opt/idea
   register: stat_result
 
 - name: IDEA - Download idea
