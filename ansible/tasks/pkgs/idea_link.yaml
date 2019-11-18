@@ -1,0 +1,5 @@
+- name: Link ideavimrc file
+  file: src={{ dotfilespath }}/files/idea/ideavimrc
+        dest=~/.ideavimrc
+        state=link
+        force=yes
