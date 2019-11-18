@@ -7,6 +7,9 @@ android_studio_tar_file: 'android-studio-ide-183.5692245-linux.tar.gz'
 go_version: 1.12.6
 go_tar_file: go{{ go_version }}.linux-amd64.tar.gz
 
+idea_version: 2019.2.4
+idea_tar_file: ideaIC-{{ idea_version }}.tar.gz
+
 node_version: 10.16.0
 node_file: node-v{{ node_version }}-linux-x64
 node_tar_file: "{{ node_file }}.tar.gz"

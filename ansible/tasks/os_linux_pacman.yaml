@@ -69,6 +69,9 @@
 - name: Linux pacman - Install android-studio
   import_tasks: tasks/pkgs/android-studio.yaml
 
+- name: Linux pacman - Install idea
+  import_tasks: tasks/pkgs/idea.yaml
+
 - name: Linux pacman - Install java_tools
   import_tasks: tasks/pkgs/java_tools.yaml
 
