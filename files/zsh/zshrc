@@ -106,13 +106,6 @@ fi
 
 
 
-### JAVA
-if [[ -f '/usr/bin/pacman' ]]; then
-  export JAVA_HOME=/usr/lib/jvm/java-$(pacman -Q | grep -Po 'jdk\d+-openjdk' | grep -Po '\d+' | head -1)-openjdk
-fi
-
-
-
 ### Android Studio
 if [[ -d '/opt/android-studio' ]]; then
   export ANDROÏD_HOME="/opt/android-studio"
@@ -172,7 +165,13 @@ export PATH="$HOME/.local_scripts:$PATH"
 
 
 
+export SDKMAN_DIR="/opt/sdkman"
+[[ -s "/opt/sdkman/bin/sdkman-init.sh" ]] && source "/opt/sdkman/bin/sdkman-init.sh"
+
+
+
 # Load local environment
 if [ -f $HOME/.zshrc.local ]; then
   source $HOME/.zshrc.local
 fi
+

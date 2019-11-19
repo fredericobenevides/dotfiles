@@ -9,6 +9,7 @@
     - tk
     - unzip
     - xclip
+    - zip
   become: true
 
 - name: Linux pacman - Make sure "chromium" is present
@@ -95,6 +96,9 @@
 
 - name: Linux pacman - Install ruby gems
   import_tasks: tasks/pkgs/ruby_gems.yaml
+
+- name: Linux pacman - Install sdkman
+  import_tasks: tasks/pkgs/sdkman.yaml
 
 - name: Linux pacman - Install snap
   import_tasks: tasks/pkgs/snap.yaml
