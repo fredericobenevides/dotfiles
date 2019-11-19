@@ -421,15 +421,15 @@ nnoremap <leader>th :tabp<cr>      |" go to the previous tab
 nnoremap <leader>tl :tabn<cr>      |" go to the next tab
 nnoremap <leader>tH :tabfirst<cr>  |" go to the first tab
 nnoremap <leader>tL :tablast<cr>   |" go to the last tab
-nnoremap <Left> :tabp<cr>          |" go to the previous tab
-nnoremap <Right> :tabn<cr>         |" go to the next tab
+nnoremap <A-Left> :tabp<cr>        |" go to the previous tab
+nnoremap <A-Right> :tabn<cr>       |" go to the next tab
 nnoremap <S-Left> :tabfirst<cr>    |" go to the first tab
 nnoremap <S-Right> :tablast<cr>    |" go to the last tab
 
 " Moving the tabs
 nnoremap <leader>tmh :tabmove -1<cr>  |" move tab to the left
-nnoremap <C-S-Left>tmh :tabmove -1<cr>  |" move tab to the left
 nnoremap <leader>tml :tabmove +1<cr>  |" move tab to the right
+nnoremap <C-S-Left>tmh :tabmove -1<cr>  |" move tab to the left
 nnoremap <C-S-Right>tml :tabmove +1<cr>  |" move tab to the right
 " }}}2
 "
