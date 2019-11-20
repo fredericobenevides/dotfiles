@@ -16,5 +16,8 @@
 
 - name : Sdkman - Install some pkgs
   shell: source "/opt/sdkman/bin/sdkman-init.sh"; sdk install {{ item }}
+  ignore_errors: true
   loop:
     - java 11.0.5.j9-adpt
+    - maven
+    - micronaut
