@@ -1,32 +1,80 @@
+" Plugins {{{2
 set commentary
 set multiple-cursors
 set surround
+" }}}2
 
+" Config settings {{{1
+set clipboard+=unnamed
+
+" History and Undo Settings {{{2
+set history=1000
+set undolevels=100
+" }}}2
+
+" }}}1
+
+" Mapping settings {{{1
+
+" Remap leader to <space> {{{2
 let mapleader = " "
+" }}}2
 
-map <leader>a :action $SelectAll<CR>
-map <leader>b :action GotoDeclaration<CR>
-map <leader>c :action $Copy<CR>
-map <leader>d :action EditorDuplicate<CR>
-map <leader>e :action RecentFiles<CR>
-map <leader>f :action Find<CR>
-map <leader>g :action GotoLine<CR>
-map <leader>h :action TypeHierarchy<CR>
-map <leader>i :action ImplementMethods<CR>
-map <leader>m :action EditorScrollToCenter<CR>
-map <leader>n :action FileChooser.NewFolder<CR>
-map <leader>o :action OverrideMethods<CR>
-map <leader>p :action ParameterInfo<CR>
-map <leader>q :action QuickJavaDoc<CR>
-map <leader>r :action Replace<CR>
-map <leader>s :action SaveAll<CR>
-map <leader>t :action Vcs.UpdateProject<CR>
-map <leader>u :action GotoSuperMethod<CR>
-map <leader>v :action $Paste<CR>
-map <leader>w :action EditorSelectWord<CR>
-map <leader>x :action $Cut<CR>
-map <leader>y :action EditorDeleteLine<CR>
-map <leader>[ :action EditorCodeBlockStart<CR>
-map <leader>] :action EditorCodeBlockEnd<CR>
+map <leader>a :action $SelectAll<cr>
+" map <leader>b :action GotoDeclaration<cr>
+" map <leader>c :action $Copy<cr>
+map <leader>d :action EditorDuplicate<cr>
+" map <leader>e :action RecentFiles<cr>
+" map <leader>f :action Find<cr>
+" map <leader>g :action GotoLine<cr>
+" map <leader>h :action TypeHierarchy<cr>
+" map <leader>i :action ImplementMethods<cr>
+map <leader>m :action EditorScrollToCenter<cr>
+map <leader>n :action FileChooser.NewFolder<cr>
+" map <leader>o :action OverrideMethods<cr>
+map <leader>p :action ParameterInfo<cr>
+map <leader>q :action QuickJavaDoc<cr>
+" map <leader>r :action Replace<cr>
+map <leader>s :action SaveAll<cr>
+map <leader>t :action Vcs.UpdateProject<cr>
+map <leader>u :action GotoSuperMethod<cr>
+" map <leader>v :action $Paste<cr>
+" map <leader>w :action EditorSelectWord<cr>
+" map <leader>x :action $Cut<cr>
+" map <leader>y :action EditorDeleteLine<cr>
+map <leader>[ :action EditorCodeBlockStart<cr>
+map <leader>] :action EditorCodeBlockEnd<cr>
 
-map <c-p> :action GotoClass<CR>
+
+
+map <c-p> :action GotoClass<cr>
+
+map <leader>; :action AceAction<cr>
+
+map <leader>ff :action Find<cr>
+
+map <leader>dm :action DelegateMethods<cr>
+map <leader>fr :action Replace<cr>
+map <leader>fu :action FindUsages<cr>
+map <leader>gc :action GenerateConstructor<cr>
+map <leader>gd :action GotoDeclaration<cr>
+map <leader>ge :action GenerateEquals<cr>
+map <leader>gl :action GotoLine<cr>
+map <leader>gs :action GenerateString<cr>
+map <leader>ha :action TypeHierarchy<cr>
+map <leader>hb :action TypeHierarchy.BaseOnThisType<cr>
+map <leader>hc :action TypeHierarchy.Class<cr>
+map <leader>hd :action TypeHierarchy.Subtypes<cr>
+map <leader>he :action TypeHierarchy.SuperTypes<cr>
+map <leader>hf :action TypeHierarchyBase.BaseOnThisType<cr>
+map <leader>hg :action TypeHierarchyPopupMenu<cr>
+map <leader>im :action ImplementMethods<cr>
+map <leader>lm :action FileStructurePopup<cr>
+map <leader>mo :action OverrideMethods<cr>
+map <leader>re :action RenameElement<cr>
+map <leader>rf :action RecentFiles<cr>
+map <leader>sp :action ShowFilePath<cr>
+map <leader>sw :action SurroundWith<cr>
+
+" }}}1
+
