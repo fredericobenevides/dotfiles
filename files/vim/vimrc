@@ -29,6 +29,9 @@ Plug 'w0rp/ale'
 Plug 'chrisbra/NrrwRgn'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'pearofducks/ansible-vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -505,6 +508,12 @@ endif
 " Plugin Easy-align {{{2
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+" }}}2
+
+" Plugin easy-motion {{{2
+map <leader>/ <Plug>(incsearch-easymotion-/)
+map <leader>? <Plug>(incsearch-easymotion-?)
+map <leader>; <Plug>(incsearch-easymotion-stay)
 " }}}2
 
 " Plugin Emmet {{{2
