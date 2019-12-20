@@ -45,7 +45,10 @@ map <leader>u :action GotoSuperMethod<cr>
 map <leader>[ :action EditorCodeBlockStart<cr>
 map <leader>] :action EditorCodeBlockEnd<cr>
 
-
+map <C-h> <c-w>h
+map <C-j> <c-w>j
+map <C-k> <c-w>k
+map <C-l> <c-w>l
 
 map <c-p> :action GotoClass<cr>
 
