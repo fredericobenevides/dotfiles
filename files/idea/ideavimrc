@@ -50,7 +50,9 @@ map <C-j> <c-w>j
 map <C-k> <c-w>k
 map <C-l> <c-w>l
 
+map <c-i> :action Forward<cr>
 map <c-p> :action GotoClass<cr>
+map <c-o> :action Back<cr>
 
 map <leader>; :action AceAction<cr>
 
