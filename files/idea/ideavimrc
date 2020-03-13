@@ -52,6 +52,7 @@ map <C-l> <c-w>l
 
 map <c-i> :action Forward<cr>
 map <c-p> :action GotoClass<cr>
+map <c-s> :action SaveAll<cr>
 map <c-s-p> :action GotoFile<cr>
 map <c-o> :action Back<cr>
 
