@@ -489,6 +489,7 @@ nmap <leader>re <Plug>(coc-rename)
 " Formatting selected code.
 xmap <leader>cf  <Plug>(coc-format-selected)
 nmap <leader>cf  <Plug>(coc-format-selected)
+vmap <leader>cf  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -531,12 +532,12 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Mappings using CoCList:
-" Show all diagnostics.
-nnoremap <silent> <leader>ca  :<C-u>CocList diagnostics<cr>
-" Manage extensionsleader
-nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
+" Show all diagnostics.
+nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
+" Manage extensionsleader
+nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
 " Find symbol of culeader cdocument.
 nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
 " Search workspace leaderlcs.
@@ -862,6 +863,7 @@ function! g:SaveCurrentBuffer()
     WidenRegion
     wall
   else
+    execute "Format"
     w
   endif
 endfunction
@@ -1003,7 +1005,7 @@ endfunction
 
 " Install coc extensios
 function! g:CocInstall()
-  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-pairs coc-python coc-snippets coc-tsserver coc-vimlsp"
+  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp"
 endfunction
 
 " }}}1
