@@ -304,6 +304,7 @@ nnoremap <leader>bL :blast<cr>   |" Move to the next buffer
 nnoremap <leader>ba <c-^><cr>    |" Alternate between buffers
 
 " mark and move between marked buffers
+nnoremap <silent> bm0 :call MarkBuffer('buffer_0')<cr>
 nnoremap <silent> bm1 :call MarkBuffer('buffer_1')<cr>
 nnoremap <silent> bm2 :call MarkBuffer('buffer_2')<cr>
 nnoremap <silent> bm3 :call MarkBuffer('buffer_3')<cr>
@@ -313,36 +314,66 @@ nnoremap <silent> bm6 :call MarkBuffer('buffer_6')<cr>
 nnoremap <silent> bm7 :call MarkBuffer('buffer_7')<cr>
 nnoremap <silent> bm8 :call MarkBuffer('buffer_8')<cr>
 nnoremap <silent> bm9 :call MarkBuffer('buffer_9')<cr>
-nnoremap <silent> bm10 :call MarkBuffer('buffer_10')<cr>
 
-nnoremap <silent> b1 :call OpenBuffer('buffer_1')<cr>
-nnoremap <silent> b2 :call OpenBuffer('buffer_2')<cr>
-nnoremap <silent> b3 :call OpenBuffer('buffer_3')<cr>
-nnoremap <silent> b4 :call OpenBuffer('buffer_4')<cr>
-nnoremap <silent> b5 :call OpenBuffer('buffer_5')<cr>
+nnoremap <silent> b0 :call OpenSplitBuffer('buffer_0', 0)<cr>
+nnoremap <silent> b1 :call OpenSplitBuffer('buffer_1', 0)<cr>
+nnoremap <silent> b2 :call OpenSplitBuffer('buffer_2', 0)<cr>
+nnoremap <silent> b3 :call OpenSplitBuffer('buffer_3', 0)<cr>
+nnoremap <silent> b4 :call OpenSplitBuffer('buffer_4', 0)<cr>
+nnoremap <silent> b5 :call OpenSplitBuffer('buffer_5', 0)<cr>
+nnoremap <silent> b6 :call OpenSplitBuffer('buffer_6', 0)<cr>
+nnoremap <silent> b7 :call OpenSplitBuffer('buffer_7', 0)<cr>
+nnoremap <silent> b8 :call OpenSplitBuffer('buffer_8', 0)<cr>
+nnoremap <silent> b9 :call OpenSplitBuffer('buffer_9', 0)<cr>
+
+nnoremap <silent> bs0 :call OpenSplitBuffer('buffer_0', 1)<cr>
+nnoremap <silent> bs1 :call OpenSplitBuffer('buffer_1', 1)<cr>
+nnoremap <silent> bs2 :call OpenSplitBuffer('buffer_2', 1)<cr>
+nnoremap <silent> bs3 :call OpenSplitBuffer('buffer_3', 1)<cr>
+nnoremap <silent> bs4 :call OpenSplitBuffer('buffer_4', 1)<cr>
+nnoremap <silent> bs5 :call OpenSplitBuffer('buffer_5', 1)<cr>
+nnoremap <silent> bs6 :call OpenSplitBuffer('buffer_6', 1)<cr>
+nnoremap <silent> bs7 :call OpenSplitBuffer('buffer_7', 1)<cr>
+nnoremap <silent> bs8 :call OpenSplitBuffer('buffer_8', 1)<cr>
+nnoremap <silent> bs9 :call OpenSplitBuffer('buffer_9', 1)<cr>
 
 nnoremap <silent> <c-Left> :call OpenDownMarkedBuffers()<cr>
 nnoremap <silent> <c-Right> :call OpenUpMarkedBuffers()<cr>
 " }}}2
 
 " mark and move between marked terminals
+nnoremap <silent> tm0 :call MarkBuffer('terminal_0')<cr>
 nnoremap <silent> tm1 :call MarkBuffer('terminal_1')<cr>
 nnoremap <silent> tm2 :call MarkBuffer('terminal_2')<cr>
-nnoremap <silent> tm3 :call MarkBuffer('terminal_2')<cr>
-nnoremap <silent> tm4 :call MarkBuffer('terminal_2')<cr>
-nnoremap <silent> tm5 :call MarkBuffer('terminal_2')<cr>
+nnoremap <silent> tm3 :call MarkBuffer('terminal_3')<cr>
+nnoremap <silent> tm4 :call MarkBuffer('terminal_4')<cr>
+nnoremap <silent> tm5 :call MarkBuffer('terminal_5')<cr>
+nnoremap <silent> tm6 :call MarkBuffer('terminal_6')<cr>
+nnoremap <silent> tm7 :call MarkBuffer('terminal_7')<cr>
+nnoremap <silent> tm8 :call MarkBuffer('terminal_8')<cr>
+nnoremap <silent> tm9 :call MarkBuffer('terminal_9')<cr>
 
-nnoremap <silent> t1 :call OpenTerminal('terminal_1', 0)<cr>
-nnoremap <silent> t2 :call OpenTerminal('terminal_2', 0)<cr>
-nnoremap <silent> t3 :call OpenTerminal('terminal_3', 0)<cr>
-nnoremap <silent> t4 :call OpenTerminal('terminal_4', 0)<cr>
-nnoremap <silent> t5 :call OpenTerminal('terminal_5', 0)<cr>
+nnoremap <silent> t0 :call OpenSplitBuffer('terminal_0', 0)<cr>
+nnoremap <silent> t1 :call OpenSplitBuffer('terminal_1', 0)<cr>
+nnoremap <silent> t2 :call OpenSplitBuffer('terminal_2', 0)<cr>
+nnoremap <silent> t3 :call OpenSplitBuffer('terminal_3', 0)<cr>
+nnoremap <silent> t4 :call OpenSplitBuffer('terminal_4', 0)<cr>
+nnoremap <silent> t5 :call OpenSplitBuffer('terminal_5', 0)<cr>
+nnoremap <silent> t6 :call OpenSplitBuffer('terminal_6', 0)<cr>
+nnoremap <silent> t7 :call OpenSplitBuffer('terminal_7', 0)<cr>
+nnoremap <silent> t8 :call OpenSplitBuffer('terminal_8', 0)<cr>
+nnoremap <silent> t9 :call OpenSplitBuffer('terminal_9', 0)<cr>
 
-nnoremap <silent> ts1 :call OpenTerminal('terminal_1', 1)<cr>
-nnoremap <silent> ts2 :call OpenTerminal('terminal_2', 1)<cr>
-nnoremap <silent> ts3 :call OpenTerminal('terminal_3', 1)<cr>
-nnoremap <silent> ts4 :call OpenTerminal('terminal_4', 1)<cr>
-nnoremap <silent> ts5 :call OpenTerminal('terminal_5', 1)<cr>
+nnoremap <silent> ts0 :call OpenSplitBuffer('terminal_0', 1)<cr>
+nnoremap <silent> ts1 :call OpenSplitBuffer('terminal_1', 1)<cr>
+nnoremap <silent> ts2 :call OpenSplitBuffer('terminal_2', 1)<cr>
+nnoremap <silent> ts3 :call OpenSplitBuffer('terminal_3', 1)<cr>
+nnoremap <silent> ts4 :call OpenSplitBuffer('terminal_4', 1)<cr>
+nnoremap <silent> ts5 :call OpenSplitBuffer('terminal_5', 1)<cr>
+nnoremap <silent> ts6 :call OpenSplitBuffer('terminal_6', 1)<cr>
+nnoremap <silent> ts7 :call OpenSplitBuffer('terminal_7', 1)<cr>
+nnoremap <silent> ts8 :call OpenSplitBuffer('terminal_8', 1)<cr>
+nnoremap <silent> ts9 :call OpenSplitBuffer('terminal_9', 1)<cr>
 " }}}2
 
 
@@ -398,7 +429,7 @@ endif
 
 " Opening and closing a tab
 nnoremap <leader>tc :tabclose<cr>  |" close current tab
-nnoremap <leader>tn :call OpenNewTab()<cr>    |" create a new empty tab
+nnoremap <leader>tn :tabnew<cr>    |" create a new empty tab
 nnoremap <leader>to :tabonly<cr>   |" close all others tab but this
 
 " Moving betwen tabs
@@ -896,14 +927,17 @@ function! g:OpenNewTab()
   exec "normal \<c-h>"
 endfunction
 
-function! g:OpenTerminal(name, vertical)
-  if bufexists(a:name)
-    if (a:vertical == 1)
-      exec "vsplit"
-    endif
-
-    call OpenBuffer(a:name)
+function! g:OpenSplitBuffer(name, vertical)
+  if !bufexists(a:name)
+    echo "Buffer doesn't exist"
+    return
   endif
+
+  if (a:vertical == 1)
+    exec "vsplit"
+  endif
+
+  call OpenBuffer(a:name)
 endfunction
 
 
@@ -917,6 +951,10 @@ function! g:MarkBuffer(name)
 endfunction
 
 function! g:OpenBuffer(name)
+  if (expand('%') == a:name)
+    return
+  endif
+
   if !bufexists(a:name)
     echo "Buffer doesn't exist"
     return
