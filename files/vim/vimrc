@@ -338,6 +338,17 @@ nnoremap <silent> bs7 :call OpenSplitBuffer('buffer_7', 1)<cr>
 nnoremap <silent> bs8 :call OpenSplitBuffer('buffer_8', 1)<cr>
 nnoremap <silent> bs9 :call OpenSplitBuffer('buffer_9', 1)<cr>
 
+nnoremap <silent> bt0 :call OpenTabBuffer('buffer_0')<cr>
+nnoremap <silent> bt1 :call OpenTabBuffer('buffer_1')<cr>
+nnoremap <silent> bt2 :call OpenTabBuffer('buffer_2')<cr>
+nnoremap <silent> bt3 :call OpenTabBuffer('buffer_3')<cr>
+nnoremap <silent> bt4 :call OpenTabBuffer('buffer_4')<cr>
+nnoremap <silent> bt5 :call OpenTabBuffer('buffer_5')<cr>
+nnoremap <silent> bt6 :call OpenTabBuffer('buffer_6')<cr>
+nnoremap <silent> bt7 :call OpenTabBuffer('buffer_7')<cr>
+nnoremap <silent> bt8 :call OpenTabBuffer('buffer_8')<cr>
+nnoremap <silent> bt9 :call OpenTabBuffer('buffer_9')<cr>
+
 nnoremap <silent> <c-Left> :call OpenDownMarkedBuffers()<cr>
 nnoremap <silent> <c-Right> :call OpenUpMarkedBuffers()<cr>
 " }}}2
@@ -375,6 +386,17 @@ nnoremap <silent> ts6 :call OpenSplitBuffer('terminal_6', 1)<cr>
 nnoremap <silent> ts7 :call OpenSplitBuffer('terminal_7', 1)<cr>
 nnoremap <silent> ts8 :call OpenSplitBuffer('terminal_8', 1)<cr>
 nnoremap <silent> ts9 :call OpenSplitBuffer('terminal_9', 1)<cr>
+
+nnoremap <silent> tt0 :call OpenTabBuffer('terminal_0')<cr>
+nnoremap <silent> tt1 :call OpenTabBuffer('terminal_1')<cr>
+nnoremap <silent> tt2 :call OpenTabBuffer('terminal_2')<cr>
+nnoremap <silent> tt3 :call OpenTabBuffer('terminal_3')<cr>
+nnoremap <silent> tt4 :call OpenTabBuffer('terminal_4')<cr>
+nnoremap <silent> tt5 :call OpenTabBuffer('terminal_5')<cr>
+nnoremap <silent> tt6 :call OpenTabBuffer('terminal_6')<cr>
+nnoremap <silent> tt7 :call OpenTabBuffer('terminal_7')<cr>
+nnoremap <silent> tt8 :call OpenTabBuffer('terminal_8')<cr>
+nnoremap <silent> tt9 :call OpenTabBuffer('terminal_9')<cr>
 " }}}2
 
 
@@ -937,6 +959,17 @@ function! g:OpenSplitBuffer(name, vertical)
   if (a:vertical == 1)
     exec "vsplit"
   endif
+
+  call OpenBuffer(a:name)
+endfunction
+
+function! g:OpenTabBuffer(name)
+  if !bufexists(a:name)
+    echo "Buffer doesn't exist"
+    return
+  endif
+
+  exec "tabnew"
 
   call OpenBuffer(a:name)
 endfunction
