@@ -21,7 +21,6 @@ Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'chrisbra/NrrwRgn'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'pearofducks/ansible-vim'
 Plug 'easymotion/vim-easymotion'
@@ -768,16 +767,6 @@ nnoremap <leader>nl :<c-u>bo Tnext<cr>
 nnoremap <leader>nh :<c-u>bo Tprevious<cr>
 " }}}2
 
-" Plugin NrrwRgn {{{2
-nnoremap <leader>rh :call NarrowHtml()<cr>
-nnoremap <leader>rj :call NarrowJavascript()<cr>
-nnoremap <leader>rc :call NarrowCss()<cr>
-
-vnoremap <leader>rh :NR<cr> :set filetype=html<cr> <c-w><c-p>
-vnoremap <leader>rj :NR<cr> :set filetype=javascript<cr> <c-w><c-p>
-vnoremap <leader>rc :NR<cr> :set filetype=css<cr> <c-w><c-p>
-" }}}2
-
 " }}}1
 
 " Autocommands {{{1
@@ -935,13 +924,8 @@ endfunction
 function! g:SaveCurrentBuffer()
   let buffer_name = @%
 
-  if buffer_name =~# '^NrrwRgn'
-    WidenRegion
-    wall
-  else
-    execute "Format"
-    w
-  endif
+  execute "Format"
+  w
 endfunction
 
 function! g:OpenNewTab()
@@ -1040,77 +1024,6 @@ function! g:OpenUpMarkedBuffers()
       break
     endif
   endwhile
-
-endfunction
-" }}}2
-
-" NrrwRgn Helper Functions {{{2
-function! g:NarrowHtml()
-  normal! gg
-
-  let @/ = 'template'
-  normal! nj
-  let first_line = line('.')
-
-  normal! nk
-  let last_line = line('.')
-
-  let cmd = first_line . ',' . last_line . 'NR'
-  exec cmd
-
-  exec 'set filetype=html'
-endfunction
-
-function! g:NarrowJavascript()
-  normal! gg
-
-  let @/ = 'script'
-  normal! nj
-  let first_line = line('.')
-
-  normal! nk
-  let last_line = line('.')
-
-  let cmd = first_line . ',' . last_line . 'NR'
-  exec cmd
-
-  exec 'set filetype=javascript'
-endfunction
-
-function! g:NarrowCss()
-  normal! gg
-
-  let @/ = 'style'
-  normal! nj
-  let first_line = line('.')
-
-  normal! nk
-  let last_line = line('.')
-
-  let cmd = first_line . ',' . last_line . 'NR'
-  exec cmd
-
-  exec 'set filetype=css'
-endfunction
-
-let g:vueFileType = "vue.html"
-
-" Vue dynamic filetype
-function! s:setVueFileType()
-  if searchpair('<script', '', '</script>', 'bnW')
-    call s:setFileType("javascript")
-  elseif searchpair('<style', '', '</style>', 'bnW')
-    call s:setFileType("css")
-  else
-    call s:setFileType("vue.html")
-  endif
-endfunction
-
-function! s:setFileType(kind)
-  if g:vueFileType != a:kind
-    exec "set ft=" . a:kind
-    let g:vueFileType = a:kind
-  endif
 
 endfunction
 " }}}2
