@@ -40,8 +40,8 @@
   pacman: name=neovim state=present
   become: true
 
-- name: Linux pacman - Make sure "nodejs-lts-dubnium" is present
-  pacman: name=nodejs-lts-dubnium state=present
+- name: Linux pacman - Make sure "nodejs-lts-erbium" is present
+  pacman: name=nodejs-lts-erbium state=present
   become: true
 
 - name: Linux pacman - Make sure "npm" is present
