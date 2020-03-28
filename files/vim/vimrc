@@ -623,6 +623,8 @@ nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
 " Resume latest cocleader.c
 nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
+" call Fold
+nnoremap <silent> <leader>cf  :Fold<CR>zR
 
 " }}} 2
 
