@@ -1032,7 +1032,7 @@ endfunction
 
 " Install coc extensios
 function! g:CocInstall()
-  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp"
+  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
 endfunction
 
 " }}}1
