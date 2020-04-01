@@ -500,7 +500,7 @@ endif
 
 " Plugins Settings {{{1
 
-" Plugin airline {{{1
+" Plugin airline {{{2
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#buffer_nr_show = 1
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -638,6 +638,7 @@ if has('nvim')
   endif
 
 endif
+" }}}2
 
 " Plugin Easy-align {{{2
 xmap ga <Plug>(EasyAlign)
@@ -645,6 +646,8 @@ nmap ga <Plug>(EasyAlign)
 " }}}2
 
 " Plugin easy-motion {{{2
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
 map <leader>/ <Plug>(incsearch-easymotion-/)
 map <leader>? <Plug>(incsearch-easymotion-?)
 map <leader>; <Plug>(incsearch-easymotion-stay)
@@ -697,8 +700,9 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 let g:fzf_tags_command = 'ctags -R'
 " }}}2
 
-" Plugin indentLine
+" Plugin indentLine {{{2
 let g:indentLine_setConceal = 0
+" }}}2
 
 " Plugin line-mover {{{2
 let g:line_mover_key_up = '<A-k>'
