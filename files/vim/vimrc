@@ -5,7 +5,8 @@ else
 endif
 
 " Colors and themes {{{2
-Plug 'tomasr/molokai'
+Plug 'joshdick/onedark.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'bling/vim-airline'
 " }}}2
 
@@ -85,7 +86,8 @@ call plug#end()
 " Color and themes configs {{{1
 syntax on
 set t_Co=256
-colorscheme molokai
+colorscheme onedark
+set termguicolors " enable true colors in terminal
 " }}}1
 
 " Config settings {{{1
@@ -160,6 +162,7 @@ set mouse=a " enable mouse inside vim
 if has('nvim')
   highlight! link TermCursor Cursor
   highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+  highlight! Normal ctermfg=252 ctermbg=233 guifg=#F8F8F2 guibg=#1B1D1E " change background to be darker
 endif
 " }}}2
 
