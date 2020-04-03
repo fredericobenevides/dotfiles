@@ -36,7 +36,6 @@ Plug 'junegunn/fzf.vim'
 
 " Git {{{2
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'junegunn/gv.vim'
 " }}}2
