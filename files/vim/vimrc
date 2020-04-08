@@ -6,24 +6,19 @@ endif
 
 " Colors and themes {{{2
 Plug 'joshdick/onedark.vim'
-Plug 'sheerun/vim-polyglot'
 Plug 'bling/vim-airline'
 " }}}2
 
 " Editor Utilities {{{2
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'jparise/vim-graphql'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'pearofducks/ansible-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
@@ -48,9 +43,11 @@ Plug 'buoto/gotests-vim', { 'do': ':! go get -u github.com/cweill/gotests/...' }
 " }}}2
 
 " Html & css {{{2
-Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
 Plug 'KabbAmine/vCoolor.vim'
+" }}}2
+
+" Syntax {{{2
+Plug 'sheerun/vim-polyglot'
 " }}}2
 
 " Tpope Utilities {{{2
@@ -66,13 +63,6 @@ if has('nvim')
   Plug 'radenling/vim-dispatch-neovim'
 endif
 " }}}2
-
-" Tmux integration {{{2
-if !has('nvim')
-  Plug 'benmills/vimux'
-  Plug 'christoomey/vim-tmux-navigator'
-endif
-"}}}2
 
 " Neovim's terminal integration {{{2
 if has('nvim')
@@ -744,19 +734,6 @@ let g:go_highlight_operators = 1
 let g:indent_guides_auto_co2ors = 0
 " }}}2
 
-" Plugin vim-jsx {{{2
-let g:jsx_ext_required = 0
-" }}}2
-
-" Plugin Vimux {{{2
-map <Leader>vp :VimuxPromptCommand<cr>      |" Prompt for a command to run
-map <Leader>vl :VimuxRunLastCommand<cr>     |" Run last command executed
-map <Leader>vi :VimuxInspectRunner<cr>      |" Inspect runner pane
-map <Leader>vq :VimuxCloseRunner<cr>        |" Close vim tmux runner opened
-map <Leader>vx :VimuxInterruptRunner<cr>    |" Interrupt any command running
-map <Leader>vz :call VimuxZoomRunner()<cr>  |" Zoom the runner pane
-" }}}2
-
 " Plugin neoterm {{{2
 nnoremap <leader>nc :<c-u>exec v:count.'Tclear'<cr>
 nnoremap <leader>nC :<c-u>exec v:count.'Tclose'<cr>
@@ -1038,7 +1015,7 @@ endfunction
 
 " Install coc extensios
 function! g:CocInstall()
-  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
+  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-tabnine coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
 endfunction
 
 " }}}1
