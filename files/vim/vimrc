@@ -11,8 +11,6 @@ Plug 'bling/vim-airline'
 
 " Editor Utilities {{{2
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'majutsushi/tagbar'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -228,8 +226,7 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-nnoremap <F6> :NERDTreeToggle<cr>
-nnoremap <F7> :NERDTreeFind<cr>
+nnoremap <F6> :CocCommand explorer<CR>
 nnoremap <F8> :TagbarOpenAutoClose<CR>
 " }}}2
 
@@ -705,12 +702,6 @@ let g:line_mover_key_up = '<A-k>'
 let g:line_mover_key_down = '<A-j>'
 " }}}2
 
-" Plugin NERDTree {{{2
-let NERDTreeShowHidden = 1 " show hidden files
-let NERDTreeQuitOnOpen = 1 " close after opening a file
-let NERDTreeIgnore=['\.class$']
-" }}}2
-
 " Plugin vCoolor {{{2
 nnoremap <leader>p :VCoolor<cr>
 " inoremap <leader>p :VCoolor<cr>
@@ -798,9 +789,6 @@ augroup vimrc
   " Plugin ansible=vim
   au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
 
-  " Plugin NerdTREE
-  autocmd VimEnter * call g:OpenNerdTree()
-
   " Plugin vim-indent-guides
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234 guibg=#1c1c1c
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235 guibg=#262626
@@ -885,29 +873,6 @@ augroup END
 " }}}1
 
 " Functions {{{1
-
-" NERDTree {{{2
-
-" Open NERDTree and put the focus on the next window
-function! g:OpenNerdTree()
-
-  " if is a directory, open the NERDTree
-  let path = expand("%")
-  if path =~ "NERD_tree_1"
-    NERDTree
-  end
-
-  " NERDtree is open? move to next window, deletes the buffer and goes back
-  let path = expand("%")
-  if path =~ "NERD_tree_2"
-    wincmd p
-    bd
-    wincmd p
-  else
-    wincmd p
-  end
-endfunction
-" }}}2
 
 " Editor Utilities {{{2
 function! g:SaveCurrentBuffer()
@@ -1019,7 +984,7 @@ endfunction
 
 " Install coc extensios
 function! g:CocInstall()
-  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-git coc-json coc-tabnine coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
+  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-explorer coc-git coc-json coc-tabnine coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
 endfunction
 
 " }}}1
