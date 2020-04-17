@@ -82,7 +82,10 @@
 - name: Linux pacman - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
 
-- name: Linux pacman - Link node files before installing packages.
+- name: Linux pacman - Install NerdFonts
+  import_tasks: tasks/pkgs/nerdfonts.yaml
+
+- name: Linux pacman - Link node files before installing packages
   import_tasks: tasks/pkgs/node_link.yaml
 
 - name: Linux pacman - Install node packages
