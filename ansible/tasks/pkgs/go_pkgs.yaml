@@ -1,9 +1,13 @@
 ---
 - name: Go pkgs - Installing go pkgs
-  shell: go get -u {{ item }}
+  shell: if [[ ! -d  "$HOME/code/go/src/{{ item.path }}" ]]; then go get -u {{ item.pkg }}; else echo "ok"; fi
   loop:
-    - github.com/golangci/golangci-lint/cmd/golangci-lint
-    - github.com/stamblerre/gocode
-    - github.com/cespare/reflex
+    - { path: github.com/golangci, pkg: github.com/golangci/golangci-lint/cmd/golangci-lint }
+    - { path: github.com/stamblerre, pkg: github.com/stamblerre/gocode }
+    - { path: github.com/cespare, pkg: github.com/cespare/reflex }
   environment:
     GOPATH: "{{ lookup('env', 'HOME') }}/code/go"
+  args:
+    executable: "/bin/bash"
+  register: stat_result
+  changed_when: stat_result.stdout != "ok"

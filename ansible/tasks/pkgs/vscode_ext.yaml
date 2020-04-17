@@ -1,6 +1,6 @@
 ---
 - name: Linux pacman - Install vscode extensions
-  shell: code --install-extension {{ item }}
+  shell: code --list-extensions | grep {{ item }}; if [[ $? = "1" ]]; then code --install-extension {{ item }}; else echo "ok"; fi
   loop:
     - dbaeumer.vscode-eslint
     - naco-siren.gradle-language
@@ -14,5 +14,3 @@
     - vscjava.vscode-spring-boot-dashboard
     - vscjava.vscode-spring-initializr
     - youmaycallmev.vscode-java-saber
-
-

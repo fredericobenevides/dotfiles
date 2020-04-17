@@ -15,7 +15,7 @@
   become: true
 
 - name : Sdkman - Install some pkgs
-  shell: source "/opt/sdkman/bin/sdkman-init.sh"; sdk install {{ item }}
+  shell: source "/opt/sdkman/bin/sdkman-init.sh"; sdk list {{ item }} | grep "> \*" ; if [[ $? = "1" ]]; then sdk install {{ item }}; else echo "ok"; fi
   ignore_errors: true
   loop:
     - java 11.0.5.j9-adpt

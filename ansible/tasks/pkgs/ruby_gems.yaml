@@ -1,6 +1,6 @@
 ---
 - name: Ruby gems - Installing gems for ruby
-  shell: eval "$(rbenv init -)"; gem install {{ item }}
+  shell: eval "$(rbenv init -)"; gem list | grep {{ item }}; if [[ $? = "1" ]]; then gem install {{ item }}; else echo "ok"; fi
   loop:
     - awesome_print
     - bundler

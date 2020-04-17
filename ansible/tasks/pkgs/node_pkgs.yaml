@@ -4,6 +4,8 @@
   loop:
     - neovim
     - tern
+    - typescript
+    - ts-node
   when: os == "macos"
 
 - name: Node pkgs (linux) - Installing global node pkgs for linux
@@ -13,13 +15,17 @@
   loop:
     - neovim
     - tern
+    - typescript
+    - ts-node
   when: (os == "linux") and (os_distro != "manjaro")
-  
+
 - name: Node pkgs (manjaro) - Installing global node pkgs for linux manjaro
-  shell: npm install -g {{ item }}
+  shell: if [[ ! -d "$HOME/.npm-global/lib/node_modules/{{ item }}" ]]; then npm install -g {{ item }}; else echo "ok"; fi
   loop:
     - neovim
     - tern
+    - typescript
+    - ts-node
   when: (os == "linux") and (os_distro == "manjaro")
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.npm-global/bin:{{ ansible_env.PATH }}"
