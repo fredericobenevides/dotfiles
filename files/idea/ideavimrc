@@ -68,6 +68,7 @@ map <leader>gd :action GotoDeclaration<cr>
 map <leader>ge :action GenerateEquals<cr>
 map <leader>gl :action GotoLine<cr>
 map <leader>gs :action GenerateString<cr>
+map <leader>hw :action HideAllWindows<cr>
 map <leader>th :action TypeHierarchy<cr>
 map <leader>im :action ImplementMethods<cr>
 map <leader>lm :action FileStructurePopup<cr>
