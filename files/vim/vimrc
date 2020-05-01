@@ -933,7 +933,8 @@ function! g:OpenBuffer(name)
     return
   endif
 
-  exec "edit " . a:name
+  let buffer_number = bufnr(a:name)
+  exec "buffer " . buffer_number
   echo ""
 endfunction
 
@@ -941,7 +942,8 @@ function! g:OpenDownMarkedBuffers()
   let current_buffer = @%
 
   if matchstr(current_buffer, 'buffer_\d') == ''
-    exec "edit buffer_1"
+    let buffer_number = bufnr("buffer_1")
+    exec "buffer " . buffer_number
     return
   endif
 
@@ -952,7 +954,8 @@ function! g:OpenDownMarkedBuffers()
     let buf_to_open = 'buffer_' . id_buffer
 
     if bufexists(buf_to_open)
-      exec "edit " . buf_to_open
+      let buffer_number = bufnr(buf_to_open)
+      exec "buffer " . buffer_number
       break
     endif
   endwhile
