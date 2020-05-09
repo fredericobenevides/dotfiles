@@ -1,7 +1,7 @@
 ---
 - name: Android Studio - Verify if install android-studio
   stat:
-    path: /opt/android-studio
+    path: /opt/Android/android-studio
   register: stat_result
 
 - name: Android Studio - Download android-studio
@@ -13,33 +13,34 @@
 - name: Android Studio - Extract android-studio file to /opt
   unarchive:
     src: /tmp/{{ android_studio_tar_file }}
-    dest: /opt/
+    dest: /opt/Android
   become: true
-  when: stat_result.stat.exists == False
-
-- name: Android Studio - Removing download file
-  shell: warn=false rm /tmp/{{ android_studio_tar_file }} 2>/dev/null
   when: stat_result.stat.exists == False
 
 - name: Android Studio - Create the folder to save Android SDK
-  shell: warn=false mkdir -p /opt/android-sdk
+  shell: warn=false mkdir -p /opt/Android/Sdk
   when: stat_result.stat.exists == False
   become: true
 
-- name: Android Studio - Change owner and group for /opt/android-studio
-  shell: chown -R {{ username }}:{{ usergroup }} /opt/android-studio
+- name: Android Studio - Change owner and group for /opt/Android/android-studio
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/Android/android-studio
   when: stat_result.stat.exists == False
   become: true
 
-- name: Android Studio - Change owner and group for /opt/android-sdk
-  shell: chown -R {{ username }}:{{ usergroup }} /opt/android-sdk
+- name: Android Studio - Change owner and group for /opt/Android/Sdk
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/Android/Sdk
   when: stat_result.stat.exists == False
   become: true
 
 - name: Android Studio - Link binary file to /usr/local/bin
-  file: src=/opt/android-studio/bin/studio.sh
+  file: src=/opt/Android/android-studio/bin/studio.sh
         dest=/usr/local/bin/android-studio
         state=link
         force=yes
   when: stat_result.stat.exists == False
   become: true
+
+- name: Android Studio - Removing download file
+  shell: warn=false rm /tmp/{{ android_studio_tar_file }} 2>/dev/null
+  when: stat_result.stat.exists == False
+
