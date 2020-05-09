@@ -1,0 +1,6 @@
+- name: Node pkgs (manjaro) - Installing yay pachages for linux manjaro
+  shell: yay -S --noconfirm {{ item }}
+  shell: yay -Q {{ item }}; if [[ $? = "1" ]]; then yay -S --confirm {{ item }}; else echo "ok"; fi
+  loop:
+    - bettergram
+  when: (os == "linux") and (os_distro == "manjaro")

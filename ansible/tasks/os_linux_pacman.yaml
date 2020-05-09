@@ -64,6 +64,10 @@
   pacman: name=yad state=present
   become: true
 
+- name: Linux pacman - Make sure "yay" is present
+  pacman: name=yay state=present
+  become: true
+
 - name: Linux pacman - Make sure "zsh" is present
   pacman: name=zsh state=present
   become: true
@@ -121,6 +125,9 @@
 
 - name: Linux pacman - Install and configure pkgs for xorg
   import_tasks: tasks/pkgs/xorg.yaml
+
+- name: Linux pacman - Install yay packages
+  import_tasks: tasks/pkgs/yay_pkgs.yaml
 
 
 # It's in the last because neovim need some packages installed before
