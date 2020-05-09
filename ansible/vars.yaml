@@ -4,6 +4,9 @@ anaconda3_sh_file: Anaconda3-2019.03-Linux-x86_64.sh
 android_studio_version: 3.4.2.0
 android_studio_tar_file: 'android-studio-ide-183.5692245-linux.tar.gz'
 
+flutter_version: 1.17.0
+flutter_tar_file: flutter_linux_{{ flutter_version }}-stable.tar.xz
+
 go_version: 1.12.6
 go_tar_file: go{{ go_version }}.linux-amd64.tar.gz
 
@@ -12,13 +15,13 @@ idea_tar_file: ideaIU-{{ idea_version }}.tar.gz
 
 node_version: 12.16.1
 node_file: node-v{{ node_version }}-linux-x64
-node_tar_file: "{{ node_file }}.tar.gz"
+node_tar_file: '{{ node_file }}.tar.gz'
 
 ruby_version: 2.6.3
 
 squirrel_sql_version: 4.0.0
 squirrel_sql_file: squirrelsql-4.0.0-standard
-squirrel_sql_zip_file: "{{ squirrel_sql_file }}.zip"
+squirrel_sql_zip_file: '{{ squirrel_sql_file }}.zip'
 
 pips:
   - { name: 'flake8', extra_args: '' }

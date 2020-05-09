@@ -78,6 +78,9 @@
 - name: Linux pacman - Install android-studio
   import_tasks: tasks/pkgs/android-studio.yaml
 
+- name: Linux pacman - Install flutter
+  import_tasks: tasks/pkgs/flutter.yaml
+
 - name: Linux pacman - Install idea
   import_tasks: tasks/pkgs/idea.yaml
 
