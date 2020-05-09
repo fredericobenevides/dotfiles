@@ -987,7 +987,7 @@ endfunction
 
 " Install coc extensios
 function! g:CocInstall()
-  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-explorer coc-git coc-json coc-tabnine coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
+  exec "CocInstall coc-css coc-html coc-emmet coc-eslint coc-explorer coc-flutter coc-git coc-json coc-tabnine coc-pairs coc-prettier coc-python coc-snippets coc-tsserver coc-vimlsp coc-yaml"
 endfunction
 
 " }}}1
