@@ -260,7 +260,7 @@ set pastetoggle=<leader>tp
 nnoremap <leader>tw :set wrap! wrap?<cr>
 
 " Find duplicate words
-nnoremap <leader>dw /\v<(\w+)\_s+\1><cr>
+nnoremap <leader>fW /\v<(\w+)\_s+\1><cr>
 
 " Find current word
 nnoremap <leader>fw /\v<C-r><C-w><cr>
