@@ -504,6 +504,7 @@ endif
 let g:coc_global_extensions = [
   \ 'coc-actions',
   \ 'coc-css',
+  \ 'coc-cssmodules',
   \ 'coc-html',
   \ 'coc-emmet',
   \ 'coc-eslint',
@@ -517,6 +518,7 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-python',
   \ 'coc-snippets',
+  \ 'coc-todolist',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
   \ 'coc-yaml',
@@ -650,7 +652,10 @@ nnoremap <silent> <leader>cF  :Fold<CR>zR
 " Open yank list
 nnoremap <silent> <leader>ly  :<C-u>CocList -A --normal yank<cr>
 " flutter commands
-nnoremap <silent> <leader>cf  :<C-u>CocList --input=flutter. --normal commands<CR>
+nnoremap <silent> <leader>cf  :<C-u>CocList --input=flutter. --normal commands<cr>
+" coc-todo list
+nnoremap <silent> <leader>lt  :<C-u>CocList todolist<cr>
+nnoremap <silent> <leader>ct  :<C-u>CocList --input=todolist. --normal commands<cr>
 
 " }}} 2
 
