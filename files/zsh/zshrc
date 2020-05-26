@@ -78,6 +78,8 @@ alias minishift_oc_env='eval $(minishift oc-env)'
 alias gotest="reflex -r '\.go$' -s go test ./..."
 alias vim='nvim'
 
+alias flutter_devtools='flutter pub global run devtools'
+
 ### GOLANG
 export GOPATH="$HOME/code/go"
 export PATH="$GOPATH/bin:$PATH"
@@ -107,10 +109,21 @@ fi
 
 
 ### Android Studio
-if [[ -d '/opt/android-studio' ]]; then
-  export ANDROÏD_HOME="/opt/android-studio"
-  export ANDROÏD_SDK="/opt/android-sdk"
-  export PATH="$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$ANDROÏD_SDK/tools/bin:$ANDROÏD_SDK/emulator:$PATH"
+if [[ -d '/opt/Android/android-studio' ]]; then
+  export ANDROID_HOME="/opt/Android/android-studio"
+  export ANDROID_SDK="/opt/Android/Sdk"
+  export PATH="$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/emulator:$PATH"
+fi
+
+
+
+### Flutter
+if [[ -d '/opt/flutter' ]]; then
+  export FLUTTER_HOME="/opt/flutter"
+  export FLUTTER_PUB_CACHE="/opt/flutter/.pub-cache"
+  export DART_HOME=/opt/flutter/bin/cache/dart-sdk
+
+  export PATH="$DART_HOME/bin:$FLUTTER_PUB_CACHE/bin:$FLUTTER_HOME/bin:$PATH"
 fi
 
 
