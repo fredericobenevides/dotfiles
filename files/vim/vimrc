@@ -478,8 +478,8 @@ endif
 " }}}2
 
 " Vim Mappings {{{2
-nnoremap <leader>ev :tabe $MYVIMRC<cr>  |" Edit vimrc file in a new tab
-nnoremap <leader>sv :so $MYVIMRC<cr>    |" Source vimrc
+nnoremap <leader>ve :tabe $MYVIMRC<cr>  |" Edit vimrc file in a new tab
+nnoremap <leader>vs :so $MYVIMRC<cr>    |" Source vimrc
 " }}}2
 
 " Python Mappings {{{2
