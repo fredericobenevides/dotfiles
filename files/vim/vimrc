@@ -20,6 +20,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'https://github.com/turbio/bracey.vim', { 'dir': '~/.local/share/nvim/plugged/bracey.vim', 'do': 'npm install --prefix server'}
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -497,6 +498,12 @@ endif
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#buffer_nr_show = 1
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
+" }}} 2
+
+" Plugin bracey.vim {{{2
+nnoremap <leader>bo :Bracey<cr>           |" open Bracey
+nnoremap <leader>br :BraceyReload<cr>     |" Reload Bracey
+nnoremap <leader>bs :BraceyStop<cr>       |" Stop Bracey
 " }}} 2
 
 " Plugin coc.nvim {{{2
