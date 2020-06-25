@@ -8,11 +8,11 @@
   become: true
 
 - name: Snap pacman - Install snap packages
-  snap: name={{ item }}
+  snap: name={{ item.name }} classic={{ item.classic }}
   loop:
-    - insomnia
-    - snap-store
-    - spotify
+    - { name: 'insomnia', classic: false }
+    - { name: 'snap-store', classic: false }
+    - { name: 'spotify', classic: false }
   environment:
     PATH: "/var/lib/snapd/snap/bin:{{ ansible_env.PATH }}"
   become: true
