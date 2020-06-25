@@ -898,6 +898,10 @@ augroup vimrc
   " }}}2
   " }}}2
 
+  " Filetype: EJS {{{2
+  autocmd BufNewFile,BufRead *.ejs set filetype=html
+  " }}}2
+
   " Filetype: Help {{{2
   autocmd FileType help wincmd J " Open help in bottom window
   " }}}2
