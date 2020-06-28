@@ -518,6 +518,7 @@ let g:coc_global_extensions = [
   \ 'coc-explorer',
   \ 'coc-flutter',
   \ 'coc-git',
+  \ 'coc-go',
   \ 'coc-highlight',
   \ 'coc-json',
   \ 'coc-tabnine',
