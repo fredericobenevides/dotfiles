@@ -927,10 +927,15 @@ augroup END
 
 " Editor Utilities {{{2
 function! g:SaveCurrentBuffer()
-  let buffer_name = @%
+  let file_type = &ft
 
-  execute "Format"
-  w
+  if (file_type == 'pug')
+    silent execute '!prettier --write ' . expand('%:p')
+    silent execute 'e'
+  else
+    execute "Format"
+    w " save the file if is not pug
+  endif
 endfunction
 
 function! g:OpenNewTab()

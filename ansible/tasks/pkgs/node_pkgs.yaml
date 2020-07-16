@@ -3,6 +3,8 @@
   npm: name=tern global=yes state=present
   loop:
     - neovim
+    - prettier
+    - '@prettier/plugin-pug'
     - tern
     - typescript
     - ts-node
@@ -11,9 +13,11 @@
 - name: Node pkgs (linux) - Installing global node pkgs for linux
   shell: /opt/node/bin/npm install -g {{ item }}
   environment:
-    PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
+    PATH: '/opt/node/bin:{{ ansible_env.PATH }}'
   loop:
     - neovim
+    - prettier
+    - '@prettier/plugin-pug'
     - tern
     - typescript
     - ts-node
@@ -23,6 +27,8 @@
   shell: if [[ ! -d "$HOME/.npm-global/lib/node_modules/{{ item }}" ]]; then npm install -g {{ item }}; else echo "ok"; fi
   loop:
     - neovim
+    - prettier
+    - '@prettier/plugin-pug'
     - tern
     - typescript
     - ts-node
