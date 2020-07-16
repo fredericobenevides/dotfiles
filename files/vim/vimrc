@@ -21,6 +21,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'https://github.com/turbio/bracey.vim', { 'dir': '~/.local/share/nvim/plugged/bracey.vim', 'do': 'npm install --prefix server'}
+Plug 'https://github.com/honza/vim-snippets'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
