@@ -930,6 +930,7 @@ function! g:SaveCurrentBuffer()
   let file_type = &ft
 
   if (file_type == 'pug')
+    w
     silent execute '!prettier --write ' . expand('%:p')
     silent execute 'e'
   else
