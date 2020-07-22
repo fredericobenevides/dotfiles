@@ -273,8 +273,8 @@ nnoremap <leader>fs :%s/\v<C-r><C-w>
 inoremap <// </<C-X><C-O>
 
 " insert html tags
-inoremap <c-e> <></><Esc>5hdiwp3lpT>i
-nnoremap <c-e> a<></><Esc>5hdiwp3lpT>i
+inoremap <leader>ih <></><Esc>5hdiwp3lpT>i
+nnoremap <leader>ih a<></><Esc>5hdiwp3lpT>i
 " }}}2
 
 " Buffer Mappings {{{2
