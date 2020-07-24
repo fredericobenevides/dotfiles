@@ -61,7 +61,7 @@ ${template1 CPU-1\ Temperature}                                             ${te
 ${template1 CPU-2\ Temperature}                                             ${template3}${exec sensors | grep 'Core 1' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
 ${template1 CPU-3\ Temperature}                                             ${template3}${exec sensors | grep 'Core 2' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
 ${template1 CPU-4\ Temperature}                                             ${template3}${exec sensors | grep 'Core 3' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
-${template1 HDD\ Temperature}                                               ${template3}${hddtemp /dev/sda}°C
+#${template1 HDD\ Temperature}                                               ${template3}${hddtemp /dev/sda}°C
 
 ${template0 Processors}
 ${template1 Load}               ${template2}${loadavg 1}                    ${template3}${loadgraph}
