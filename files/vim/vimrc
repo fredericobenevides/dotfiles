@@ -299,55 +299,6 @@ nnoremap <leader>bH :bfirst<cr>  |" Move to the previous buffer
 nnoremap <leader>bL :blast<cr>   |" Move to the next buffer
 nnoremap <leader>ba <c-^><cr>    |" Alternate between buffers
 
-" mark and move between marked buffers
-nnoremap <silent> bm0 :call MarkBuffer('buffer_0')<cr>
-nnoremap <silent> bm1 :call MarkBuffer('buffer_1')<cr>
-nnoremap <silent> bm2 :call MarkBuffer('buffer_2')<cr>
-nnoremap <silent> bm3 :call MarkBuffer('buffer_3')<cr>
-nnoremap <silent> bm4 :call MarkBuffer('buffer_4')<cr>
-nnoremap <silent> bm5 :call MarkBuffer('buffer_5')<cr>
-nnoremap <silent> bm6 :call MarkBuffer('buffer_6')<cr>
-nnoremap <silent> bm7 :call MarkBuffer('buffer_7')<cr>
-nnoremap <silent> bm8 :call MarkBuffer('buffer_8')<cr>
-nnoremap <silent> bm9 :call MarkBuffer('buffer_9')<cr>
-
-nnoremap <silent> b0 :call OpenSplitBuffer('buffer_0', 0)<cr>
-nnoremap <silent> b1 :call OpenSplitBuffer('buffer_1', 0)<cr>
-nnoremap <silent> b2 :call OpenSplitBuffer('buffer_2', 0)<cr>
-nnoremap <silent> b3 :call OpenSplitBuffer('buffer_3', 0)<cr>
-nnoremap <silent> b4 :call OpenSplitBuffer('buffer_4', 0)<cr>
-nnoremap <silent> b5 :call OpenSplitBuffer('buffer_5', 0)<cr>
-nnoremap <silent> b6 :call OpenSplitBuffer('buffer_6', 0)<cr>
-nnoremap <silent> b7 :call OpenSplitBuffer('buffer_7', 0)<cr>
-nnoremap <silent> b8 :call OpenSplitBuffer('buffer_8', 0)<cr>
-nnoremap <silent> b9 :call OpenSplitBuffer('buffer_9', 0)<cr>
-
-nnoremap <silent> bs0 :call OpenSplitBuffer('buffer_0', 1)<cr>
-nnoremap <silent> bs1 :call OpenSplitBuffer('buffer_1', 1)<cr>
-nnoremap <silent> bs2 :call OpenSplitBuffer('buffer_2', 1)<cr>
-nnoremap <silent> bs3 :call OpenSplitBuffer('buffer_3', 1)<cr>
-nnoremap <silent> bs4 :call OpenSplitBuffer('buffer_4', 1)<cr>
-nnoremap <silent> bs5 :call OpenSplitBuffer('buffer_5', 1)<cr>
-nnoremap <silent> bs6 :call OpenSplitBuffer('buffer_6', 1)<cr>
-nnoremap <silent> bs7 :call OpenSplitBuffer('buffer_7', 1)<cr>
-nnoremap <silent> bs8 :call OpenSplitBuffer('buffer_8', 1)<cr>
-nnoremap <silent> bs9 :call OpenSplitBuffer('buffer_9', 1)<cr>
-
-nnoremap <silent> bt0 :call OpenTabBuffer('buffer_0')<cr>
-nnoremap <silent> bt1 :call OpenTabBuffer('buffer_1')<cr>
-nnoremap <silent> bt2 :call OpenTabBuffer('buffer_2')<cr>
-nnoremap <silent> bt3 :call OpenTabBuffer('buffer_3')<cr>
-nnoremap <silent> bt4 :call OpenTabBuffer('buffer_4')<cr>
-nnoremap <silent> bt5 :call OpenTabBuffer('buffer_5')<cr>
-nnoremap <silent> bt6 :call OpenTabBuffer('buffer_6')<cr>
-nnoremap <silent> bt7 :call OpenTabBuffer('buffer_7')<cr>
-nnoremap <silent> bt8 :call OpenTabBuffer('buffer_8')<cr>
-nnoremap <silent> bt9 :call OpenTabBuffer('buffer_9')<cr>
-
-nnoremap <silent> <c-Left> :call OpenDownMarkedBuffers()<cr>
-nnoremap <silent> <c-Right> :call OpenUpMarkedBuffers()<cr>
-" }}}2
-
 " mark and move between marked terminals
 nnoremap <silent> tm0 :call MarkBuffer('terminal_0')<cr>
 nnoremap <silent> tm1 :call MarkBuffer('terminal_1')<cr>
