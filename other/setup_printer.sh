@@ -3,7 +3,7 @@
 # disable anaconda because if is active has a problem with the path of lib
 source deactivate
 
-sudo pacman -Syu libcups avahi cups hplip system-config-printer sane sane-frontends xsane xsane-gimp ghostscript cups-pdf
+sudo pacman -Syu libcups avahi cups hplip system-config-printer sane sane-frontends xsane xsane-gimp ghostscript cups-pdf gscan2pdf pdftk
 
 yay -S cnijfilter2
 
