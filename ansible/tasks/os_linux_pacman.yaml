@@ -52,6 +52,10 @@
   pacman: name=npm state=present
   become: true
 
+- name: Linux pacman - Make sure "obs-studio" is present
+  pacman: name=obs-studio state=present
+  become: true
+
 - name: Linux pacman - Make sure "simplescreenrecorder" is present
   pacman: name=simplescreenrecorder state=present
   become: true
@@ -136,8 +140,6 @@
 - name: Linux pacman - Install yay packages
   import_tasks: tasks/pkgs/yay_pkgs.yaml
 
-
 # It's in the last because neovim need some packages installed before
 - name: Linux pacman - Install neovim's plugin
   import_tasks: tasks/pkgs/neovim_plugins.yaml
-
