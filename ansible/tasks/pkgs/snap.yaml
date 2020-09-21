@@ -10,7 +10,6 @@
 - name: Snap pacman - Install snap packages
   snap: name={{ item.name }} classic={{ item.classic }}
   loop:
-    - { name: 'insomnia', classic: false }
     - { name: 'snap-store', classic: false }
     - { name: 'spotify', classic: false }
   environment:
