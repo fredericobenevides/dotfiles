@@ -32,6 +32,10 @@
   pacman: name=ctags state=present
   become: true
 
+- name: Linux pacman - Make sure "dbeaver" is present
+  pacman: name=dbeaver state=present
+  become: true
+
 - name: Linux pacman - Make sure "flameshot" is present
   pacman: name=flameshot state=present
   become: true
@@ -118,9 +122,6 @@
 
 - name: Linux pacman - Install sdkman
   import_tasks: tasks/pkgs/sdkman.yaml
-
-- name: Linux pacman - Install squirrel-sql
-  import_tasks: tasks/pkgs/squirrel-sql.yaml
 
 - name: Linux pacman - Install snap
   import_tasks: tasks/pkgs/snap.yaml
