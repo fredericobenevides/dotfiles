@@ -10,7 +10,7 @@ flutter_tar_file: flutter_linux_{{ flutter_version }}-stable.tar.xz
 go_version: 1.12.6
 go_tar_file: go{{ go_version }}.linux-amd64.tar.gz
 
-idea_version: 2019.3.2
+idea_version: 2020.3.1
 idea_tar_file: ideaIU-{{ idea_version }}.tar.gz
 
 node_version: 12.16.1
