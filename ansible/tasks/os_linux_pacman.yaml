@@ -109,6 +109,9 @@
 - name: Linux pacman - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
 
+- name: Linux pacman - Install kubernetes's tools packages
+  import_tasks: tasks/pkgs/kubernetes_tools.yaml
+
 - name: Linux pacman - Install NerdFonts
   import_tasks: tasks/pkgs/nerdfonts.yaml
 
