@@ -24,4 +24,20 @@ install() {
   done
 }
 
+uninstall_docker_compose() {
+  sudo unlink /usr/local/bin/docker-compose
+
+  sudo rm /opt/docker-compose
+}
+
+install_docker_compose() {
+  curl -Lo /tmp/docker-compose "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)"
+
+  sudo mv /tmp/docker-compose /opt
+
+  sudo ln -s /opt/docker-compose /usr/local/bin/docker-compose
+
+  sudo chmod +x /opt/docker-compose
+}
+
 $*
