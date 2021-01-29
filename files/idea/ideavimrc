@@ -75,6 +75,7 @@ map <leader>lm :action FileStructurePopup<cr>
 map <leader>om :action OverrideMethods<cr>
 map <leader>re :action RenameElement<cr>
 map <leader>rf :action RecentFiles<cr>
+map <leader>sa :action SelectAllOccurrences<cr>
 map <leader>sp :action ShowFilePath<cr>
 map <leader>sw :action SurroundWith<cr>
 map <leader>wS :action SplitHorizontally<cr>
