@@ -103,8 +103,8 @@
 - name: Linux pacman - Install pips
   import_tasks: tasks/pkgs/pips.yaml
 
-# - name: Linux pacman - Install Docker
-#   import_tasks: tasks/pkgs/docker.yaml
+- name: Linux pacman - Install Docker
+  import_tasks: tasks/pkgs/docker.yaml
 
 - name: Linux pacman - Install Go packages
   import_tasks: tasks/pkgs/go_pkgs.yaml
