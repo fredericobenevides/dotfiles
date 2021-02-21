@@ -14,10 +14,10 @@
   when: stat_result.stat.exists == False
   become: true
 
-- name : Sdkman - Install some pkgs
+- name: Sdkman - Install some pkgs
   shell: source "/opt/sdkman/bin/sdkman-init.sh"; sdk list {{ item }} | grep "> \*" ; if [[ $? = "1" ]]; then sdk install {{ item }}; else echo "ok"; fi
   ignore_errors: true
   loop:
-    - java 11.0.8-open
+    - java 11.0.10-open
     - maven
     - micronaut
