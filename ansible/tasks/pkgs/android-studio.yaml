@@ -4,13 +4,18 @@
     path: /opt/Android/android-studio
   register: stat_result
 
+- name: Android Studio - Create Android Studio folder
+  shell: warn=false mkdir -p /opt/Android
+  become: true
+  when: stat_result.stat.exists == False
+
 - name: Android Studio - Download android-studio
   get_url:
     url: https://dl.google.com/dl/android/studio/ide-zips/{{ android_studio_version }}/{{ android_studio_tar_file }}
     dest: /tmp
   when: stat_result.stat.exists == False
 
-- name: Android Studio - Extract android-studio file to /opt
+- name: Android Studio - Extract android-studio file to /opt/Android
   unarchive:
     src: /tmp/{{ android_studio_tar_file }}
     dest: /opt/Android
