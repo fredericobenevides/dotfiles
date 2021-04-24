@@ -52,7 +52,7 @@ ZSH_THEME="fredericobenevides"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew bundler docker docker-compose docker-machine gem git go kubectl node npm oc pip postgres python fredericobenevides myutils)
+plugins=(brew bundler docker docker-compose docker-machine gem git kubectl node npm oc pip postgres python fredericobenevides myutils)
 
 # User configuration
 
@@ -75,16 +75,9 @@ alias docker_env_dev='eval $(docker-machine env dev)'
 alias minishift_docker_env='eval $(minishift docker-env)'
 alias minishift_oc_env='eval $(minishift oc-env)'
 
-alias gotest="reflex -r '\.go$' -s go test ./..."
 alias vim='nvim'
 
 alias flutter_devtools='flutter pub global run devtools'
-
-### GOLANG
-export GOPATH="$HOME/code/go"
-export PATH="$GOPATH/bin:$PATH"
-
-
 
 ### PYTHON
 export PYTHONSTARTUP="$HOME/.pythonrc"

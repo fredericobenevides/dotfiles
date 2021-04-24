@@ -19,9 +19,6 @@
 - name: Mac - Make sure "fzf" is present
   homebrew: name=fzf state=present
 
-- name: Mac - Make sure "go" is present
-  homebrew: name=go state=present
-
 - name: Mac - Make sure "iterm2" is present
   homebrew_cask: name=iterm2 state=present
 
@@ -39,9 +36,6 @@
 - name: Mac - Make sure "neovim" is present
   homebrew: name=neovim state=present
 
-- name: Mac - Install Go packages
-  import_tasks: tasks/pkgs/go_pkgs.yaml
-
 - name: Mac - Install node packages
   import_tasks: tasks/pkgs/node_pkgs.yaml
 
@@ -56,4 +50,3 @@
 
 - name: Mac - Install ohmyzsh
   import_tasks: tasks/pkgs/ohmyzsh.yaml
-

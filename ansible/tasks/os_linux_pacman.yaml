@@ -40,10 +40,6 @@
   pacman: name=flameshot state=present
   become: true
 
-- name: Linux pacman - Make sure "go" is present
-  pacman: name=go state=present
-  become: true
-
 - name: Linux pacman - Make sure "neovim" is present
   pacman: name=neovim state=present
   become: true
@@ -105,9 +101,6 @@
 
 - name: Linux pacman - Install Docker
   import_tasks: tasks/pkgs/docker.yaml
-
-- name: Linux pacman - Install Go packages
-  import_tasks: tasks/pkgs/go_pkgs.yaml
 
 - name: Linux pacman - Install kubernetes's tools packages
   import_tasks: tasks/pkgs/kubernetes_tools.yaml
