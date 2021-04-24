@@ -36,12 +36,6 @@ Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
 Plug 'junegunn/gv.vim'
 " }}}2
 
-" Go {{{2
-Plug 'fatih/vim-go'
-Plug 'sebdah/vim-delve'
-Plug 'buoto/gotests-vim', { 'do': ':! go get -u github.com/cweill/gotests/...' }
-" }}}2
-
 " Html & css {{{2
 Plug 'KabbAmine/vCoolor.vim'
 " }}}2
@@ -699,24 +693,6 @@ nnoremap <leader>p :VCoolor<cr>
 " inoremap <leader>p :VCoolor<cr>
 " }}}2
 
-" Plugin Vim-go {{{2
-let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
-
-let g:go_fmt_command = "goimports"
-
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-" }}}2
-
 " Plugin vim-indent-guides {{{2
 let g:indent_guides_auto_co2ors = 0
 " }}}2
@@ -793,57 +769,6 @@ augroup END
 " FileType {{{1
 
 augroup vimrc
-
-  " FileType: Go {{{2
-  autocmd FileType go setlocal ts=4 sts=4 sw=4 noexpandtab
-  " autocmd FileType go setlocal listchars+=tab:\ \ , " don't show tabs for go files
-
-  " Open :GoDeclsDir with ctrl-g
-  autocmd FileType go nnoremap <C-g> :GoDeclsDir<cr>
-  autocmd FileType go inoremap <C-g> <esc>:<C-u>GoDeclsDir<cr>
-
-  autocmd FileType go nnoremap <leader>m <Plug>(go-run)
-  autocmd FileType go nnoremap <leader>M <Plug>(go-run-tab)
-
-  autocmd FileType go nnoremap <leader>b <Plug>(go-build)
-  autocmd FileType go nnoremap <leader>te <Plug>(go-test)
-  autocmd FileType go nnoremap <leader>co <Plug>(go-coverage-toggle)
-  autocmd FileType go nnoremap <leader>i <Plug>(go-info)
-  autocmd FileType go nnoremap <leader>n <Plug>(go-rename)
-
-  autocmd FileType go nnoremap gD <Plug>(go-def-vertical)
-
-  " Open documentation
-  autocmd FileType go nnoremap <leader>do <Plug>(go-doc)
-  autocmd FileType go nnoremap <leader>dv <Plug>(go-doc-vertical)
-  autocmd FileType go nnoremap <leader>db <Plug>(go-doc-browser)
-
-  " :GoAlternate commands :A, :AV, :AS and :AT
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-  autocmd FileType go nnoremap <leader>af :A<cr>
-  autocmd FileType go nnoremap <leader>at :AV<cr>
-  autocmd FileType go nnoremap <leader>av :AV<cr>
-
-  " gohtmltmpl
-  autocmd BufNewFile,BufRead *.gohtml set filetype=gohtmltmpl
-  autocmd FileType gohtmltmpl setlocal ts=2 sts=2 sw=2 expandtab
-
-  " vim-delve
-  autocmd FileType go nnoremap <leader>ab :DlvAddBreakpoint<cr>
-  autocmd FileType go nnoremap <leader>ap :DlvAddTracepoint<cr>
-  autocmd FileType go nnoremap <leader>ca :DlvClearAll<cr>
-  autocmd FileType go nnoremap <leader>db :DlvDebug<cr>
-  autocmd FileType go nnoremap <leader>dt :DlvTest<cr>
-  autocmd FileType go nnoremap <leader>rb :DlvRemoveBreakpoint<cr>
-  autocmd FileType go nnoremap <leader>rp :DlvRemoveTracepoint<cr>
-  autocmd FileType go nnoremap <leader>tb :DlvToggleBreakpoint<cr>
-  autocmd FileType go nnoremap <leader>tt :DlvToggleTracepoint<cr>
-  " }}}2
-  " }}}2
 
   " Filetype: EJS {{{2
   autocmd BufNewFile,BufRead *.ejs set filetype=html
