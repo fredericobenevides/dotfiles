@@ -9,6 +9,10 @@ Plug 'joshdick/onedark.vim'
 Plug 'bling/vim-airline'
 " }}}2
 
+" Dart {{{2
+Plug 'dart-lang/dart-vim-plugin'
+" }}}2
+
 " Editor Utilities {{{2
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
@@ -460,6 +464,7 @@ let g:coc_global_extensions = [
   \ 'coc-git',
   \ 'coc-go',
   \ 'coc-highlight',
+  \ 'coc-jest',
   \ 'coc-json',
   \ 'coc-tabnine',
   \ 'coc-pairs',
