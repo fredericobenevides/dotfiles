@@ -4,7 +4,7 @@ anaconda3_sh_file: Anaconda3-2020.11-Linux-x86_64.sh
 android_studio_version: 4.1.3.0
 android_studio_tar_file: "android-studio-ide-201.7199119-linux.tar.gz"
 
-flutter_version: 1.17.0
+flutter_version: 2.0.5
 flutter_tar_file: flutter_linux_{{ flutter_version }}-stable.tar.xz
 
 idea_version: 2020.3.2

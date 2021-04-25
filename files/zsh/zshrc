@@ -52,7 +52,7 @@ ZSH_THEME="fredericobenevides"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew bundler docker docker-compose docker-machine gem git kubectl node npm oc pip postgres python fredericobenevides myutils)
+plugins=(brew bundler docker docker-compose docker-machine flutter gem git kubectl node npm oc pip postgres python fredericobenevides myutils)
 
 # User configuration
 
@@ -104,8 +104,8 @@ fi
 ### Android Studio
 if [[ -d '/opt/Android/android-studio' ]]; then
   export ANDROID_HOME="/opt/Android/android-studio"
-  export ANDROID_SDK="/opt/Android/Sdk"
-  export PATH="$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$ANDROID_SDK/tools/bin:$ANDROID_SDK/emulator:$PATH"
+  export ANDROID_SDK_ROOT="/opt/Android/Sdk"
+  export PATH="$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/emulator:$PATH"
 fi
 
 
