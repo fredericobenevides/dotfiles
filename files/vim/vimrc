@@ -468,7 +468,6 @@ let g:coc_global_extensions = [
   \ 'coc-emmet',
   \ 'coc-eslint',
   \ 'coc-explorer',
-  \ 'coc-flutter',
   \ 'coc-git',
   \ 'coc-go',
   \ 'coc-highlight',
@@ -539,7 +538,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>re <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap <leader>cf  <Plug>(coc-format-selected)
@@ -628,8 +627,6 @@ nnoremap <silent> <leader>cF  :Fold<CR>zR
 
 " Open yank list
 nnoremap <silent> <leader>ly  :<C-u>CocList -A --normal yank<cr>
-" flutter commands
-nnoremap <silent> <leader>cf  :<C-u>CocList --input=flutter. --normal commands<cr>
 " coc-todo list
 nnoremap <silent> <leader>lt  :<C-u>CocList todolist<cr>
 nnoremap <silent> <leader>ct  :<C-u>CocList --input=todolist. --normal commands<cr>
