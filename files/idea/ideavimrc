@@ -19,67 +19,62 @@ set undolevels=100
 " Remap leader to <space> {{{2
 let mapleader = " "
 " }}}2
+imap jj <Esc>
 
-map <leader>a :action $SelectAll<cr>
-" map <leader>b :action GotoDeclaration<cr>
-" map <leader>c :action $Copy<cr>
-map <leader>d :action EditorDuplicate<cr>
-" map <leader>e :action RecentFiles<cr>
-" map <leader>f :action Find<cr>
-" map <leader>g :action GotoLine<cr>
-" map <leader>h :action TypeHierarchy<cr>
-" map <leader>i :action ImplementMethods<cr>
-map <leader>m :action EditorScrollToCenter<cr>
-map <leader>n :action FileChooser.NewFolder<cr>
-" map <leader>o :action OverrideMethods<cr>
-map <leader>p :action ParameterInfo<cr>
-map <leader>q :action QuickJavaDoc<cr>
-" map <leader>r :action Replace<cr>
-map <leader>s :action SaveAll<cr>
-map <leader>t :action Vcs.UpdateProject<cr>
-map <leader>u :action GotoSuperMethod<cr>
-" map <leader>v :action $Paste<cr>
-" map <leader>w :action EditorSelectWord<cr>
-" map <leader>x :action $Cut<cr>
-" map <leader>y :action EditorDeleteLine<cr>
-map <leader>[ :action EditorCodeBlockStart<cr>
-map <leader>] :action EditorCodeBlockEnd<cr>
+nnoremap <C-h> <c-w>h
+nnoremap <C-j> <c-w>j
+nnoremap <C-k> <c-w>k
+nnoremap <C-l> <c-w>l
 
-map <C-h> <c-w>h
-map <C-j> <c-w>j
-map <C-k> <c-w>k
-map <C-l> <c-w>l
+nnoremap <leader>a :action $SelectAll<cr>
+nnoremap <leader>b :action GotoDeclaration<cr>
+nnoremap <leader>c :action $Copy<cr>
+nnoremap <leader>d :action EditorDuplicate<cr>
+nnoremap <leader>e :action RecentFiles<cr>
+nnoremap <leader>f :action Find<cr>
+nnoremap <leader>g :action GotoLine<cr>
+nnoremap <leader>h :action TypeHierarchy<cr>
+nnoremap <leader>i :action ImplementMethods<cr>
+nnoremap <leader>m :action EditorScrollToCenter<cr>
+nnoremap <leader>n :action GotoClass<cr>
+nnoremap <leader>o :action OverrideMethods<cr>
+nnoremap <leader>p :action ParameterInfo<cr>
+nnoremap <leader>q :action QuickJavaDoc<cr>
+nnoremap <leader>r :action Replace<cr>
+nnoremap <leader>s :action SaveAll<cr>
+nnoremap <leader>t :action Vcs.UpdateProject<cr>
+nnoremap <leader>u :action GotoSuperMethod<cr>
+nnoremap <leader>v :action $Paste<cr>
+nnoremap <leader>w :action EditorSelectWord<cr>
+nnoremap <leader>x :action $Cut<cr>
+nnoremap <leader>y :action EditorDeleteLine<cr>
+nnoremap <leader>[ :action EditorCodeBlockStart<cr>
+nnoremap <leader>] :action EditorCodeBlockEnd<cr>
+nnoremap <leader>a :action $SelectAll<cr>
 
-map <c-i> :action Forward<cr>
-map <c-p> :action GotoClass<cr>
-map <c-s> :action SaveAll<cr>
-map <c-s-p> :action GotoFile<cr>
-map <c-o> :action Back<cr>
+nnoremap <leader>DM :action DelegateMethods<cr>
+nnoremap <leader>FR :action Replace<cr>
+nnoremap <leader>FU :action FindUsages<cr>
+nnoremap <leader>GC :action GenerateConstructor<cr>
+nnoremap <leader>GD :action GotoDeclaration<cr>
+nnoremap <leader>GE :action GenerateEquals<cr>
+nnoremap <leader>GS :action GenerateString<cr>
+nnoremap <leader>HW :action HideAllWindows<cr>
+nnoremap <leader>TH :action TypeHierarchy<cr>
+nnoremap <leader>IM :action ImplementMethods<cr>
+nnoremap <leader>LM :action FileStructurePopup<cr>
+nnoremap <leader>OM :action OverrideMethods<cr>
+nnoremap <leader>RN :action RenameElement<cr>
+nnoremap <leader>RF :action RecentFiles<cr>
+nnoremap <leader>SA :action SelectAllOccurrences<cr>
+nnoremap <leader>SP :action ShowFilePath<cr>
+nnoremap <leader>SW :action SurroundWith<cr>
+nnoremap <leader>Ws :action SplitHorizontally<cr>
+nnoremap <leader>WS :action SplitVertically<cr>
 
-map <leader>; :action AceAction<cr>
+nnoremap <leader>; :action AceAction<cr>
+" }}}1
 
-map <leader>ff :action Find<cr>
-
-map <leader>dm :action DelegateMethods<cr>
-map <leader>fr :action Replace<cr>
-map <leader>fu :action FindUsages<cr>
-map <leader>gc :action GenerateConstructor<cr>
-map <leader>gd :action GotoDeclaration<cr>
-map <leader>ge :action GenerateEquals<cr>
-map <leader>gl :action GotoLine<cr>
-map <leader>gs :action GenerateString<cr>
-map <leader>hw :action HideAllWindows<cr>
-map <leader>th :action TypeHierarchy<cr>
-map <leader>im :action ImplementMethods<cr>
-map <leader>lm :action FileStructurePopup<cr>
-map <leader>om :action OverrideMethods<cr>
-map <leader>re :action RenameElement<cr>
-map <leader>rf :action RecentFiles<cr>
-map <leader>sa :action SelectAllOccurrences<cr>
-map <leader>sp :action ShowFilePath<cr>
-map <leader>sw :action SurroundWith<cr>
-map <leader>wS :action SplitHorizontally<cr>
-map <leader>ws :action SplitVertically<cr>
 
 " }}}1
 
