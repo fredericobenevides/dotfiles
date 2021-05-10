@@ -3,4 +3,5 @@
   loop:
     - codelite-bin
     - insomnia
+    - kafkacat
   when: (os == "linux") and (os_distro == "manjaro")
