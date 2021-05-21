@@ -2,6 +2,7 @@
 - name: Node pkgs - Installing global node pkgs for macos
   npm: name=tern global=yes state=present
   loop:
+    - meta
     - neovim
     - prettier
     - '@prettier/plugin-pug'
@@ -15,6 +16,7 @@
   environment:
     PATH: '/opt/node/bin:{{ ansible_env.PATH }}'
   loop:
+    - meta
     - neovim
     - prettier
     - '@prettier/plugin-pug'
@@ -26,6 +28,7 @@
 - name: Node pkgs (manjaro) - Installing global node pkgs for linux manjaro
   shell: if [[ ! -d "$HOME/.npm-global/lib/node_modules/{{ item }}" ]]; then npm install -g {{ item }}; else echo "ok"; fi
   loop:
+    - meta
     - neovim
     - prettier
     - '@prettier/plugin-pug'
