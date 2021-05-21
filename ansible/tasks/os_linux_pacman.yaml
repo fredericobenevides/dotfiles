@@ -40,6 +40,10 @@
   pacman: name=flameshot state=present
   become: true
 
+- name: Linux pacman - Make sure "gdb" is present
+  pacman: name=gdb state=present
+  become: true
+
 - name: Linux pacman - Make sure "neovim" is present
   pacman: name=neovim state=present
   become: true
