@@ -17,7 +17,7 @@
   tasks:
     - import_tasks: tasks/pkgs/git_link.yaml
     - import_tasks: tasks/pkgs/idea_link.yaml
-    - import_tasks: tasks/pkgs/ohmyzsh_link.yaml
+    - import_tasks: tasks/pkgs/fish_link.yaml
     - import_tasks: tasks/pkgs/python_link.yaml
     - import_tasks: tasks/pkgs/ruby_link.yaml
     - import_tasks: tasks/pkgs/tmux_link.yaml

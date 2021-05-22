@@ -1,0 +1,15 @@
+---
+- name: Fish - Get the current shell
+  shell: echo $SHELL
+  register: shell
+
+- name: Fish - Set the default shell to fish for macos
+  shell: chsh -s `which zsh`
+  when: shell.stdout != "/bin/zsh" and os == "macos"
+  become: true
+
+# using sed to change the file, because had problem using chsh on wsl2
+- name: Fish - Set the default shell to fish for linux
+  shell: sed -i "s@{{ lookup('env', 'HOME') }}.*@{{ lookup('env', 'HOME') }}\:`which fish`@" /etc/passwd
+  when: shell.stdout != "/bin/fish" and os == "linux"
+  become: true

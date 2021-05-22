@@ -36,6 +36,10 @@
   pacman: name=dbeaver state=present
   become: true
 
+- name: Linux pacman - Make sure "fish" is present
+  pacman: name=fish state=present
+  become: true
+
 - name: Linux pacman - Make sure "flameshot" is present
   pacman: name=flameshot state=present
   become: true
@@ -84,10 +88,6 @@
   pacman: name=yay state=present
   become: true
 
-- name: Linux pacman - Make sure "zsh" is present
-  pacman: name=zsh state=present
-  become: true
-
 - name: Linux pacman - Install anaconda
   import_tasks: tasks/pkgs/anaconda3.yaml
 
@@ -105,6 +105,9 @@
 
 - name: Linux pacman - Install Docker
   import_tasks: tasks/pkgs/docker.yaml
+
+- name: Linux pacman - Install fish
+  import_tasks: tasks/pkgs/fish.yaml
 
 - name: Linux pacman - Install kubernetes's tools packages
   import_tasks: tasks/pkgs/kubernetes_tools.yaml
@@ -129,9 +132,6 @@
 
 - name: Linux pacman - Install snap
   import_tasks: tasks/pkgs/snap.yaml
-
-- name: Linux pacman - Install ohmyzsh
-  import_tasks: tasks/pkgs/ohmyzsh.yaml
 
 - name: Linux pacman - Install virtualbox
   import_tasks: tasks/pkgs/virtualbox.yaml

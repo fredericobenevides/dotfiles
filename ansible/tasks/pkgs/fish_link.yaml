@@ -1,0 +1,5 @@
+- name: Link fish file
+  file: src={{ dotfilespath }}/files/fish/fish_prompt.fish
+        dest=~/.config/fish/functions/fish_prompt.fish
+        state=link
+        force=yes
