@@ -1,5 +1,14 @@
 - name: Link fish file
   file: src={{ dotfilespath }}/files/fish/fish_prompt.fish
-        dest=~/.config/fish/functions/fish_prompt.fish
-        state=link
-        force=yes
+    dest=~/.config/fish/functions/fish_prompt.fish
+    state=link
+    force=yes
+
+- name: Link fish file
+  file: src={{ dotfilespath }}/files/fish/{{ item }}
+    dest=~/.config/fish/{{ item }}
+    state=link
+    force=yes
+  loop:
+    - config.fish
+    - fish_variables

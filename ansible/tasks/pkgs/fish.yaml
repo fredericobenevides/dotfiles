@@ -13,3 +13,20 @@
   shell: sed -i "s@{{ lookup('env', 'HOME') }}.*@{{ lookup('env', 'HOME') }}\:`which fish`@" /etc/passwd
   when: shell.stdout != "/bin/fish" and os == "linux"
   become: true
+
+- name: Fish - Verify if install fisher
+  stat:
+    path: ~/.config/fish/functions/fisher.fish
+  register: verify_fisher
+
+- name: Fish - Install fisher
+  shell: warn=false fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+  when: verify_fisher.stat.exists == False
+
+- name: Fish - Install fisher plugins
+  shell: if [[ ! -d "$HOME/.config/fish/functions/{{ item.fnpath }}" ]]; then fish -c "fisher install {{ item.plugin }}"; else echo "ok"; fi
+  loop:
+    - { fnpath: fzf.fish, plugin: jethrokuan/fzf }
+    - { fnpath: sdk.fish, plugin: reitzig/sdkman-for-fish@v1.4.0 }
+
+  when: (os == "linux") and (os_distro == "manjaro")
