@@ -68,6 +68,10 @@
   pacman: name=peek state=present
   become: true
 
+- name: Linux pacman - Make sure "rust-analyzer" is present
+  pacman: name=rust-analyzer state=present
+  become: true
+
 - name: Linux pacman - Make sure "simplescreenrecorder" is present
   pacman: name=simplescreenrecorder state=present
   become: true

@@ -7,3 +7,8 @@
 - name: Rust - Install rust
   shell: warn=false curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   when: stat_result.stat.exists == False
+
+- name: Rust - Add component
+  shell: warn=false rustup component add rust-src
+  args:
+    executable: "/usr/bin/fish"
