@@ -76,7 +76,9 @@ install_ansible() {
 }
 
 run_ansible() {
-  ansible-playbook --ask-become-pass -i ansible/hosts ansible/setup.yaml \
+  SETUP_FILE="setup_manjaro.yaml"
+
+  ansible-playbook --ask-become-pass -i ansible/hosts ansible/$SETUP_FILE \
     --extra-vars "whoami=`whoami`" \
     --extra-vars "username=`id -u`" \
     --extra-vars "usergroup=`id -g`" \
