@@ -127,6 +127,9 @@
 - name: Linux pacman - Install ruby gems
   import_tasks: tasks/pkgs/ruby_gems.yaml
 
+- name: Linux pacman - Install rust
+  import_tasks: tasks/pkgs/rust.yaml
+
 - name: Linux pacman - Install sdkman
   import_tasks: tasks/pkgs/sdkman.yaml
 

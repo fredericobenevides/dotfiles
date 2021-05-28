@@ -62,6 +62,11 @@ end
 
 
 
+### RUST
+set PATH $HOME/.cargo/bin $PATH
+
+
+
 ### SNAP
 if test -d /usr/lib/snapd
   set PATH "/var/lib/snapd/snap/bin" $PATH
