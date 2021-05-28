@@ -5,16 +5,19 @@
   register: stat_result
 
 - name: Ruby - Download and install rbenv-installer for linux
-  shell: warn=false curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+  shell: warn=false curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
   register: command_result
   failed_when: "'Please add it to PATH' not in command_result.stdout"
+  when: stat_result.stat.exists == False
 
 - name: Ruby - Install ruby {{ ruby_version }} for linux
   shell: eval "$(rbenv init -)"; rbenv install {{ ruby_version }}
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.rbenv/bin:{{ ansible_env.PATH }}"
+  when: stat_result.stat.exists == False
 
 - name: Ruby - Define ruby {{ ruby_version }} as global for rbenv for linux
   shell: eval "$(rbenv init -)"; rbenv global {{ ruby_version }}
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.rbenv/bin:{{ ansible_env.PATH }}"
+  when: stat_result.stat.exists == False
