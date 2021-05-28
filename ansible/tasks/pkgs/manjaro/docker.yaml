@@ -3,7 +3,6 @@
   stat:
     path: /etc/modules-load.d/loop.conf
   register: stat_result
-  when: os_distro == "manjaro"
 
 - name: Docker pacman - Create loop.conf
   shell: tee /etc/modules-load.d/loop.conf <<< "loop"

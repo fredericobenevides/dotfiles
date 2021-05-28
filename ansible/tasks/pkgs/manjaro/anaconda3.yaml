@@ -13,12 +13,6 @@
 - name: Anaconda3 - Install anaconda3
   shell: chmod +x /tmp/{{ anaconda3_sh_file }}; /tmp/{{ anaconda3_sh_file }} -b -p /opt/anaconda3
   when: stat_result.stat.exists == False
-  become: true
-
-- name: Anaconda3 - Change owner and group for /opt/anaconda3
-  shell: chown -R {{ username }}:{{ usergroup }} /opt/anaconda3
-  when: stat_result.stat.exists == False
-  become: true
 
 - name: Anaconda3 - Removing download file
   shell: warn=false rm /tmp/{{ anaconda3_sh_file }} 2> /dev/null

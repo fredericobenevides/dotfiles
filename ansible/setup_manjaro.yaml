@@ -5,9 +5,11 @@
     - vars.yaml
 
   pre_tasks:
-    - import_tasks: tasks/os_linux_pacman.yaml
+    - import_tasks: tasks/pkgs/opt.yaml
 
   tasks:
+    - import_tasks: tasks/os_linux_pacman.yaml
+
     - import_tasks: tasks/pkgs/git_link.yaml
     - import_tasks: tasks/pkgs/idea_link.yaml
     - import_tasks: tasks/pkgs/fish_link.yaml

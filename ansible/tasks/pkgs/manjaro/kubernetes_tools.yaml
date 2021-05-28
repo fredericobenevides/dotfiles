@@ -11,7 +11,6 @@
 
 - name: Kubernetes Tools - Install kubectl
   shell: warn=false sudo install /tmp/kubectl /opt/kubectl
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Kubernetes Tools - Link kubectl
@@ -32,12 +31,10 @@
 
 - name: Kubernetes Tools - Download minikube
   shell: warn=false curl -Lo /tmp/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Kubernetes Tools - Install minikube
   shell: warn=false sudo install /tmp/minikube /opt/minikube
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Kubernetes Tools - Link minikube
@@ -58,12 +55,10 @@
 
 - name: Kubernetes Tools - Download skaffold
   shell: warn=false curl -Lo /tmp/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Kubernetes Tools - Install skaffold
   shell: warn=false sudo install /tmp/skaffold /opt/skaffold
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Kubernetes Tools - Link skaffold

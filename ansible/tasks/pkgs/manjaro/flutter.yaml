@@ -10,29 +10,22 @@
     dest: /tmp
   when: stat_result.stat.exists == False
 
-- name: Flutter - Extract flutter to /opt
+- name: Flutter - Extract flutter to /tmp
   unarchive:
     src: /tmp/{{ flutter_tar_file }}
     dest: /tmp
-  become: true
   when: stat_result.stat.exists == False
 
 - name: Flutter - Move flutter folder to /opt as /opt/flutter
   shell: mv /tmp/flutter /opt
-  become: true
   when: stat_result.stat.exists == False
-
-- name: Flutter - Change owner and group for /opt/flutter
-  shell: chown -R {{ username }}:{{ usergroup }} /opt/flutter
-  when: stat_result.stat.exists == False
-  become: true
 
 - name: Flutter - Link binary file to /usr/local/bin
   file: src=/opt/flutter/bin/flutter
         dest=/usr/local/bin/flutter
         state=link
         force=yes
-  # when: stat_result.stat.exists == False
+  when: stat_result.stat.exists == False
   become: true
 
 - name: Flutter - Removing download file
