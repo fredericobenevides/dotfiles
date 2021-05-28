@@ -3,40 +3,18 @@
   stat:
     path: "{{ lookup('env', 'HOME') }}/.rbenv/versions/{{ ruby_version }}"
   register: stat_result
-  when: os == "linux"
 
 - name: Ruby - Download and install rbenv-installer for linux
   shell: warn=false curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
   register: command_result
   failed_when: "'Please add it to PATH' not in command_result.stdout"
-  when: os == "linux" and stat_result.stat.exists == False
 
 - name: Ruby - Install ruby {{ ruby_version }} for linux
   shell: eval "$(rbenv init -)"; rbenv install {{ ruby_version }}
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.rbenv/bin:{{ ansible_env.PATH }}"
-  when: os == "linux" and stat_result.stat.exists == False
 
 - name: Ruby - Define ruby {{ ruby_version }} as global for rbenv for linux
   shell: eval "$(rbenv init -)"; rbenv global {{ ruby_version }}
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.rbenv/bin:{{ ansible_env.PATH }}"
-  when: os == "linux" and stat_result.stat.exists == False
-
-
-
-
-
-
-- name: Ruby - Install rbenv for macos
-  homebrew: name=rbenv state=present
-  register: verify_rbenv
-  when: os == "macos"
-
-- name: Ruby - Install ruby for macos
-  shell: eval "$(rbenv init -)"; rbenv install {{ ruby_version }}
-  when: os == "macos" and verify_rbenv.changed
-
-- name: Ruby - Define ruby {{ ruby_version }} as global for rbenv for macos
-  shell: eval "$(rbenv init -)"; rbenv global {{ ruby_version }}
-  when: os == "macos" and verify_rbenv.changed

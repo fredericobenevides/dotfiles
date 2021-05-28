@@ -1,0 +1,10 @@
+---
+- name: Fish - Get the current shell
+  shell: echo $SHELL
+  register: shell
+
+- name: Fish - Set the default shell to fish for macos
+  shell: chsh -s `which zsh`
+  when: shell.stdout != "/bin/zsh" and os == "macos"
+  become: true
+

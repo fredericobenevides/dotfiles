@@ -2,7 +2,6 @@
 - name: Virtualbox pacman - Install Virtualbox
   pacman: name=virtualbox state=present
   register: pacman_virtualbox
-  when: os_distro == "manjaro"
   become: true
 
 - name: Virtualbox pacman - Install virtualbox host-modules

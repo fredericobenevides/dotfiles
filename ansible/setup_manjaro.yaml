@@ -5,14 +5,7 @@
     - vars.yaml
 
   pre_tasks:
-    # - import_tasks: tasks/os_mac.yaml
-    #   when: os == "macos"
-
-    # - import_tasks: tasks/os_linux.yaml
-    #   when: (os == "linux") and (os_distro != "manjaro")
-
     - import_tasks: tasks/os_linux_pacman.yaml
-      when: (os == "linux") and (os_distro == "manjaro")
 
   tasks:
     - import_tasks: tasks/pkgs/git_link.yaml
