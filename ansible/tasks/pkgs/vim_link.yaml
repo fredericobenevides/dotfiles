@@ -10,6 +10,12 @@
         state=link
         force=yes
 
+- name: Link vimrc file in neovim's folder
+  file: src={{ dotfilespath }}/files/vim/coc-settings.json
+        dest=~/.config/nvim/coc-settings.json
+        state=link
+        force=yes
+
 - name: Link snippets to vim's folder
   file: src={{ dotfilespath }}/files/vim/snippets
         dest=~/.vim/snippets
