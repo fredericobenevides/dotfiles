@@ -246,6 +246,10 @@ nnoremap gk k
 nnoremap j gj
 nnoremap gj j
 
+" change <c-i> mapping because of coc
+nnoremap <A-i> <C-i>
+nnoremap <A-o> <C-o>
+
 " Save current file
 " nnoremap <leader>s :w<cr>
 nnoremap <leader>s :call SaveCurrentBuffer()<cr>
@@ -712,8 +716,8 @@ let g:indentLine_setConceal = 0
 " }}}2
 
 " Plugin line-mover {{{2
-let g:line_mover_key_up = '<A-k>'
-let g:line_mover_key_down = '<A-j>'
+let g:line_mover_key_up = '<A-Up>'
+let g:line_mover_key_down = '<A-Down>'
 " }}}2
 
 " Plugin vCoolor {{{2
