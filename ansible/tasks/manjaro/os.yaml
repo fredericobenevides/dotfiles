@@ -93,65 +93,62 @@
   become: true
 
 - name: Linux pacman - Install anaconda
-  import_tasks: tasks/pkgs/manjaro/anaconda3.yaml
+  import_tasks: tasks/manjaro/pkgs/anaconda3.yaml
 
 - name: Linux pacman - Install android-studio
-  import_tasks: tasks/pkgs/manjaro/android-studio.yaml
+  import_tasks: tasks/manjaro/pkgs/android-studio.yaml
+
+- name: Linux pacman - Install docker
+  import_tasks: tasks/manjaro/pkgs/docker.yaml
 
 - name: Linux pacman - Install flutter
-  import_tasks: tasks/pkgs/manjaro/flutter.yaml
-
-- name: Linux pacman - Install idea
-  import_tasks: tasks/pkgs/manjaro/idea.yaml
-
-- name: Linux pacman - Install pips
-  import_tasks: tasks/pkgs/manjaro/pips.yaml
-
-- name: Linux pacman - Install Docker
-  import_tasks: tasks/pkgs/manjaro/docker.yaml
+  import_tasks: tasks/manjaro/pkgs/flutter.yaml
 
 - name: Linux pacman - Install fish
-  import_tasks: tasks/pkgs/manjaro/fish.yaml
+  import_tasks: tasks/manjaro/pkgs/fish.yaml
+
+- name: Linux pacman - Install idea
+  import_tasks: tasks/manjaro/pkgs/idea.yaml
 
 - name: Linux pacman - Install kubernetes's tools packages
-  import_tasks: tasks/pkgs/manjaro/kubernetes_tools.yaml
+  import_tasks: tasks/manjaro/pkgs/kubernetes_tools.yaml
 
 - name: Linux pacman - Install NerdFonts
-  import_tasks: tasks/pkgs/manjaro/nerdfonts.yaml
-
-- name: Linux pacman - Link node files before installing packages
-  import_tasks: tasks/pkgs/node_link.yaml
+  import_tasks: tasks/manjaro/pkgs/nerdfonts.yaml
 
 - name: Linux pacman - Install node packages
-  import_tasks: tasks/pkgs/manjaro/node_pkgs.yaml
+  import_tasks: tasks/manjaro/pkgs/node_pkgs.yaml
+
+- name: Linux pacman - Install pips
+  import_tasks: tasks/manjaro/pkgs/pips.yaml
 
 - name: Linux pacman - Install ruby
-  import_tasks: tasks/pkgs/manjaro/ruby.yaml
+  import_tasks: tasks/manjaro/pkgs/ruby.yaml
 
 - name: Linux pacman - Install ruby gems
-  import_tasks: tasks/pkgs/manjaro/ruby_gems.yaml
+  import_tasks: tasks/manjaro/pkgs/ruby_gems.yaml
 
 - name: Linux pacman - Install rust
-  import_tasks: tasks/pkgs/manjaro/rust.yaml
+  import_tasks: tasks/manjaro/pkgs/rust.yaml
 
 - name: Linux pacman - Install sdkman
-  import_tasks: tasks/pkgs/manjaro/sdkman.yaml
+  import_tasks: tasks/manjaro/pkgs/sdkman.yaml
 
 - name: Linux pacman - Install snap
-  import_tasks: tasks/pkgs/manjaro/snap.yaml
+  import_tasks: tasks/manjaro/pkgs/snap.yaml
 
 - name: Linux pacman - Install virtualbox
-  import_tasks: tasks/pkgs/manjaro/virtualbox.yaml
+  import_tasks: tasks/manjaro/pkgs/virtualbox.yaml
 
 - name: Linux pacman - Install vscode entensions
-  import_tasks: tasks/pkgs/manjaro/vscode_ext.yaml
+  import_tasks: tasks/manjaro/pkgs/vscode_ext.yaml
 
 - name: Linux pacman - Install and configure pkgs for xorg
-  import_tasks: tasks/pkgs/manjaro/xorg.yaml
+  import_tasks: tasks/manjaro/pkgs/xorg.yaml
 
 - name: Linux pacman - Install yay packages
-  import_tasks: tasks/pkgs/manjaro/yay_pkgs.yaml
+  import_tasks: tasks/manjaro/pkgs/yay_pkgs.yaml
 
 # It's in the last because neovim need some packages installed before
 - name: Linux pacman - Install neovim's plugin
-  import_tasks: tasks/pkgs/manjaro/neovim_plugins.yaml
+  import_tasks: tasks/manjaro/pkgs/neovim_plugins.yaml

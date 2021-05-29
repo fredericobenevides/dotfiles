@@ -5,15 +5,9 @@
     - vars.yaml
 
   pre_tasks:
-    - import_tasks: tasks/pkgs/opt.yaml
+    - import_tasks: pre_tasks/opt.yaml
 
   tasks:
-    - import_tasks: tasks/os_linux_pacman.yaml
+    - import_tasks: tasks/manjaro/os.yaml
 
-    - import_tasks: tasks/pkgs/git_link.yaml
-    - import_tasks: tasks/pkgs/idea_link.yaml
-    - import_tasks: tasks/pkgs/fish_link.yaml
-    - import_tasks: tasks/pkgs/python_link.yaml
-    - import_tasks: tasks/pkgs/ruby_link.yaml
-    - import_tasks: tasks/pkgs/tmux_link.yaml
-    - import_tasks: tasks/pkgs/vim_link.yaml
+    - import_tasks: tasks/files_link/links.yaml

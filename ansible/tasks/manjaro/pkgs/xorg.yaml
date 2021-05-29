@@ -37,6 +37,3 @@
   shell: sed -i 's/ć/ç/' /usr/share/X11/locale/en_US.UTF-8/Compose
   when: verify_cedilla_compose_file.rc == 0
   become: true
-
-- name: Linux - Link xorg files
-  import_tasks: tasks/pkgs/xorg_link.yaml
