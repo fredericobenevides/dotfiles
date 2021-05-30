@@ -247,6 +247,7 @@ nnoremap j gj
 nnoremap gj j
 
 " change <c-i> mapping because of coc
+nnoremap <C-o> <Nop>
 nnoremap <A-i> <C-i>
 nnoremap <A-o> <C-o>
 
