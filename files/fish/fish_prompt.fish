@@ -84,6 +84,14 @@ function fish_prompt --description 'Informative prompt'
     set_color -o white
     echo -n ") "
 
+    # node
+    set_color -o white
+    echo -n "("
+    set_color -o yellow
+    echo -n "n-"(node --version | cut -b 2- )
+    set_color -o white
+    echo -n ") "
+
     # java
     set_color -o white
     echo -n "("
