@@ -26,6 +26,12 @@ nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 
+nnoremap <C-o> <Nop>
+nnoremap <C-i> <Nop>
+
+nnoremap <A-o> <c-o>
+nnoremap <A-i> <c-i>
+
 nnoremap <leader>a :action $SelectAll<cr>
 nnoremap <leader>b :action GotoDeclaration<cr>
 nnoremap <leader>c :action $Copy<cr>
