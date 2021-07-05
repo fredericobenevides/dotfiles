@@ -7,7 +7,7 @@ android_studio_tar_file: "android-studio-ide-201.7199119-linux.tar.gz"
 flutter_version: 2.0.5
 flutter_tar_file: flutter_linux_{{ flutter_version }}-stable.tar.xz
 
-idea_version: 2020.3.2
+idea_version: 2021.1.2
 idea_tar_file: ideaIU-{{ idea_version }}.tar.gz
 
 node_version: 12.16.1
