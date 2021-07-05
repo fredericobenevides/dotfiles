@@ -4,9 +4,6 @@
   vars_files:
     - vars.yaml
 
-  pre_tasks:
-    - import_tasks: pre_tasks/opt.yaml
-
   tasks:
     - import_tasks: tasks/manjaro/os.yaml
 

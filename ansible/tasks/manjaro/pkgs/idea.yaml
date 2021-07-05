@@ -4,14 +4,20 @@
     path: /opt/idea
   register: stat_result
 
+- name: Create /opt/idea folder
+  shell: warn=false mkdir -p /opt/idea
+  become: true
+  when: stat_result.stat.exists == False
+
+- name: Fix /opt/idea permissions
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/idea
+  become: true
+  when: stat_result.stat.exists == False
+
 - name: IDEA - Download idea
   get_url:
     url: https://download.jetbrains.com/idea/{{ idea_tar_file }}
     dest: /tmp
-  when: stat_result.stat.exists == False
-
-- name: IDEA - Create the folder for idea
-  shell: warn=false mkdir -p /opt/idea
   when: stat_result.stat.exists == False
 
 - name: IDEA - Extract idea file to /opt/idea
@@ -27,9 +33,9 @@
 
 - name: IDEA - Link binary file to /usr/local/bin
   file: src=/opt/idea/bin/{{ item }}
-        dest=/usr/local/bin/{{ item }}
-        state=link
-        force=yes
+    dest=/usr/local/bin/{{ item }}
+    state=link
+    force=yes
   with_items:
     - idea.sh
   when: stat_result.stat.exists == False

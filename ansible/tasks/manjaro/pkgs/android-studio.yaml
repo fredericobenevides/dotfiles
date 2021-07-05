@@ -35,3 +35,7 @@
 - name: Android Studio - Removing download file
   shell: warn=false rm /tmp/{{ android_studio_tar_file }} 2>/dev/null
   when: stat_result.stat.exists == False
+
+- name: Fix /opt/Android permissions
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/Android
+  become: true

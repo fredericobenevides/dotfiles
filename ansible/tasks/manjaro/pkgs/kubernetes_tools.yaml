@@ -21,6 +21,10 @@
   become: true
   when: stat_result.stat.exists == False
 
+- name: Fix /opt/kubectl permissions
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/kubectl
+  become: true
+
 
 
 
@@ -45,6 +49,10 @@
   become: true
   when: stat_result.stat.exists == False
 
+- name: Fix /opt/minikube permissions
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/minikube
+  become: true
+
 
 
 
@@ -68,3 +76,7 @@
     force=yes
   become: true
   when: stat_result.stat.exists == False
+
+- name: Fix /opt/skaffold permissions
+  shell: chown -R {{ username }}:{{ usergroup }} /opt/skaffold
+  become: true

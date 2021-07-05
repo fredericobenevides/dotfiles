@@ -1,8 +1,0 @@
----
-- name: Create /opt folder
-  shell: warn=false mkdir -p /opt
-  become: true
-
-- name: Fix /opt permissions
-  shell: chown -R {{ username }}:{{ usergroup }} /opt
-  become: true
