@@ -2,9 +2,10 @@
 
 set -e
 
-CLION_EXTRACTED="clion-2020.3.3"
+CLION_VERSION="2021.1.2"
+CLION_EXTRACTED="clion-$CLION_VERSION"
 
-# curl -Lo /tmp/CLion.tar.gz https://download.jetbrains.com/cpp/CLion-2020.3.3.tar.gz
+curl -Lo /tmp/CLion.tar.gz https://download.jetbrains.com/cpp/CLion-$CLION_VERSION.tar.gz
 
 tar -xzvf /tmp/CLion.tar.gz -C /tmp
 
