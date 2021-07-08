@@ -111,8 +111,8 @@
 - name: Linux pacman - Install fish
   import_tasks: tasks/manjaro/pkgs/fish.yaml
 
-# - name: Linux pacman - Install idea
-#   import_tasks: tasks/manjaro/pkgs/idea.yaml
+- name: Linux pacman - Install idea
+  import_tasks: tasks/manjaro/pkgs/idea.yaml
 
 - name: Linux pacman - Install kubernetes's tools packages
   import_tasks: tasks/manjaro/pkgs/kubernetes_tools.yaml
