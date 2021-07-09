@@ -68,6 +68,10 @@
   pacman: name=peek state=present
   become: true
 
+- name: Linux pacman - Make sure "rlwrap" is present
+  pacman: name=rlwrap state=present
+  become: true
+
 - name: Linux pacman - Make sure "rust-analyzer" is present
   pacman: name=rust-analyzer state=present
   become: true
@@ -101,6 +105,12 @@
 
 - name: Linux pacman - Install android-studio
   import_tasks: tasks/manjaro/pkgs/android-studio.yaml
+
+- name: Linux pacman - Install clojure
+  import_tasks: tasks/manjaro/pkgs/clojure.yaml
+
+- name: Linux pacman - Install clojure
+  import_tasks: tasks/manjaro/pkgs/clojure_pkgs.yaml
 
 - name: Linux pacman - Install docker
   import_tasks: tasks/manjaro/pkgs/docker.yaml

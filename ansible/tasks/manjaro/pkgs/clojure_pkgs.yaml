@@ -1,0 +1,26 @@
+- name: clojure - Verify if install leiningen
+  stat:
+    path: /opt/lein
+  register: stat_result
+
+- name: clojure - Download the installation file
+  get_url:
+    url: https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+    dest: /tmp
+  when: stat_result.stat.exists == False
+
+- name: clojure - chmod +x to the file
+  shell: chmod +x /tmp/lein
+  when: stat_result.stat.exists == False
+
+- name: clojure - move to /opt/lein
+  shell: warn=false mv /tmp/lein /opt/lein
+  when: stat_result.stat.exists == False
+  become: true
+
+- name: clojure - Link file to /usr/local/bin
+  file: src=/opt/lein
+    dest=/usr/local/bin/lein
+    state=link
+    force=yes
+  become: true
