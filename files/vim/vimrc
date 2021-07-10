@@ -13,6 +13,11 @@ Plug 'bling/vim-airline'
 Plug 'dart-lang/dart-vim-plugin'
 " }}}2
 
+" Clojure {{{2
+Plug 'Olical/conjure', {'tag': 'v4.21.0'}
+Plug 'clojure-vim/vim-jack-in'
+" }}}2
+
 " Editor Utilities {{{2
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
@@ -27,6 +32,7 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'dsznajder/vscode-es7-javascript-react-snippets', { 'do': 'yarn install --frozen-lockfile && yarn compile' }
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'guns/vim-sexp'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -57,6 +63,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 
 if has('nvim')
   Plug 'radenling/vim-dispatch-neovim'
@@ -215,6 +222,7 @@ set colorcolumn=80
 
 " Remap leader to <space> {{{2
 let mapleader = " "
+let maplocalleader = ","
 " }}}2
 
 " Double spaces remove highlight {{{2
@@ -454,6 +462,31 @@ else
 endif
 " }}}2
 
+" clojure-lsp {{{2
+function! Expand(exp) abort
+    let l:result = expand(a:exp)
+    return l:result ==# '' ? '' : "file://" . l:result
+endfunction
+
+nnoremap <silent> crcc :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'cycle-coll', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crth :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crtt :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-last', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crtf :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crtl :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-last-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> cruw :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'unwind-thread', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crua :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'unwind-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crml :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'move-to-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')]})<CR>
+nnoremap <silent> cril :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'introduce-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')]})<CR>
+nnoremap <silent> crel :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'expand-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> cram :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'add-missing-libspec', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crcn :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'clean-ns', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> crcp :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'cycle-privacy', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> cris :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'inline-symbol', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
+nnoremap <silent> cref :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'extract-function', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Function name: ')]})<CR>
+
+" }}}2
+
+
 " }}}1
 
 " Plugins Settings {{{1
@@ -470,6 +503,7 @@ let g:coc_global_extensions = [
   \ 'coc-actions',
   \ 'coc-css',
   \ 'coc-cssmodules',
+  \ 'coc-conjure',
   \ 'coc-html',
   \ 'coc-html-css-support',
   \ 'coc-emmet',
@@ -548,10 +582,11 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+
 " Formatting selected code.
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
-vmap <leader>cf  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+vmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -641,6 +676,10 @@ nnoremap <silent> <leader>ct  :<C-u>CocList --input=todolist. --normal commands<
 
 " }}} 2
 
+" Plugin conjure {{{2
+let g:conjure#mapping#doc_word = v:false
+" }}}2
+
 " Plugin python {{{2
 if has('nvim')
 
@@ -673,22 +712,22 @@ let g:endwise_no_mappings = 1
 " Plugin FZF {{{2
 map <C-p> :Files<cr>
 nmap <C-p> :Files<cr>
-nnoremap <leader>ff :files<cr>
-nnoremap <leader>fF :GFiles<cr>
-nnoremap <leader>fb :Buffers<cr>
-nnoremap <leader>fa :Ag<cr>
-nnoremap <leader>fl :Lines<cr>
-nnoremap <leader>fL :Bines<cr>
-nnoremap <leader>ft :Tags<cr>
-nnoremap <leader>fT :BTags<cr>
-nnoremap <leader>fc :Commits<cr>
-nnoremap <leader>fC :BCommits<cr>
-nnoremap <leader>fh :History<cr>
-nnoremap <leader>fH :Helptags<cr>
-nnoremap <leader>f: :History:<cr>
-nnoremap <leader>f/ :History/<cr>
-nnoremap <leader>fm :Marks<cr>
-nnoremap <leader>fM :Maps<cr>
+nnoremap <leader>Ff :files<cr>
+nnoremap <leader>FF :GFiles<cr>
+nnoremap <leader>Fb :Buffers<cr>
+nnoremap <leader>Fa :Ag<cr>
+nnoremap <leader>Fl :Lines<cr>
+nnoremap <leader>FL :Bines<cr>
+nnoremap <leader>Ft :Tags<cr>
+nnoremap <leader>FT :BTags<cr>
+nnoremap <leader>Fc :Commits<cr>
+nnoremap <leader>FC :BCommits<cr>
+nnoremap <leader>Fh :History<cr>
+nnoremap <leader>FH :Helptags<cr>
+nnoremap <leader>F: :History:<cr>
+nnoremap <leader>F/ :History/<cr>
+nnoremap <leader>Fm :Marks<cr>
+nnoremap <leader>FM :Maps<cr>
 
 " Complete from open tmux panes (from @junegunn)
 inoremap <expr> <C-x><C-t> fzf#complete( 'tmuxwords.rb -all-but-current --scroll 499 --min 5')
