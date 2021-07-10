@@ -26,6 +26,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'dsznajder/vscode-es7-javascript-react-snippets', { 'do': 'yarn install --frozen-lockfile && yarn compile' }
+Plug 'kien/rainbow_parentheses.vim'
 Plug 'fredericobenevides/line-mover.vim'
 " }}}2
 
@@ -746,6 +747,20 @@ nnoremap <leader>nt :<c-u>tabnew \| Tnew<cr>
 
 nnoremap <leader>nl :<c-u>bo Tnext<cr>
 nnoremap <leader>nh :<c-u>bo Tprevious<cr>
+" }}}2
+
+" Plugin rainbow_parentheses {{{2
+let g:rbpt_colorpairs = [
+      \ ['201', '#FF00FF'],
+      \ ['yellow', 'yellow'],
+      \ ['cyan', 'cyan'],
+      \ ['red', 'firebrick1'],
+      \ ]
+
+au VimEnter * RainbowParenthesesActivate
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " }}}2
 
 " }}}1
