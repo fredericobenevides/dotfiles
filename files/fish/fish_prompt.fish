@@ -106,7 +106,16 @@ function fish_prompt --description 'Informative prompt'
     set_color -o yellow
     echo -n "j-"(java --version | head -1 | awk '{print $2}')
     set_color -o white
-    echo -n ")"
+    echo -n ") "
+
+    # clojure
+    set_color -o white
+    echo -n "("
+    set_color -o yellow
+    echo -n "cl-"(clojure --version | awk '{print $4}')
+    set_color -o white
+    echo -n ") "
+
 
     # git
     printf '%s' (fish_git_prompt)
