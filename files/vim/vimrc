@@ -396,8 +396,8 @@ nnoremap <leader>wmt <c-w>T  |" move current window to a tab
 nnoremap <leader>wW <c-w>\|          |" Expand the width of the Window
 nnoremap <leader>wH :resize 100<cr>  |" Expand the height of the Window
 nnoremap <leader>w= <c-w>=           |" Make all windows equally high and wide
-nnoremap <Up>    <c-w>-              |" Decrease current window height
-nnoremap <Down>  <c-w>+              |" Increase current window height
+" nnoremap <Up>    <c-w>-              |" Decrease current window height
+" nnoremap <Down>  <c-w>+              |" Increase current window height
 " nnoremap <Left>  <c-w>>              |" Increase current window width
 " nnoremap <Right> <c-w><              |" Decrease current window width
 
