@@ -514,7 +514,6 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ 'coc-jest',
   \ 'coc-json',
-  \ 'coc-tabnine',
   \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-python',
