@@ -1,103 +1,36 @@
 ---
-- name: Linux pacman - Make sure some base packages are installed
+- name: Linux manjaro - Install packages
   pacman: name={{item}} state=present
   loop:
+    - axel
+    - code
+    - conky
+    - ctags
+    - dbeaver
+    - fish
+    - flameshot
+    - gdb
     - hddtemp
     - jq
+    - neovim
+    - nodejs-lts-erbium
+    - npm
+    - obs-studio
+    - peek
+    - rlwrap
+    - rust-analyzer
+    - simplescreenrecorder
+    - shotcut
+    - smplayer
     - stress
     - the_silver_searcher
     - tk
+    - tmux
     - unzip
+    - yad
+    - yay
     - xclip
     - zip
-  become: true
-
-- name: Linux pacman - Make sure "axel" is present
-  pacman: name=axel state=present
-  become: true
-
-- name: Linux pacman - Make sure "chromium" is present
-  pacman: name=chromium state=present
-  become: true
-
-- name: Linux pacman - Make sure "code (Visual Code)" is present
-  pacman: name=code state=present
-  become: true
-
-- name: Linux pacman - Make sure "conky" is present
-  pacman: name=conky state=present
-  become: true
-
-- name: Linux pacman - Make sure "ctags (exuberant-ctags)" is present
-  pacman: name=ctags state=present
-  become: true
-
-- name: Linux pacman - Make sure "dbeaver" is present
-  pacman: name=dbeaver state=present
-  become: true
-
-- name: Linux pacman - Make sure "fish" is present
-  pacman: name=fish state=present
-  become: true
-
-- name: Linux pacman - Make sure "flameshot" is present
-  pacman: name=flameshot state=present
-  become: true
-
-- name: Linux pacman - Make sure "gdb" is present
-  pacman: name=gdb state=present
-  become: true
-
-- name: Linux pacman - Make sure "neovim" is present
-  pacman: name=neovim state=present
-  become: true
-
-- name: Linux pacman - Make sure "nodejs-lts-erbium" is present
-  pacman: name=nodejs-lts-erbium state=present
-  become: true
-
-- name: Linux pacman - Make sure "npm" is present
-  pacman: name=npm state=present
-  become: true
-
-- name: Linux pacman - Make sure "obs-studio" is present
-  pacman: name=obs-studio state=present
-  become: true
-
-- name: Linux pacman - Make sure "peek" is present
-  pacman: name=peek state=present
-  become: true
-
-- name: Linux pacman - Make sure "rlwrap" is present
-  pacman: name=rlwrap state=present
-  become: true
-
-- name: Linux pacman - Make sure "rust-analyzer" is present
-  pacman: name=rust-analyzer state=present
-  become: true
-
-- name: Linux pacman - Make sure "simplescreenrecorder" is present
-  pacman: name=simplescreenrecorder state=present
-  become: true
-
-- name: Linux pacman - Make sure "shotcut" is present
-  pacman: name=shotcut state=present
-  become: true
-
-- name: Linux pacman - Make sure "smplayer" is present
-  pacman: name=smplayer state=present
-  become: true
-
-- name: Linux pacman - Make sure "tmux" is present
-  pacman: name=tmux state=present
-  become: true
-
-- name: Linux pacman - Make sure "yad" is present
-  pacman: name=yad state=present
-  become: true
-
-- name: Linux pacman - Make sure "yay" is present
-  pacman: name=yay state=present
   become: true
 
 - name: Linux pacman - Install anaconda
