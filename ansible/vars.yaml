@@ -16,6 +16,9 @@ node_version: 12.16.1
 node_file: node-v{{ node_version }}-linux-x64
 node_tar_file: "{{ node_file }}.tar.gz"
 
+paw_version: 4.2.0
+paw_file: "paw-client-{{ paw_version }}.AppImage"
+
 ruby_version: 2.6.3
 
 squirrel_sql_version: 4.0.0

@@ -78,6 +78,9 @@
 - name: Linux pacman - Install rust
   import_tasks: tasks/manjaro/pkgs/rust.yaml
 
+- name: Linux pacman - Install paw
+  import_tasks: tasks/manjaro/pkgs/paw.yaml
+
 - name: Linux pacman - Install sdkman
   import_tasks: tasks/manjaro/pkgs/sdkman.yaml
 
