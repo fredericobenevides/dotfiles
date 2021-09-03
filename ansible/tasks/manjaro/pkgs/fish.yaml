@@ -21,5 +21,6 @@
 - name: Fish - Install fisher plugins
   shell: if [[ ! -d "$HOME/.config/fish/functions/{{ item.fnpath }}" ]]; then fish -c "fisher install {{ item.plugin }}"; else echo "ok"; fi
   loop:
+    - { fnpath: nvm.fish, plugin: jorgebucaran/nvm }
     - { fnpath: fzf.fish, plugin: jethrokuan/fzf }
     - { fnpath: sdk.fish, plugin: reitzig/sdkman-for-fish@v1.4.0 }

@@ -13,8 +13,7 @@
     - hddtemp
     - jq
     - neovim
-    - nodejs-lts-erbium
-    - npm
+    - nvm
     - obs-studio
     - peek
     - rlwrap
