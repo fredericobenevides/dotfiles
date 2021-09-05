@@ -1,0 +1,8 @@
+- name: Emacs - Verify if install spacemacs
+  stat:
+    path: ~/.emacs.d
+  register: verify_emacs
+
+- name: Emacs - Install spacemacs
+  shell: warn=false git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+  when: verify_emacs.stat.exists == False

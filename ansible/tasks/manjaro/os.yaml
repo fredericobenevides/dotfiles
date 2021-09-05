@@ -7,6 +7,7 @@
     - conky
     - ctags
     - dbeaver
+    - emacs
     - fish
     - flameshot
     - gdb
@@ -46,6 +47,9 @@
 
 - name: Linux pacman - Install docker
   import_tasks: tasks/manjaro/pkgs/docker.yaml
+
+- name: Linux pacman - Install emacs
+  import_tasks: tasks/manjaro/pkgs/emacs.yaml
 
 - name: Linux pacman - Install flutter
   import_tasks: tasks/manjaro/pkgs/flutter.yaml

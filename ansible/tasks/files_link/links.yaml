@@ -1,3 +1,6 @@
+- name: Emac's link
+  import_tasks: tasks/files_link/emacs_link.yaml
+
 - name: Fish's link
   import_tasks: tasks/files_link/fish_link.yaml
 
