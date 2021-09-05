@@ -834,16 +834,8 @@ augroup END
 
 " Editor Utilities {{{2
 function! g:SaveCurrentBuffer()
-  let file_type = &ft
-
-  if (file_type == 'pug')
-    w
-    silent execute '!prettier --write ' . expand('%:p')
-    silent execute 'e'
-  else
-    execute "Format"
-    w " save the file if is not pug
-  endif
+  execute "Format"
+  w
 endfunction
 
 " }}}2
