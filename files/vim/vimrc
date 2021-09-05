@@ -72,10 +72,6 @@ endif
 
 " terminal integration {{{2
 Plug 'voldikss/vim-floaterm'
-
-if has('nvim')
-  Plug 'kassio/neoterm'
-endif
 " }}}2
 
 call plug#end()
@@ -740,24 +736,6 @@ nnoremap <leader>p :VCoolor<cr>
 
 " Plugin vim-indent-guides {{{2
 let g:indent_guides_auto_co2ors = 0
-" }}}2
-
-" Plugin neoterm {{{2
-nnoremap <leader>nc :<c-u>exec v:count.'Tclear'<cr>
-nnoremap <leader>nC :<c-u>exec v:count.'Tclose'<cr>
-nnoremap <leader>nk :<c-u>exec v:count.'Tkill'<cr>
-nnoremap <leader>nn :<c-u>Tnew<cr>
-nnoremap <leader>nq :<c-u>exec v:count.'T quit'<cr>
-
-nnoremap <leader>ns :TREPLSendLine<cr>
-vnoremap <leader>ns :TREPLSendSelection<cr>
-
-nnoremap <leader>nb :<c-u>bo Tnew<cr><c-w>j
-nnoremap <leader>nv :<c-u>vert Tnew<cr><c-w>l
-nnoremap <leader>nt :<c-u>tabnew \| Tnew<cr>
-
-nnoremap <leader>nl :<c-u>bo Tnext<cr>
-nnoremap <leader>nh :<c-u>bo Tprevious<cr>
 " }}}2
 
 " Plugin rainbow_parentheses {{{2
