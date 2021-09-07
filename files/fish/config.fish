@@ -19,6 +19,14 @@ end
 
 
 
+### DOOM-EMACS
+if test -d ~/.emacs.d
+  set -x EMACS_HOME "$HOME/.emacs.d"
+  set PATH "$EMACS_HOME/bin:$PATH"
+end
+
+
+
 ### FLUTTER
 if test -d /opt/flutter
   set -x FLUTTER_HOME "/opt/flutter"

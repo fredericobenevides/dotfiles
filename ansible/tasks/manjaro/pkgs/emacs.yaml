@@ -3,6 +3,10 @@
     path: ~/.emacs.d
   register: verify_emacs
 
-- name: Emacs - Install spacemacs
-  shell: warn=false git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+- name: Emacs - Download doom-emacs
+  shell: warn=false git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+  when: verify_emacs.stat.exists == False
+
+- name: Emacs -  Install doom-emacs
+  shell: warn=false ~/.emacs.d/bin/doom install
   when: verify_emacs.stat.exists == False

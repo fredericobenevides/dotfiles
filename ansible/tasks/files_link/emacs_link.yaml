@@ -1,5 +1,5 @@
 - name: Link emacs' file
-  file: src={{ dotfilespath }}/files/emacs/spacemacs
-    dest=~/.spacemacs
+  file: src={{ dotfilespath }}/files/emacs/doom.d
+    dest=~/.doom.d
     state=link
     force=yes

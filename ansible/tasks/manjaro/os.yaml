@@ -8,6 +8,7 @@
     - ctags
     - dbeaver
     - emacs
+    - fd
     - fish
     - flameshot
     - gdb
@@ -20,9 +21,11 @@
     - rlwrap
     - rust-analyzer
     - simplescreenrecorder
+    - shellcheck
     - shotcut
     - smplayer
     - stress
+    - ripgrep
     - the_silver_searcher
     - tk
     - tmux
