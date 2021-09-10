@@ -22,7 +22,7 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 (setq doom-font (font-spec :family "JetBrainsMono NerdFont" :size 16)
-      doom-variable-pitch-font (font-spec :family "sans" :size 12))
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono NerdFont" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -54,3 +54,20 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; set the localleader key
+(setq evil-snipe-override-evil-repeat-keys nil)
+(setq doom-localleader-key ",")
+
+;; Disable exit confirmation
+(setq confirm-kill-emacs nil)
+
+;; Maximize window
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; Change splash screen. Images download from
+;; https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash
+(let ((alternatives '("doom-emacs-flugo-slant_out_purple-small.png")))
+  (setq fancy-splash-image
+        (concat doom-private-dir "splash/"
+                (nth (random (length alternatives)) alternatives))))
