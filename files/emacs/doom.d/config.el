@@ -71,3 +71,30 @@
   (setq fancy-splash-image
         (concat doom-private-dir "splash/"
                 (nth (random (length alternatives)) alternatives))))
+
+(use-package! cider
+  :after clojure-mode
+  :config
+  (setq cider-eldoc-display-for-symbol-at-point nil) ; use lsp to show eldoc during symbol at point
+  (set-lookup-handlers! 'cider-mode nil) ; use lsp to find definition/references
+  (add-hook 'cider-mode-hook (lambda () (remove-hook 'completion-at-point-functions #'cider-complete-at-point)))) ; use lsp completion
+
+(use-package! clj-refactor
+  :after clojure-mode
+  :config
+  (setq cljr-add-ns-to-blank-clj-files nil)) ; use lsp to add ns to blank files
+
+(use-package! lsp-mode
+  :config
+  (setq lsp-clojure-custom-server-command '("bash" "-c" "clojure-lsp")
+        lsp-completion-show-details t
+        lsp-eldoc-enable-hover t
+        lsp-lens-enable t) ;; shows the references
+  )
+
+(use-package! lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-peek-list-width 60
+        lsp-ui-doc-max-width 60))
