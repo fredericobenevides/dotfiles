@@ -98,3 +98,18 @@
   :config
   (setq lsp-ui-peek-list-width 60
         lsp-ui-doc-max-width 60))
+
+(use-package smartparens
+  :after clojure-mode
+  :bind
+  (:map smartparens-mode-map
+        ("C-M-<up>"      . sp-raise-sexp)
+        ("C-<right>"     . sp-forward-slurp-sexp)
+        ("C-<left>"      . sp-backward-slurp-sexp)
+        ("M-<right>"     . sp-forward-barf-sexp)
+        ("M-<left>"      . sp-backward-barf-sexp)
+        ("C-k"           . sp-kill-hybrid-sexp)
+        ("C-x C-t"       . sp-transpose-hybrid-sexp)
+        ("C-M-n"         . sp-next-sexp)
+        ("C-M-p"         . sp-previous-sexp)
+        ("C-<backspace>" . sp-backward-kill-word)))
