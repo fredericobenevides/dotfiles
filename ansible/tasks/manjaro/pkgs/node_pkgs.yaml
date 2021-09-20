@@ -5,9 +5,10 @@
     - meta
     - neovim
     - prettier
-    - '@prettier/plugin-pug'
+    - "@prettier/plugin-pug"
     - tern
     - typescript
     - ts-node
+    - yarn
   environment:
     PATH: "{{ lookup('env', 'HOME') }}/.npm-global/bin:{{ ansible_env.PATH }}"
