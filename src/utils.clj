@@ -43,7 +43,7 @@
         permission-cmd (str "sudo chown -R " username ":" group " " path)]
     (run-shell permission-cmd)))
 
-(defn- expand-path
+(defn expand-path
   "Expand the path from ~ to $HOME folder"
   [path]
   (let [home-folder (System/getProperty "user.home")]

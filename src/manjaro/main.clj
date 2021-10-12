@@ -2,6 +2,7 @@
   (:require [manjaro.anaconda :as anaconda]
             [manjaro.android-studio :as android-studio]
             [manjaro.docker :as docker]
+            [manjaro.emacs :as emacs]
             [manjaro.pacman :as pacman]
             [manjaro.yay :as yay]))
 
@@ -13,6 +14,7 @@
   (anaconda/run)
   (android-studio/run)
   (docker/run)
+  (emacs/run)
   (yay/run)
 
   (println "\nFinished the installation"))
