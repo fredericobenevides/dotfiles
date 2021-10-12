@@ -34,7 +34,7 @@
   (println "Removing a file from" path)
   (fs/delete-if-exists path))
 
-(defn fix-permission
+(defn fix-user-permission
   "Allow to fix the permission of a path using the username and user's group"
   [path]
   (println "Fixing permission at" path)

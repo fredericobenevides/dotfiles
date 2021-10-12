@@ -30,7 +30,7 @@
 
         (utils/download-file url-file dest-file)
         (install-anaconda)
-        (utils/fix-permission "/opt/anaconda3")
+        (utils/fix-user-permission "/opt/anaconda3")
         (utils/link-files ".pythonrc" ".dotfiles/files/python/.pythonrc")
 
         (println "Finished the installation of Anaconda"))
