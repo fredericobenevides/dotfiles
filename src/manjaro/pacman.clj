@@ -16,6 +16,7 @@
   (println "Installing pacman packages")
 
   (pacman "Install axel" :axel)
+  (pacman "Install clojure" :clojure)
   (pacman "Install code" :code)
   (pacman "Install conky" :conky)
   (pacman "Install dbeaver" :dbeaver)
@@ -25,6 +26,7 @@
   (pacman "Install flameshot" :flameshot)
   (pacman "Install gdb" :gdb)
   (pacman "Install jq" :jq)
+  (pacman "Install leiningen" :leiningen)
   (pacman "Install neovim" :neovim)
   (pacman "Install nvm" :nvm)
   (pacman "Install peek" :peek)
