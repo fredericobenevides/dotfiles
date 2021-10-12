@@ -17,7 +17,7 @@
         (println "Skippping package" pkg-name "already installed")
         (do
           (println description)
-          (-> @(process ["pacman" "-S" "--noconfirm" pkg-name] {:out :inherit}))))))
+          (-> @(process ["sudo" "pacman" "-S" "--noconfirm" pkg-name] {:err :inherit :in :inherit :out :inherit}))))))
 
 (defn run
   []
