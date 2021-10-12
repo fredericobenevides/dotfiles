@@ -20,6 +20,8 @@
   (pacman "Install code" :code)
   (pacman "Install conky" :conky)
   (pacman "Install dbeaver" :dbeaver)
+  (pacman "Install docker" :docker)
+  (pacman "Install docker-compose" :docker-compose)
   (pacman "Install emacs" :emacs)
   (pacman "Install fd" :fd)
   (pacman "Install fish" :fish)
