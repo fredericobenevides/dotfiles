@@ -21,6 +21,8 @@
 
 (defn run
   []
+  (println "Installing pacman packages")
+
   (pacman "Install axel" :axel)
   (pacman "Install code" :code)
   (pacman "Install conky" :conky)
@@ -41,4 +43,6 @@
   (pacman "Install unzip" :unzip)
   (pacman "Install yay" :yay)
   (pacman "Install xclip" :xclip)
-  (pacman "Install zip" :zip))
+  (pacman "Install zip" :zip)
+  
+  (println "Finished the installation of pacman packages"))

@@ -1,10 +1,9 @@
-(ns manjaro.anaconda)
-
-(require '[babashka.process :refer [process sh]])
-(require '[babashka.fs :as fs])
-(require '[babashka.curl :as curl])
-(require '[clojure.java.io :as io])
-(require '[clojure.string :as str])
+(ns manjaro.anaconda
+  (:require [babashka.process :refer [process sh]]
+            [babashka.fs :as fs]
+            [babashka.curl :as curl]
+            [clojure.java.io :as io]
+            [clojure.string :as str]))
 
 (def anaconda-url "https://repo.anaconda.com/archive")
 (def anaconda-file "Anaconda3-2021.05-Linux-x86_64.sh")
@@ -75,4 +74,4 @@
         (link-files ".pythonrc" ".dotfiles/files/python/.pythonrc")
 
         (println "Finished the installation of Anaconda"))
-      (println "Skipping the installation of Anaconda"))))
+      (println "\nSkipping the installation of Anaconda"))))

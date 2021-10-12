@@ -1,9 +1,7 @@
-(ns manjaro.main)
-
-(require '[manjaro.anaconda :as anaconda])
-(require '[manjaro.pacman :as pacman])
-(require '[manjaro.yay :as yay])
-
+(ns manjaro.main
+  (:require [manjaro.anaconda :as anaconda]
+            [manjaro.pacman :as pacman]
+            [manjaro.yay :as yay]))
 
 (defn -main
   [& _args]
