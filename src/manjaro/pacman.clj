@@ -1,23 +1,15 @@
 (ns manjaro.pacman
-  (:require [babashka.process :refer [process]]))
-
-(defn exist-pkg?
-  "Verify if the package exist"
-  [pkg]
-  (empty?
-    (-> (process ["pacman" "-Qi" (name pkg)]) 
-      :err 
-      slurp)))
+  (:require [utils]
+            [babashka.process :refer [process]]))
 
 (defn pacman
   "Install the package using pacman"
   [description pkg]
-    (let [pkg-name (name pkg)]
-      (if (exist-pkg? pkg-name)
-        (println "Skippping package" pkg-name "already installed")
-        (do
-          (println description)
-          (-> @(process ["sudo" "pacman" "-S" "--noconfirm" pkg-name] {:err :inherit :in :inherit :out :inherit}))))))
+  (let [pkg-name (name pkg)]
+    (utils/install-pkg description
+                       (str "pacman -Qi " pkg-name)
+                       (str "sudo pacman -S --noconfirm " pkg-name)
+                       pkg-name)))
 
 (defn run
   []

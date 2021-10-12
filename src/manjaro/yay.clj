@@ -1,23 +1,14 @@
 (ns manjaro.yay
   (:require [babashka.process :refer [process]]))
 
-(defn exist-pkg?
-  "Verify if the package exist"
-  [pkg]
-  (empty?
-    (-> (process ["yay" "-Qi" (name pkg)])
-      :err
-      slurp)))
-
 (defn yay
   "Install the package using yay"
   [description pkg]
-    (let [pkg-name (name pkg)]
-      (if (exist-pkg? pkg-name)
-        (println "Skippping package" pkg-name "already installed")
-        (do
-          (println description)
-          (-> @(process ["yay" "-S" "--confirm" pkg-name] {:err :inherit :in :inherit :out :inherit}))))))
+  (let [pkg-name (name pkg)]
+    (utils/install-pkg description
+                       (str "yay -Qi " pkg-name)
+                       (str "yay -S --confirm " pkg-name)
+                       pkg-name)))
 
 (defn run
   []
