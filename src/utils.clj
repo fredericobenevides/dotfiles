@@ -43,16 +43,20 @@
         permission-cmd (str "sudo chown -R " username ":" group " " path)]
     (run-shell permission-cmd)))
 
+(defn- expand-path
+  "Expand the path from ~ to $HOME folder"
+  [path]
+  (let [home-folder (System/getProperty "user.home")]
+    (clojure.string/replace path #"~" home-folder)))
+
 (defn link-files
   "Create a link between a file and link"
-  [link file]
-  (println "Creating a link from" link "to" file)
-  (let [home (System/getProperty "user.home")
-        home-link (str home "/" link)
-        home-file (str home "/" file)]
-    (try 
-      (fs/create-sym-link home-link home-file)
-      (catch java.nio.file.FileAlreadyExistsException e (println "Link already added")))))
+  ([link file]
+   (link-files link file false))
+  ([link file sudo?]
+   (if sudo?
+     (run-shell (str "sudo ln -sf " (expand-path file) " " (expand-path link)))
+     (run-shell (str "ln -sf " (expand-path file) " " (expand-path link))))))
 
 (defn- exist-pkg?
   "Verify if the package exist"
