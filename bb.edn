@@ -1,3 +1,3 @@
-{:paths ["manjaro"]
+{:paths ["src"]
  :tasks
- {manjaro (shell "bb --classpath . -m manjaro.main")}}
+ {manjaro (shell "bb -m manjaro.main")}}
