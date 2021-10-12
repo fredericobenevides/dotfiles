@@ -54,9 +54,12 @@
   ([link file]
    (link-files link file false))
   ([link file sudo?]
-   (if sudo?
-     (run-shell (str "sudo ln -sf " (expand-path file) " " (expand-path link)))
-     (run-shell (str "ln -sf " (expand-path file) " " (expand-path link))))))
+   (let [file-path (expand-path file)
+         link-path (expand-path link)]
+     (println "Linking from" link-path "to" file-path)
+     (if sudo?
+       (run-shell (str "sudo ln -sf " file-path " " link-path))
+       (run-shell (str "ln -sf " file-path " " link-path))))))
 
 (defn- exist-pkg?
   "Verify if the package exist"
