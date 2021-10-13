@@ -8,7 +8,7 @@
   (let [pkg-name (name pkg)]
     (utils/install-pkg description
                        (str "pacman -Qi " pkg-name)
-                       (str "sudo pacman -S --noconfirm " pkg-name)
+                       (str "sudo pacman -S " pkg-name)
                        pkg-name)))
 
 (defn run
@@ -39,6 +39,7 @@
   (pacman "Install smplayer" :smplayer)
   (pacman "Install snapd" :snapd)
   (pacman "Install unzip" :unzip)
+  (pacman "Install virtualbox" :virtualbox)
   (pacman "Install yay" :yay)
   (pacman "Install xclip" :xclip)
   (pacman "Install zip" :zip)
