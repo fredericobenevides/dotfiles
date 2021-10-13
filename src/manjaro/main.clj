@@ -10,6 +10,7 @@
             [manjaro.nerd-fonts :as nerd-fonts]
             [manjaro.nodejs :as nodejs]
             [manjaro.pacman :as pacman]
+            [manjaro.paw :as paw]
             [manjaro.yay :as yay]))
 
 (defn -main
@@ -17,6 +18,7 @@
   (println "Starting the installation\n")
 
   (pacman/run)
+
   (anaconda/run)
   (android-studio/run)
   (docker/run)
@@ -27,6 +29,7 @@
   (idea/run)
   (nerd-fonts/run)
   (nodejs/run)
+  (paw/run)
   (yay/run)
 
   (println "\nFinished the installation"))
