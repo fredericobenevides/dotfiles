@@ -5,6 +5,7 @@
             [manjaro.emacs :as emacs]
             [manjaro.fish :as fish]
             [manjaro.flutter :as flutter]
+            [manjaro.idea :as idea]
             [manjaro.pacman :as pacman]
             [manjaro.yay :as yay]))
 
@@ -19,6 +20,7 @@
   (emacs/run)
   (fish/run)
   (flutter/run)
+  (idea/run)
   (yay/run)
 
   (println "\nFinished the installation"))
