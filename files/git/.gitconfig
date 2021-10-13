@@ -1,0 +1,31 @@
+[user]
+	name = Frederico Benevides
+	email = fredbene@gmail.com
+[color]
+	ui = on
+[github]
+	user = fredericobenevides
+[alias]
+	assumed = !git ls-files -v | grep "^[[:lower:]]"
+	assume = !git update-index --assume-unchanged
+	unassume = !git update-index --no-assume-unchanged
+	lg = log --pretty=format:'%C(yellow)%h%Creset%d -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --decorate
+	lt = describe --tags --abbrev=0
+	sa = stash apply
+	sl = stash list
+	ss = stash save
+	st = status
+	rs = reset --soft HEAD~1
+	rh = reset --hard HEAD~1
+	r = reset
+	co = checkout
+	dc = diff --cached
+	dh = diff HEAD
+[merge]
+	tool = vimdiff
+[mergetool]
+	keepBackup = false
+[mergetool "vimdiff"]
+	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd w' -c '$wincmd w' -c '$wincmd J' -c '$wincmd w'
+#[url "git@github.com:"]
+#	insteadOf = https://github.com/
