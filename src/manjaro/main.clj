@@ -3,6 +3,7 @@
             [manjaro.android-studio :as android-studio]
             [manjaro.docker :as docker]
             [manjaro.emacs :as emacs]
+            [manjaro.fish :as fish]
             [manjaro.flutter :as flutter]
             [manjaro.pacman :as pacman]
             [manjaro.yay :as yay]))
@@ -16,6 +17,7 @@
   (android-studio/run)
   (docker/run)
   (emacs/run)
+  (fish/run)
   (flutter/run)
   (yay/run)
 

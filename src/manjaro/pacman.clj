@@ -25,6 +25,7 @@
   (pacman "Install emacs" :emacs)
   (pacman "Install fd" :fd)
   (pacman "Install fish" :fish)
+  (pacman "Install fisher" :fisher)
   (pacman "Install flameshot" :flameshot)
   (pacman "Install gdb" :gdb)
   (pacman "Install jq" :jq)
