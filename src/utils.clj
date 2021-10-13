@@ -15,6 +15,11 @@
   [cmd]
   (-> @(process cmd {:err :inherit :in :inherit :out :inherit})))
 
+(defn current-shell
+  "Return the current shell"
+  []
+  (System/getenv "SHELL"))
+
 (defn empty-folder?
   "Verify if the folder is empty"
   [folder]
