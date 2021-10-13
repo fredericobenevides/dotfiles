@@ -8,6 +8,7 @@
             [manjaro.git :as git]
             [manjaro.idea :as idea]
             [manjaro.nerd-fonts :as nerd-fonts]
+            [manjaro.nodejs :as nodejs]
             [manjaro.pacman :as pacman]
             [manjaro.yay :as yay]))
 
@@ -25,6 +26,7 @@
   (git/run)
   (idea/run)
   (nerd-fonts/run)
+  (nodejs/run)
   (yay/run)
 
   (println "\nFinished the installation"))
