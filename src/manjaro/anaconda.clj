@@ -4,10 +4,25 @@
             [babashka.fs :as fs]
             [babashka.curl :as curl]
             [clojure.java.io :as io]
+            [clojure.java.shell :as shell]
             [clojure.string :as str]))
 
 (def anaconda-url "https://repo.anaconda.com/archive")
 (def anaconda-file "Anaconda3-2021.05-Linux-x86_64.sh")
+
+(defn pip
+  "Install the package using pip"
+  ([description pkg]
+   (pip description pkg ""))
+  ([description pkg extra-args]
+  (let [pkg-exist (-> (shell/sh "sh" "-c" (str "/opt/anaconda3/bin/pip list | grep " pkg))
+                      :exit
+                      (= 0))
+        pip-cmd (str "/opt/anaconda3/bin/pip install " pkg " " extra-args)]
+    (if (not pkg-exist)
+      (do
+        (println description)
+        (shell/sh "sh" "-c" pip-cmd))))))
 
 (defn install-anaconda
   []
@@ -32,6 +47,13 @@
         (install-anaconda)
         (utils/fix-user-permission "/opt/anaconda3")
         (utils/link-files "~/.pythonrc" "~/.dotfiles/files/python/.pythonrc")
+
+        (pip "Installing flake8" "flake8")
+        (pip "Installing jedi" "jedi")
+        (pip "Installing neovim" "neovim")
+        (pip "Installing pylint" "pylint")
+        (pip "Installing pynvim" "pynvim" "--user")
+        (pip "Installing yapf" "yapf")
 
         (println "Finished the installation of Anaconda"))
         (println "\nSkipping the installation of Anaconda"))))
