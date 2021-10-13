@@ -17,7 +17,6 @@
 
   (pacman "Install axel" :axel)
   (pacman "Install clojure" :clojure)
-  (pacman "Install code" :code)
   (pacman "Install conky" :conky)
   (pacman "Install dbeaver" :dbeaver)
   (pacman "Install docker" :docker)
