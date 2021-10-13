@@ -12,6 +12,7 @@
             [manjaro.pacman :as pacman]
             [manjaro.paw :as paw]
             [manjaro.sdkman :as sdkman]
+            [manjaro.snap :as snap]
             [manjaro.yay :as yay]))
 
 (defn -main
@@ -29,9 +30,10 @@
   (git/run)
   (idea/run)
   (nerd-fonts/run)
-  (nodejs/run)
+  ;(nodejs/run)
   (paw/run)
   (sdkman/run)
+  (snap/run)
   (yay/run)
 
   (println "\nFinished the installation"))

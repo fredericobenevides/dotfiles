@@ -37,6 +37,7 @@
   (pacman "Install rlwrap" :rlwrap)
   (pacman "Install simplescreenrecorder" :simplescreenrecorder)
   (pacman "Install smplayer" :smplayer)
+  (pacman "Install snapd" :snapd)
   (pacman "Install unzip" :unzip)
   (pacman "Install yay" :yay)
   (pacman "Install xclip" :xclip)
