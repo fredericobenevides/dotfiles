@@ -7,6 +7,7 @@
             [manjaro.flutter :as flutter]
             [manjaro.git :as git]
             [manjaro.idea :as idea]
+            [manjaro.nerd-fonts :as nerd-fonts]
             [manjaro.pacman :as pacman]
             [manjaro.yay :as yay]))
 
@@ -23,6 +24,7 @@
   (flutter/run)
   (git/run)
   (idea/run)
+  (nerd-fonts/run)
   (yay/run)
 
   (println "\nFinished the installation"))
