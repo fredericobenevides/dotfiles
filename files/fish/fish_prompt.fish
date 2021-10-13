@@ -76,14 +76,6 @@ function fish_prompt --description 'Informative prompt'
     # current_dir
     printf '%s ' (set_color -o red) (prompt_pwd)
 
-    # ruby
-    set_color -o white
-    echo -n "("
-    set_color -o yellow
-	  echo -n "r-"(cat ~/.rbenv/version 2> /dev/null)
-    set_color -o white
-    echo -n ") "
-
     # conda
     set_color -o white
     echo -n "("
@@ -115,7 +107,6 @@ function fish_prompt --description 'Informative prompt'
     echo -n "cl-"(clojure --version | awk '{print $4}')
     set_color -o white
     echo -n ") "
-
 
     # git
     printf '%s' (fish_git_prompt)
