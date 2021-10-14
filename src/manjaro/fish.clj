@@ -28,10 +28,11 @@
         (utils/run-shell "chsh -s /usr/bin/fish"))))
 
   (println "Installing fisher plugins")
-  (fisher "Installing nvm" "nvm.fish" "jorgebucaran/nvm.fish")
+  (fisher "Installing bass" "bass.fish" "edc/bass")
+  (fisher "Installing fish-nvm" "nvm.fish" "FabioAntunes/fish-nvm")
   (fisher "Installing fzf" "fzf.fish" "jethrokuan/fzf")
   (fisher "Installing sdk" "sdk.fish" "reitzig/sdkman-for-fish@v1.4.0")
-  
+
   (utils/link-files "~/.config/fish/functions/fish_prompt.fish" "~/.dotfiles/files/fish/fish_prompt.fish")
   (utils/link-files "~/.config/fish/config.fish" "~/.dotfiles/files/fish/config.fish")
   (utils/link-files "~/.config/fish/fish_variables" "~/.dotfiles/files/fish/fish_variables")
