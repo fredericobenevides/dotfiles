@@ -33,7 +33,7 @@
   (idea/run)
   (neovim/run)
   (nerd-fonts/run)
-  ;(nodejs/run)
+  (nodejs/run)
   (paw/run)
   (sdkman/run)
   (snap/run)

@@ -10,7 +10,8 @@
 (defn npm
   "Install the package using npm"
   [description pkg]
-  (let [pkg-exist (fs/exists? (str (utils/expand-path "~/.npm-global/lib/node-modules") pkg))
+  (let [pkg-path (str (utils/expand-path "~/.npm-global/lib/node_modules/") pkg)
+        pkg-exist (fs/exists? pkg-path)
         npm-cmd (str "npm install -g " pkg)]
     (if (not pkg-exist)
       (do
