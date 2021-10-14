@@ -37,10 +37,11 @@
   (pacman "Install simplescreenrecorder" :simplescreenrecorder)
   (pacman "Install smplayer" :smplayer)
   (pacman "Install snapd" :snapd)
+  (pacman "Install the_silver_searcher" :the_silver_searcher)
   (pacman "Install unzip" :unzip)
   (pacman "Install virtualbox" :virtualbox)
   (pacman "Install yay" :yay)
   (pacman "Install xclip" :xclip)
   (pacman "Install zip" :zip)
-  
+
   (println "Finished the installation of pacman packages"))
