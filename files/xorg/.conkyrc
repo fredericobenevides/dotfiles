@@ -1,0 +1,140 @@
+conky.config = {
+    use_xft = true,
+    xftalpha = 0.8,
+    update_interval = 1.0,
+    total_run_times = 0,
+    own_window = true,
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_type = 'normal',
+    own_window_class = 'conky-semi',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    background = false,
+    double_buffer = true,
+    imlib_cache_size = 0,
+    no_buffers = true,
+    uppercase = false,
+    cpu_avg_samples = 2,
+    override_utf8_locale = true,
+
+    -- placement
+    alignment = 'middle_right',
+    gap_x = 0,
+    gap_y = 0,
+
+    -- default drawing
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    default_bar_width = 150, default_bar_height = 5,
+    default_graph_width = 150, default_graph_height = 12,
+    default_gauge_width = 20, default_gauge_height = 20,
+
+    -- colors
+    font = 'JetBrainsMono Nerd Font:size=9',
+    default_color = 'EEEEEE',
+    color1 = 'AABBFF',
+    color2 = 'FF993D',
+    color3 = 'AAAAAA',
+    color4 = '0077FF',
+
+    -- layouting
+    template0 = [[${font JetBrainsMono Nerd Font:bold:size=10}${color2}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${color1}\1]],
+    template2 = [[${goto 100}${color}]],
+    template3 = [[${goto 180}${color}${alignr}]],
+};
+
+conky.text = [[
+${template0 Info}
+${template1 Date}                                                           ${template3}${color3}${time %a,}${color}${time %e %B %G}
+${template1 Time}                                                           ${template3}${time %T}
+
+${template0 System}
+${template1 Hostname}                                                       ${template3}${nodename}
+${template1 ${sysname}}                                                     ${template3}${kernel}-${machine}
+${template1 Uptime}                                                         ${template3}${uptime_short}
+${template1 CPU}                                                            ${template3}${freq_g}GHz
+${template1 CPU-1\ Temperature}                                             ${template3}${exec sensors | grep 'Core 0' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
+${template1 CPU-2\ Temperature}                                             ${template3}${exec sensors | grep 'Core 1' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
+${template1 CPU-3\ Temperature}                                             ${template3}${exec sensors | grep 'Core 2' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
+${template1 CPU-4\ Temperature}                                             ${template3}${exec sensors | grep 'Core 3' | cut -c17-19 | grep -Po '\d+'}${color3}°C / 100°C
+#${template1 HDD\ Temperature}                                               ${template3}${hddtemp /dev/sda}°C
+
+${template0 Processors}
+${template1 Load}               ${template2}${loadavg 1}                    ${template3}${loadgraph}
+${template1 Core\ 1}            ${template2}${cpu cpu1}%                    ${template3}${cpubar cpu1}
+${template1 Core\ 2}            ${template2}${cpu cpu2}%                    ${template3}${cpubar cpu2}
+${template1 Core\ 3}            ${template2}${cpu cpu3}%                    ${template3}${cpubar cpu3}
+${template1 Core\ 4}            ${template2}${cpu cpu4}%                    ${template3}${cpubar cpu4}
+${template1 Core\ 5}            ${template2}${cpu cpu5}%                    ${template3}${cpubar cpu5}
+${template1 Core\ 6}            ${template2}${cpu cpu6}%                    ${template3}${cpubar cpu6}
+${template1 Core\ 7}            ${template2}${cpu cpu7}%                    ${template3}${cpubar cpu7}
+${if_existing /sys/devices/system/cpu/cpu8}\
+${template1 Core\ 8}            ${template2}${cpu cpu8}%                    ${template3}${cpubar cpu8}
+${template1 Core\ 9}            ${template2}${cpu cpu9}%                    ${template3}${cpubar cpu9}
+${template1 Core\ 10}           ${template2}${cpu cpu10}%                   ${template3}${cpubar cpu10}
+${template1 Core\ 11}           ${template2}${cpu cpu11}%                   ${template3}${cpubar cpu11}
+${template1 Core\ 12}           ${template2}${cpu cpu12}%                   ${template3}${cpubar cpu12}
+${endif}\
+${color2}Top Processes      PID    CPU%   MEM%
+$color${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+$color${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+$color${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+$color${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+$color${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
+
+${template0 Memory}
+${template1 RAM}                ${template2}${memperc}% used                ${template3}${mem} / ${memmax}
+                                                                            ${template3}${membar}
+${template1 Swap}               ${template2}${swapperc}% used               ${template3}${swap} / ${swapfree}
+                                                                            ${template3}${swapbar}
+${color2}Top Memory         PID    CPU%   MEM%
+$color${top_mem name 1} ${top_mem pid 1} ${top_mem cpu 1} ${top_mem mem 1}
+$color${top_mem name 2} ${top_mem pid 2} ${top_mem cpu 2} ${top_mem mem 2}
+$color${top_mem name 3} ${top_mem pid 3} ${top_mem cpu 3} ${top_mem mem 3}
+$color${top_mem name 4} ${top_mem pid 4} ${top_mem cpu 4} ${top_mem mem 4}
+$color${top_mem name 5} ${top_mem pid 5} ${top_mem cpu 5} ${top_mem mem 5}
+
+${template0 Filesystem}
+${template1 /}                  ${template2}${fs_free /} free               ${template3}${fs_used /} / ${fs_size /}
+                                                                            ${template3}${fs_bar /}
+${template1 IO\ Read}           ${template2}${diskio_read}                  ${template3}${diskiograph_read}
+${template1 IO\ Write}          ${template2}$diskio_write                   ${template3}$diskiograph_write
+${template1 Top}                ${template2}${top_io name 1}                ${template3}${top_io io_perc 1}%
+
+${template0 Networking}
+${if_existing /proc/net/route wlp2s0}\
+${template1 Local\ IP}                                                        ${template3}${addr wlp2s0}
+${template1 External\ Ip}                                                    ${template3}${execi 60 curl ipinfo.io/ip}
+${template1 AP}                                                             ${template3}${wireless_essid wlp2s0}
+${template1 Signal}             ${template2}${wireless_link_qual_perc wlp2s0} ${template3}${wireless_link_bar wlp2s0}
+${template1 Download}           ${template2}${downspeed wlp2s0}              ${template3}${downspeedgraph wlp2s0}
+${template1 Upload}             ${template2}${upspeed wlp2s0}                ${template3}${upspeedgraph wlp2s0}
+${template1 Total Down/Up}                                                  ${template3}${totaldown wlp2s0}↓ / ${totalup wlp2s0}↑
+${endif}\
+${if_existing /proc/net/route wlp60s0}\
+${template1 Local\ IP}                                                        ${template3}${addr wlp60s0}
+${template1 External\ IP}                                                    ${template3}${execi 60 curl ipinfo.io/ip}
+${template1 AP}                                                             ${template3}${wireless_essid wlp60s0}
+${template1 Signal}             ${template2}${wireless_link_qual_perc wlp60s0} ${template3}${wireless_link_bar wlp60s0}
+${template1 Download}           ${template2}${downspeed wlp60s0}              ${template3}${downspeedgraph wlp60s0}
+${template1 Upload}             ${template2}${upspeed wlp60s0}                ${template3}${upspeedgraph wlp60s0}
+${template1 Total Down/Up}                                                  ${template3}${totaldown wlp60s0}↓ / ${totalup wlp60s0}↑
+${endif}\
+${if_existing /proc/net/route enp59s0}\
+${template1 Local\ IP}                                                        ${template3}${addr enp59s0}
+${template1 External\ IP}                                                    ${template3}${execi 60 curl ipinfo.io/ip}
+${template1 Download}           ${template2}${downspeed enp59s0}               ${template3}${downspeedgraph enp59s0}
+${template1 Upload}             ${template2}${upspeed enp59s0}                 ${template3}${upspeedgraph enp59s0}
+${template1 Total Down/Up}                                                  ${template3}${totaldown enp59s0}↓ / ${totalup enp59s0}↑
+${endif}\
+
+${if_existing /sys/class/power_supply/BAT0}\
+${template0 Battery}
+${template1 Status}                                                         ${template3}${color}${battery_percent BAT0}%
+${endif}\
+
+]];

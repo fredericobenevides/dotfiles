@@ -13,6 +13,7 @@
             [manjaro.paw :as paw]
             [manjaro.sdkman :as sdkman]
             [manjaro.snap :as snap]
+            [manjaro.xorg :as xorg]
             [manjaro.yay :as yay]))
 
 (defn -main
@@ -34,6 +35,7 @@
   (paw/run)
   (sdkman/run)
   (snap/run)
+  (xorg/run)
   (yay/run)
 
   (println "\nFinished the installation"))
