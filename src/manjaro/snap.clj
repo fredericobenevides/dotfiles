@@ -16,12 +16,18 @@
         (println description)
         (println (:out (shell/sh "sh" "-c" (str "snap install " pkg))))))))
 
+(defn snap-socket-is-loaded?
+  []
+  (not (empty? (:out (shell/sh "sh" "-c" "sudo systemctl status snapd 2> /dev/null | grep loaded")))))
+
 (defn run
   []
   (println "\nInstalling Snap")
 
-  (println "Enable snap socket")
-  (utils/run-shell "sudo systemctl enable --now -f snapd.socket")
+  (if (not (snap-socket-is-loaded?))
+    (do
+      (println "Enable snap socket")
+      (utils/run-shell "sudo systemctl enable --now -f snapd.socket")))
 
   (snap "Installing spotify" "spotify")
 
