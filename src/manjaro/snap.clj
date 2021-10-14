@@ -9,12 +9,15 @@
 
 (defn snap
   "Install the package using snap"
-  [description pkg]
-  (let [pkg-exist (not (empty? (:out (shell/sh "sh" "-c" (str "snap list | grep " pkg)))))]
+  ([description pkg]
+   (snap description pkg ""))
+  ([description pkg classic]
+   (let [pkg-exist (not (empty? (:out (shell/sh "sh" "-c" (str "snap list | grep " pkg)))))
+         install-cmd (str "snap install " pkg " " classic)]
     (if (not pkg-exist)
       (do
-        (println description)
-        (println (:out (shell/sh "sh" "-c" (str "snap install " pkg))))))))
+        (println description install-cmd)
+        (println (:out (utils/run-shell install-cmd))))))))
 
 (defn snap-socket-is-loaded?
   []
@@ -29,6 +32,9 @@
       (println "Enable snap socket")
       (utils/run-shell "sudo systemctl enable --now -f snapd.socket")))
 
+  (utils/link-files "/snap" "/var/lib/snapd/snap" true)
+
+  (snap "Installing cmake" "cmake" "--classic")
   (snap "Installing spotify" "spotify")
 
   (println "Finished the installation of Snap"))
