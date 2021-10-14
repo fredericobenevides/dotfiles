@@ -1,0 +1,46 @@
+snippet     beforeEach
+abbr        beforeEach(() => {});
+alias       beach
+options     head
+  beforeEach(() => {
+    ${0:TARGET}
+  });
+
+snippet     describe
+abbr        describe('', () => {});
+alias       desc
+options     head
+  describe('${1}', () => {
+    ${0:TARGET}
+  });
+
+snippet     describeit
+abbr        describe('', () => { it... });
+alias       descit
+options     head
+  describe('${1}', () => {
+    it('${2}', () => {
+      ${0:TARGET}
+    });
+  });
+
+snippet     expect
+abbr        expect('').
+alias       exp
+options     head
+  expect('${1}').${0:TARGET}
+
+snippet     it
+abbr        it('', () => {});
+options     head
+  it('${1}', () => {
+    ${0:TARGET}
+  });
+
+snippet     lambda
+abbr        () => {}
+alias       => lamb
+options     word
+  (${1}) => {
+    ${0:TARGET}
+  }

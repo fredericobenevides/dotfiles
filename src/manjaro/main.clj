@@ -7,6 +7,7 @@
             [manjaro.flutter :as flutter]
             [manjaro.git :as git]
             [manjaro.idea :as idea]
+            [manjaro.neovim :as neovim]
             [manjaro.nerd-fonts :as nerd-fonts]
             [manjaro.nodejs :as nodejs]
             [manjaro.pacman :as pacman]
@@ -30,6 +31,7 @@
   (flutter/run)
   (git/run)
   (idea/run)
+  (neovim/run)
   (nerd-fonts/run)
   ;(nodejs/run)
   (paw/run)
