@@ -15,14 +15,13 @@
   ([description pkg]
    (pip description pkg ""))
   ([description pkg extra-args]
-  (let [pkg-exist (-> (shell/sh "sh" "-c" (str "/opt/anaconda3/bin/pip list | grep " pkg))
-                      :exit
-                      (= 0))
-        pip-cmd (str "/opt/anaconda3/bin/pip install " pkg " " extra-args)]
-    (if (not pkg-exist)
-      (do
-        (println description)
-        (shell/sh "sh" "-c" pip-cmd))))))
+   (let [pkg-exist (-> (shell/sh "sh" "-c" (str "/opt/anaconda3/bin/pip list | grep " pkg))
+                       :exit
+                       (= 0))
+         pip-cmd (str "/opt/anaconda3/bin/pip install " pkg " " extra-args)]
+     (when (not pkg-exist)
+       (println description)
+       (print (:out (shell/sh "sh" "-c" pip-cmd)))))))
 
 (defn install-anaconda
   []
@@ -39,21 +38,21 @@
   (let [empty-folder (utils/empty-folder? "/opt/anaconda3")
         url-file (str anaconda-url "/" anaconda-file)
         dest-file (str "/tmp/" anaconda-file)]
-    (if empty-folder
-      (do
-        (println "\nInstalling Anaconda")
+    (println "\nConfiguring Anaconda")
 
-        (utils/download-file url-file dest-file)
-        (install-anaconda)
-        (utils/fix-user-permission "/opt/anaconda3")
-        (utils/link-files "~/.pythonrc" "~/.dotfiles/files/python/.pythonrc")
+    (when empty-folder
+      (println "\nInstalling Anaconda")
 
-        (pip "Installing flake8" "flake8")
-        (pip "Installing jedi" "jedi")
-        (pip "Installing neovim" "neovim")
-        (pip "Installing pylint" "pylint")
-        (pip "Installing pynvim" "pynvim" "--user")
-        (pip "Installing yapf" "yapf")
+      (utils/download-file url-file dest-file)
+      (install-anaconda)
+      (utils/fix-user-permission "/opt/anaconda3")
+      (utils/link-files "~/.pythonrc" "~/.dotfiles/files/python/.pythonrc"))
 
-        (println "Finished the installation of Anaconda"))
-        (println "\nSkipping the installation of Anaconda"))))
+    (pip "Installing flake8" "flake8")
+    (pip "Installing jedi" "jedi")
+    (pip "Installing neovim" "neovim")
+    (pip "Installing pylint" "pylint")
+    (pip "Installing pynvim" "pynvim" "--user")
+    (pip "Installing yapf" "yapf")
+
+    (println "Finished configuring Anaconda")))
