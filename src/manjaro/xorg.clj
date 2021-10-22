@@ -48,16 +48,17 @@
   (if (not (exist-cedilla-environment?))
     (add-cedilla-to-environment)
     (println "Skipping the configuration to include cedilla located in /etc/environment"))
-  
+
   (if (not (exist-en-in-gtk-immodules?))
     (add-en-to-gtk-immodules)
     (println "Skipping the configuration to replace :wa to :wa:en"))
 
-  ;(if (not (exist-c-in-compose?))
-  ;  (add-cedilla-to-compose)
-  ;  (println "Skipping the configuration to replace 'ć' to 'ç' and 'Ć' to 'Ç'"))
-
+  (if (not (exist-c-in-compose?))
+    (add-cedilla-to-compose)
+    (println "Skipping the configuration to replace 'ć' to 'ç' and 'Ć' to 'Ç'"))
 
   (utils/link-files "~/.conkyrc" "~/.dotfiles/files/xorg/.conkyrc")
+  (utils/link-files "~/.xbindkeysrc" "~/.dotfiles/files/xorg/.xbindkeysrc")
+  (utils/link-files "~/.xprofile" "~/.dotfiles/files/xorg/.xprofile")
 
   (println "Finished configuring data related to xorg"))

@@ -41,6 +41,8 @@
   (pacman "Install unzip" :unzip)
   (pacman "Install virtualbox" :virtualbox)
   (pacman "Install yay" :yay)
+  (pacman "Install xbindkeys" :xbindkeys)
+  (pacman "Install xdotool" :xdotool)
   (pacman "Install xclip" :xclip)
   (pacman "Install zip" :zip)
 
