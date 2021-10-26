@@ -34,7 +34,7 @@
   (pacman "Install peek" :peek)
   (pacman "Install ripgrep" :ripgrep)
   (pacman "Install rlwrap" :rlwrap)
-  (pacman "Install simplescreenrecorder" :simplescreenrecorder)
+  (pacman "Install obs-studio" :obs-studio)
   (pacman "Install smplayer" :smplayer)
   (pacman "Install snapd" :snapd)
   (pacman "Install the_silver_searcher" :the_silver_searcher)
