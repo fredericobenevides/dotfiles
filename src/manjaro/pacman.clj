@@ -19,6 +19,7 @@
   (pacman "Install clojure" :clojure)
   (pacman "Install conky" :conky)
   (pacman "Install dbeaver" :dbeaver)
+  (pacman "Install discord" :discord)
   (pacman "Install docker" :docker)
   (pacman "Install docker-compose" :docker-compose)
   (pacman "Install emacs" :emacs)
