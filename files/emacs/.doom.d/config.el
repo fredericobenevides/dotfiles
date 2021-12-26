@@ -65,6 +65,9 @@
 ;; Maximize window
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
+;; Disable undo-history after closing emacs
+(remove-hook 'undo-fu-mode-hook #'global-undo-fu-session-mode)
+
 ;; Change splash screen. Images download from
 ;; https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash
 (let ((alternatives '("doom-emacs-flugo-slant_out_purple-small.png")))
