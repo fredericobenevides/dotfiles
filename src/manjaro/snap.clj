@@ -35,6 +35,7 @@
   (utils/link-files "/snap" "/var/lib/snapd/snap" true)
 
   (snap "Installing cmake" "cmake" "--classic")
+  (snap "Installing heroku" "heroku" "--classic")
   (snap "Installing insomnia" "insomnia")
   (snap "Installing spotify" "spotify")
 
