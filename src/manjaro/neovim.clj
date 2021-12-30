@@ -34,4 +34,13 @@
         (utils/link-files "~/.config/nvim/coc-settings.json" "~/.dotfiles/files/vim/coc-settings.json")
 
         (println "Finished the configuration of neovim"))
-      (println "\nSkipping the configuration of neovim"))))
+      (println "\nSkipping the configuration of neovim")))
+
+  (let [empty-folder (utils/empty-folder? (utils/expand-path "~/.dotfiles/files/themes"))]
+    (when (not empty-folder)
+      (do
+        (println "Creating the themes folder")
+        (shell/sh "sh" "-c" "mkdir -p ~/.local/share/nvim/site/pack/themes/start")
+
+        (println "Linking theme file")
+        (utils/link-files "~/.local/share/nvim/site/pack/themes/start/dracula_pro" "~/.dotfiles/files/themes/vim")))))

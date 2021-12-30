@@ -5,7 +5,6 @@ else
 endif
 
 " Colors and themes {{{2
-Plug 'joshdick/onedark.vim'
 Plug 'bling/vim-airline'
 " }}}2
 
@@ -78,10 +77,13 @@ call plug#end()
 " }}}1
 
 " Color and themes configs {{{1
+" syntax on
 syntax on
 set t_Co=256
-colorscheme onedark
 set termguicolors " enable true colors in terminal
+
+colorscheme dracula_pro
+let g:dracula_colorterm = 0
 " }}}1
 
 " Config settings {{{1
@@ -160,12 +162,6 @@ set mousehide " hide the cursor while typing
 set mouse=a " enable mouse inside vim
 " }}}2
 
-" Neovim's  Terminal settings {{{2
-if has('nvim')
-  highlight! link TermCursor Cursor
-  highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
-  highlight! Normal ctermfg=252 ctermbg=233 guifg=#F8F8F2 guibg=#1B1D1E " change background to be darker
-endif
 " }}}2
 
 " Search Settings {{{2
