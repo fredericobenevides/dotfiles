@@ -160,6 +160,12 @@ Set the default custom file
 #+end_src
 
 *** evil-collection
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
 *** paren
 
 #+begin_src emacs-lisp
@@ -167,7 +173,7 @@ Set the default custom file
 #+end_src
 
 *** which-key
-
+    
 #+begin_src emacs-lisp
   (use-package which-key
     :init (which-key-mode)
@@ -175,17 +181,21 @@ Set the default custom file
     (setq which-key-idle-delay 0.3))
 #+end_src
 
-
+*** undo
 #+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+(use-package undo-fu
+  :config
+  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+  (define-key evil-normal-state-map "U" 'undo-fu-only-redo))
 #+end_src
 
-*** undo
-
 ** Tools
+*** Magit
+
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
 *** Projectile
 For managing projects
 
@@ -197,10 +207,10 @@ For managing projects
     ("C-c p" . projectile-command-map))
 #+end_src
 
-*** Magit
+*** Term
 
 #+begin_src emacs-lisp
-  (use-package magit)
+  (use-package vterm)
 #+end_src
 
 ** Org Mode

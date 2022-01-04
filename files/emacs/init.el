@@ -97,6 +97,11 @@
   :config
   (evil-mode 1))
 
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
 (show-paren-mode 1)
 
 (use-package which-key
@@ -104,10 +109,12 @@
   :config
   (setq which-key-idle-delay 0.3))
 
-(use-package evil-collection
-  :after evil
+(use-package undo-fu
   :config
-  (evil-collection-init))
+  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+  (define-key evil-normal-state-map "U" 'undo-fu-only-redo))
+
+(use-package magit)
 
 (use-package projectile
   :init
@@ -115,7 +122,7 @@
   :bind-keymap
   ("C-c p" . projectile-command-map))
 
-(use-package magit)
+(use-package vterm)
 
 (use-package org-superstar
   :config
