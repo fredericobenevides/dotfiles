@@ -53,9 +53,26 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
+(use-package swiper)
+
+(use-package ivy
+  :bind (("C-s" . swiper)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (ivy-mode 1))
 
 (use-package all-the-icons)
 
@@ -94,6 +111,7 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-fu) ;; make evil use undo-fu
   :config
   (evil-mode 1))
 
@@ -123,6 +141,11 @@
   ("C-c p" . projectile-command-map))
 
 (use-package vterm)
+
+(setq org-startup-folded t)
+
+(setq org-startup-indented t) ;; ident for each level
+(setq org-startup-with-inline-images t)
 
 (use-package org-superstar
   :config
