@@ -120,6 +120,11 @@
   :config
   (evil-collection-init))
 
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region)
+  ("C--" . er/contract-region))
+
 (show-paren-mode 1)
 
 (use-package which-key

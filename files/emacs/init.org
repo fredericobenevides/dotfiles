@@ -182,6 +182,13 @@ Set the default custom file
     :config
     (evil-collection-init))
 #+end_src
+*** expand-region
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind
+    ("C-=" . er/expand-region)
+    ("C--" . er/contract-region))
+#+end_src
 *** paren
 
 #+begin_src emacs-lisp
