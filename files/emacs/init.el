@@ -87,6 +87,10 @@
 
 (use-package all-the-icons)
 
+(use-package all-the-icons-ivy-rich
+  :init
+  (all-the-icons-ivy-rich-mode 1))
+
 (use-package dashboard
   :config
 

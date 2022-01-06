@@ -123,7 +123,11 @@ Set the default custom file
 *** Icons
 
 #+begin_src emacs-lisp
-(use-package all-the-icons)
+  (use-package all-the-icons)
+
+  (use-package all-the-icons-ivy-rich
+    :init
+    (all-the-icons-ivy-rich-mode 1))
 #+end_src
 
 *** Dashboard
