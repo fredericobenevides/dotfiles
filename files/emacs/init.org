@@ -239,10 +239,14 @@ For managing projects
 
 #+begin_src emacs-lisp
   (use-package projectile
-    :init
-    (projectile-mode +1)
     :bind-keymap
-    ("C-c p" . projectile-command-map))
+    ("C-c p" . projectile-command-map)
+    :config
+    (projectile-mode +1))
+
+  (use-package counsel-projectile
+    :config
+    (counsel-projectile-mode))
 #+end_src
 
 *** Term

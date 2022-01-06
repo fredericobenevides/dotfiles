@@ -155,10 +155,14 @@
 (use-package magit)
 
 (use-package projectile
-  :init
-  (projectile-mode +1)
   :bind-keymap
-  ("C-c p" . projectile-command-map))
+  ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode +1))
+
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-mode))
 
 (use-package vterm)
 
