@@ -113,6 +113,10 @@
   :init
   (doom-modeline-mode 1))
 
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
 (use-package doom-themes
   :config
   (load-theme 'doom-dracula t))

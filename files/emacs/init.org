@@ -160,6 +160,14 @@ Set the default custom file
     (doom-modeline-mode 1))
 #+end_src
 
+*** Rainbow delimiters
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
 *** Themes
 
 #+begin_src emacs-lisp
