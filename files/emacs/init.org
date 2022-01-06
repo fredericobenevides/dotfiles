@@ -86,26 +86,37 @@ Set the default custom file
 *** ivy
 
 #+begin_src emacs-lisp
+  (use-package counsel)
   (use-package swiper)
 
   (use-package ivy
     :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
+           ("C-x C-f" . counsel-find-file)
+           ("M-x" . counsel-M-x)
+           ("M-y" . counsel-yank-pop)
+           ("C-h b" . counsel-descbinds)
+           ("<f1> f" . counsel-describe-function)
+           ("<f1> v" . counsel-describe-variable)
+           ("<f1> o" . counsel-describe-symbol)
+           ("<f1> l" . counsel-find-library)
+           ("<f2> i" . counsel-info-lookup-symbol)
+           ("<f2> u" . counsel-unicode-char))
     :config
+    (setq ivy-initial-inputs-alist nil) ;; Removes the ^ in ivy searches
+
+    ;; ivy recommends this settings
     (setq ivy-use-virtual-buffers t)
     (setq enable-recursive-minibuffers t)
+
     (ivy-mode 1))
+
+  (use-package ivy-rich
+    :after ivy
+    :init
+    (setq ivy-rich-path-style 'abbrev)
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+    :config
+    (ivy-rich-mode 1))
 #+end_src
 
 ** UI
