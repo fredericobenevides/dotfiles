@@ -126,19 +126,6 @@
   (global-command-log-mode)
   :bind ("C-c o" . clm/toggle-command-log-buffer))
 
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-undo-system 'undo-fu) ;; make evil use undo-fu
-  :config
-  (evil-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region)
@@ -156,8 +143,9 @@
 
 (use-package undo-fu
   :config
-  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-  (define-key evil-normal-state-map "U" 'undo-fu-only-redo))
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
 
 (use-package markdown-mode
   :ensure t
@@ -220,11 +208,3 @@
 (use-package org-superstar
   :config
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-
-(use-package evil-org
-  :ensure t
-  :after org
-  :hook (org-mode . (lambda () evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
