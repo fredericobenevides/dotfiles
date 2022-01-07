@@ -32,6 +32,7 @@
   (pacman "Install leiningen" :leiningen)
   (pacman "Install neovim" :neovim)
   (pacman "Install nvm" :nvm)
+  (pacman "Install pandoc" :pandoc)
   (pacman "Install peek" :peek)
   (pacman "Install ripgrep" :ripgrep)
   (pacman "Install rlwrap" :rlwrap)
