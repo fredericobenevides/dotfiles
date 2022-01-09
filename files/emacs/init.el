@@ -53,6 +53,10 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
+(use-package avy
+  :bind
+  ("C-'" . avy-goto-char))
+
 (use-package company
   :bind (:map company-active-map
          ("C-n" . company-select-next)
@@ -63,6 +67,7 @@
 
 (use-package counsel)
 (use-package swiper)
+
 
 (use-package ivy
   :bind (("C-s" . swiper)
@@ -75,7 +80,9 @@
          ("<f1> o" . counsel-describe-symbol)
          ("<f1> l" . counsel-find-library)
          ("<f2> i" . counsel-info-lookup-symbol)
-         ("<f2> u" . counsel-unicode-char))
+         ("<f2> u" . counsel-unicode-char)
+         :map ivy-minibuffer-map
+         ("C-'" . ivy-avy)) ;; allow to run ivy inside the ivy-minibuffer
   :config
   (setq ivy-initial-inputs-alist nil) ;; Removes the ^ in ivy searches
 

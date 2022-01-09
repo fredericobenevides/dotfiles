@@ -83,6 +83,14 @@ Set the default custom file
 
 * Modules
 ** Completion
+*** avy
+
+#+begin_src emacs-lisp
+  (use-package avy
+    :bind
+    ("C-'" . avy-goto-char))
+#+end_src
+
 *** company
 #+begin_src emacs-lisp
 (use-package company
@@ -99,6 +107,7 @@ Set the default custom file
   (use-package counsel)
   (use-package swiper)
 
+
   (use-package ivy
     :bind (("C-s" . swiper)
            ("C-x C-f" . counsel-find-file)
@@ -110,7 +119,9 @@ Set the default custom file
            ("<f1> o" . counsel-describe-symbol)
            ("<f1> l" . counsel-find-library)
            ("<f2> i" . counsel-info-lookup-symbol)
-           ("<f2> u" . counsel-unicode-char))
+           ("<f2> u" . counsel-unicode-char)
+           :map ivy-minibuffer-map
+           ("C-'" . ivy-avy)) ;; allow to run ivy inside the ivy-minibuffer
     :config
     (setq ivy-initial-inputs-alist nil) ;; Removes the ^ in ivy searches
 
