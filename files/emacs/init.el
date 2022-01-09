@@ -53,6 +53,14 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
+(use-package company
+  :bind (:map company-active-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous))
+  :config
+  (setq company-idle-delay 0.3)
+  (global-company-mode t))
+
 (use-package counsel)
 (use-package swiper)
 
@@ -147,6 +155,24 @@
   (global-set-key (kbd "C-z")   'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
 
+(use-package clojure-mode)
+
+(add-hook 'clojure-mode-hook 'lsp)
+(add-hook 'clojurescript-mode-hook 'lsp)
+(add-hook 'clojurec-mode-hook 'lsp)
+
+(use-package cider
+  :config
+  ;; disable cider showing eldoc during symbol at point
+  (setq cider-eldoc-display-for-symbol-at-point nil)
+
+  ;; go right to the REPL buffer when it's finished connecting
+  (setq cider-repl-pop-to-buffer-on-connect t)
+
+  ;; When there's a cider error, don't switch to the buffer
+  (setq cider-show-error-buffer nil)
+  (setq cider-auto-select-error-buffer nil))
+
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -180,6 +206,17 @@
   (unless (process-status "httpd")
     (httpd-stop))
   (impatient-mode -1))
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+    ((lsp-mode . lsp-enable-which-key-integration)))
+
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs)
 
 (use-package magit)
 
