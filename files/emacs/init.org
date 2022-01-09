@@ -210,7 +210,13 @@ Set the default custom file
 *** eletric-pair-mode
 
 #+begin_src emacs-lisp
-  (electric-pair-mode 1)
+(electric-pair-mode 1)
+#+end_src
+
+*** lispy
+
+#+begin_src emacs-lisp
+  (use-package lispy)
 #+end_src
 
 *** expand-region
@@ -256,9 +262,15 @@ Set the default custom file
 #+begin_src emacs-lisp
   (use-package clojure-mode)
 
+  ;; integrated with lsp
   (add-hook 'clojure-mode-hook 'lsp)
   (add-hook 'clojurescript-mode-hook 'lsp)
   (add-hook 'clojurec-mode-hook 'lsp)
+
+  ;; enable lispy mode and deactivate eletric-pair-local-mode
+  (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+  (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+  (add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
 
   (use-package cider
     :config

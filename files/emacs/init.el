@@ -143,6 +143,8 @@
 
 (electric-pair-mode 1)
 
+(use-package lispy)
+
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region)
@@ -166,9 +168,15 @@
 
 (use-package clojure-mode)
 
+;; integrated with lsp
 (add-hook 'clojure-mode-hook 'lsp)
 (add-hook 'clojurescript-mode-hook 'lsp)
 (add-hook 'clojurec-mode-hook 'lsp)
+
+;; enable lispy mode and deactivate eletric-pair-local-mode
+(add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+(add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+(add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
 
 (use-package cider
   :config
