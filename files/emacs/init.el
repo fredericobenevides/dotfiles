@@ -134,6 +134,8 @@
   (global-command-log-mode)
   :bind ("C-c o" . clm/toggle-command-log-buffer))
 
+(electric-pair-mode 1)
+
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region)
