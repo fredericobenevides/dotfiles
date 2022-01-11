@@ -24,8 +24,6 @@
   (pacman "Install docker-compose" :docker-compose)
   (pacman "Install emacs" :emacs)
   (pacman "Install fd" :fd)
-  (pacman "Install fish" :fish)
-  (pacman "Install fisher" :fisher)
   (pacman "Install flameshot" :flameshot)
   (pacman "Install gdb" :gdb)
   (pacman "Install jq" :jq)
@@ -46,6 +44,7 @@
   (pacman "Install xbindkeys" :xbindkeys)
   (pacman "Install xdotool" :xdotool)
   (pacman "Install xclip" :xclip)
+  (pacman "Install zsh" :zsh)
   (pacman "Install zip" :zip)
 
   (println "Finished the installation of pacman packages"))

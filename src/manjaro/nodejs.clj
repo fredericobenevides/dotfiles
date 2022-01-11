@@ -24,8 +24,6 @@
   (shell/sh "sh" "-c" "source /usr/share/nvm/init-nvm.sh && nvm install --lts")
   (shell/sh "sh" "-c" "source /usr/share/nvm/init-nvm.sh && nvm use --lts")
 
-  (utils/link-files "~/.npmrc" "~/.dotfiles/files/nodejs/.npmrc")
-
   (println "Installing fisher plugins")
   (npm "Installing meta" "meta")
   (npm "Installing neovim" "neovim")
