@@ -1,4 +1,4 @@
-#+TITLE: Emacs Config
+ #+TITLE: Emacs Config
 #+PROPERTY: header-args :tangle ./init.el
 
 * Package Setup
@@ -80,6 +80,14 @@ Set the default custom file
   (load custom-file)
 #+end_src
 
+** Load shell environment
+
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize))
+#+end_src
+
 
 * Modules
 ** Completion
@@ -93,13 +101,23 @@ Set the default custom file
 
 *** company
 #+begin_src emacs-lisp
-(use-package company
-  :bind (:map company-active-map
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous))
-  :config
-  (setq company-idle-delay 0.3)
-  (global-company-mode t))
+  (use-package company
+    :bind (:map company-active-map
+           ("C-n" . company-select-next)
+           ("C-p" . company-select-previous))
+    :config
+    (setq company-idle-delay 0.3)
+    (global-company-mode t))
+
+  (use-package company-web
+    :bind (
+           ("C-:" . company-web-html)))
+
+  ;; show docs when is idling in the autocomplete
+  (use-package company-quickhelp
+    :config
+    (company-quickhelp-mode))
+
 #+end_src
 *** ivy
 
@@ -211,6 +229,16 @@ Set the default custom file
 
 #+begin_src emacs-lisp
 (electric-pair-mode 1)
+#+end_src
+
+*** emmet
+
+#+begin_src emacs-lisp
+  (use-package emmet-mode
+    :after
+    (web-mode css-mode)
+    :config
+    (add-hook 'css-mode-hook  'emmet-mode)) ;; enable Emmet's css abbreviation.
 #+end_src
 
 *** lispy
@@ -325,6 +353,37 @@ Set the default custom file
     (unless (process-status "httpd")
       (httpd-stop))
     (impatient-mode -1))
+#+end_src
+
+*** web (HTML / CSS)
+
+**** HTML
+
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :mode
+    (("\\.html?\\'" . web-mode))
+    :config
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-enable-auto-expanding t)
+    (setq web-mode-style-padding 2)
+    (setq web-mode-script-padding 2)
+
+    ;; integrated with lsp
+    (add-hook 'web-mode-hook 'lsp)
+
+    ;; integrated with emmet-mode
+    (add-hook 'web-mode-hook 'emmet-mode))
+
+#+end_src
+
+**** CSS
+
+#+begin_src emacs-lisp
+  (setq css-indent-level 2)
+  (setq css-indent-offset 2)
 #+end_src
 
 ** Tools

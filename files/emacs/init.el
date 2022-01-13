@@ -53,6 +53,10 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package avy
   :bind
   ("C-'" . avy-goto-char))
@@ -64,6 +68,15 @@
   :config
   (setq company-idle-delay 0.3)
   (global-company-mode t))
+
+(use-package company-web
+  :bind (
+         ("C-:" . company-web-html)))
+
+;; show docs when is idling in the autocomplete
+(use-package company-quickhelp
+  :config
+  (company-quickhelp-mode))
 
 (use-package counsel)
 (use-package swiper)
@@ -142,6 +155,12 @@
   :bind ("C-c o" . clm/toggle-command-log-buffer))
 
 (electric-pair-mode 1)
+
+(use-package emmet-mode
+  :after
+  (web-mode css-mode)
+  :config
+  (add-hook 'css-mode-hook  'emmet-mode)) ;; enable Emmet's css abbreviation.
 
 (use-package lispy)
 
@@ -223,6 +242,26 @@
   (unless (process-status "httpd")
     (httpd-stop))
   (impatient-mode -1))
+
+(use-package web-mode
+  :mode
+  (("\\.html?\\'" . web-mode))
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-enable-auto-expanding t)
+  (setq web-mode-style-padding 2)
+  (setq web-mode-script-padding 2)
+
+  ;; integrated with lsp
+  (add-hook 'web-mode-hook 'lsp)
+
+  ;; integrated with emmet-mode
+  (add-hook 'web-mode-hook 'emmet-mode))
+
+(setq css-indent-level 2)
+(setq css-indent-offset 2)
 
 (use-package lsp-mode
   :init
