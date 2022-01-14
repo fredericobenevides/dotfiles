@@ -66,7 +66,23 @@
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous))
   :config
-  (setq company-idle-delay 0.3)
+
+  ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
+  ;; Add yasnippet support for all company backends
+  ;; https://github.com/syl20bnr/spacemacs/pull/179
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+    (defun company-mode/backend-with-yas (backend)
+      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+           backend
+        (append (if (consp backend) backend (list backend))
+                '(:with company-yasnippet))))
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+
+  (setq company-idle-delay 0.1)
+  (setq company-echo-delay 0.1)
+
   (global-company-mode t))
 
 (use-package company-web
@@ -184,6 +200,12 @@
   (global-unset-key (kbd "C-z"))
   (global-set-key (kbd "C-z")   'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets)
 
 (use-package clojure-mode)
 
