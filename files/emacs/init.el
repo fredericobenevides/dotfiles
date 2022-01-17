@@ -57,6 +57,11 @@
   :config
   (exec-path-from-shell-initialize))
 
+(defun my/kill-buffer-and-window ()
+  "Kill buffer and its window on quitting"
+  (local-set-key (kbd "q") 'kill-buffer-and-window))
+(add-hook 'comint-mode-hook #'my/kill-buffer-and-window)
+
 (use-package avy
   :bind
   ("C-'" . avy-goto-char))
@@ -201,23 +206,60 @@
   (global-set-key (kbd "C-z")   'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
+(use-package yasnippet)
 
 (use-package yasnippet-snippets)
 
-(use-package clojure-mode)
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+    ((lsp-mode . lsp-enable-which-key-integration))
+  :config
+  (setq gc-cons-threshold (* 100 1024 1024)
+    read-process-output-max (* 1024 1024)
+    treemacs-space-between-root-nodes nil
+    company-idle-delay 0.0
+    company-minimum-prefix-length 1
+    lsp-idle-delay 0.1)
 
-;; integrated with lsp
-(add-hook 'clojure-mode-hook 'lsp)
-(add-hook 'clojurescript-mode-hook 'lsp)
-(add-hook 'clojurec-mode-hook 'lsp)
+  (yas-global-mode 1))
 
-;; enable lispy mode and deactivate eletric-pair-local-mode
-(add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-(add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-(add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs)
+
+(use-package magit)
+
+(use-package projectile
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode +1))
+
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-mode))
+
+(use-package simple-httpd
+  :config
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
+
+(use-package vterm)
+
+(use-package clojure-mode
+  :config
+  ;; integrated with lsp
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
+
+  ;; enable lispy mode and deactivate eletric-pair-local-mode
+  (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+  (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+  (add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1))))
 
 (use-package cider
   :config
@@ -230,6 +272,19 @@
   ;; When there's a cider error, don't switch to the buffer
   (setq cider-show-error-buffer nil)
   (setq cider-auto-select-error-buffer nil))
+
+(add-hook 'c-mode-hook 'lsp)
+  (add-hook 'c++-mode-hook 'lsp)
+
+(defun my/compileandrun()
+  (interactive)
+  (save-buffer)
+  (compile (concat "g++ " (file-name-nondirectory (buffer-file-name)) " -o " (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./" (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t )
+  (other-window 1)
+  (end-of-buffer))
+
+  (add-hook 'c++-mode-hook
+            (lambda () (local-set-key (kbd "<f9>") #'my/compileandrun)))
 
 (use-package markdown-mode
   :ensure t
@@ -284,43 +339,6 @@
 
 (setq css-indent-level 2)
 (setq css-indent-offset 2)
-
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-    ((lsp-mode . lsp-enable-which-key-integration))
-  :config
-  (setq gc-cons-threshold (* 100 1024 1024)
-    read-process-output-max (* 1024 1024)
-    treemacs-space-between-root-nodes nil
-    company-idle-delay 0.0
-    company-minimum-prefix-length 1
-    lsp-idle-delay 0.1))
-
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs)
-
-(use-package magit)
-
-(use-package projectile
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :config
-  (projectile-mode +1))
-
-(use-package counsel-projectile
-  :config
-  (counsel-projectile-mode))
-
-(use-package simple-httpd
-  :config
-  (setq httpd-port 7070)
-  (setq httpd-host (system-name)))
-
-(use-package vterm)
 
 (setq org-startup-folded t)
 

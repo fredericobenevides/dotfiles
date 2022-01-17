@@ -88,6 +88,15 @@ Set the default custom file
     (exec-path-from-shell-initialize))
 #+end_src
 
+** Custom commands
+
+#+begin_src emacs-lisp
+(defun my/kill-buffer-and-window ()
+  "Kill buffer and its window on quitting"
+  (local-set-key (kbd "q") 'kill-buffer-and-window))
+(add-hook 'comint-mode-hook #'my/kill-buffer-and-window)
+#+end_src
+
 
 * Modules
 ** Completion
@@ -305,27 +314,86 @@ Set the default custom file
 *** yasnippet
 
 #+begin_src emacs-lisp
-  (use-package yasnippet
-    :config
-    (yas-global-mode 1))
+  (use-package yasnippet)
 
   (use-package yasnippet-snippets)
 #+end_src
 
+** Tools
+*** lsp
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init
+    ;; set prefix for lsp-command-keymap
+    (setq lsp-keymap-prefix "C-c l")
+    :hook
+      ((lsp-mode . lsp-enable-which-key-integration))
+    :config
+    (setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-idle-delay 0.1)
+
+    (yas-global-mode 1))
+
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-treemacs)
+#+end_src
+
+*** Magit
+
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
+*** Projectile
+For managing projects
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :config
+    (projectile-mode +1))
+
+  (use-package counsel-projectile
+    :config
+    (counsel-projectile-mode))
+#+end_src
+
+*** simple-httpd
+
+#+begin_src emacs-lisp
+(use-package simple-httpd
+  :config
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
+#+end_src
+*** Term
+
+#+begin_src emacs-lisp
+  (use-package vterm)
+#+end_src
+
 ** Lang
 *** clojure
+
 #+begin_src emacs-lisp
-  (use-package clojure-mode)
+  (use-package clojure-mode
+    :config
+    ;; integrated with lsp
+    (add-hook 'clojure-mode-hook 'lsp)
+    (add-hook 'clojurescript-mode-hook 'lsp)
+    (add-hook 'clojurec-mode-hook 'lsp)
 
-  ;; integrated with lsp
-  (add-hook 'clojure-mode-hook 'lsp)
-  (add-hook 'clojurescript-mode-hook 'lsp)
-  (add-hook 'clojurec-mode-hook 'lsp)
-
-  ;; enable lispy mode and deactivate eletric-pair-local-mode
-  (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-  (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-  (add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+    ;; enable lispy mode and deactivate eletric-pair-local-mode
+    (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+    (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
+    (add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1))))
 
   (use-package cider
     :config
@@ -338,6 +406,23 @@ Set the default custom file
     ;; When there's a cider error, don't switch to the buffer
     (setq cider-show-error-buffer nil)
     (setq cider-auto-select-error-buffer nil))
+#+end_src
+
+*** C / C++
+
+#+begin_src emacs-lisp
+    (add-hook 'c-mode-hook 'lsp)
+    (add-hook 'c++-mode-hook 'lsp)
+
+  (defun my/compileandrun()
+    (interactive)
+    (save-buffer)
+    (compile (concat "g++ " (file-name-nondirectory (buffer-file-name)) " -o " (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./" (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t )
+    (other-window 1)
+    (end-of-buffer))
+
+    (add-hook 'c++-mode-hook
+              (lambda () (local-set-key (kbd "<f9>") #'my/compileandrun)))
 #+end_src
 
 *** Markdown
@@ -411,64 +496,6 @@ Set the default custom file
 #+begin_src emacs-lisp
   (setq css-indent-level 2)
   (setq css-indent-offset 2)
-#+end_src
-
-** Tools
-*** lsp
-
-#+begin_src emacs-lisp
-    (use-package lsp-mode
-      :init
-      ;; set prefix for lsp-command-keymap
-      (setq lsp-keymap-prefix "C-c l")
-      :hook
-        ((lsp-mode . lsp-enable-which-key-integration))
-      :config
-      (setq gc-cons-threshold (* 100 1024 1024)
-        read-process-output-max (* 1024 1024)
-        treemacs-space-between-root-nodes nil
-        company-idle-delay 0.0
-        company-minimum-prefix-length 1
-        lsp-idle-delay 0.1))
-
-    (use-package lsp-ui :commands lsp-ui-mode)
-    (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-    (use-package lsp-treemacs)
-#+end_src
-
-*** Magit
-
-#+begin_src emacs-lisp
-  (use-package magit)
-#+end_src
-
-*** Projectile
-For managing projects
-
-#+begin_src emacs-lisp
-  (use-package projectile
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :config
-    (projectile-mode +1))
-
-  (use-package counsel-projectile
-    :config
-    (counsel-projectile-mode))
-#+end_src
-
-*** simple-httpd
-
-#+begin_src emacs-lisp
-(use-package simple-httpd
-  :config
-  (setq httpd-port 7070)
-  (setq httpd-host (system-name)))
-#+end_src
-*** Term
-
-#+begin_src emacs-lisp
-  (use-package vterm)
 #+end_src
 
 ** Org Mode
