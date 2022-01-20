@@ -46,7 +46,7 @@
 (menu-bar-mode -1)    ;; Disable menu bar
 (scroll-bar-mode -1)  ;; Disable visible scrollbar
 (tool-bar-mode -1)    ;; Disable the toolbar
-(tooltip-mode +1)     ;; Disable tooltips
+(tooltip-mode -1)     ;; Disable tooltips
 
 (set-fringe-mode 10)
 
@@ -274,17 +274,20 @@
   (setq cider-auto-select-error-buffer nil))
 
 (add-hook 'c-mode-hook 'lsp)
-  (add-hook 'c++-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 
 (defun my/compileandrun()
   (interactive)
   (save-buffer)
-  (compile (concat "g++ " (file-name-nondirectory (buffer-file-name)) " -o " (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./" (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t )
+  (compile (concat "g++ -g -Wall -Wextra -Werror " (file-name-nondirectory (buffer-file-name)) " -o " (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./" (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t )
   (other-window 1)
   (end-of-buffer))
 
-  (add-hook 'c++-mode-hook
-            (lambda () (local-set-key (kbd "<f9>") #'my/compileandrun)))
+(add-hook 'c++-mode-hook
+          (lambda () (local-set-key (kbd "<f9>") #'my/compileandrun)))
+
+;; gdb show buffer
+(setq gdb-show-main t)
 
 (use-package markdown-mode
   :ensure t
