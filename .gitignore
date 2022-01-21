@@ -1,2 +1,2 @@
-modules/ruby/files/gemrc
-ansible/setup.retry
+.clj-kondo
+.lsp
