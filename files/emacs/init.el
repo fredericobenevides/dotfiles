@@ -50,8 +50,15 @@
 
 (set-fringe-mode 10)
 
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq confirm-kill-emacs 'yes-or-no-p)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
+
+(setq create-lockfiles nil
+      make-backup-files nil)
 
 (use-package exec-path-from-shell
   :config

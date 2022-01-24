@@ -72,12 +72,27 @@ Disable menu and scrollbar
   (set-fringe-mode 10)
 #+end_src
 
-** Custom Files
+** Quit
+
+#+begin_src emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (setq confirm-kill-emacs 'yes-or-no-p)
+#+end_src
+
+** Files
 Set the default custom file
 
 #+begin_src emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (load custom-file)
+#+end_src
+
+Don't create backup files
+
+#+begin_src emacs-lisp
+  (setq create-lockfiles nil
+        make-backup-files nil)
 #+end_src
 
 ** Load shell environment
