@@ -256,6 +256,20 @@
 
 (use-package vterm)
 
+(use-package vterm-toggle
+  :bind
+    (("<M-f12>" . vterm-toggle)
+      :map vterm-mode-map
+      ("M-<" . vterm-toggle-forward)
+      ("M->" . vterm-toggle-backward))
+  :config
+  (add-to-list 'display-buffer-alist
+             '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                (display-buffer-reuse-window display-buffer-at-bottom)
+                (direction . bottom)
+                (reusable-frames . visible)
+                (window-height . 0.3))))
+
 (use-package clojure-mode
   :config
   ;; integrated with lsp
