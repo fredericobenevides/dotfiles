@@ -355,6 +355,9 @@
   (setq web-mode-style-padding 2)
   (setq web-mode-script-padding 2)
 
+  (setq web-mode-enable-current-column-highlight t)
+  (setq web-mode-enable-current-element-highlight t)
+
   ;; integrated with lsp
   (add-hook 'web-mode-hook 'lsp)
 

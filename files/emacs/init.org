@@ -56,6 +56,13 @@ Show line numbers
   (global-hl-line-mode 1) ;; Enable hl
 #+end_src
 
+** Indentation
+Disable tab
+
+#+begin_src
+(setq-default indent-tabs-mode nil)
+#+end_src
+
 ** Menu / Scrollbar
 Disable menu and scrollbar
 
@@ -514,6 +521,9 @@ For managing projects
     (setq web-mode-enable-auto-expanding t)
     (setq web-mode-style-padding 2)
     (setq web-mode-script-padding 2)
+
+    (setq web-mode-enable-current-column-highlight t)
+    (setq web-mode-enable-current-element-highlight t)
 
     ;; integrated with lsp
     (add-hook 'web-mode-hook 'lsp)
