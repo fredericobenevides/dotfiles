@@ -307,6 +307,21 @@ Don't create backup files
 (use-package impatient-mode
   :commands impatient-mode)
 #+end_src
+
+*** multiple-cursors
+
+#+begin_src emacs-lisp
+  (use-package multiple-cursors
+    :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
+    (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+#+end_src
+
 *** paren
 
 #+begin_src emacs-lisp

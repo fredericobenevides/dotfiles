@@ -200,6 +200,16 @@
 (use-package impatient-mode
   :commands impatient-mode)
 
+(use-package multiple-cursors
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
+  (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+
 (show-paren-mode 1)
 
 (use-package which-key
