@@ -188,7 +188,8 @@
   :after
   (web-mode css-mode)
   :config
-  (add-hook 'css-mode-hook  'emmet-mode)) ;; enable Emmet's css abbreviation.
+  (add-hook 'css-mode-hook  'emmet-mode)
+  (add-hook 'web-mode-hook 'emmet-mode))
 
 (use-package lispy)
 
@@ -369,10 +370,7 @@
   (setq web-mode-enable-current-element-highlight t)
 
   ;; integrated with lsp
-  (add-hook 'web-mode-hook 'lsp)
-
-  ;; integrated with emmet-mode
-  (add-hook 'web-mode-hook 'emmet-mode))
+  (add-hook 'web-mode-hook 'lsp))
 
 (setq css-indent-level 2)
 (setq css-indent-offset 2)

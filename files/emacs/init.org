@@ -285,7 +285,8 @@ Don't create backup files
     :after
     (web-mode css-mode)
     :config
-    (add-hook 'css-mode-hook  'emmet-mode)) ;; enable Emmet's css abbreviation.
+    (add-hook 'css-mode-hook  'emmet-mode)
+    (add-hook 'web-mode-hook 'emmet-mode))
 #+end_src
 
 *** lispy
@@ -541,10 +542,7 @@ For managing projects
     (setq web-mode-enable-current-element-highlight t)
 
     ;; integrated with lsp
-    (add-hook 'web-mode-hook 'lsp)
-
-    ;; integrated with emmet-mode
-    (add-hook 'web-mode-hook 'emmet-mode))
+    (add-hook 'web-mode-hook 'lsp))
 
 #+end_src
 
