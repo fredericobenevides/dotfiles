@@ -4,6 +4,7 @@
             [manjaro.docker :as docker]
             [manjaro.emacs :as emacs]
             [manjaro.flutter :as flutter]
+            [manjaro.fzf :as fzf]
             [manjaro.git :as git]
             [manjaro.idea :as idea]
             [manjaro.neovim :as neovim]
@@ -27,6 +28,7 @@
   (docker/run)
   (emacs/run)
   (flutter/run)
+  (fzf/run)
   (git/run)
   (idea/run)
   (neovim/run)
