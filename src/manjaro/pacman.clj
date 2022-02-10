@@ -16,6 +16,7 @@
   (println "Installing pacman packages")
 
   (pacman "Install axel" :axel)
+  (pacman "Install alacritty" :alacritty)
   (pacman "Install clang" :clang)
   (pacman "Install clojure" :clojure)
   (pacman "Install conky" :conky)
