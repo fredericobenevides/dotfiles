@@ -22,9 +22,9 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(set-face-attribute 'default nil :font "JetBrainsMono NF" :height 160)
-(set-face-attribute 'fixed-pitch nil :font "JetBrainsMono NF" :height 160)
-(set-face-attribute 'variable-pitch nil :font "JetBrainsMono NF" :height 160)
+(set-face-attribute 'default nil :font "JetBrainsMono NF" :height 140)
+(set-face-attribute 'fixed-pitch nil :font "JetBrainsMono NF" :height 140)
+(set-face-attribute 'variable-pitch nil :font "JetBrainsMono NF" :height 140)
 
 ;; Show column and line numbers
 (column-number-mode)
