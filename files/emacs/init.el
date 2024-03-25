@@ -22,9 +22,9 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(set-face-attribute 'default nil :font "JetBrainsMono NF" :height 140)
-(set-face-attribute 'fixed-pitch nil :font "JetBrainsMono NF" :height 140)
-(set-face-attribute 'variable-pitch nil :font "JetBrainsMono NF" :height 140)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 140)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height 140)
+(set-face-attribute 'variable-pitch nil :font "JetBrains Mono" :height 140)
 
 ;; Show column and line numbers
 (column-number-mode)
@@ -55,7 +55,7 @@
 (setq confirm-kill-emacs 'yes-or-no-p)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+(when (file-exists-p custom-file) (load custom-file))
 
 (setq create-lockfiles nil
       make-backup-files nil)
