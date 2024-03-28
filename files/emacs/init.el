@@ -1,33 +1,33 @@
-(require 'package)
+;; bootstrap with straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; avoid issues with different verion from org
+(straight-use-package '(org :type built-in))
 
-;; initialize built-in package management
-(package-initialize)
-
-;; update packages list if we are on a new install
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; install use-package if is not installed
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-;; load use-package
-(require 'use-package)
-(setq use-package-always-ensure t)
-(setq use-package-verbose nil)
-
-;; download automatically
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+;;  Effectively replace use-package with straight-use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
-(set-face-attribute 'default nil :font "JetBrains Mono" :height 140)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height 140)
-(set-face-attribute 'variable-pitch nil :font "JetBrains Mono" :height 140)
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 140)
+(set-face-attribute 'fixed-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
+(set-face-attribute 'variable-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -41,12 +41,19 @@
   :config
   (load-theme 'doom-dracula t))
 
-(use-package all-the-icons
-  :if (display-graphic-p))
+(use-package nerd-icons
+  :straight (nerd-icons
+             :type git
+             :host github
+             :repo "rainstormstudio/nerd-icons.el")
+  :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
 
-(use-package all-the-icons-completion
-  :if (display-graphic-p)
-  :init (all-the-icons-completion-mode))
+  (use-package nerd-icons-completion
+    :init (nerd-icons-completion-mode))
 
 (setq inhibit-startup-message t) ;; Don't show the startup message
 
@@ -260,7 +267,7 @@
 :init
 
 ;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
+(add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
 
 ;; Marginalia must be activated in the :init section of use-package such that
 ;; the mode gets enabled right away. Note that this forces loading the
@@ -316,6 +323,8 @@
   (global-corfu-mode))
 
 (use-package dashboard
+  :straight
+  (:host github :repo "emacs-dashboard/emacs-dashboard" :commit "a1c29c0bbfca3f6778022628b79e7eef2b9f351d")
   :config
 
   ;; list to show on dashboard
@@ -330,6 +339,12 @@
   ;; change banner
   (setq dashboard-startup-banner 'logo)
 
+  ;; Content is not centered by default. To center, set
+  (setq dashboard-center-content nil)
+
+  ;; vertically center content
+  (setq dashboard-vertically-center-content nil)
+
   ;; start dashboard
   (dashboard-setup-startup-hook))
 
@@ -342,27 +357,29 @@
 (use-package magit)
 
 (use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-ke ymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
   :hook
-    ((lsp-mode . lsp-enable-which-key-integration))
-  :custom
-  (lsp-keymap-prefix "C-c l")
+  ((lsp-mode . lsp-enable-which-key-integration))
+  :commands
+  lsp
+  ;;:custom
   ;; core
-  (lsp-completion-provider :none)
+  ;;(lsp-completion-provider :none)
   ;; completion
-  (lsp-completion-enable t)
-  (lsp-completion-enable-additional-text-edit nil)
-  (lsp-enable-snippet nil)
-  (lsp-completion-show-kind nil))
+  ;;(lsp-completion-enable t)
+  ;;(lsp-completion-enable-additional-text-edit nil)
+  ;;(lsp-enable-snippet nil)
+  ;;(lsp-completion-show-kind nil)
+  )
 
 (use-package lsp-ui
   :commands lsp-ui-mode)
 
 (use-package emmet-mode
   :after
-  (web-mode css-mode)
-  :config
-  (add-hook 'css-mode-hook  'emmet-mode)
-  (add-hook 'web-mode-hook 'emmet-mode))
+  (web-mode css-mode))
 
 (use-package json-mode)
 (use-package js2-mode)
@@ -383,6 +400,9 @@
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-current-element-highlight t)
 
+  ;; integrated with emmet
+  (add-hook 'web-mode-hook 'emmet-mode)
+
   ;; integrated with lsp
   (add-hook 'web-mode-hook 'lsp))
 
@@ -390,6 +410,13 @@
 (setq css-indent-offset 2)
 
 (add-hook 'css-mode-hook 'lsp)
+
+(use-package lsp-tailwindcss
+  :init
+  (setq lsp-tailwindcss-add-on-mode t)
+  ;;:config
+  ;;(add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
+  )
 
 (use-package clojure-mode
   :config
@@ -410,10 +437,10 @@
   (setq cider-show-error-buffer nil)
   (setq cider-auto-select-error-buffer nil))
 
-(setq org-startup-folded t)
+(package-install 'org)  (setq org-startup-folded t)
 
-(setq org-startup-indented t) ;; ident for each level
-(setq org-startup-with-inline-images t)
+  (setq org-startup-indented t) ;; ident for each level
+  (setq org-startup-with-inline-images t)
 
 (use-package org-superstar
   :config
