@@ -2,6 +2,7 @@
 #+PROPERTY: header-args :tangle ./init.el
 
 * Package Setup
+
 #+begin_src emacs-lisp
   (require 'package)
 
@@ -29,54 +30,22 @@
 #+end_src
 
 
-* Basic Settings
+* Emacs Basic Editor Settings
+
+** Custom Files
+Set the default custom file
+
+#+begin_src emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file) (load custom-file))
+#+end_src
+
 ** Fonts
 
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "JetBrains Mono" :height 140)
   (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height 140)
   (set-face-attribute 'variable-pitch nil :font "JetBrains Mono" :height 140)
-#+end_src
-
-** Line Numbers
-Show line numbers
-
-#+begin_src emacs-lisp
-  ;; Show column and line numbers
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
-
-  ;; Disable line numbers for some mode
-  (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                  shell-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-  (global-hl-line-mode 1) ;; Enable hl
-#+end_src
-
-** Indentation
-Disable tab
-
-#+begin_src
-(setq-default indent-tabs-mode nil)
-#+end_src
-
-** Menu / Scrollbar
-Disable menu and scrollbar
-
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t) ;; Don't show the startup message
-
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; maximize window
-
-  (menu-bar-mode -1)    ;; Disable menu bar
-  (scroll-bar-mode -1)  ;; Disable visible scrollbar
-  (tool-bar-mode -1)    ;; Disable the toolbar
-  (tooltip-mode -1)     ;; Disable tooltips
-
-  (set-fringe-mode 10)
 #+end_src
 
 ** Quit
@@ -87,20 +56,140 @@ Disable menu and scrollbar
   (setq confirm-kill-emacs 'yes-or-no-p)
 #+end_src
 
-** Files
-Set the default custom file
+* Themes
+** doom-modeline
 
-#+begin_src emacs-lisp
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) (load custom-file))
+#+begin_src emacs_lisp
+  (use-package doom-modeline
+    :init
+    (doom-modeline-mode 1))
 #+end_src
 
-Don't create backup files
+** doom-themes
 
 #+begin_src emacs-lisp
-  (setq create-lockfiles nil
-        make-backup-files nil)
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-dracula t))
 #+end_src
+
+** icons
+Add icons to completion candidates using the built in completion metadata functions.
+
+#+begin_src emacs-lisp
+    (use-package all-the-icons
+      :if (display-graphic-p))
+
+    (use-package all-the-icons-completion
+      :if (display-graphic-p)
+      :init (all-the-icons-completion-mode))
+#+end_src
+
+* GUI frames
+** Suppress GUI Features
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t) ;; Don't show the startup message
+#+end_src
+
+** Menu / Scrollbar
+
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)) ;; maximize window
+
+  (menu-bar-mode -1)    ;; Disable menu bar
+  (scroll-bar-mode -1)  ;; Disable visible scrollbar
+  (tool-bar-mode -1)    ;; Disable the toolbar
+  (tooltip-mode -1)     ;; Disable tooltips
+
+  (set-fringe-mode 10)
+#+end_src
+
+* Editing
+** Basic Settings
+
+#+begin_src emacs-lisp
+  (setq-default
+   auto-save-default nil
+   create-lockfiles nil
+   column-number-mode t
+   global-display-line-numbers-mode t
+   indent-tabs-mode nil
+   make-backup-files nil)
+#+end_src
+
+** command-log-mode
+
+#+begin_src emacs-lisp
+  (use-package command-log-mode
+   :config
+   (global-command-log-mode)
+   :bind ("C-c o" . clm/toggle-command-log-buffer))
+#+end_src
+
+** expand-region
+
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind
+    ("C-=" . er/expand-region)
+    ("C--" . er/contract-region))
+#+end_src
+
+** lispy
+
+#+begin_src emacs-lisp
+  (use-package lispy)
+#+end_src
+
+** multiple-cursors
+
+#+begin_src emacs-lisp
+  (use-package multiple-cursors
+    :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
+    (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+#+end_src
+
+** paren
+Show matching parenthesis
+
+#+begin_src emacs-lisp
+  (show-paren-mode 1)
+#+end_src
+
+** rainbow-delimiters
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** which-key
+Displays the key bindings following your currently entered incomplete command (a prefix) in a popup
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+    (which-key-mode)
+    :config
+    (setq which-key-idle-delay 0.3))
+#+end_src
+
+** winner
+Winner Mode is a global minor mode that allows you to “undo” and “redo” changes in WindowConfiguration
+
+#+begin_src emacs-lisp
+  (winner-mode 1)
+#+end_src
+
+* Term
 
 ** Load shell environment
 
@@ -110,115 +199,248 @@ Don't create backup files
     (exec-path-from-shell-initialize))
 #+end_src
 
-** Custom commands
+** vterm
 
 #+begin_src emacs-lisp
-(defun my/kill-buffer-and-window ()
-  "Kill buffer and its window on quitting"
-  (local-set-key (kbd "q") 'kill-buffer-and-window))
-(add-hook 'comint-mode-hook #'my/kill-buffer-and-window)
-#+end_src
+  (use-package vterm)
 
-
-* Modules
-** Completion
-*** avy
-
-#+begin_src emacs-lisp
-  (use-package avy
+  (use-package vterm-toggle
     :bind
-    ("C-'" . avy-goto-char))
+      (("<M-f12>" . vterm-toggle)
+        :map vterm-mode-map
+        ("M-<" . vterm-toggle-forward)
+        ("M->" . vterm-toggle-backward))
+    :config
+    (add-to-list 'display-buffer-alist
+               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                  (display-buffer-reuse-window display-buffer-at-bottom)
+                  (direction . bottom)
+                  (reusable-frames . visible)
+                  (window-height . 0.3))))
 #+end_src
 
-*** company
+* Search/Completion
+** vertico
+Vertico provides a performant and minimalistic vertical completion UI based on the default completion system
 
 #+begin_src emacs-lisp
-  (use-package company
-    :bind (:map company-active-map
-           ("C-n" . company-select-next)
-           ("C-p" . company-select-previous))
+  (use-package vertico
+    :init
+    (vertico-mode))
+#+end_src
+
+** consult
+
+#+begin_src emacs-lisp
+    (use-package consult
+    ;; Replace bindings. Lazily loaded due by `use-package'.
+    :bind (;; C-c bindings in `mode-specific-map'
+           ("C-c M-x" . consult-mode-command)
+           ("C-c h" . consult-history)
+           ("C-c k" . consult-kmacro)
+           ("C-c m" . consult-man)
+           ("C-c i" . consult-info)
+           ([remap Info-search] . consult-info)
+           ;; C-x bindings in `ctl-x-map'
+           ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+           ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+           ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+           ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+           ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+           ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+           ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+           ;; Custom M-# bindings for fast register access
+           ("M-#" . consult-register-load)
+           ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+           ("C-M-#" . consult-register)
+           ;; Other custom bindings
+           ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+           ;; M-g bindings in `goto-map'
+           ("M-g e" . consult-compile-error)
+           ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+           ("M-g g" . consult-goto-line)             ;; orig. goto-line
+           ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+           ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+           ("M-g m" . consult-mark)
+           ("M-g k" . consult-global-mark)
+           ("M-g i" . consult-imenu)
+           ("M-g I" . consult-imenu-multi)
+           ;; M-s bindings in `search-map'
+           ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+           ("M-s c" . consult-locate)
+           ("M-s g" . consult-grep)
+           ("M-s G" . consult-git-grep)
+           ("M-s r" . consult-ripgrep)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi)
+           ("M-s k" . consult-keep-lines)
+           ("M-s u" . consult-focus-lines)
+           ;; Isearch integration
+           ("M-s e" . consult-isearch-history)
+           :map isearch-mode-map
+           ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+           ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+           ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+           ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+           ;; Minibuffer history
+           :map minibuffer-local-map
+           ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+           ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+
+    ;; Enable automatic preview at point in the *Completions* buffer. This is
+    ;; relevant when you use the default completion UI.
+    :hook (completion-list-mode . consult-preview-at-point-mode)
+
+    ;; The :init configuration is always executed (Not lazy)
+    :init
+
+    ;; Optionally configure the register formatting. This improves the register
+    ;; preview for `consult-register', `consult-register-load',
+    ;; `consult-register-store' and the Emacs built-ins.
+    (setq register-preview-delay 0.5
+          register-preview-function #'consult-register-format)
+
+    ;; Optionally tweak the register preview window.
+    ;; This adds thin lines, sorting and hides the mode line of the window.
+    (advice-add #'register-preview :override #'consult-register-window)
+
+    ;; Use Consult to select xref locations with preview
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)
+
+    ;; Configure other variables and modes in the :config section,
+    ;; after lazily loading the package.
     :config
 
-    ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
-    ;; Add yasnippet support for all company backends
-    ;; https://github.com/syl20bnr/spacemacs/pull/179
-    (defvar company-mode/enable-yas t
-      "Enable yasnippet for all backends.")
-      (defun company-mode/backend-with-yas (backend)
-        (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-             backend
-          (append (if (consp backend) backend (list backend))
-                  '(:with company-yasnippet))))
-    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+    ;; Optionally configure preview. The default value
+    ;; is 'any, such that any key triggers the preview.
+    ;; (setq consult-preview-key 'any)
+    ;; (setq consult-preview-key "M-.")
+    ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+    ;; For some commands and buffer sources it is useful to configure the
+    ;; :preview-key on a per-command basis using the `consult-customize' macro.
+    (consult-customize
+     consult-theme :preview-key '(:debounce 0.2 any)
+     consult-ripgrep consult-git-grep consult-grep
+     consult-bookmark consult-recent-file consult-xref
+     consult--source-bookmark consult--source-file-register
+     consult--source-recent-file consult--source-project-recent-file
+     ;; :preview-key "M-."
+     :preview-key '(:debounce 0.4 any))
+
+    ;; Optionally configure the narrowing key.
+    ;; Both < and C-+ work reasonably well.
+    (setq consult-narrow-key "<") ;; "C-+"
+
+    ;; Optionally make narrowing help available in the minibuffer.
+    ;; You may want to use `embark-prefix-help-command' or which-key instead.
+    ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+    ;; By default `consult-project-function' uses `project-root' from project.el.
+    ;; Optionally configure a different project root function.
+    ;;;; 1. project.el (the default)
+    ;; (setq consult-project-function #'consult--default-project--function)
+    ;;;; 2. vc.el (vc-root-dir)
+    ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
+    ;;;; 3. locate-dominating-file
+    ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
+    ;;;; 4. projectile.el (projectile-project-root)
+    ;; (autoload 'projectile-project-root "projectile")
+    ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
+    ;;;; 5. No project support
+    ;; (setq consult-project-function nil)
+    )
+
+  (use-package consult-lsp)
+#+end_src
+
+** marginalia
+ Marginalia are marks or annotations placed at the margin of the page of a book
+ or in this case helpful colorful annotations placed at the margin of the
+ minibuffer for your completion candidates
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+
+  ;; The :init section is always executed.
+  :init
   
+  ;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
 
-    (setq company-idle-delay 0.1)
-    (setq company-echo-delay 0.1)
-
-    (global-company-mode t))
-
-  (use-package company-web
-    :bind (
-           ("C-:" . company-web-html)))
-
-  ;; show docs when is idling in the autocomplete
-  (use-package company-quickhelp
-    :config
-    (company-quickhelp-mode))
-
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 #+end_src
 
-*** ivy
+** orderless
+Provides a completion style that divides the pattern into space-separated
+components, and matches candidates that match all of the components in any order
 
 #+begin_src emacs-lisp
-  (use-package counsel)
-  (use-package swiper)
-
-
-  (use-package ivy
-    :bind (("C-s" . swiper)
-           ("C-x C-f" . counsel-find-file)
-           ("M-x" . counsel-M-x)
-           ("M-y" . counsel-yank-pop)
-           ("C-h b" . counsel-descbinds)
-           ("<f1> f" . counsel-describe-function)
-           ("<f1> v" . counsel-describe-variable)
-           ("<f1> o" . counsel-describe-symbol)
-           ("<f1> l" . counsel-find-library)
-           ("<f2> i" . counsel-info-lookup-symbol)
-           ("<f2> u" . counsel-unicode-char)
-           :map ivy-minibuffer-map
-           ("C-'" . ivy-avy)) ;; allow to run ivy inside the ivy-minibuffer
-    :config
-    (setq ivy-initial-inputs-alist nil) ;; Removes the ^ in ivy searches
-
-    ;; ivy recommends this settings
-    (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t)
-
-    (ivy-mode 1))
-
-  (use-package ivy-rich
-    :after ivy
-    :init
-    (setq ivy-rich-path-style 'abbrev)
-    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-    :config
-    (ivy-rich-mode 1))
+  (use-package orderless
+    :ensure t
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-** UI
-*** Icons
+** corfu
+Corfu enhances in-buffer completion with a small completion popup. The current
+candidates are shown in a popup below or above the point.
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons)
-
-  (use-package all-the-icons-ivy-rich
+  (use-package emacs
     :init
-    (all-the-icons-ivy-rich-mode 1))
+    ;; TAB cycle if there are only few candidates
+    (setq completion-cycle-threshold 3)
+
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (setq tab-always-indent 'complete)
+
+    ;; Emacs 30 and newer: Disable Ispell completion function. As an alternative,
+    ;; try `cape-dict'.
+    ;;(setq text-mode-ispell-word-completion nil)
+
+    ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
+    ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
+    ;; setting is useful beyond Corfu.
+    (setq read-extended-command-predicate #'command-completion-default-include-p))
+
+  (use-package corfu
+    ;; Optional customizations
+    :custom
+    ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    ;; (corfu-separator ?\s)          ;; Orderless field separator
+    ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+    ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+    ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+    ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+    ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+    ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
+    ;; Enable Corfu only for certain modes.
+    ;; :hook ((prog-mode . corfu-mode)
+    ;;        (shell-mode . corfu-mode)
+    ;;        (eshell-mode . corfu-mode))
+
+    ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+    ;; be used globally (M-/).  See also the customization variable
+    ;; `global-corfu-modes' to exclude certain modes.=
+    :init
+    (global-corfu-mode))
 #+end_src
 
-*** Dashboard
+* dashboard
 
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -240,47 +462,45 @@ Don't create backup files
     (dashboard-setup-startup-hook))
 #+end_src
 
-*** Modeline
+* projectile
+For managing projects
 
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :init
-    (doom-modeline-mode 1))
-#+end_src
-
-*** Rainbow delimiters
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook
-    (prog-mode . rainbow-delimiters-mode))
-#+end_src
-
-*** Themes
-
-#+begin_src emacs-lisp
-  (use-package doom-themes
+  (use-package projectile
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
     :config
-    (load-theme 'doom-dracula t))
+    (projectile-mode 1))
 #+end_src
 
-** Editor
-*** Command Log Mode
+* Git
 
 #+begin_src emacs-lisp
-  (use-package command-log-mode
-   :config
-    (global-command-log-mode)
-    :bind ("C-c o" . clm/toggle-command-log-buffer))
+  (use-package magit)
 #+end_src
 
-*** eletric-pair-mode
+* Programming
+** lsp
 
 #+begin_src emacs-lisp
-  (electric-pair-mode 1)
+  (use-package lsp-mode
+    :hook
+      ((lsp-mode . lsp-enable-which-key-integration))
+    :custom
+    (lsp-keymap-prefix "C-c l")
+    ;; core
+    (lsp-completion-provider :none)
+    ;; completion
+    (lsp-completion-enable t)
+    (lsp-completion-enable-additional-text-edit nil)
+    (lsp-enable-snippet nil)
+    (lsp-completion-show-kind nil))
+
+  (use-package lsp-ui
+    :commands lsp-ui-mode)
 #+end_src
 
-*** emmet
+** emmet
 
 #+begin_src emacs-lisp
   (use-package emmet-mode
@@ -291,244 +511,16 @@ Don't create backup files
     (add-hook 'web-mode-hook 'emmet-mode))
 #+end_src
 
-*** lispy
+** Javascript
 
 #+begin_src emacs-lisp
-  (use-package lispy)
+  (use-package json-mode)
+  (use-package js2-mode)
+  (use-package prettier-js)
+  (use-package typescript-mode)
 #+end_src
 
-*** expand-region
-
-#+begin_src emacs-lisp
-  (use-package expand-region
-    :bind
-    ("C-=" . er/expand-region)
-    ("C--" . er/contract-region))
-#+end_src
-
-*** impatient-mode
-
-#+begin_src emacs-lisp
-  (use-package impatient-mode
-    :commands impatient-mode)
-#+end_src
-
-*** multiple-cursors
-
-#+begin_src emacs-lisp
-  (use-package multiple-cursors
-    :config
-    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-    (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
-    (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
-    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
-#+end_src
-
-*** paren
-
-#+begin_src emacs-lisp
-  (show-paren-mode 1)
-#+end_src
-
-*** which-key
-    
-#+begin_src emacs-lisp
-  (use-package which-key
-    :init (which-key-mode)
-    :config
-    (setq which-key-idle-delay 0.3))
-#+end_src
-
-*** undo
-
-#+begin_src emacs-lisp
-  (use-package undo-fu
-    :config
-    (global-unset-key (kbd "C-z"))
-    (global-set-key (kbd "C-z")   'undo-fu-only-undo)
-    (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
- 
-#+end_src
-
-*** yasnippet
-
-#+begin_src emacs-lisp
-  (use-package yasnippet)
-
-  (use-package yasnippet-snippets)
-#+end_src
-
-** Tools
-*** lsp
-
-#+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init
-    ;; set prefix for lsp-command-keymap
-    (setq lsp-keymap-prefix "C-c l")
-    :hook
-      ((lsp-mode . lsp-enable-which-key-integration))
-    :config
-    (setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-idle-delay 0.1)
-
-    (yas-global-mode 1))
-
-  (use-package lsp-ui :commands lsp-ui-mode)
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-  (use-package lsp-treemacs)
-#+end_src
-
-*** Magit
-
-#+begin_src emacs-lisp
-  (use-package magit)
-#+end_src
-
-*** Projectile
-For managing projects
-
-#+begin_src emacs-lisp
-  (use-package projectile
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :config
-    (projectile-mode +1))
-
-  (use-package counsel-projectile
-    :config
-    (counsel-projectile-mode))
-#+end_src
-
-*** simple-httpd
-
-#+begin_src emacs-lisp
-(use-package simple-httpd
-  :config
-  (setq httpd-port 7070)
-  (setq httpd-host (system-name)))
-#+end_src
-*** Term
-
-#+begin_src emacs-lisp
-  (use-package vterm)
-
-  (use-package vterm-toggle
-    :bind
-      (("<M-f12>" . vterm-toggle)
-        :map vterm-mode-map
-        ("M-<" . vterm-toggle-forward)
-        ("M->" . vterm-toggle-backward))
-    :config
-    (add-to-list 'display-buffer-alist
-               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-                  (display-buffer-reuse-window display-buffer-at-bottom)
-                  (direction . bottom)
-                  (reusable-frames . visible)
-                  (window-height . 0.3))))
-#+end_src
-
-** Lang
-*** clojure
-
-#+begin_src emacs-lisp
-  (use-package clojure-mode
-    :config
-    ;; integrated with lsp
-    (add-hook 'clojure-mode-hook 'lsp)
-    (add-hook 'clojurescript-mode-hook 'lsp)
-    (add-hook 'clojurec-mode-hook 'lsp)
-
-    ;; enable lispy mode and deactivate eletric-pair-local-mode
-    (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-    (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1)))
-    (add-hook 'clojurec-mode-hook (lambda () (lispy-mode 1) (electric-pair-local-mode -1))))
-
-  (use-package cider
-    :config
-    ;; disable cider showing eldoc during symbol at point
-    (setq cider-eldoc-display-for-symbol-at-point nil)
-
-    ;; go right to the REPL buffer when it's finished connecting
-    (setq cider-repl-pop-to-buffer-on-connect t)
-
-    ;; When there's a cider error, don't switch to the buffer
-    (setq cider-show-error-buffer nil)
-    (setq cider-auto-select-error-buffer nil))
-#+end_src
-
-*** C / C++
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-hook 'lsp)
-  (add-hook 'c++-mode-hook 'lsp)
-
-  (defun my/compileandrun()
-    (interactive)
-    (save-buffer)
-    (compile (concat "g++ -g -Wall -Wextra -Werror " (file-name-nondirectory (buffer-file-name)) " -o " (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./" (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t )
-    (other-window 1)
-    (end-of-buffer))
-
-  (add-hook 'c++-mode-hook
-            (lambda () (local-set-key (kbd "<f9>") #'my/compileandrun)))
-
-  ;; gdb show buffer
-  (setq gdb-show-main t)
-#+end_src
-
-*** Markdown
-#+begin_src emacs-lisp
-  (use-package markdown-mode
-    :ensure t
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "pandoc"))
-#+end_src
-
-
-**** Custom functions to open markdown on the browser
-
-#+begin_src emacs-lisp
-  (defun my-markdown-filter (buffer)
-    (princ
-     (with-temp-buffer
-       (let ((tmp (buffer-name)))
-         (set-buffer buffer)
-         (set-buffer (markdown tmp))
-         (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css\"/>
-  <body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string))))
-     (current-buffer)))
-
-  (defun my-markdown-preview ()
-    "Preview markdown."
-    (interactive)
-    (unless (process-status "httpd")
-      (httpd-start))
-    (impatient-mode)
-    (imp-set-user-filter 'my-markdown-filter)
-    (imp-visit-buffer))
-
-  (defun my-markdown-preview-stop ()
-    "Stop preview"
-    (interactive)
-    (unless (process-status "httpd")
-      (httpd-stop))
-    (impatient-mode -1))
-#+end_src
-
-*** web (HTML / CSS)
-
-**** HTML
+** HTML
 
 #+begin_src emacs-lisp
   (use-package web-mode
@@ -547,18 +539,42 @@ For managing projects
 
     ;; integrated with lsp
     (add-hook 'web-mode-hook 'lsp))
-
 #+end_src
 
-**** CSS
+** CSS
 
 #+begin_src emacs-lisp
   (setq css-indent-level 2)
   (setq css-indent-offset 2)
+
+  (add-hook 'css-mode-hook 'lsp)
 #+end_src
 
-** Org Mode
-*** Basic Settings
+** clojure
+
+#+begin_src emacs-lisp
+  (use-package clojure-mode
+    :config
+    ;; integrated with lsp
+    (add-hook 'clojure-mode-hook 'lsp)
+    (add-hook 'clojurescript-mode-hook 'lsp)
+    (add-hook 'clojurec-mode-hook 'lsp))
+
+  (use-package cider
+    :config
+    ;; disable cider showing eldoc during symbol at point
+    (setq cider-eldoc-display-for-symbol-at-point nil)
+
+    ;; go right to the REPL buffer when it's finished connecting
+    (setq cider-repl-pop-to-buffer-on-connect nil)
+
+    ;; When there's a cider error, don't switch to the buffer
+    (setq cider-show-error-buffer nil)
+    (setq cider-auto-select-error-buffer nil))
+#+end_src
+
+* Org Mode
+** Basic Settings
 
 #+begin_src emacs-lisp
   (setq org-startup-folded t)
@@ -567,15 +583,19 @@ For managing projects
   (setq org-startup-with-inline-images t)
 #+end_src
 
-*** org-superstar (Bullets)
-    
+** org-superstar (Bullets)
+
 #+begin_src emacs-lisp
   (use-package org-superstar
     :config
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
 
-*** Auto tangle org file (save and load automatically)
+** Auto tangle org file (save and load automatically)
+
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(when (y-or-n-p "Tangle?")(org-babel-tangle) (message "Reloading file") (load-file user-init-file))) nil t)
 # End:
+
+
+
