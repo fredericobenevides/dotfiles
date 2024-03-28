@@ -159,7 +159,7 @@
          ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ;; M-g bindings in `goto-map'
          ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g f" . consult-flycheck)              ;; Alternative: consult-flycheck
          ("M-g g" . consult-goto-line)             ;; orig. goto-line
          ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
          ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -253,7 +253,9 @@
   ;; (setq consult-project-function nil)
   )
 
-(use-package consult-lsp)
+(use-package consult-flycheck)
+
+(use-package consult-eglot)
 
 (use-package marginalia
 ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
@@ -356,35 +358,30 @@
 
 (use-package magit)
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-ke ymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  ((lsp-mode . lsp-enable-which-key-integration))
-  :commands
-  lsp
-  ;;:custom
-  ;; core
-  ;;(lsp-completion-provider :none)
-  ;; completion
-  ;;(lsp-completion-enable t)
-  ;;(lsp-completion-enable-additional-text-edit nil)
-  ;;(lsp-enable-snippet nil)
-  ;;(lsp-completion-show-kind nil)
-  )
-
-(use-package lsp-ui
-  :commands lsp-ui-mode)
+(use-package eglot)
 
 (use-package emmet-mode
   :after
   (web-mode css-mode))
 
+(use-package flycheck
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
 (use-package json-mode)
-(use-package js2-mode)
-(use-package prettier-js)
+;;(use-package js2-mode)
 (use-package typescript-mode)
+(use-package prettier-js)
+
+(setq js-indent-level 2)
+
+(add-hook 'js-mode-hook 'eglot-ensure)
 
 (use-package web-mode
   :mode
@@ -401,15 +398,10 @@
   (setq web-mode-enable-current-element-highlight t)
 
   ;; integrated with emmet
-  (add-hook 'web-mode-hook 'emmet-mode)
-
-  ;; integrated with lsp
-  (add-hook 'web-mode-hook 'lsp))
+  (add-hook 'web-mode-hook 'emmet-mode))
 
 (setq css-indent-level 2)
 (setq css-indent-offset 2)
-
-(add-hook 'css-mode-hook 'lsp)
 
 (use-package lsp-tailwindcss
   :init
@@ -420,10 +412,9 @@
 
 (use-package clojure-mode
   :config
-  ;; integrated with lsp
-  (add-hook 'clojure-mode-hook 'lsp)
-  (add-hook 'clojurescript-mode-hook 'lsp)
-  (add-hook 'clojurec-mode-hook 'lsp))
+  (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
+  (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
+  (add-hook 'clojurec-mode-hook (lambda () (lispy-mode) (eglot-ensure))))
 
 (use-package cider
   :config
@@ -431,7 +422,7 @@
   (setq cider-eldoc-display-for-symbol-at-point nil)
 
   ;; go right to the REPL buffer when it's finished connecting
-  (setq cider-repl-pop-to-buffer-on-connect nil)
+  (setq cider-repl-pop-to-buffer-on-connect t)
 
   ;; When there's a cider error, don't switch to the buffer
   (setq cider-show-error-buffer nil)
