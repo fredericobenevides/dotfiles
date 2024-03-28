@@ -263,7 +263,7 @@ Vertico provides a performant and minimalistic vertical completion UI based on t
            ("M-y" . consult-yank-pop)                ;; orig. yank-pop
            ;; M-g bindings in `goto-map'
            ("M-g e" . consult-compile-error)
-           ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+           ("M-g f" . consult-flycheck)              ;; Alternative: consult-flycheck
            ("M-g g" . consult-goto-line)             ;; orig. goto-line
            ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
            ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -357,7 +357,9 @@ Vertico provides a performant and minimalistic vertical completion UI based on t
     ;; (setq consult-project-function nil)
     )
 
-  (use-package consult-lsp)
+  (use-package consult-flycheck)
+
+  (use-package consult-eglot)
 #+end_src
 
 ** marginalia
@@ -494,29 +496,10 @@ For managing projects
 #+end_src
 
 * Programming
-** lsp
+** eglot
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init
-    ;; set prefix for lsp-command-ke ymap (few alternatives - "C-l", "C-c l")
-    (setq lsp-keymap-prefix "C-c l")
-    :hook
-    ((lsp-mode . lsp-enable-which-key-integration))
-    :commands
-    lsp
-    ;;:custom
-    ;; core
-    ;;(lsp-completion-provider :none)
-    ;; completion
-    ;;(lsp-completion-enable t)
-    ;;(lsp-completion-enable-additional-text-edit nil)
-    ;;(lsp-enable-snippet nil)
-    ;;(lsp-completion-show-kind nil)
-    )
-
-  (use-package lsp-ui
-    :commands lsp-ui-mode)
+  (use-package eglot)
 #+end_src
 
 ** emmet
@@ -527,13 +510,33 @@ For managing projects
     (web-mode css-mode))
 #+end_src
 
+** flycheck
+Flycheck is a modern on-the-fly syntax checking extension for GNU Emacs, intended
+as replacement for the older Flymake extension which is part of GNU Emacs
+
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :config
+    (add-hook 'after-init-hook #'global-flycheck-mode))
+
+  (use-package flycheck-eglot
+    :ensure t
+    :after (flycheck eglot)
+    :config
+    (global-flycheck-eglot-mode 1))
+#+end_src
+
 ** Javascript
 
 #+begin_src emacs-lisp
   (use-package json-mode)
-  (use-package js2-mode)
-  (use-package prettier-js)
+  ;;(use-package js2-mode)
   (use-package typescript-mode)
+  (use-package prettier-js)
+
+  (setq js-indent-level 2)
+
+  (add-hook 'js-mode-hook 'eglot-ensure)
 #+end_src
 
 ** HTML
@@ -554,10 +557,7 @@ For managing projects
     (setq web-mode-enable-current-element-highlight t)
 
     ;; integrated with emmet
-    (add-hook 'web-mode-hook 'emmet-mode)
-
-    ;; integrated with lsp
-    (add-hook 'web-mode-hook 'lsp))
+    (add-hook 'web-mode-hook 'emmet-mode))
 #+end_src
 
 ** CSS
@@ -565,11 +565,8 @@ For managing projects
 #+begin_src emacs-lisp
   (setq css-indent-level 2)
   (setq css-indent-offset 2)
-
-  (add-hook 'css-mode-hook 'lsp)
 #+end_src
 
-** tailwindcss
 
 #+begin_src emacs-lisp
   (use-package lsp-tailwindcss
@@ -585,18 +582,17 @@ For managing projects
 #+begin_src emacs-lisp
   (use-package clojure-mode
     :config
-    ;; integrated with lsp
-    (add-hook 'clojure-mode-hook 'lsp)
-    (add-hook 'clojurescript-mode-hook 'lsp)
-    (add-hook 'clojurec-mode-hook 'lsp))
-
+    (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
+    (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
+    (add-hook 'clojurec-mode-hook (lambda () (lispy-mode) (eglot-ensure))))
+    
   (use-package cider
     :config
     ;; disable cider showing eldoc during symbol at point
     (setq cider-eldoc-display-for-symbol-at-point nil)
 
     ;; go right to the REPL buffer when it's finished connecting
-    (setq cider-repl-pop-to-buffer-on-connect nil)
+    (setq cider-repl-pop-to-buffer-on-connect t)
 
     ;; When there's a cider error, don't switch to the buffer
     (setq cider-show-error-buffer nil)
