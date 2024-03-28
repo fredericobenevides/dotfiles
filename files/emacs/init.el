@@ -428,6 +428,48 @@
   (setq cider-show-error-buffer nil)
   (setq cider-auto-select-error-buffer nil))
 
+(use-package simple-httpd
+  :config
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
+
+(use-package impatient-mode
+  :commands impatient-mode)
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . gfm-mode))
+  :init (setq markdown-command "pandoc"))
+
+(defun fb/markdown-filter (buffer)
+  (princ
+   (with-temp-buffer
+     (let ((tmp (buffer-name)))
+       (set-buffer buffer)
+       (set-buffer (markdown tmp))
+       (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css\"/>
+<body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string))))
+   (current-buffer)))
+
+(defun fb/markdown-preview ()
+  "Preview markdown."
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-start))
+  (impatient-mode)
+  (imp-set-user-filter 'fb/markdown-filter)
+  (imp-visit-buffer))
+
+(defun fb/markdown-preview-stop ()
+  "Stop preview"
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-stop))
+  (impatient-mode -1))
+
 (package-install 'org)  (setq org-startup-folded t)
 
   (setq org-startup-indented t) ;; ident for each level
