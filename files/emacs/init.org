@@ -493,6 +493,9 @@ For managing projects
 
 #+begin_src emacs-lisp
   (use-package magit)
+
+  (use-package magit-delta
+    :hook (magit-mode . magit-delta-mode))
 #+end_src
 
 * neotree

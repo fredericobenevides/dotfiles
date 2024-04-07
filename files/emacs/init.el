@@ -358,6 +358,9 @@
 
 (use-package magit)
 
+(use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
+
 (use-package neotree
   :config
   (global-set-key (kbd "<f8>") 'neotree-toggle)
