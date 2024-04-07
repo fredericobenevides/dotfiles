@@ -486,11 +486,9 @@
 
 (use-package magit)
 
-(use-package  magit-delta
-  :after
-  (magit)
-  :hook
-  (magit-mode . magit-delta-mode))
+;;(use-package  magit-delta
+;;  :after (magit)
+;;  :hook (magit-mode . magit-delta-mode))
 
 (winner-mode 1)
 
