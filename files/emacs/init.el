@@ -379,10 +379,16 @@
   ;;(add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
   )
 
+(use-package prettier
+  :config
+  (add-hook 'css-mode-hook 'prettier-mode)
+  (add-hook 'js-mode-hook 'prettier-mode)
+  (add-hook 'json-mode-hook 'prettier-mode)
+  (add-hook 'web-mode-hook 'prettier-mode))
+
 (use-package json-mode)
 ;;(use-package js2-mode)
 (use-package typescript-mode)
-(use-package prettier-js)
 
 (setq js-indent-level 2)
 
