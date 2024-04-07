@@ -25,6 +25,14 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
+(setq-default
+ auto-save-default nil
+ create-lockfiles nil
+ column-number-mode t
+ global-display-line-numbers-mode t
+ indent-tabs-mode nil
+ make-backup-files nil)
+
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
 (set-face-attribute 'variable-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
@@ -32,28 +40,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (setq confirm-kill-emacs 'yes-or-no-p)
-
-(use-package doom-modeline
-  :init
-  (doom-modeline-mode 1))
-
-(use-package doom-themes
-  :config
-  (load-theme 'doom-dracula t))
-
-(use-package nerd-icons
-  :straight (nerd-icons
-             :type git
-             :host github
-             :repo "rainstormstudio/nerd-icons.el")
-  :custom
-  ;; The Nerd Font you want to use in GUI
-  ;; "Symbols Nerd Font Mono" is the default and is recommended
-  ;; but you can use any other Nerd Font if you want
-  (nerd-icons-font-family "Symbols Nerd Font Mono"))
-
-  (use-package nerd-icons-completion
-    :init (nerd-icons-completion-mode))
 
 (setq inhibit-startup-message t) ;; Don't show the startup message
 
@@ -65,50 +51,6 @@
 (tooltip-mode -1)     ;; Disable tooltips
 
 (set-fringe-mode 10)
-
-(setq-default
- auto-save-default nil
- create-lockfiles nil
- column-number-mode t
- global-display-line-numbers-mode t
- indent-tabs-mode nil
- make-backup-files nil)
-
-(use-package command-log-mode
- :config
- (global-command-log-mode)
- :bind ("C-c o" . clm/toggle-command-log-buffer))
-
-(use-package expand-region
-  :bind
-  ("C-=" . er/expand-region)
-  ("C--" . er/contract-region))
-
-(use-package lispy)
-
-(use-package multiple-cursors
-  :config
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
-  (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
-
-(show-paren-mode 1)
-
-(use-package rainbow-delimiters
-  :hook
-  (prog-mode . rainbow-delimiters-mode))
-
-(use-package which-key
-  :init
-  (which-key-mode)
-  :config
-  (setq which-key-idle-delay 0.3))
-
-(winner-mode 1)
 
 (use-package exec-path-from-shell
   :config
@@ -258,23 +200,25 @@
 (use-package consult-eglot)
 
 (use-package marginalia
-;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-;; available in the *Completions* buffer, add it to the
-;; `completion-list-mode-map'.
-:bind (:map minibuffer-local-map
-       ("M-A" . marginalia-cycle))
+  :after
+  (nerd-icons-completion)
 
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
 
-;; The :init section is always executed.
-:init
+  ;; The :init section is always executed.
+  :init
 
-;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
-(add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
+  ;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
 
-;; Marginalia must be activated in the :init section of use-package such that
-;; the mode gets enabled right away. Note that this forces loading the
-;; package.
-(marginalia-mode))
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 
 (use-package orderless
   :ensure t
@@ -324,6 +268,32 @@
   :init
   (global-corfu-mode))
 
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region)
+  ("C--" . er/contract-region))
+
+(use-package multiple-cursors
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
+  (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+
+(show-paren-mode 1)
+
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
+(use-package neotree
+  :config
+  (global-set-key (kbd "<f8>") 'neotree-toggle)
+  (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+
 (use-package dashboard
   :straight
   (:host github :repo "emacs-dashboard/emacs-dashboard" :commit "a1c29c0bbfca3f6778022628b79e7eef2b9f351d")
@@ -350,27 +320,12 @@
   ;; start dashboard
   (dashboard-setup-startup-hook))
 
-(use-package projectile
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :config
-  (projectile-mode 1))
-
-(use-package magit)
-
-(use-package magit-delta
-  :hook (magit-mode . magit-delta-mode))
-
-(use-package neotree
-  :config
-  (global-set-key (kbd "<f8>") 'neotree-toggle)
-  (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+(use-package command-log-mode
+ :config
+ (global-command-log-mode)
+ :bind ("C-c o" . clm/toggle-command-log-buffer))
 
 (use-package eglot)
-
-(use-package emmet-mode
-  :after
-  (web-mode css-mode))
 
 (use-package flycheck
   :config
@@ -378,18 +333,24 @@
 
 (use-package flycheck-eglot
   :ensure t
-  :after (flycheck eglot)
+  :after
+  (flycheck eglot)
   :config
   (global-flycheck-eglot-mode 1))
 
-(use-package json-mode)
-;;(use-package js2-mode)
-(use-package typescript-mode)
-(use-package prettier-js)
+(use-package impatient-mode
+  :commands impatient-mode)
 
-(setq js-indent-level 2)
+(use-package simple-httpd
+  :config
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
 
-(add-hook 'js-mode-hook 'eglot-ensure)
+(use-package lispy)
+
+(use-package emmet-mode
+  :after
+  (web-mode css-mode))
 
 (use-package web-mode
   :mode
@@ -418,6 +379,15 @@
   ;;(add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
   )
 
+(use-package json-mode)
+;;(use-package js2-mode)
+(use-package typescript-mode)
+(use-package prettier-js)
+
+(setq js-indent-level 2)
+
+(add-hook 'js-mode-hook 'eglot-ensure)
+
 (use-package clojure-mode
   :config
   (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
@@ -435,14 +405,6 @@
   ;; When there's a cider error, don't switch to the buffer
   (setq cider-show-error-buffer nil)
   (setq cider-auto-select-error-buffer nil))
-
-(use-package simple-httpd
-  :config
-  (setq httpd-port 7070)
-  (setq httpd-host (system-name)))
-
-(use-package impatient-mode
-  :commands impatient-mode)
 
 (use-package markdown-mode
   :ensure t
@@ -477,6 +439,51 @@
   (unless (process-status "httpd")
     (httpd-stop))
   (impatient-mode -1))
+
+(use-package projectile
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode 1))
+
+(use-package doom-modeline
+  :init
+  (doom-modeline-mode 1))
+
+(use-package doom-themes
+  :config
+  (load-theme 'doom-dracula t))
+
+(use-package nerd-icons
+  :straight
+  (nerd-icons :type git :host github :repo "rainstormstudio/nerd-icons.el")
+  :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  (nerd-icons-font-family "Symbols Nerd Font Mono"))
+
+  (use-package nerd-icons-completion
+    :after
+    (nerd-icons)
+    :init
+    (nerd-icons-completion-mode))
+
+(use-package which-key
+  :init
+  (which-key-mode)
+  :config
+  (setq which-key-idle-delay 0.3))
+
+(use-package magit)
+
+(use-package  magit-delta
+  :after
+  (magit)
+  :hook
+  (magit-mode . magit-delta-mode))
+
+(winner-mode 1)
 
 (package-install 'org)  (setq org-startup-folded t)
 

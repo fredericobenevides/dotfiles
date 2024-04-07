@@ -30,13 +30,24 @@
 #+end_src
 
 * Emacs Basic Editor Settings
-
 ** Custom Files
 Set the default custom file
 
 #+begin_src emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file) (load custom-file))
+#+end_src
+
+** Edit Settings
+
+#+begin_src emacs-lisp
+  (setq-default
+   auto-save-default nil
+   create-lockfiles nil
+   column-number-mode t
+   global-display-line-numbers-mode t
+   indent-tabs-mode nil
+   make-backup-files nil)
 #+end_src
 
 ** Fonts
@@ -53,42 +64,6 @@ Set the default custom file
   (fset 'yes-or-no-p 'y-or-n-p)
 
   (setq confirm-kill-emacs 'yes-or-no-p)
-#+end_src
-
-* Themes
-** doom-modeline
-
-#+begin_src emacs_lisp
-  (use-package doom-modeline
-    :init
-    (doom-modeline-mode 1))
-#+end_src
-
-** doom-themes
-
-#+begin_src emacs-lisp
-  (use-package doom-themes
-    :config
-    (load-theme 'doom-dracula t))
-#+end_src
-
-** icons
-Add icons to completion candidates using the built in completion metadata functions.
-
-#+begin_src emacs-lisp
-  (use-package nerd-icons
-    :straight (nerd-icons
-               :type git
-               :host github
-               :repo "rainstormstudio/nerd-icons.el")
-    :custom
-    ;; The Nerd Font you want to use in GUI
-    ;; "Symbols Nerd Font Mono" is the default and is recommended
-    ;; but you can use any other Nerd Font if you want
-    (nerd-icons-font-family "Symbols Nerd Font Mono"))
-
-    (use-package nerd-icons-completion
-      :init (nerd-icons-completion-mode))
 #+end_src
 
 * GUI frames
@@ -111,93 +86,9 @@ Add icons to completion candidates using the built in completion metadata functi
   (set-fringe-mode 10)
 #+end_src
 
-* Editing
-** Basic Settings
-
-#+begin_src emacs-lisp
-  (setq-default
-   auto-save-default nil
-   create-lockfiles nil
-   column-number-mode t
-   global-display-line-numbers-mode t
-   indent-tabs-mode nil
-   make-backup-files nil)
-#+end_src
-
-** command-log-mode
-
-#+begin_src emacs-lisp
-  (use-package command-log-mode
-   :config
-   (global-command-log-mode)
-   :bind ("C-c o" . clm/toggle-command-log-buffer))
-#+end_src
-
-** expand-region
-
-#+begin_src emacs-lisp
-  (use-package expand-region
-    :bind
-    ("C-=" . er/expand-region)
-    ("C--" . er/contract-region))
-#+end_src
-
-** lispy
-
-#+begin_src emacs-lisp
-  (use-package lispy)
-#+end_src
-
-** multiple-cursors
-
-#+begin_src emacs-lisp
-  (use-package multiple-cursors
-    :config
-    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-    (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
-    (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
-    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
-#+end_src
-
-** paren
-Show matching parenthesis
-
-#+begin_src emacs-lisp
-  (show-paren-mode 1)
-#+end_src
-
-** rainbow-delimiters
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook
-    (prog-mode . rainbow-delimiters-mode))
-#+end_src
-
-** which-key
-Displays the key bindings following your currently entered incomplete command (a prefix) in a popup
-
-#+begin_src emacs-lisp
-  (use-package which-key
-    :init
-    (which-key-mode)
-    :config
-    (setq which-key-idle-delay 0.3))
-#+end_src
-
-** winner
-Winner Mode is a global minor mode that allows you to “undo” and “redo” changes in WindowConfiguration
-
-#+begin_src emacs-lisp
-  (winner-mode 1)
-#+end_src
-
-* Term
-
-** Load shell environment
+* Packages
+** Console
+*** Load shell environment
 
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
@@ -205,7 +96,7 @@ Winner Mode is a global minor mode that allows you to “undo” and “redo” 
     (exec-path-from-shell-initialize))
 #+end_src
 
-** vterm
+*** vterm
 
 #+begin_src emacs-lisp
   (use-package vterm)
@@ -225,8 +116,8 @@ Winner Mode is a global minor mode that allows you to “undo” and “redo” 
                   (window-height . 0.3))))
 #+end_src
 
-* Search/Completion
-** vertico
+** Completion/Search
+*** vertico
 Vertico provides a performant and minimalistic vertical completion UI based on the default completion system
 
 #+begin_src emacs-lisp
@@ -235,7 +126,7 @@ Vertico provides a performant and minimalistic vertical completion UI based on t
     (vertico-mode))
 #+end_src
 
-** consult
+*** consult
 
 #+begin_src emacs-lisp
     (use-package consult
@@ -362,33 +253,35 @@ Vertico provides a performant and minimalistic vertical completion UI based on t
   (use-package consult-eglot)
 #+end_src
 
-** marginalia
+*** marginalia
  Marginalia are marks or annotations placed at the margin of the page of a book
  or in this case helpful colorful annotations placed at the margin of the
  minibuffer for your completion candidates
 
 #+begin_src emacs-lisp
   (use-package marginalia
-  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-  ;; available in the *Completions* buffer, add it to the
-  ;; `completion-list-mode-map'.
-  :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
+    :after
+    (nerd-icons-completion)
 
+    ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+    ;; available in the *Completions* buffer, add it to the
+    ;; `completion-list-mode-map'.
+    :bind (:map minibuffer-local-map
+                ("M-A" . marginalia-cycle))
 
-  ;; The :init section is always executed.
-  :init
-  
-  ;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
+    ;; The :init section is always executed.
+    :init
 
-  ;; Marginalia must be activated in the :init section of use-package such that
-  ;; the mode gets enabled right away. Note that this forces loading the
-  ;; package.
-  (marginalia-mode))
+    ;; This will ensure that it is on when marginalia-mode is on and is off when it’s off.
+    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
+
+    ;; Marginalia must be activated in the :init section of use-package such that
+    ;; the mode gets enabled right away. Note that this forces loading the
+    ;; package.
+    (marginalia-mode))
 #+end_src
 
-** orderless
+*** orderless
 Provides a completion style that divides the pattern into space-separated
 components, and matches candidates that match all of the components in any order
 
@@ -400,7 +293,7 @@ components, and matches candidates that match all of the components in any order
     (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-** corfu
+*** corfu
 Corfu enhances in-buffer completion with a small completion popup. The current
 candidates are shown in a popup below or above the point.
 
@@ -448,7 +341,58 @@ candidates are shown in a popup below or above the point.
     (global-corfu-mode))
 #+end_src
 
-* dashboard
+** Editing Enhacement
+*** expand-region
+
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind
+    ("C-=" . er/expand-region)
+    ("C--" . er/contract-region))
+#+end_src
+
+*** multiple-cursors
+
+#+begin_src emacs-lisp
+  (use-package multiple-cursors
+    :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C-S-w C-S-w") 'mc/mark-all-dwim)
+    (global-set-key (kbd "C-S-e C-S-e") 'mc/edit-ends-of-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+#+end_src
+
+*** paren
+Show matching parenthesis
+
+#+begin_src emacs-lisp
+  (show-paren-mode 1)
+#+end_src
+
+*** rainbow-delimiters
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** File Manager
+*** neotree
+A Emacs tree plugin like NerdTree for Vim.
+
+#+begin_src emacs-lisp
+  (use-package neotree
+    :config
+    (global-set-key (kbd "<f8>") 'neotree-toggle)
+    (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+#+end_src
+
+** Interface Enhacement
+*** dashboard
 
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -478,52 +422,24 @@ candidates are shown in a popup below or above the point.
     (dashboard-setup-startup-hook))
 #+end_src
 
-* projectile
-For managing projects
+** Log
+*** command-log-mode
 
 #+begin_src emacs-lisp
-  (use-package projectile
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :config
-    (projectile-mode 1))
+  (use-package command-log-mode
+   :config
+   (global-command-log-mode)
+   :bind ("C-c o" . clm/toggle-command-log-buffer))
 #+end_src
-
-* Git
-
-#+begin_src emacs-lisp
-  (use-package magit)
-
-  (use-package magit-delta
-    :hook (magit-mode . magit-delta-mode))
-#+end_src
-
-* neotree
-A Emacs tree plugin like NerdTree for Vim.
-
-#+begin_src emacs-lisp
-  (use-package neotree
-    :config
-    (global-set-key (kbd "<f8>") 'neotree-toggle)
-    (global-set-key (kbd "M-<f8>") 'neotree-refresh))
-#+end_src
-
-* Programming
-** eglot
+** Programming
+*** eglot
+Eglot is the Emacs client for the Language Server Protocol ( LSP ). The name “Eglot” is an acronym that stands for "Emacs Polyglot".
 
 #+begin_src emacs-lisp
   (use-package eglot)
 #+end_src
 
-** emmet
-
-#+begin_src emacs-lisp
-  (use-package emmet-mode
-    :after
-    (web-mode css-mode))
-#+end_src
-
-** flycheck
+*** flycheck
 Flycheck is a modern on-the-fly syntax checking extension for GNU Emacs, intended
 as replacement for the older Flymake extension which is part of GNU Emacs
 
@@ -534,25 +450,49 @@ as replacement for the older Flymake extension which is part of GNU Emacs
 
   (use-package flycheck-eglot
     :ensure t
-    :after (flycheck eglot)
+    :after
+    (flycheck eglot)
     :config
     (global-flycheck-eglot-mode 1))
 #+end_src
 
-** Javascript
+*** impatient
+See the effect of your HTML as you type it.
 
 #+begin_src emacs-lisp
-  (use-package json-mode)
-  ;;(use-package js2-mode)
-  (use-package typescript-mode)
-  (use-package prettier-js)
-
-  (setq js-indent-level 2)
-
-  (add-hook 'js-mode-hook 'eglot-ensure)
+  (use-package impatient-mode
+    :commands impatient-mode)
 #+end_src
 
-** HTML
+**** Http Server
+Start local server
+
+#+begin_src emacs-lisp
+  (use-package simple-httpd
+    :config
+    (setq httpd-port 7070)
+    (setq httpd-host (system-name)))
+#+end_src
+
+*** lispy
+This package reimagines Paredit - a popular method to navigate and edit LISP code in Emacs.
+
+#+begin_src emacs-lisp
+  (use-package lispy)
+#+end_src
+
+** Programming Languages
+*** Web Development
+**** emmet
+
+#+begin_src emacs-lisp
+  (use-package emmet-mode
+    :after
+    (web-mode css-mode))
+#+end_src
+
+**** web-mode
+Major mode for editing various html templates.
 
 #+begin_src emacs-lisp
   (use-package web-mode
@@ -573,14 +513,14 @@ as replacement for the older Flymake extension which is part of GNU Emacs
     (add-hook 'web-mode-hook 'emmet-mode))
 #+end_src
 
-** CSS
+**** css configs
 
 #+begin_src emacs-lisp
   (setq css-indent-level 2)
   (setq css-indent-offset 2)
 #+end_src
 
-
+**** tailwindcss 
 #+begin_src emacs-lisp
   (use-package lsp-tailwindcss
     :init
@@ -590,7 +530,21 @@ as replacement for the older Flymake extension which is part of GNU Emacs
     )
 #+end_src
 
-** clojure
+*** Javascript
+
+#+begin_src emacs-lisp
+  (use-package json-mode)
+  ;;(use-package js2-mode)
+  (use-package typescript-mode)
+  (use-package prettier-js)
+
+  (setq js-indent-level 2)
+
+  (add-hook 'js-mode-hook 'eglot-ensure)
+#+end_src
+
+
+*** clojure
 
 #+begin_src emacs-lisp
   (use-package clojure-mode
@@ -612,26 +566,7 @@ as replacement for the older Flymake extension which is part of GNU Emacs
     (setq cider-auto-select-error-buffer nil))
 #+end_src
 
-** Http Server
-Start local server
-
-#+begin_src emacs-lisp
-  (use-package simple-httpd
-    :config
-    (setq httpd-port 7070)
-    (setq httpd-host (system-name)))
-#+end_src
-
-** impatient
-See the effect of your HTML as you type it.
-
-#+begin_src emacs-lisp
-  (use-package impatient-mode
-    :commands impatient-mode)
-#+end_src
-
-
-** markdown
+*** markdown
 
 #+begin_src emacs-lisp
   (use-package markdown-mode
@@ -669,8 +604,90 @@ See the effect of your HTML as you type it.
     (impatient-mode -1))
 #+end_src
 
-* Org Mode
-** Basic Settings
+** Project management
+*** projectile
+For managing projects
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :config
+    (projectile-mode 1))
+#+end_src
+
+** Themes
+*** doom-modeline
+
+#+begin_src emacs_lisp
+  (use-package doom-modeline
+    :init
+    (doom-modeline-mode 1))
+#+end_src
+
+*** doom-themes
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-dracula t))
+#+end_src
+
+*** icons
+Add icons to completion candidates using the built in completion metadata functions.
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    :straight
+    (nerd-icons :type git :host github :repo "rainstormstudio/nerd-icons.el")
+    :custom
+    ;; The Nerd Font you want to use in GUI
+    ;; "Symbols Nerd Font Mono" is the default and is recommended
+    ;; but you can use any other Nerd Font if you want
+    (nerd-icons-font-family "Symbols Nerd Font Mono"))
+
+    (use-package nerd-icons-completion
+      :after
+      (nerd-icons)
+      :init
+      (nerd-icons-completion-mode))
+#+end_src
+
+** Utilities
+*** which-key
+Displays the key bindings following your currently entered incomplete command (a prefix) in a popup
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+    (which-key-mode)
+    :config
+    (setq which-key-idle-delay 0.3))
+#+end_src
+
+** Version control
+*** Git
+
+#+begin_src emacs-lisp
+  (use-package magit)
+
+  (use-package  magit-delta
+    :after
+    (magit)
+    :hook
+    (magit-mode . magit-delta-mode))
+#+end_src
+
+** Window Frame Management
+*** winner
+Winner Mode is a global minor mode that allows you to “undo” and “redo” changes in WindowConfiguration
+
+#+begin_src emacs-lisp
+  (winner-mode 1)
+#+end_src
+
+** Org Mode
+*** Basic Settings
 
 #+begin_src emacs-lisp
 (package-install 'org)  (setq org-startup-folded t)
@@ -679,7 +696,7 @@ See the effect of your HTML as you type it.
   (setq org-startup-with-inline-images t)
 #+end_src
 
-** org-superstar (Bullets)
+*** org-superstar (Bullets)
 
 #+begin_src emacs-lisp
   (use-package org-superstar
@@ -687,7 +704,7 @@ See the effect of your HTML as you type it.
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
 
-** Auto tangle org file (save and load automatically)
+*** Auto tangle org file (save and load automatically)
 
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(when (y-or-n-p "Tangle?")(org-babel-tangle) (message "Reloading file") (load-file user-init-file))) nil t)
