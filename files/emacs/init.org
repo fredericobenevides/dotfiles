@@ -89,6 +89,7 @@ Set the default custom file
 * Packages
 ** Console
 *** Load shell environment
+A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
 
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
@@ -97,6 +98,9 @@ Set the default custom file
 #+end_src
 
 *** vterm
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
+on libvterm, a C library. As a result of using compiled code (instead of elisp),
+emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
 
 #+begin_src emacs-lisp
   (use-package vterm)
@@ -127,6 +131,7 @@ Vertico provides a performant and minimalistic vertical completion UI based on t
 #+end_src
 
 *** consult
+Consult provides various practical commands based on the Emacs completion function completing-read.
 
 #+begin_src emacs-lisp
     (use-package consult
@@ -343,6 +348,7 @@ candidates are shown in a popup below or above the point.
 
 ** Editing Enhacement
 *** expand-region
+Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want.
 
 #+begin_src emacs-lisp
   (use-package expand-region
@@ -352,6 +358,7 @@ candidates are shown in a popup below or above the point.
 #+end_src
 
 *** multiple-cursors
+Mark, edit multiple lines at once.
 
 #+begin_src emacs-lisp
   (use-package multiple-cursors
@@ -373,6 +380,7 @@ Show matching parenthesis
 #+end_src
 
 *** rainbow-delimiters
+Highlights parentheses, brackets, and braces according to their depth.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
@@ -393,6 +401,7 @@ A Emacs tree plugin like NerdTree for Vim.
 
 ** Interface Enhacement
 *** dashboard
+A startup dashboard which provides certain information about your recent Emacs activities.
 
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -431,6 +440,7 @@ Whenever the window scrolls a light will shine on top of your cursor so you know
 #+end_src
 ** Log
 *** command-log-mode
+Show event history and command history of some or all buffers.
 
 #+begin_src emacs-lisp
   (use-package command-log-mode
@@ -491,6 +501,9 @@ This package reimagines Paredit - a popular method to navigate and edit LISP cod
 ** Programming Languages
 *** Web Development
 **** emmet
+Emmet is a web-developer’s toolkit for boosting HTML & CSS code writing. With Emmet,
+you can type expressions (abbreviations) similar to CSS selectors and convert them
+into code fragment with a single keystroke.
 
 #+begin_src emacs-lisp
   (use-package emmet-mode
@@ -527,7 +540,8 @@ Major mode for editing various html templates.
   (setq css-indent-offset 2)
 #+end_src
 
-**** tailwindcss 
+**** tailwindcss
+
 #+begin_src emacs-lisp
   (use-package lsp-tailwindcss
     :init
@@ -560,8 +574,9 @@ Major mode for editing various html templates.
   (add-hook 'js-mode-hook 'eglot-ensure)
 #+end_src
 
-
 *** clojure
+clojure-mode is an Emacs major mode that provides font-lock (syntax highlighting),
+indentation, navigation and refactoring support for the Clojure(Script) programming language.
 
 #+begin_src emacs-lisp
   (use-package clojure-mode
