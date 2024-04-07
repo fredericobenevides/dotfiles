@@ -495,6 +495,16 @@ For managing projects
   (use-package magit)
 #+end_src
 
+* neotree
+A Emacs tree plugin like NerdTree for Vim.
+
+#+begin_src emacs-lisp
+  (use-package neotree
+    :config
+    (global-set-key (kbd "<f8>") 'neotree-toggle)
+    (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+#+end_src
+
 * Programming
 ** eglot
 

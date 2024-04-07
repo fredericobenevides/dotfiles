@@ -358,6 +358,11 @@
 
 (use-package magit)
 
+(use-package neotree
+  :config
+  (global-set-key (kbd "<f8>") 'neotree-toggle)
+  (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+
 (use-package eglot)
 
 (use-package emmet-mode
