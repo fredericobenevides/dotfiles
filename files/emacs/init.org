@@ -121,13 +121,51 @@ emacs-libvterm is fully capable, fast, and it can seamlessly handle large output
 #+end_src
 
 ** Completion/Search
-*** vertico
-Vertico provides a performant and minimalistic vertical completion UI based on the default completion system
+*** corfu
+Corfu enhances the default completion in region function with a completion overlay.
 
 #+begin_src emacs-lisp
-  (use-package vertico
+  (use-package emacs
     :init
-    (vertico-mode))
+    ;; TAB cycle if there are only few candidates
+    (setq completion-cycle-threshold 3)
+
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (setq tab-always-indent 'complete)
+
+    ;; Emacs 30 and newer: Disable Ispell completion function. As an alternative,
+    ;; try `cape-dict'.
+    ;;(setq text-mode-ispell-word-completion nil)
+
+    ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
+    ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
+    ;; setting is useful beyond Corfu.
+    (setq read-extended-command-predicate #'command-completion-default-include-p))
+
+  (use-package corfu
+    ;; Optional customizations
+    :custom
+    ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    ;; (corfu-separator ?\s)          ;; Orderless field separator
+    ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+    ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+    ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+    ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+    ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+    ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
+    ;; Enable Corfu only for certain modes.
+    ;; :hook ((prog-mode . corfu-mode)
+    ;;        (shell-mode . corfu-mode)
+    ;;        (eshell-mode . corfu-mode))
+
+    ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+    ;; be used globally (M-/).  See also the customization variable
+    ;; `global-corfu-modes' to exclude certain modes.=
+    :init
+    (global-corfu-mode))
 #+end_src
 
 *** consult
@@ -259,9 +297,7 @@ Consult provides various practical commands based on the Emacs completion functi
 #+end_src
 
 *** marginalia
- Marginalia are marks or annotations placed at the margin of the page of a book
- or in this case helpful colorful annotations placed at the margin of the
- minibuffer for your completion candidates
+ Show document of function in ==M-x=, or file attributes in C-x C-f.
 
 #+begin_src emacs-lisp
   (use-package marginalia
@@ -287,8 +323,7 @@ Consult provides various practical commands based on the Emacs completion functi
 #+end_src
 
 *** orderless
-Provides a completion style that divides the pattern into space-separated
-components, and matches candidates that match all of the components in any order
+Use space-separated search terms in any order when completing with Icomplete or the default interface.
 
 #+begin_src emacs-lisp
   (use-package orderless
@@ -298,52 +333,13 @@ components, and matches candidates that match all of the components in any order
     (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-*** corfu
-Corfu enhances in-buffer completion with a small completion popup. The current
-candidates are shown in a popup below or above the point.
+*** vertico
+Vertico provides a minimalistic vertical completion UI, which is based on the default completion system. 
 
 #+begin_src emacs-lisp
-  (use-package emacs
+  (use-package vertico
     :init
-    ;; TAB cycle if there are only few candidates
-    (setq completion-cycle-threshold 3)
-
-    ;; Enable indentation+completion using the TAB key.
-    ;; `completion-at-point' is often bound to M-TAB.
-    (setq tab-always-indent 'complete)
-
-    ;; Emacs 30 and newer: Disable Ispell completion function. As an alternative,
-    ;; try `cape-dict'.
-    ;;(setq text-mode-ispell-word-completion nil)
-
-    ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
-    ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
-    ;; setting is useful beyond Corfu.
-    (setq read-extended-command-predicate #'command-completion-default-include-p))
-
-  (use-package corfu
-    ;; Optional customizations
-    :custom
-    ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-    (corfu-auto t)                 ;; Enable auto completion
-    ;; (corfu-separator ?\s)          ;; Orderless field separator
-    ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-    ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-    ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-    ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-    ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-    ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-
-    ;; Enable Corfu only for certain modes.
-    ;; :hook ((prog-mode . corfu-mode)
-    ;;        (shell-mode . corfu-mode)
-    ;;        (eshell-mode . corfu-mode))
-
-    ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-    ;; be used globally (M-/).  See also the customization variable
-    ;; `global-corfu-modes' to exclude certain modes.=
-    :init
-    (global-corfu-mode))
+    (vertico-mode))
 #+end_src
 
 ** Editing Enhacement
@@ -575,6 +571,7 @@ Major mode for editing various html templates.
 #+end_src
 
 *** clojure
+**** clojure-mode
 clojure-mode is an Emacs major mode that provides font-lock (syntax highlighting),
 indentation, navigation and refactoring support for the Clojure(Script) programming language.
 
@@ -584,7 +581,12 @@ indentation, navigation and refactoring support for the Clojure(Script) programm
     (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
     (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
     (add-hook 'clojurec-mode-hook (lambda () (lispy-mode) (eglot-ensure))))
-    
+#+end_src
+
+**** cider
+CIDER is the Clojure(Script) Interactive Development Environment that Rocks!
+
+#+begin_src emacs-lisp
   (use-package cider
     :config
     ;; disable cider showing eldoc during symbol at point
@@ -596,6 +598,22 @@ indentation, navigation and refactoring support for the Clojure(Script) programm
     ;; When there's a cider error, don't switch to the buffer
     (setq cider-show-error-buffer nil)
     (setq cider-auto-select-error-buffer nil))
+#+end_src
+
+**** clj-refactor
+clj-refactor provides powerful refactoring functionality for Clojure projects.
+It complements the refactoring functionality you'd find in clojure-mode and CIDER.
+
+#+begin_src emacs-lisp
+  (defun my-clojure-mode-hook ()
+      (clj-refactor-mode 1)
+      (yas-minor-mode 1) ; for adding require/use/import statements
+      ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+      (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+  (use-package clj-refactor
+    :config
+    (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 #+end_src
 
 *** markdown
