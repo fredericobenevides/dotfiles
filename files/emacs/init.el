@@ -423,6 +423,7 @@
 
 (use-package clj-refactor
   :config
+  (setq cljr-warn-on-eval nil) ; disable warning
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
 (use-package markdown-mode

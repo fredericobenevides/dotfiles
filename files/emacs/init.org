@@ -613,6 +613,7 @@ It complements the refactoring functionality you'd find in clojure-mode and CIDE
 
   (use-package clj-refactor
     :config
+    (setq cljr-warn-on-eval nil) ; disable warning
     (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 #+end_src
 
