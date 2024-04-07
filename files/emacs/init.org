@@ -422,6 +422,13 @@ A Emacs tree plugin like NerdTree for Vim.
     (dashboard-setup-startup-hook))
 #+end_src
 
+*** beacon
+Whenever the window scrolls a light will shine on top of your cursor so you know where it is.
+
+#+begin_src emacs-lisp
+  (use-package beacon
+    :config (beacon-mode))
+#+end_src
 ** Log
 *** command-log-mode
 

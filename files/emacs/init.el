@@ -320,6 +320,9 @@
   ;; start dashboard
   (dashboard-setup-startup-hook))
 
+(use-package beacon
+  :config (beacon-mode))
+
 (use-package command-log-mode
  :config
  (global-command-log-mode)
