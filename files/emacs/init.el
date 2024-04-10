@@ -503,11 +503,39 @@
 
 (winner-mode 1)
 
-(package-install 'org)  (setq org-startup-folded t)
+(package-install 'org)
+ 
+  (setq
+      ;; Edit settings
+      org-auto-align-tags nil
+      org-tags-column 0
+      org-catch-invisible-edits 'show-and-error
+      org-special-ctrl-a/e t
+      org-startup-indented t
+      org-startup-folded t
+;;      org-startup-with-inline-images t
+      org-insert-heading-respect-content t
 
-  (setq org-startup-indented t) ;; ident for each level
-  (setq org-startup-with-inline-images t)
+      ;; Org styling, hide markup etc.
+      org-hide-emphasis-markers t
+      org-pretty-entities t
+      org-ellipsis "…"
 
-(use-package org-superstar
+      ;; Agenda styling
+      org-agenda-tags-column 0
+      org-agenda-block-separator ?─
+      org-agenda-time-grid
+      '((daily today require-timed)
+        (800 1000 1200 1400 1600 1800 2000)
+        " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+      org-agenda-current-time-string
+      "◀── now ─────────────────────────────────────────────────")
+
+(use-package org-download
   :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (add-hook 'dired-mode-hook 'org-download-enable))
+
+(use-package org-modern
+  :config
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
