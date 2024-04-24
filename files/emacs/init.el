@@ -29,9 +29,14 @@
  auto-save-default nil
  create-lockfiles nil
  column-number-mode t
- global-display-line-numbers-mode t
  indent-tabs-mode nil
  make-backup-files nil)
+
+;; show line numbers
+(global-display-line-numbers-mode)
+
+;; enables highlighting for the current buffer
+(when window-system (global-hl-line-mode t))
 
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
@@ -504,12 +509,13 @@
 (winner-mode 1)
 
 (package-install 'org)
- 
+
   (setq
       ;; Edit settings
       org-auto-align-tags nil
       org-tags-column 0
       org-catch-invisible-edits 'show-and-error
+      org-confirm-babel-evaluate nil
       org-special-ctrl-a/e t
       org-startup-indented t
       org-startup-folded t
