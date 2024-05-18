@@ -29,11 +29,18 @@
  auto-save-default nil
  create-lockfiles nil
  column-number-mode t
+ fill-column 80
  indent-tabs-mode nil
  make-backup-files nil)
 
+;; broken automatically when the line becomes too wide
+(auto-fill-mode)
+
 ;; show line numbers
 (global-display-line-numbers-mode)
+
+;; pair mode
+(electric-pair-mode)
 
 ;; enables highlighting for the current buffer
 (when window-system (global-hl-line-mode t))
@@ -465,6 +472,38 @@
     (httpd-stop))
   (impatient-mode -1))
 
+(defun my-cargo-run ()
+  "Build and run Rust code."
+  (interactive)
+  (cargo-process-run)
+  (let ((orig-win (selected-window))
+        (run-win (display-buffer (get-buffer "*Cargo Run*") nil 'visible)))
+    (select-window run-win)
+    (comint-mode)
+    (read-only-mode 0)
+    (end-of-buffer)))
+
+(use-package rust-mode
+  :config
+  (setq rust-format-on-save t)
+
+  (add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
+
+  (add-hook 'rust-mode-hook (lambda () (eglot-ensure)))
+  (add-to-list 'eglot-server-programs
+               '((rust-ts-mode rust-mode) .
+                 ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+
+  (define-key rust-mode-map (kbd "C-c C-c C-q") 'my-cargo-run))
+
+(use-package cargo
+  :config
+  (add-hook 'rust-mode-hook 'cargo-minor-mode))
+
+(use-package flycheck-rust
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
 (use-package projectile
   :bind-keymap
   ("C-c p" . projectile-command-map)
@@ -510,32 +549,32 @@
 
 (package-install 'org)
 
-  (setq
-      ;; Edit settings
-      org-auto-align-tags nil
-      org-tags-column 0
-      org-catch-invisible-edits 'show-and-error
-      org-confirm-babel-evaluate nil
-      org-special-ctrl-a/e t
-      org-startup-indented t
-      org-startup-folded t
-;;      org-startup-with-inline-images t
-      org-insert-heading-respect-content t
+(setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-catch-invisible-edits 'show-and-error
+ org-confirm-babel-evaluate nil
+ org-special-ctrl-a/e t
+ org-startup-indented t
+ org-startup-folded t
+ ;;      org-startup-with-inline-images t
+ org-insert-heading-respect-content t
 
-      ;; Org styling, hide markup etc.
-      org-hide-emphasis-markers t
-      org-pretty-entities t
-      org-ellipsis "…"
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-ellipsis "…"
 
-      ;; Agenda styling
-      org-agenda-tags-column 0
-      org-agenda-block-separator ?─
-      org-agenda-time-grid
-      '((daily today require-timed)
-        (800 1000 1200 1400 1600 1800 2000)
-        " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-      org-agenda-current-time-string
-      "◀── now ─────────────────────────────────────────────────")
+ ;; Agenda styling
+ org-agenda-tags-column 0
+ org-agenda-block-separator ?─
+ org-agenda-time-grid
+ '((daily today require-timed)
+   (800 1000 1200 1400 1600 1800 2000)
+   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+ org-agenda-current-time-string
+ "◀── now ─────────────────────────────────────────────────")
 
 (use-package org-download
   :config
@@ -545,3 +584,16 @@
   :config
   (add-hook 'org-mode-hook #'org-modern-mode)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+
+(use-package org-roam
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture))
+  :config
+  (setq org-roam-directory (file-truename "~/org"))
+  (setq org-roam-completion-everywhere t)
+  (org-roam-db-autosync-mode))
+
+(use-package org-roam-ui)
