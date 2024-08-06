@@ -487,7 +487,7 @@
   :config
   (setq rust-format-on-save t)
 
-  (add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
+  ;;(add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
 
   (add-hook 'rust-mode-hook (lambda () (eglot-ensure)))
   (add-to-list 'eglot-server-programs
