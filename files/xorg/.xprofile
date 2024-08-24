@@ -1,1 +1,4 @@
-xbindkeys
+#xbindkeys
+
+# bind caps lock to ctrl
+setxkbmap -option ctrl:nocaps
