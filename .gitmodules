@@ -1,3 +1,6 @@
-[submodule "files/themes"]
+[submodule "external_files/org"]
 	path = external_files/dracula-pro
 	url = git@github.com:fredericobenevides/dracula-pro.git
+[submodule "external_files/org"]
+	path = external_files/org
+	url = git@github.com:fredericobenevides/org.git
