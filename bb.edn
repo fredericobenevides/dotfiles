@@ -1,3 +1,0 @@
-{:paths ["src"]
- :tasks
- {manjaro (shell "bb -m manjaro.main")}}

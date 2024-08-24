@@ -25,29 +25,3 @@ clear
 . ./modules/sdkman.sh
 . ./modules/xorg.sh
 . ./modules/zsh.sh
-
-
-
-
-###### EMACS
-#install_title "emacs"
-
-#pacman "emacs"
-
-#echo -e "Configuring emacs"
-
-#echo -e "Creating the folder ~/.emacs.d"
-#mkdir -p ~/.emacs.d
-
-#ln -s ~/.dotfiles/files/emacs/init.el ~/.emacs.d/init.el
-#ln -s ~/.dotfiles/files/emacs/init.org ~/.emacs.d/init.org
-
-#finished_title "emacs"
-
-#curl -o /tmp/idea https://download.jetbrains.com/idea/ideaIU-2023.1.7.tar.gz
-#sudo mkdir -p /opt/idea
-
-#sudo tar -C /opt/idea --strip-components=1 -xzvf /tmp/idea
-
-###### EMACS
-
