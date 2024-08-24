@@ -2,6 +2,7 @@
 
 info "Installing pacman packages"
 
+pacman "alacritty"
 pacman "conky"
 pacman "xdotool"
 
