@@ -4,8 +4,8 @@
     path: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/autoload/plug.vim"
   register: stat_result
 
-- name: Neovim plugins - Create the config neovim's config folder
-  shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.config/nvim"
+- name: Neovim plugins - Create the config.old neovim's config.old folder
+  shell: "warn=false mkdir -p {{ lookup('env', 'HOME') }}/.config.old/nvim"
   when: stat_result.stat.exists == False
 
 - name: Neovim plugins - Create the .vim folder

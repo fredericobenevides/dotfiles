@@ -11,7 +11,7 @@
 
 - name: Fish - Verify if install fisher
   stat:
-    path: ~/.config/fish/functions/fisher.fish
+    path: ~/.config.old/fish/functions/fisher.fish
   register: verify_fisher
 
 - name: Fish - Install fisher
@@ -19,7 +19,7 @@
   when: verify_fisher.stat.exists == False
 
 - name: Fish - Install fisher plugins
-  shell: if [[ ! -f "$HOME/.config/fish/functions/{{ item.fnpath }}" ]]; then fish -c "fisher install {{ item.plugin }}"; else echo "ok"; fi
+  shell: if [[ ! -f "$HOME/.config.old/fish/functions/{{ item.fnpath }}" ]]; then fish -c "fisher install {{ item.plugin }}"; else echo "ok"; fi
   loop:
     - { fnpath: nvm.fish, plugin: jorgebucaran/nvm.fish }
     - { fnpath: fzf.fish, plugin: jethrokuan/fzf }
