@@ -1,9 +1,0 @@
-- name: Node pkgs (manjaro) - Installing yay pachages for linux manjaro
-  shell: yay -Q {{ item }}; if [[ $? = "1" ]]; then yay -S --confirm {{ item }}; else echo "ok"; fi
-  loop:
-    - codelite-bin
-    - clojure-lsp-bin
-    - hugo-extended
-    - insomnia
-    - kafkacat
-    - slack-desktop

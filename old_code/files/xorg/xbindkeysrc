@@ -1,7 +1,0 @@
-# Bind "back" mouse button to Ctrl+Alt+Left
-"xdotool key Control_L+Alt_L+Left"
-  b:9
-
-# Bind "forward" mouse button to Ctrl+Alt+Right
-"xdotool key Control_L+Alt_L+Right"
-  b:8

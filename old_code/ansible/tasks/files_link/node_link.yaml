@@ -1,8 +1,0 @@
----
-- name: Link nodejs files
-  file: src={{ dotfilespath }}/files/nodejs/{{ item }}
-        dest=~/.{{item}}
-        state=link
-        force=yes
-  with_items:
-    - npmrc

@@ -1,5 +1,0 @@
-- name: Link emacs' file
-  file: src={{ dotfilespath }}/files/emacs/doom.d
-    dest=~/.doom.d
-    state=link
-    force=yes

@@ -1,5 +1,0 @@
----
-- name: Pips - Installing pips for macos
-  shell: "/usr/local/anaconda3/bin/pip install {{ item.extra_args }} {{ item.name }}"
-  loop: "{{ pips }}"
-  when: os == "macos"

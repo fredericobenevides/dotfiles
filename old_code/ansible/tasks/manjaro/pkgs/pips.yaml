@@ -1,8 +1,0 @@
----
-- name: Pips - Installing pips for linux
-  shell: pip list | grep {{ item.name }}; if [[ $? = "1" ]]; then /opt/anaconda3/bin/pip install {{ item.extra_args}} {{ item.name }}; else echo "ok"; fi
-  loop: "{{ pips }}"
-  args:
-    executable: "/bin/bash"
-  register: stat_result
-  changed_when: stat_result.stdout != "ok"
