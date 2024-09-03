@@ -14,10 +14,6 @@ function install_flatpak() {
   echo -e "-- Adding the Flathub repository"
   flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-  echo -e "-- Installing flatpak applications"
-  flatpak install spotify
-  flatpak install flathub rest.insomnia.Insomnia
-
   info "Finished installing and configuring flatkpak"
 }
 
