@@ -172,6 +172,13 @@ fi
 
 
 
+
+### PYTHON
+export PATH="$PATH:$HOME/.venv/bin"
+
+
+
+
 ### RBENV
 export RBENV_ROOT="${HOME}/.rbenv"
 
