@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 function install_python() {
-    info "Installing and configuring python"
-
     if [ -d ~/.venv ]; then
         info "python already configured!"
         return
     fi
+
+    info "Installing and configuring python"
     
     echo -e "-- Creating python environment"
     python -m venv ~/.venv
