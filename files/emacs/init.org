@@ -455,6 +455,15 @@ Show event history and command history of some or all buffers.
    :bind ("C-c o" . clm/toggle-command-log-buffer))
 #+end_src
 ** Programming
+*** emacs-gdb
+#+begin_src emacs-lisp
+  (use-package gdb-mi
+  :straight (:host github :repo "weirdNox/emacs-gdb" :files ("*.el" "*.c" "*.h" "Makefile"))
+  :init
+  (fmakunbound 'gdb)
+  (fmakunbound 'gdb-enable-debug))
+#+end_src
+
 *** yasnippet
 YASnippet is a template system for Emacs. It allows you to type an abbreviation
 and automatically expand it into function templates. Bundled language templates

@@ -338,6 +338,12 @@
  (global-command-log-mode)
  :bind ("C-c o" . clm/toggle-command-log-buffer))
 
+(use-package gdb-mi
+:straight (:host github :repo "weirdNox/emacs-gdb" :files ("*.el" "*.c" "*.h" "Makefile"))
+:init
+(fmakunbound 'gdb)
+(fmakunbound 'gdb-enable-debug))
+
 (use-package yasnippet
   :init
   (yas-global-mode 1))
