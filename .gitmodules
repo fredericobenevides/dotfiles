@@ -1,4 +1,4 @@
-[submodule "external_files/org"]
+[submodule "external_files/dracula-pro"]
 	path = external_files/dracula-pro
 	url = git@github.com:fredericobenevides/dracula-pro.git
 [submodule "external_files/org"]
