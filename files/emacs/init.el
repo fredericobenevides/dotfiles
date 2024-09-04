@@ -347,6 +347,8 @@
             :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
             :build (:not compile))
   :init
+  (setq lsp-bridge-python-command "~/.venv/bin/python")
+  (setq lsp-bridge-enable-inlay-hint 1)
   (global-lsp-bridge-mode))
 
 (use-package flycheck

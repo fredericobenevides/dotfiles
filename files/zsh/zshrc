@@ -173,14 +173,6 @@ export PATH="$PATH:$HOME/.idea/bin"
 
 
 
-### PYTHON
-if [[ -d "$HOME/.venv" ]]; then
-   source $HOME/.venv/bin/activate
-fi
-
-
-
-
 ### RBENV
 export RBENV_ROOT="${HOME}/.rbenv"
 
