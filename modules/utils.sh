@@ -15,7 +15,7 @@ function flatpak() {
 }
 
 function npm() {
-    bash -c "npm -g list 2>&1 | grep $1 > /dev/null"
+    bash -c "npm -g list 2>&1 | grep $1@ > /dev/null"
     if [ $? -eq 1 ]; then
       echo -e "-- Installing $1"
       bash -c "npm install -g $1"

@@ -27,6 +27,9 @@ function install_nodejs() {
 function install_pkgs_nodejs() {
   info "Installing nodejs packages"
 
+  npm "prettier"
+  npm "typescript"
+  npm "typescript-language-server"
   npm "vscode-langservers-extracted"
 
   info "Finished installing nodejs packages"
