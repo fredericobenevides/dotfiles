@@ -27,6 +27,7 @@ function install_nodejs() {
 function install_pkgs_nodejs() {
   info "Installing nodejs packages"
 
+  npm "bash-language-server"
   npm "prettier"
   npm "typescript"
   npm "typescript-language-server"
