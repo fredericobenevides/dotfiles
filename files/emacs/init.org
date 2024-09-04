@@ -304,8 +304,6 @@ Consult provides various practical commands based on the Emacs completion functi
     )
 
   (use-package consult-flycheck)
-
-  (use-package consult-eglot)
 #+end_src
 
 *** marginalia
@@ -457,12 +455,6 @@ Show event history and command history of some or all buffers.
    :bind ("C-c o" . clm/toggle-command-log-buffer))
 #+end_src
 ** Programming
-*** eglot
-Eglot is the Emacs client for the Language Server Protocol ( LSP ). The name “Eglot” is an acronym that stands for "Emacs Polyglot".
-
-#+begin_src emacs-lisp
-  (use-package eglot)
-#+end_src
 
 *** flycheck
 Flycheck is a modern on-the-fly syntax checking extension for GNU Emacs, intended
@@ -472,13 +464,6 @@ as replacement for the older Flymake extension which is part of GNU Emacs
   (use-package flycheck
     :config
     (add-hook 'after-init-hook #'global-flycheck-mode))
-
-  (use-package flycheck-eglot
-    :ensure t
-    :after
-    (flycheck eglot)
-    :config
-    (global-flycheck-eglot-mode 1))
 #+end_src
 
 *** impatient
@@ -578,8 +563,6 @@ Major mode for editing various html templates.
   (use-package typescript-mode)
 
   (setq js-indent-level 2)
-
-  (add-hook 'js-mode-hook 'eglot-ensure)
 #+end_src
 
 *** clojure
@@ -588,11 +571,7 @@ clojure-mode is an Emacs major mode that provides font-lock (syntax highlighting
 indentation, navigation and refactoring support for the Clojure(Script) programming language.
 
 #+begin_src emacs-lisp
-  (use-package clojure-mode
-    :config
-    (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
-    (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
-    (add-hook 'clojurec-mode-hook (lambda () (lispy-mode) (eglot-ensure))))
+  (use-package clojure-mode)
 #+end_src
 
 **** cider
@@ -688,11 +667,6 @@ rust-mode makes editing Rust code with Emacs enjoyable
     (setq rust-format-on-save t)
 
     ;;(add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
-
-    (add-hook 'rust-mode-hook (lambda () (eglot-ensure)))
-    (add-to-list 'eglot-server-programs
-                 '((rust-ts-mode rust-mode) .
-                   ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
 
     (define-key rust-mode-map (kbd "C-c C-c C-q") 'my-cargo-run))
 #+end_src

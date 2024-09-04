@@ -247,8 +247,6 @@
 
 (use-package consult-flycheck)
 
-(use-package consult-eglot)
-
 (use-package marginalia
   :after
   (nerd-icons-completion)
@@ -340,18 +338,9 @@
  (global-command-log-mode)
  :bind ("C-c o" . clm/toggle-command-log-buffer))
 
-(use-package eglot)
-
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
-
-(use-package flycheck-eglot
-  :ensure t
-  :after
-  (flycheck eglot)
-  :config
-  (global-flycheck-eglot-mode 1))
 
 (use-package impatient-mode
   :commands impatient-mode)
@@ -407,13 +396,7 @@
 
 (setq js-indent-level 2)
 
-(add-hook 'js-mode-hook 'eglot-ensure)
-
-(use-package clojure-mode
-  :config
-  (add-hook 'clojure-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
-  (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode) (eglot-ensure)))
-  (add-hook 'clojurec-mode-hook (lambda () (lispy-mode) (eglot-ensure))))
+(use-package clojure-mode)
 
 (use-package cider
   :config
@@ -488,11 +471,6 @@
   (setq rust-format-on-save t)
 
   ;;(add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
-
-  (add-hook 'rust-mode-hook (lambda () (eglot-ensure)))
-  (add-to-list 'eglot-server-programs
-               '((rust-ts-mode rust-mode) .
-                 ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
 
   (define-key rust-mode-map (kbd "C-c C-c C-q") 'my-cargo-run))
 
