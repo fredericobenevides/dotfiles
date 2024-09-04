@@ -23,3 +23,15 @@ function pacman() {
     echo -e "-- Package $1 is already installed"
   fi
 }
+
+function pip() {
+    pip_cmd="~/.venv/bin/pip"
+    bash -c "${pip_cmd} list | grep $1 > /dev/null 2>&1"
+    if [ $? -eq 1 ]; then
+        echo -e "-- Installing $1"
+        bash -c "${pip_cmd} install $1"
+    else
+        echo -e "-- Package $1 is already installed"
+    fi 
+
+}

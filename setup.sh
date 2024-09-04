@@ -22,6 +22,7 @@ clear
 . ./modules/idea.sh
 . ./modules/nerd-fonts.sh
 . ./modules/nodejs.sh
+. ./modules/python.sh
 . ./modules/rust.sh
 . ./modules/sdkman.sh
 . ./modules/xorg.sh
