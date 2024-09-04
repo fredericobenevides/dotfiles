@@ -163,13 +163,12 @@ export PATH="$PATH:$HOME/.idea/bin"
 
 
 ### NODE
-# export PATH="$HOME/.npm-global/bin:$PATH"
-#
-# if [[ -d "/opt/node" ]]; then
-#   export PATH="/opt/node/bin:$PATH"
-# fi
-# source /usr/share/nvm/init-nvm.sh
-
+FNM_PATH="$HOME/.fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$HOME/.fnm:$PATH"
+  export FNM_DIR="$HOME/.fnm"
+  eval "`fnm env`"
+fi
 
 
 
@@ -226,4 +225,5 @@ source $ZSH/oh-my-zsh.sh
 if [ -f $HOME/.zshrc.local ]; then
   source $HOME/.zshrc.local
 fi
+
 
