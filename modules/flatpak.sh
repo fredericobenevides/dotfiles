@@ -14,6 +14,9 @@ function install_flatpak() {
   echo -e "-- Adding the Flathub repository"
   flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
+  echo -e "-- Installing a portal frontend service"
+  pacman "xdg-desktop-portal-gtk"
+
   info "Finished installing and configuring flatkpak"
 }
 
@@ -21,7 +24,9 @@ function install_pkgs_flatpak() {
   info "Installing flatkpak packages"
 
   flatpak "com.google.AndroidStudio"
+  flatpak "com.google.Chrome"
   flatpak "com.spotify.Client"
+  flatpak "com.github.tchx84.Flatseal"
   flatpak "rest.insomnia.Insomnia"
 
   info "Finished installing flatkpak packages"

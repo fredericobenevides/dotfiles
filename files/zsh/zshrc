@@ -116,6 +116,8 @@ alias flutter_devtools='flutter pub global run devtools'
 
 # flatpak alias
 alias android_studio="flatpak run com.google.AndroidStudio"
+alias chrome="flatpak run com.google.Chrome"
+alias flatseal="flatpak run com.github.tchx84.Flatseal"
 alias insomnia="flatpak run rest.insomnia.Insomnia"
 alias spotify="flatpak run com.spotify.Client"
 
