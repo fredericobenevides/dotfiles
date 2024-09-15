@@ -22,6 +22,10 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(setq gc-cons-threshold 100000000)
+
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
@@ -87,47 +91,47 @@
                 (reusable-frames . visible)
                 (window-height . 0.3))))
 
-;;(use-package emacs
-;;  :init
-;;  ;; TAB cycle if there are only few candidates
-;;  (setq completion-cycle-threshold 3)
-;;
-;;  ;; Enable indentation+completion using the TAB key.
-;;  ;; `completion-at-point' is often bound to M-TAB.
-;;  (setq tab-always-indent 'complete)
-;;
-;;  ;; Emacs 30 and newer: Disable Ispell completion function. As an alternative,
-;;  ;; try `cape-dict'.
-;;  ;;(setq text-mode-ispell-word-completion nil)
-;;
-;;  ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
-;;  ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
-;;  ;; setting is useful beyond Corfu.
-;;  (setq read-extended-command-predicate #'command-completion-default-include-p))
-;;
-;;(use-package corfu
-;;  ;; Optional customizations
-;;  :custom
-;;  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-;;  (corfu-auto t)                 ;; Enable auto completion
-;;  ;; (corfu-separator ?\s)          ;; Orderless field separator
-;;  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-;;  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-;;  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-;;  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-;;  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-;;  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-;;
-;;  ;; Enable Corfu only for certain modes.
-;;  ;; :hook ((prog-mode . corfu-mode)
-;;  ;;        (shell-mode . corfu-mode)
-;;  ;;        (eshell-mode . corfu-mode))
-;;
-;;  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-;;  ;; be used globally (M-/).  See also the customization variable
-;;  ;; `global-corfu-modes' to exclude certain modes.=
-;;  :init
-;;  (global-corfu-mode))
+(use-package emacs
+ :init
+ ;; TAB cycle if there are only few candidates
+ (setq completion-cycle-threshold 3)
+
+ ;; Enable indentation+completion using the TAB key.
+ ;; `completion-at-point' is often bound to M-TAB.
+ (setq tab-always-indent 'complete)
+
+ ;; Emacs 30 and newer: Disable Ispell completion function. As an alternative,
+ ;; try `cape-dict'.
+ ;;(setq text-mode-ispell-word-completion nil)
+
+ ;; Emacs 28 and newer: Hide commands in M-x which do not apply to the current
+ ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
+ ;; setting is useful beyond Corfu.
+ (setq read-extended-command-predicate #'command-completion-default-include-p))
+
+(use-package corfu
+ ;; Optional customizations
+ :custom
+ ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+ (corfu-auto t)                 ;; Enable auto completion
+ ;; (corfu-separator ?\s)          ;; Orderless field separator
+ ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+ ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+ ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+ ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+ ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+ ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
+ ;; Enable Corfu only for certain modes.
+ ;; :hook ((prog-mode . corfu-mode)
+ ;;        (shell-mode . corfu-mode)
+ ;;        (eshell-mode . corfu-mode))
+
+ ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+ ;; be used globally (M-/).  See also the customization variable
+ ;; `global-corfu-modes' to exclude certain modes.=
+ :init
+ (global-corfu-mode))
 
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
@@ -347,19 +351,6 @@
 (fmakunbound 'gdb)
 (fmakunbound 'gdb-enable-debug))
 
-(use-package yasnippet
-  :init
-  (yas-global-mode 1))
-
-(use-package lsp-bridge
-  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
-            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
-            :build (:not compile))
-  :init
-  (setq lsp-bridge-python-command "~/.venv/bin/python")
-  (setq lsp-bridge-enable-inlay-hint 1)
-  (global-lsp-bridge-mode))
-
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
@@ -372,7 +363,32 @@
   (setq httpd-port 7070)
   (setq httpd-host (system-name)))
 
+(use-package lsp-ui)
+
+(use-package lsp-mode
+  :custom
+  (lsp-completion-provider :none) ;; we use Corfu!
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))) ;; Configure orderless
+  :config
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  :hook (
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration)
+         (lsp-completion-mode . my/lsp-mode-setup-completion)
+
+         (rust-mode . lsp-deferred)))
+
 (use-package lispy)
+
+(use-package yasnippet
+  :init
+  (yas-global-mode 1))
 
 (use-package emmet-mode
   :after
