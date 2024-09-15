@@ -1,4 +1,4 @@
-#+TITLE: Emacs Config
+#+TITLE: EMACS Config
 #+PROPERTY: header-args :tangle ./init.el
 
 * Bootstrap
@@ -60,6 +60,9 @@ Set the default custom file
 
   ;; enables highlighting for the current buffer
   (when window-system (global-hl-line-mode t))
+
+  ;; auto refresh buffers when file changed on disk
+  (global-auto-revert-mode t)
 #+end_src
 
 ** Fonts

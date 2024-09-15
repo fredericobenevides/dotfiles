@@ -45,6 +45,9 @@
 ;; enables highlighting for the current buffer
 (when window-system (global-hl-line-mode t))
 
+;; auto refresh buffers when file changed on disk
+(global-auto-revert-mode t)
+
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
 (set-face-attribute 'variable-pitch nil :font "JetBrainsMono Nerd Font" :height 140)
