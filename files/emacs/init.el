@@ -382,6 +382,8 @@
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-completion-mode . my/lsp-mode-setup-completion)
 
+         (web-mode . lsp-deferred)
+         (css-mode . lsp-deferred)
          (rust-mode . lsp-deferred)))
 
 (use-package lispy)
@@ -417,9 +419,9 @@
 (use-package lsp-tailwindcss
   :init
   (setq lsp-tailwindcss-add-on-mode t)
-  ;;:config
-  ;;(add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
-  )
+  :config
+  ;; (add-hook 'before-save-hook 'lsp-tailwindcss-rustywind-before-save)
+  (setq lsp-tailwindcss-major-modes '(web-mode html-mode sgml-mode css-mode rjsx-mode)))
 
 (use-package prettier
   :config
