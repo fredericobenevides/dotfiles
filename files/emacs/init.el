@@ -363,7 +363,11 @@
   (setq httpd-port 7070)
   (setq httpd-host (system-name)))
 
-(use-package lsp-ui)
+(use-package lsp-ui
+  :custom
+  (lsp-ui-peek-always-show nil)
+  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-doc-enable t))
 
 (use-package lsp-mode
   :custom
@@ -371,6 +375,17 @@
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+
+  ;; enable / disable the hints as you prefer:
+  ;;(setq lsp-inlay-hint-enable t)
+
+  ;;(setq lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  ;;(setq lsp-rust-analyzer-display-chaining-hints t)
+  ;;(setq lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+  ;;(setq lsp-rust-analyzer-display-closure-return-type-hints t)
+  ;;(setq lsp-rust-analyzer-display-parameter-hints nil)
+  ;;(setq lsp-rust-analyzer-display-reborrow-hints nil)
 
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
@@ -506,17 +521,23 @@
     (read-only-mode 0)
     (end-of-buffer)))
 
-(use-package rust-mode
+(use-package rustic
   :config
-  (setq rust-format-on-save t)
+  (setq rustic-format-on-save t)
 
   ;;(add-hook 'rust-mode-hook (lambda () (prettify-symbols-mode)))
+  ;;(define-key rust-mode-map (kbd "C-c C-c C-q") 'my-cargo-run)
 
-  (define-key rust-mode-map (kbd "C-c C-c C-q") 'my-cargo-run))
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-c C-c l" . flycheck-list-errors))
+  :custom
+  (rustic-cargo-use-last-stored-arguments t))
 
-(use-package cargo
-  :config
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
+;;(use-package cargo
+;;  :config
+;;  (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
 (use-package flycheck-rust
   :init
