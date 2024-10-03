@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function install_nodejs() {
-    if [ -d ~/.fnm ]; then
+    if [ -d $HOME/.fnm ]; then
         info "nodejs already configured!"
         return
     fi
@@ -20,6 +20,12 @@ function install_nodejs() {
 
     echo -e "-- Setting default nodejs"
     fnm default v20.17.0
+
+    echo -e "-- Creating directory"
+    mdkir -p $HOME/.npm-global
+
+    echo -e "-- Linking file"
+    ln -sf $HOME/.dotfiles/files/npm/.npmrc $HOME/.npmrc
 
     info "Finished installing and configuring nodejs"
 }
