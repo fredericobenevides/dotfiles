@@ -1,6 +1,0 @@
-[Desktop Entry]
-Exec=/opt/idea/bin/idea.sh
-Icon=/opt/idea/bin/idea.png
-Type=Application
-Categories=Development
-Name=IntelliJ IDEA

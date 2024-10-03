@@ -13,6 +13,7 @@ clear
 
 # packages
 . ./modules/clojure.sh
+. ./modules/desktop.sh
 . ./modules/docker.sh
 . ./modules/emacs.sh
 . ./modules/flutter.sh

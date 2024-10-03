@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/{{USER}}/.idea/bin/idea.sh
+Icon=/home/{{USER}}/.idea/bin/idea.png
+Type=Application
+Categories=Development
+Name=IntelliJ IDEA

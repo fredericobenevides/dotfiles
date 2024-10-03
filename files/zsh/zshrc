@@ -159,7 +159,7 @@ export FZF_COMPLETION_TRIGGER='~~'
 
 
 ### IDEA
-export PATH="$PATH:/opt/idea/bin"
+export PATH="$PATH:$HOME/.idea/bin"
 
 
 
