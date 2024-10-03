@@ -404,14 +404,29 @@ Highlights parentheses, brackets, and braces according to their depth.
 #+end_src
 
 ** File Manager
-*** neotree
-A Emacs tree plugin like NerdTree for Vim.
+*** treemacs
+Treemacs is a file and project explorer similar to NeoTree or vim’s NerdTree,
+but largely inspired by the Project Explorer in Eclipse. It shows the file
+system outlines of your projects in a simple tree layout allowing quick
+navigation and exploration, while also possessing basic file management
+utilities
 
 #+begin_src emacs-lisp
-  (use-package neotree
-    :config
-    (global-set-key (kbd "<f8>") 'neotree-toggle)
-    (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+  (use-package treemacs
+    :bind
+    (("<f8>" . treemacs)
+     ("<C-f8>" . treemacs-select-window)
+     ("<M-f8>" . treemacs-add-and-display-current-project)
+     ("<C-S-f8>" . treemacs-add-and-display-current-project-exclusively)))
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile))
+
+  (use-package treemacs-icons-dired
+    :hook (dired-mode . treemacs-icons-dired-enable-once))
+
+  (use-package treemacs-magit
+    :after (treemacs magit))
 #+end_src
 
 ** Interface Enhacement

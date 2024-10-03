@@ -306,10 +306,21 @@
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
-(use-package neotree
-  :config
-  (global-set-key (kbd "<f8>") 'neotree-toggle)
-  (global-set-key (kbd "M-<f8>") 'neotree-refresh))
+(use-package treemacs
+  :bind
+  (("<f8>" . treemacs)
+   ("<C-f8>" . treemacs-select-window)
+   ("<M-f8>" . treemacs-add-and-display-current-project)
+   ("<C-S-f8>" . treemacs-add-and-display-current-project-exclusively)))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
 
 (use-package dashboard
   :straight
