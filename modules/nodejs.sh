@@ -33,9 +33,7 @@ function install_nodejs() {
 function install_pkgs_nodejs() {
   info "Installing nodejs packages"
 
-  npm "@angular/language-service@next"
-  npm "@angular/language-server"
-  npm "bash-language-server"
+  npm "@angular/cli"
   npm "prettier"
   npm "typescript"
   npm "typescript-language-server"

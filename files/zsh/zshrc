@@ -167,7 +167,7 @@ export PATH="$PATH:$HOME/.idea/bin"
 ### NODE
 FNM_PATH="$HOME/.fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$HOME/.fnm:$PATH"
+  export PATH="$HOME/.fnm:$HOME/.npm-global/bin:$PATH"
   export FNM_DIR="$HOME/.fnm"
   eval "`fnm env`"
 fi
