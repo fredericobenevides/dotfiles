@@ -14,6 +14,16 @@ function flatpak() {
   fi
 }
 
+function code() {
+    bash -c "code --list-extensions 2>&1 | grep $1 > /dev/null"
+    if [ $? -eq 1 ]; then
+      echo -e "-- Installing $1"
+      bash -c "code --install-extension $1"
+    else
+      echo -e "-- Package $1 is already installed"
+    fi
+}
+
 function npm() {
     bash -c "npm -g list 2>&1 | grep $1@ > /dev/null"
     if [ $? -eq 1 ]; then

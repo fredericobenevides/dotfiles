@@ -26,5 +26,6 @@ clear
 . ./modules/python.sh
 . ./modules/rust.sh
 . ./modules/sdkman.sh
+. ./modules/vscode.sh
 . ./modules/xorg.sh
 . ./modules/zsh.sh
