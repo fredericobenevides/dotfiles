@@ -19,11 +19,13 @@ clear
 . ./modules/flutter.sh
 . ./modules/fzf.sh
 . ./modules/git.sh
+. ./modules/hyprland.sh
 . ./modules/i3.sh
 . ./modules/idea.sh
 . ./modules/nerd-fonts.sh
 . ./modules/nodejs.sh
 . ./modules/python.sh
+. ./modules/rofi.sh
 . ./modules/rust.sh
 . ./modules/sdkman.sh
 . ./modules/vscode.sh
