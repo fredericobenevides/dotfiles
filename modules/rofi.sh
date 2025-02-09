@@ -3,7 +3,7 @@
 info "Configuring rofi"
 
 if [[ -d ~/.config/rofi ]]; then
-  info "waybar already configured!"
+  info "rofi already configured!"
   return
 fi
 
