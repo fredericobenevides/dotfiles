@@ -9,6 +9,8 @@ pacman "rofi-wayland"
 pacman "grim"
 pacman "slurp"
 pacman "imv"
+pacman "swayidle"
+pacman "swaync"
 yay -S "swaylock-effects-git"
 
 if [[ -d ~/.config/hypr ]]; then

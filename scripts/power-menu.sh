@@ -10,7 +10,7 @@ selected_option=$(echo -e "$actions" | rofi -dmenu -i -config "${config}" || pki
 # Perform actions based on the selected option
 case "$selected_option" in
 *Lock)
-  ~/.config/waybar/scripts/swaylock.sh
+  ~/.dotfiles/scripts/swaylock.sh
   ;;
 *Shutdown)
   systemctl poweroff

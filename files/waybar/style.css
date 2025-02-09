@@ -46,6 +46,11 @@ tooltip label {
   background: @bg_hover;
 }
 
+#idle_inhibitor.activated {
+  background-color: #ecf0f1;
+  color: #2d3436;
+}
+
 #pulseaudio:hover {
   background: @bg_hover;
 }
@@ -56,7 +61,6 @@ tooltip label {
   margin-left: 1.5px;
 }
 #workspaces button {
-  padding: 3px;
   color: @content_inactive;
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

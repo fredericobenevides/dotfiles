@@ -12,6 +12,7 @@
         "hyprland/window"
     ],
     "modules-right": [
+        "idle_inhibitor",    
         "cpu",
         "temperature",
         "memory",
@@ -90,9 +91,9 @@
         "format": "  {usage}%"
     },
     "custom/power": {
-        "format" : "⏻ ",
+        "format" : " ⏻ ",
         "tooltip-format": "Power Menu",
-        "on-click": "~/.dotfiles/scripts/waybar/power-menu.sh"
+        "on-click": "~/.dotfiles/scripts/power-menu.sh"
     },    
     "disk": {
         "interval": 30,
@@ -106,7 +107,14 @@
         "format": "{}",
         "format-en": "ENG",
         "format-ru": "РУС"
-    },      
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "   ",
+            "deactivated": "   "
+        }
+    },
     "memory": {
         "format": "  {}%"
     },
@@ -127,12 +135,12 @@
         "scroll-step": 10,
         "format": "{icon}",
         "tooltip-format": "{volume}%",
-        "format-muted": " ",
+        "format-muted": "  ",
         "format-icons": {
             "default": [
-                " ",
-                " ",
-                " "
+                "  ",
+                "  ",
+                "   "
             ]
         },
         "on-click": "pavucontrol"
