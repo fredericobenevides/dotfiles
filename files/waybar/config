@@ -1,0 +1,147 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 8, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "cpu",
+        "temperature",
+        "memory",
+        "disk",
+        "network",
+        "pulseaudio",
+        "battery",
+        "battery#bat2",
+        "hyprland/language",
+        "clock",
+        "custom/power"        
+    ],
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+  
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            "󰂎",
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "clock": {
+        "format": "      {:%R\n %d.%m.%Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }        
+    },    
+    "cpu": {
+        "format": "  {usage}%"
+    },
+    "custom/power": {
+        "format" : "⏻ ",
+        "tooltip-format": "Power Menu",
+        "on-click": "~/.config/waybar/scripts/power-menu.sh"
+    },    
+    "disk": {
+        "interval": 30,
+        "format": "󰋊 {percentage_used}%",
+        "path": "/",
+        "tooltip": true,
+        "unit": "GB",
+        "tooltip-format":  "Available {free} of {total}"
+    },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "ENG",
+        "format-ru": "РУС"
+    },      
+    "memory": {
+        "format": "  {}%"
+    },
+    "network": {
+        "format-wifi": "   {signalStrength}%",
+        "format-ethernet": "  ",
+        "format-disconnected": " 󰌙 ",
+        "format-icons": [
+            "󰤯 ",
+            "󰤟 ",
+            "󰤢 ",
+            "󰤢 ",
+            "󰤨 "
+        ]
+    },
+    "pulseaudio": {
+        "max-volume": 150,
+        "scroll-step": 10,
+        "format": "{icon}",
+        "tooltip-format": "{volume}%",
+        "format-muted": " ",
+        "format-icons": {
+            "default": [
+                " ",
+                " ",
+                " "
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": " {temperatureC}°C",
+    },    
+}

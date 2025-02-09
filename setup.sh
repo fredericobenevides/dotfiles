@@ -29,5 +29,6 @@ clear
 . ./modules/rust.sh
 . ./modules/sdkman.sh
 . ./modules/vscode.sh
+. ./modules/waybar.sh 
 . ./modules/xorg.sh
 . ./modules/zsh.sh

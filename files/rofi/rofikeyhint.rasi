@@ -1,14 +1,17 @@
 /*******************************************************
- * ROFI configs
+ * ROFI configs i3 keyhint-menu for EndeavourOS
+ * Maintainer: joekamprad [joekamprad //a_t// endeavouros.com]
  *******************************************************/
 configuration {
     font:                "Noto Sans Regular 10";
-    show-icons:          true;
+    show-icons:          false;
     icon-theme:          "Qogir";
-    display-drun:        "Apps";
+    display-drun:        "KeyHint";
     drun-display-format: "{name}";
     scroll-method:       0;
     disable-history:     false;
+    fullscreen:          false;
+    hide-scrollbar:      true;
     sidebar-mode:        false;
 }
 
@@ -22,7 +25,7 @@ window {
 }
 listview {
     lines:   10;
-    columns: 3;
+    columns: 1;
 }
 mainbox {
     border:  0;

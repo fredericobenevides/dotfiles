@@ -3,13 +3,15 @@
 info "Configuring hyprland"
 
 pacman "wayland"
+pacman "waybar"
 pacman "hyprland"
 pacman "rofi-wayland"
 pacman "grim"
 pacman "slurp"
 pacman "imv"
+yay -S "swaylock-effects-git"
 
 echo -e "-- Linking files"
-ln -sf ~/.dotfiles/files/hyprland/hyprland.conf ~/.config/hypr/hyprland.conf
+ln -sf ~/.dotfiles/files/hyprland ~/.config/hypr
 
 echo -e "Finished configuring hyprland"

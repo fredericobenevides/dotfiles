@@ -1,0 +1,34 @@
+/*******************************************************
+ * ROFI configs
+ *******************************************************/
+configuration {
+    font:            "Noto Sans Regular 14";
+    show-icons:      false;
+    icon-theme:      "Qogir";
+    scroll-method:   0;
+    disable-history: false;
+    sidebar-mode:    false;
+}
+
+@import "~/.config/rofi/config.rasi"
+/* Insert theme modifications after this */
+
+window {
+    background-color: @background;
+    border:           0;
+    padding:          20;
+    transparency:     "real";
+    width:            180px;
+    location:         center;
+    /*y-offset:       18;*/
+    /*x-offset:       850;*/
+}
+listview {
+    lines:     6;
+    columns:   1;
+    scrollbar: false;
+}
+/*removes the text input line*/
+mainbox {
+  children: [listview];
+}
