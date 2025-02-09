@@ -55,5 +55,17 @@ function install_vscode_extensions() {
     info "Finished installing vscode extensions"
 }
 
+link_files() {
+    if [[ -d ~/.config/code-flags.conf ]]; then
+        info "code-flags already configured!"
+        return
+    fi
+
+    info "-- Linking files"
+    ln -sf ~/.dotfiles/files/vscode/code-flags.conf ~/.config/code-flags.conf
+}
+
 install_vscode
 install_vscode_extensions
+link_files
+
