@@ -11,6 +11,11 @@ pacman "slurp"
 pacman "imv"
 yay -S "swaylock-effects-git"
 
+if [[ -d ~/.config/hypr ]]; then
+  info "hypr linking files already configured!"
+  return
+fi
+
 echo -e "-- Linking files"
 ln -sf ~/.dotfiles/files/hyprland ~/.config/hypr
 
