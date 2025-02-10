@@ -28,5 +28,6 @@ clear
 . ./modules/rust.sh
 . ./modules/sdkman.sh
 . ./modules/vscode.sh
-. ./modules/waybar.sh 
+. ./modules/waybar.sh
+. ./modules/x11.sh
 . ./modules/zsh.sh
