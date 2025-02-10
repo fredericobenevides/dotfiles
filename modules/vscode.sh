@@ -19,6 +19,7 @@ function install_vscode_extensions() {
 
     # editor
     code "alefragnani.Bookmarks"
+    code "bierner.emojisense"
     code "ritwickdey.LiveServer"
     code "tuttieee.emacs-mcx"
     code "usernamehw.find-jump"
