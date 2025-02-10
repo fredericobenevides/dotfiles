@@ -20,7 +20,6 @@ clear
 . ./modules/fzf.sh
 . ./modules/git.sh
 . ./modules/hyprland.sh
-. ./modules/i3.sh
 . ./modules/idea.sh
 . ./modules/nerd-fonts.sh
 . ./modules/nodejs.sh
@@ -30,5 +29,4 @@ clear
 . ./modules/sdkman.sh
 . ./modules/vscode.sh
 . ./modules/waybar.sh 
-. ./modules/xorg.sh
 . ./modules/zsh.sh

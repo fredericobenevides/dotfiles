@@ -1,6 +1,0 @@
-# use US compositions by default - don't forget that, w/o you'll not get any other dead-key behavior
-include "/usr/share/X11/locale/en_US.UTF-8/Compose"
-
-# but give me my funky ç with a tail
-<dead_acute> <C> : "Ç"
-<dead_acute> <c> : "ç"
