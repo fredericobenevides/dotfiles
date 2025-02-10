@@ -1,5 +1,5 @@
 /*base background color*/
-@define-color bg_main rgba(25, 25, 25, 0.65);
+@define-color bg_main rgba(44, 47, 58, 0.65);
 @define-color bg_main_tooltip rgba(0, 0, 0, 0.7);
 
 /*base background color of selections */
