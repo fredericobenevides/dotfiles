@@ -11,7 +11,7 @@ pacman "slurp"
 pacman "imv"
 pacman "swayidle"
 pacman "swaync"
-yay -S "swaylock-effects-git"
+yay "swaylock-effects-git"
 
 if [[ -d ~/.config/hypr ]]; then
   info "hypr linking files already configured!"

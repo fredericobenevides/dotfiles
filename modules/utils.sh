@@ -53,5 +53,14 @@ function pip() {
     else
         echo -e "-- Package $1 is already installed"
     fi 
+}
 
+function yay() {
+  /usr/bin/yay -Qi $1 > /dev/null 2>&1
+  if [ $? -eq 1 ]; then
+    echo -e "-- Installing $1"
+    sudo bash -c "yay -S $1"
+  else
+    echo -e "-- Package $1 is already installed"
+  fi
 }
