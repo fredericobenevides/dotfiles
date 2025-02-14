@@ -17,11 +17,14 @@ function install_vscode() {
 function install_vscode_extensions() {
     info "Installing vscode extensions"
 
+    # themes
+    code "Catppuccin.catppuccin-vsc"
+    code "PKief.material-icon-theme"
+
     # editor
     code "alefragnani.Bookmarks"
     code "bierner.emojisense"
     code "ritwickdey.LiveServer"
-    code "tuttieee.emacs-mcx"
     code "usernamehw.find-jump"
     code "tamasfe.even-better-toml"    
     code "vadimcn.vscode-lldb"
