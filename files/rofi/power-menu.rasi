@@ -18,14 +18,16 @@ window {
     border:           0;
     padding:          20;
     transparency:     "real";
-    width:            180px;
+    width:            450px;
+    height:           130px;
     location:         center;
     /*y-offset:       18;*/
     /*x-offset:       850;*/
 }
 listview {
-    lines:     6;
-    columns:   1;
+    lines:       2;
+    columns:     3;
+    spacing:  20px;
     scrollbar: false;
 }
 /*removes the text input line*/
