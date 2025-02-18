@@ -1,6 +1,6 @@
 # Frederico Benevides' Dot Files
 
-Config files to set up my system using Manjaro Linux.
+Config files to set up my system using EndeavourOS
 
 ## Installation
 
@@ -10,6 +10,6 @@ Download the dotfiles to the root path and goes to the dotfiles folder
 
 Run with the command:
 
-`bb manjaro`
+`./setup.sh`
 
 **Have Fun**
