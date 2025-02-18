@@ -642,7 +642,7 @@
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture))
   :config
-  (setq org-roam-directory (file-truename "~/.dotfiles/external_files/org"))
+  (setq org-roam-directory (file-truename "~/org"))
   (setq org-roam-completion-everywhere t)
   (org-roam-db-autosync-mode))
 
