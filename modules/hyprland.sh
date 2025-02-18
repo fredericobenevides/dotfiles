@@ -19,7 +19,10 @@ if [[ -d ~/.config/hypr ]]; then
   return
 fi
 
+echo -e "-- Creating directory"
+mkdir -p ~/.config/hypr
+
 echo -e "-- Linking files"
-ln -sf ~/.dotfiles/files/hyprland ~/.config/hypr
+ln -sf ~/.dotfiles/files/hyprland/hyprland.conf ~/.config/hypr/hyprland.conf 
 
 echo -e "Finished configuring hyprland"
