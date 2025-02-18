@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-. ../modules/utils.sh
+if [ -d $HOME/.config/nvim ]; then
+  info "neovim already configured!"
+  return
+fi
 
 info "Installing and configuring neovim"
 
@@ -25,6 +28,5 @@ echo -e "-- Linking files"
 ln -sf ~/.dotfiles/files/vim/.vimrc ~/.vimrc
 ln -sf ~/.dotfiles/files/vim/.vimrc ~/.config/nvim/init.vim
 ln -sf ~/.dotfiles/files/vim/coc-settings.json ~/.config/nvim/coc-settings.json
-ln -sf ~/.dotfiles/files/themes/vim ~/.local/share/nvim/site/pack/themes/start/dracula_pro
 
 info "Finished installing and configuring neovim"

@@ -22,6 +22,7 @@ clear
 . ./modules/hyprland.sh
 . ./modules/idea.sh
 . ./modules/nerd-fonts.sh
+#. ./modules/neovim.sh
 . ./modules/nodejs.sh
 . ./modules/python.sh
 . ./modules/rofi.sh
