@@ -52,6 +52,10 @@ function install_vscode_extensions() {
     code "dbaeumer.vscode-eslint"
     code "esbenp.prettier-vscode"
 
+    # vuejs
+    code "johnsoncodehk.volar"
+    code "johnsoncodehk.vscode-typescript-vue-plugin"
+
     # rust
     code "serayuzgur.crates"
     code "rust-lang.rust-analyzer"
