@@ -19,6 +19,7 @@ clear
 . ./modules/flutter.sh
 . ./modules/fzf.sh
 . ./modules/git.sh
+. ./modules/go.sh
 . ./modules/hyprland.sh
 . ./modules/idea.sh
 . ./modules/nerd-fonts.sh
