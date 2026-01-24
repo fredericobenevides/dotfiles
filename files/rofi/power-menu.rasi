@@ -2,7 +2,7 @@
  * ROFI configs
  *******************************************************/
 configuration {
-    font:            "Noto Sans Regular 14";
+    font:            "JetBrainsMono Nerd Font Mono 14";
     show-icons:      false;
     icon-theme:      "Qogir";
     scroll-method:   0;

@@ -1,83 +1,90 @@
 {
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "vscode-icons",
+
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'",
+  "editor.fontSize": 14,
+  "editor.fontWeight": "600",
+  "editor.fontLigatures": false,
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 1,
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.4)",
+    "rgba(127,255,127,0.4)",
+    "rgba(255,127,255,0.4)",
+    "rgba(79,236,236,0.4)"
+  ],
+
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "files.autoSave": "onFocusChange",
+  "keyboard.dispatch": "keyCode",
+
+  "html.autoClosingTags": false,
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+
+  "telemetry.telemetryLevel": "off",
+
+  "rust-analyzer.check.command": "clippy",
 
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "always",
-    },
+      "source.fixAll.eslint": "always"
+    }
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "always",
-    },
+      "source.fixAll.eslint": "always"
+    }
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": true
   },
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.formatOnSave": true,
-    "editor.tabSize": 4,
+    "editor.tabSize": 4
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true,
-    "editor.tabSize": 4,
+    "editor.tabSize": 4
   },
-
-  "rust-analyzer.check.command": "clippy",
 
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
-    "typescript": "typescriptreact",
-  },
-
-  "workbench.colorTheme": "Catppuccin Macchiato",
-  "workbench.iconTheme": "vscode-icons",
-  "html.autoClosingTags": false,
-
-  "indentRainbow.indicatorStyle": "light",
-  "indentRainbow.lightIndicatorStyleLineWidth": 1,
-  "indentRainbow.colors": [
-    "rgba(255,255,64,0.3)",
-    "rgba(127,255,127,0.3)",
-    "rgba(255,127,255,0.3)",
-    "rgba(79,236,236,0.3)",
-  ],
-
-  "prettier.singleQuote": true,
-  "prettier.arrowParens": "avoid",
-  "keyboard.dispatch": "keyCode",
-  "telemetry.telemetryLevel": "off",
-  "makefile.configureOnOpen": false,
+    "typescript": "typescriptreact"
+  }
 }

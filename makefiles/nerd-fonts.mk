@@ -1,24 +1,12 @@
-FONTS_DIR := $(HOME)/.local/share/fonts/NerdFonts/JetBrainsMono
-FONTS_TMP := /tmp/JetBrainsMono.tar.xz
-FONTS_URL := https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.tar.xz
+# 1. ttf-jetbrains-mono-nerd: Main font (Letters + Icons)
+# 2. noto-fonts-emoji: Color emojis
+# 3. ttf-nerd-fonts-symbols-common: Pure glyphs for system fallback
+# 4. woff2-font-awesome: The new standard for Font Awesome icons on Arch
+FONT_PKGS := ttf-jetbrains-mono-nerd noto-fonts-emoji ttf-nerd-fonts-symbols-common woff2-font-awesome
 
 nerd-fonts-all:
-	@test -d $(FONTS_DIR) && echo "#### Nerd Fonts already configured!" || $(MAKE) nerd-fonts-setup
-
-nerd-fonts-setup:
-	@echo "#### Configuring Nerd Fonts in the system"
-
-	@echo "-- Downloading JetBrainsMono"
-	curl -o $(FONTS_TMP) -L $(FONTS_URL)
-
-	@echo "-- Creating the directory $(FONTS_DIR)"
-	mkdir -p $(FONTS_DIR)
-
-	@echo "-- Extracting font files"
-	tar -xf $(FONTS_TMP) -C $(FONTS_DIR)
-
-	@echo "-- Reloading font cache"
+	@echo "#### [Fonts] Installing official Arch packages (including woff2 transition)"
+	sudo pacman -S --needed --noconfirm $(FONT_PKGS)
+	@echo "-- Rebuilding font cache..."
 	fc-cache -f
-
-	@echo "-- Cleaning up temporary file"
-	rm $(FONTS_TMP)
+	@echo "-- Done! Your Waybar and Emacs icons are ready."
