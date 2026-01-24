@@ -21,7 +21,7 @@ zsh-pkgs:
 	
 	@echo "-- Linking custom plugins"
 	@mkdir -p $(ZSH_PLUGINS_DIR)
-	@$(foreach plugin, $(ZSH_PLUGINS), ln -sf $(ZSH_DOTFILES)/plugins/$(plugin) $(ZSH_PLUGINS_DIR)/$(plugin);)
+	@$(foreach plugin, $(ZSH_PLUGINS), ln -sfn $(ZSH_DOTFILES)/plugins/$(plugin) $(ZSH_PLUGINS_DIR)/$(plugin);)
 	
 	@echo "-- Linking custom theme"
 	@ln -sf $(ZSH_DOTFILES)/themes/fredericobenevides.zsh-theme $(ZSH_DIR)/themes/fredericobenevides.zsh-theme
