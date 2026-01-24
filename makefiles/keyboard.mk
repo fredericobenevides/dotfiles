@@ -6,5 +6,8 @@ keyboard-all:
 keyboard-setup:
 	@echo "#### Configuring keyboard"
 
+	@echo "#### Installing fcitx5"
+	sudo pacman -S --needed --noconfirm fcitx5
+
 	@echo "-- Linking .XCompose file"
 	ln -sf $(KEYBOARD_DOTFILES)/.XCompose $(HOME)/.XCompose
