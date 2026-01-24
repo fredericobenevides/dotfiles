@@ -1,0 +1,21 @@
+[
+  {
+    "key": "ctrl+alt+shift+Left",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  {
+    "key": "ctrl+alt+shift+Right",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "alt+s ;",
+    "command": "findJump.activate"
+  },
+  {
+    "key": "alt+shift+r",
+    "command": "rust-analyzer.run",
+    "when": "editorLangId === 'rust'"
+  }
+]

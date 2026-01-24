@@ -24,6 +24,16 @@ function code() {
     fi
 }
 
+function codium() {
+    bash -c "codium --list-extensions 2>&1 | grep $1 > /dev/null"
+    if [ $? -eq 1 ]; then
+      echo -e "-- Installing $1"
+      bash -c "codium --install-extension $1"
+    else
+      echo -e "-- Package $1 is already installed"
+    fi
+}
+
 function npm() {
     bash -c "npm -g list 2>&1 | grep $1@ > /dev/null"
     if [ $? -eq 1 ]; then
@@ -59,7 +69,7 @@ function yay() {
   /usr/bin/yay -Qi $1 > /dev/null 2>&1
   if [ $? -eq 1 ]; then
     echo -e "-- Installing $1"
-    sudo bash -c "yay -S $1"
+    bash -c "yay -S $1"
   else
     echo -e "-- Package $1 is already installed"
   fi

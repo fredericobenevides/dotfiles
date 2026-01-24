@@ -9,71 +9,71 @@ function install_vscode() {
 
     info "Installing and configuring vscode"
 
-    pacman "code"
+    yay "visual-studio-code-bin"
 
     info "Finished installing and configuring vscode"    
 }
 
 function install_vscode_extensions() {
-    info "Installing vscode extensions"
+    info "Installing VSCode extensions"
 
-    # themes
+    # Themes & Icons
     code "Catppuccin.catppuccin-vsc"
-    code "PKief.material-icon-theme"
+    code "vscode-icons-team.vscode-icons"
 
-    # editor
+    # Editor Enhancements
     code "alefragnani.Bookmarks"
     code "bierner.emojisense"
     code "ritwickdey.LiveServer"
     code "usernamehw.find-jump"
-    code "tamasfe.even-better-toml"    
     code "vadimcn.vscode-lldb"
     code "wayou.vscode-todo-highlight"
 
-    # colors
-    code "kamikillerto.vscode-colorize"
+    # Colors & Visuals
     code "oderwat.indent-rainbow"
-    code "vscode-icons-team.vscode-icons"
+    code "kisstkondoros.vscode-gutter-preview"
+    code "mikestead.dotenv"
 
-    # docker
-    code "ms-azuretools.vscode-docker"
-
-    # git
-    code "donjayamanne.githistory"    
+    # Git
+    code "donjayamanne.githistory"
     code "eamodio.gitlens"
 
-    # html, css, javascript, angular
-    code "angular.ng-template"
-    code "gydunhn.angular-essentials"
-    code "xabikos.JavaScriptSnippets"
-    code "formulahendry.auto-rename-tag"
-    code "pranaygp.vscode-css-peek"
-    code "bradlc.vscode-tailwindcss"
-    code "dbaeumer.vscode-eslint"
-    code "esbenp.prettier-vscode"
+    # Docker
+    code "ms-azuretools.vscode-docker"
 
-    # vuejs
-    code "johnsoncodehk.volar"
-    code "johnsoncodehk.vscode-typescript-vue-plugin"
+    # Go
+    code "golang.Go"
 
-    # rust
-    code "serayuzgur.crates"
+    # Rust
     code "rust-lang.rust-analyzer"
+    code "tamasfe.even-better-toml"
 
-    info "Finished installing vscode extensions"
+    # Formatting & Code Quality
+    code "esbenp.prettier-vscode"
+    code "fill-labs.dependi"
+
+    # HTML Tools
+    code "formulahendry.auto-rename-tag"
+
+    # JavaScript
+    code "dbaeumer.vscode-eslint"
+    code "xabikos.JavaScriptSnippets"
+
+    # CSS
+    code "bradlc.vscode-tailwindcss"
+    code "kamikillerto.vscode-colorize"
+    code "pranaygp.vscode-css-peek"
+
+    info "Finished installing VSCode extensions"
 }
 
 link_files() {
-    if [[ -d ~/.config/code-flags.conf ]]; then
-        info "code-flags already configured!"
-        return
-    fi
-
     info "-- Linking files"
-    ln -sf ~/.dotfiles/files/vscode/code-flags.conf ~/.config/code-flags.conf
+
+    ln -sf ~/.dotfiles/files/vscode/settings.json ~/.config/Code/User/settings.json
+    ln -sf ~/.dotfiles/files/vscode/keybindings.json ~/.config/Code/User/keybindings.json
 }
 
 install_vscode
 install_vscode_extensions
 link_files
-

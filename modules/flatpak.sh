@@ -26,6 +26,7 @@ function install_pkgs_flatpak() {
   flatpak "com.google.AndroidStudio"
   flatpak "com.google.Chrome"
   flatpak "com.spotify.Client"
+  flatpak "com.discordapp.Discord"
   flatpak "com.github.tchx84.Flatseal"
   flatpak "rest.insomnia.Insomnia"
 

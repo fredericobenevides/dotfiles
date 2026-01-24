@@ -226,7 +226,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Load hyprland
 if [ "$(tty)" = "/dev/tty1" ];then
-  exec hyprland
+  exec start-hyprland
 fi
 
 

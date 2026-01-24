@@ -284,8 +284,8 @@ Consult provides various practical commands based on the Emacs completion functi
      consult-theme :preview-key '(:debounce 0.2 any)
      consult-ripgrep consult-git-grep consult-grep
      consult-bookmark consult-recent-file consult-xref
-     consult--source-bookmark consult--source-file-register
-     consult--source-recent-file consult--source-project-recent-file
+     ;;consult--source-bookmark consult--source-file-register
+     ;;consult--source-recent-file consult--source-project-recent-file
      ;; :preview-key "M-."
      :preview-key '(:debounce 0.4 any))
 
@@ -868,7 +868,7 @@ Winner Mode is a global minor mode that allows you to “undo” and “redo” 
 ** Org Mode
 
 #+begin_src emacs-lisp
-  (package-install 'org)
+  ;;(package-install 'org)
 
   (setq
    ;; Edit settings

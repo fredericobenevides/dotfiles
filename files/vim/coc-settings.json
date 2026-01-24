@@ -13,5 +13,6 @@
       }
     }
   },
-  "rust-analyzer.server.path": "/usr/bin/rust-analyzer"
+  "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
+  "snippets.ultisnips.pythonPrompt": false
 }
