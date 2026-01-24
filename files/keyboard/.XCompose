@@ -2,5 +2,5 @@
 include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 
 # but give me my funky ç with a tail
-<dead_acute> <C> : "Ç"
-<dead_acute> <c> : "ç"
+<dead_acute> <C> : "Ç" Ccedilla
+<dead_acute> <c> : "ç" ccedilla

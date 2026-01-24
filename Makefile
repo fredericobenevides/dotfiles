@@ -8,6 +8,7 @@ include makefiles/git.mk
 include makefiles/go.mk
 include makefiles/hyperland.mk
 include makefiles/idea.mk
+include makefiles/keyboard.mk
 include makefiles/neovim.mk
 include makefiles/nerd-fonts.mk
 include makefiles/nodejs.mk
@@ -19,14 +20,13 @@ include makefiles/sdkman.mk
 include makefiles/swap.mk
 include makefiles/vscode.mk
 include makefiles/waybar.mk
-include makefiles/x11.mk
 include makefiles/zsh.mk
 
 .DEFAULT_GOAL := all
 
 system: swap-all pacman-all flatpak-all docker-all
 
-gui: nerd-fonts-all hyprland-all rofi-all waybar-all x11-all
+gui: keyboard-all nerd-fonts-all hyprland-all rofi-all waybar-all
 
 langs: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all
 
