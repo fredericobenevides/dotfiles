@@ -10,6 +10,6 @@ Download the dotfiles to the root path and goes to the dotfiles folder
 
 Run with the command:
 
-`./setup.sh`
+`make`
 
 **Have Fun**
