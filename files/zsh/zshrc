@@ -146,6 +146,11 @@ fi
 
 
 
+### GOLANG
+export PATH="$PATH:$HOME/go/bin"
+
+
+
 ### FZF
 export PATH="$PATH:$HOME/.fzf/bin"
 export MANPATH="$MANPATH:$HOME/.fzf/man"
