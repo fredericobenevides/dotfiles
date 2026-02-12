@@ -1,9 +1,9 @@
 FLATPAK_PKGS := com.google.AndroidStudio \
                 com.google.Chrome \
                 com.spotify.Client \
-                com.discordapp.Discord \
                 com.github.tchx84.Flatseal \
-                rest.insomnia.Insomnia
+                rest.insomnia.Insomnia \
+				dev.vencord.Vesktop
 
 
 flatpak-all:  flatpak-install flatpak-pkgs
