@@ -1,4 +1,5 @@
 FLATPAK_PKGS := com.google.AndroidStudio \
+				com.usebruno.Bruno \
                 com.google.Chrome \
                 com.spotify.Client \
                 com.github.tchx84.Flatseal \
