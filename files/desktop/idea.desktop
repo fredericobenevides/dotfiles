@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=/home/{{USER}}/.idea/bin/idea.sh
+Exec=/home/{{USER}}/.idea/bin/idea
 Icon=/home/{{USER}}/.idea/bin/idea.png
 Type=Application
 Categories=Development

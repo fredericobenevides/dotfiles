@@ -1,6 +1,6 @@
 IDEA_DIR        := $(HOME)/.idea
 IDEA_TMP        := /tmp/idea_installer.tar.gz
-IDEA_URL        := https://download.jetbrains.com/idea/ideaIU-2025.3.2.tar.gz
+IDEA_URL        := https://download.jetbrains.com/idea/ideaIU-2025.3.4.tar.gz
 IDEA_DESKTOP_DIR := $(HOME)/.local/share/applications
 IDEA_DESKTOP     := $(IDEA_DESKTOP_DIR)/idea.desktop
 
