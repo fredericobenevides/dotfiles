@@ -3,6 +3,7 @@ PACMAN_PKGS := alacritty \
 		conky \
 		flameshot \
 		gdb \
+		vivaldi \
 		xdotool \
 		zathura-pdf-mupdf
 
