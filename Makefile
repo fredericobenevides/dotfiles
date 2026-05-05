@@ -1,3 +1,5 @@
+DOTS_DIR := $(HOME)/.dotfiles/dots
+
 include makefiles/clojure.mk
 include makefiles/docker.mk
 include makefiles/emacs.mk

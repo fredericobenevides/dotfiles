@@ -1,5 +1,4 @@
 HYPR_CONFIG_DIR := $(HOME)/.config/hypr
-HYPR_DOTFILES   := $(HOME)/.dotfiles/files/hyprland
 
 HYPR_PKGS := wayland waybar hyprland hypridle hyprpicker hyprlock rofi-wayland grim slurp imv swaync brightnessctl
 
@@ -16,6 +15,6 @@ hyprland-setup:
 	mkdir -p $(HYPR_CONFIG_DIR)
 	
 	@echo "-- Linking files"
-	ln -sf $(HYPR_DOTFILES)/hyprland.conf $(HYPR_CONFIG_DIR)/hyprland.conf
-	ln -sf $(HYPR_DOTFILES)/hypridle.conf $(HYPR_CONFIG_DIR)/hypridle.conf
-	ln -sf $(HYPR_DOTFILES)/hyprlock.conf $(HYPR_CONFIG_DIR)/hyprlock.conf
+	ln -sf $(DOTS_DIR)/.config/hypr/hyprland.conf $(HYPR_CONFIG_DIR)/hyprland.conf
+	ln -sf $(DOTS_DIR)/.config/hypr/hypridle.conf $(HYPR_CONFIG_DIR)/hypridle.conf
+	ln -sf $(DOTS_DIR)/.config/hypr/hyprlock.conf $(HYPR_CONFIG_DIR)/hyprlock.conf

@@ -1,5 +1,4 @@
 VSCODE_CONFIG_DIR := $(HOME)/.config/Code/User
-VSCODE_DOTFILES   := $(HOME)/.dotfiles/files/vscode
 
 VSCODE_EXTS := Catppuccin.catppuccin-vsc \
                vscode-icons-team.vscode-icons \
@@ -39,8 +38,8 @@ vscode-setup:
 vscode-pkgs:
 	@echo "#### Configuring VSCode (linking settings)"
 	@mkdir -p $(VSCODE_CONFIG_DIR)
-	@ln -sf $(VSCODE_DOTFILES)/settings.json $(VSCODE_CONFIG_DIR)/settings.json
-	@ln -sf $(VSCODE_DOTFILES)/keybindings.json $(VSCODE_CONFIG_DIR)/keybindings.json
+	@ln -sf $(DOTS_DIR)/.config/Code/User/settings.json $(VSCODE_CONFIG_DIR)/settings.json
+	@ln -sf $(DOTS_DIR)/.config/Code/User/keybindings.json $(VSCODE_CONFIG_DIR)/keybindings.json
 
 	@echo "#### Installing VSCode extensions"
 	@$(foreach ext, $(VSCODE_EXTS), code --install-extension $(ext) --force;)

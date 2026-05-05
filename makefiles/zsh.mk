@@ -1,5 +1,4 @@
 ZSH_DIR         := $(HOME)/.oh-my-zsh
-ZSH_DOTFILES    := $(HOME)/.dotfiles/files/zsh
 
 ZSH_PLUGINS_DIR := $(ZSH_DIR)/custom/plugins
 ZSH_PLUGINS     := fredericobenevides myutils
@@ -17,11 +16,11 @@ zsh-pkgs:
 	@echo "#### Configuring Zsh plugins, themes and rc"
 	
 	@echo "-- Linking .zshrc"
-	@ln -sf $(ZSH_DOTFILES)/zshrc $(HOME)/.zshrc
+	@ln -sf $(DOTS_DIR)/.zshrc $(HOME)/.zshrc
 	
 	@echo "-- Linking custom plugins"
 	@mkdir -p $(ZSH_PLUGINS_DIR)
-	@$(foreach plugin, $(ZSH_PLUGINS), ln -sfn $(ZSH_DOTFILES)/plugins/$(plugin) $(ZSH_PLUGINS_DIR)/$(plugin);)
+	@$(foreach plugin, $(ZSH_PLUGINS), ln -sfn $(DOTS_DIR)/.oh-my-zsh/custom/plugins/$(plugin) $(ZSH_PLUGINS_DIR)/$(plugin);)
 	
 	@echo "-- Linking custom theme"
-	@ln -sf $(ZSH_DOTFILES)/themes/fredericobenevides.zsh-theme $(ZSH_DIR)/themes/fredericobenevides.zsh-theme
+	@ln -sf $(DOTS_DIR)/.oh-my-zsh/themes/fredericobenevides.zsh-theme $(ZSH_DIR)/themes/fredericobenevides.zsh-theme

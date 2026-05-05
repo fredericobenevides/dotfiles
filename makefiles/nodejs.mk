@@ -20,7 +20,7 @@ nodejs-setup:
 	
 	@echo "-- Configuring npm global directory and .npmrc"
 	mkdir -p $(HOME)/.npm-global
-	ln -sf $(HOME)/.dotfiles/files/npm/.npmrc $(HOME)/.npmrc
+	ln -sf $(DOTS_DIR)/.npmrc $(HOME)/.npmrc
 
 nodejs-pkgs:
 	@echo "#### Installing global npm packages"

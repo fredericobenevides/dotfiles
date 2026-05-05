@@ -1,5 +1,4 @@
 ROFI_CONFIG_DIR := $(HOME)/.config/rofi
-ROFI_DOTFILES   := $(HOME)/.dotfiles/files/rofi
 
 ROFI_FILES := config.rasi \
               power-menu.rasi \
@@ -17,4 +16,4 @@ rofi-setup:
 	@mkdir -p $(ROFI_CONFIG_DIR)
 	
 	@echo "-- Linking configuration files"
-	@$(foreach file, $(ROFI_FILES), ln -sf $(ROFI_DOTFILES)/$(file) $(ROFI_CONFIG_DIR)/$(file);)
+	@$(foreach file, $(ROFI_FILES), ln -sf $(DOTS_DIR)/.config/rofi/$(file) $(ROFI_CONFIG_DIR)/$(file);)

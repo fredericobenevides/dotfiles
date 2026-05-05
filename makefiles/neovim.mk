@@ -1,6 +1,5 @@
 NVIM_CONFIG_DIR := $(HOME)/.config/nvim
 NVIM_SITE_DIR   := $(HOME)/.local/share/nvim/site
-NVIM_DOTFILES   := $(HOME)/.dotfiles/files/vim
 
 neovim-all: neovim-install neovim-pkgs
 
@@ -22,8 +21,8 @@ neovim-pkgs:
 	@curl -fLo $(NVIM_SITE_DIR)/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 	@echo "-- Linking configuration files"
-	@ln -sf $(NVIM_DOTFILES)/.vimrc $(HOME)/.vimrc
-	@ln -sf $(NVIM_DOTFILES)/.vimrc $(NVIM_CONFIG_DIR)/init.vim
-	@ln -sf $(NVIM_DOTFILES)/coc-settings.json $(NVIM_CONFIG_DIR)/coc-settings.json
+	@ln -sf $(DOTS_DIR)/.vimrc $(HOME)/.vimrc
+	@ln -sf $(DOTS_DIR)/.config/nvim/init.vim $(NVIM_CONFIG_DIR)/init.vim
+	@ln -sf $(DOTS_DIR)/.config/nvim/coc-settings.json $(NVIM_CONFIG_DIR)/coc-settings.json
 	
 	@echo "Tip: Run :PlugInstall inside Neovim to install plugins."
