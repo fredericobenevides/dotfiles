@@ -15,6 +15,4 @@ hyprland-setup:
 	mkdir -p $(HYPR_CONFIG_DIR)
 	
 	@echo "-- Linking files"
-	ln -sf $(DOTS_DIR)/.config/hypr/hyprland.conf $(HYPR_CONFIG_DIR)/hyprland.conf
-	ln -sf $(DOTS_DIR)/.config/hypr/hypridle.conf $(HYPR_CONFIG_DIR)/hypridle.conf
-	ln -sf $(DOTS_DIR)/.config/hypr/hyprlock.conf $(HYPR_CONFIG_DIR)/hyprlock.conf
+	@$(foreach file,$(shell ls $(DOTS_DIR)/.config/hypr),ln -sf $(DOTS_DIR)/.config/hypr/$(file) $(HYPR_CONFIG_DIR)/$(file);)

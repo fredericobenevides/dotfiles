@@ -38,8 +38,8 @@ vscode-setup:
 vscode-pkgs:
 	@echo "#### Configuring VSCode (linking settings)"
 	@mkdir -p $(VSCODE_CONFIG_DIR)
-	@ln -sf $(DOTS_DIR)/.config/Code/User/settings.json $(VSCODE_CONFIG_DIR)/settings.json
-	@ln -sf $(DOTS_DIR)/.config/Code/User/keybindings.json $(VSCODE_CONFIG_DIR)/keybindings.json
+
+	@$(foreach file,$(shell ls $(DOTS_DIR)/.config/Code/User),ln -sf $(DOTS_DIR)/.config/Code/User/$(file) $(VSCODE_CONFIG_DIR)/$(file);)
 
 	@echo "#### Installing VSCode extensions"
 	@$(foreach ext, $(VSCODE_EXTS), code --install-extension $(ext) --force;)
