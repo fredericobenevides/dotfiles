@@ -8,6 +8,9 @@ waybar-all:
 
 waybar-setup:
 	@echo "#### Configuring waybar"
-	@mkdir -p $(WAYBAR_CONFIG_DIR)
-	@echo "-- Linking $(words $(WAYBAR_FILES)) configuration files"
-	@$(foreach file, $(WAYBAR_FILES), ln -sf $(DOTS_DIR)/.config/waybar/$(file) $(WAYBAR_CONFIG_DIR)/$(file);)
+	
+	@echo "-- Removing old link configuration directory if it exists"
+	@rm -rf $(WAYBAR_CONFIG_DIR)
+	
+	@echo "-- Linking configuration files"
+	ln -sf $(DOTS_DIR)/.config/waybar/ $(WAYBAR_CONFIG_DIR)

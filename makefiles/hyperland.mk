@@ -10,9 +10,9 @@ hyprland-setup:
 	
 	@echo "-- Installing system packages"
 	sudo pacman -S --needed --noconfirm $(HYPR_PKGS)
+
+	@echo "-- Removing old link configuration directory if it exists"
+	@rm -rf $(HYPR_CONFIG_DIR)
 	
-	@echo "-- Creating directory $(HYPR_CONFIG_DIR)"
-	mkdir -p $(HYPR_CONFIG_DIR)
-	
-	@echo "-- Linking files"
-	@$(foreach file,$(shell ls $(DOTS_DIR)/.config/hypr),ln -sf $(DOTS_DIR)/.config/hypr/$(file) $(HYPR_CONFIG_DIR)/$(file);)
+	@echo "-- Linking configuration files"
+	ln -sf $(DOTS_DIR)/.config/hypr/ $(HYPR_CONFIG_DIR)

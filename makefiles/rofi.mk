@@ -12,8 +12,8 @@ rofi-all:
 rofi-setup:
 	@echo "#### Configuring rofi"
 	
-	@echo "-- Creating directory $(ROFI_CONFIG_DIR)"
-	@mkdir -p $(ROFI_CONFIG_DIR)
+	@echo "-- Removing old link configuration directory if it exists"
+	@rm -rf $(ROFI_CONFIG_DIR)
 	
 	@echo "-- Linking configuration files"
-	@$(foreach file, $(ROFI_FILES), ln -sf $(DOTS_DIR)/.config/rofi/$(file) $(ROFI_CONFIG_DIR)/$(file);)
+	ln -sf $(DOTS_DIR)/.config/rofi/ $(ROFI_CONFIG_DIR)
