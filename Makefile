@@ -1,6 +1,7 @@
 DOTS_DIR := $(HOME)/.dotfiles/dots
 
 include makefiles/clojure.mk
+include makefiles/cloudflare.mk
 include makefiles/docker.mk
 include makefiles/emacs.mk
 include makefiles/flatpak.mk
@@ -11,11 +12,13 @@ include makefiles/go.mk
 include makefiles/hyperland.mk
 include makefiles/idea.mk
 include makefiles/keyboard.mk
+include makefiles/kitty.mk
 include makefiles/neovim.mk
 include makefiles/nerd-fonts.mk
 include makefiles/nodejs.mk
 include makefiles/pacman.mk
 include makefiles/python.mk
+include makefiles/quickshell.mk
 include makefiles/rofi.mk
 include makefiles/rust.mk
 include makefiles/sdkman.mk
@@ -26,9 +29,9 @@ include makefiles/zsh.mk
 
 .DEFAULT_GOAL := all
 
-system: swap-all pacman-all flatpak-all docker-all
+system: swap-all pacman-all flatpak-all docker-all kitty-all cloudflare-all
 
-gui: keyboard-all nerd-fonts-all hyprland-all rofi-all waybar-all
+gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all rofi-all waybar-all
 
 langs: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all
 

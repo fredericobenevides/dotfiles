@@ -105,7 +105,6 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 export EDITOR='emacs'
 export VISUAL='emacs'
-export BROWSER='vivaldi'
 
 alias docker_env_dev='eval $(docker-machine env dev)'
 alias minishift_docker_env='eval $(minishift docker-env)'
@@ -234,6 +233,10 @@ export SDKMAN_DIR="$HOME/.sdkman"
 if [ "$(tty)" = "/dev/tty1" ];then
   exec start-hyprland
 fi
+
+
+# Load dotfiles scripts
+export PATH="$HOME/.dotfiles/scripts:$PATH"
 
 
 
