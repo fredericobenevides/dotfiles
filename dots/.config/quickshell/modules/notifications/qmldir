@@ -1,0 +1,4 @@
+singleton NotificationsService 1.0 NotificationsService.qml
+NotificationButton 1.0 NotificationButton.qml
+NotificationsModal 1.0 NotificationsModal.qml
+NotificationPopup 1.0 NotificationPopup.qml

@@ -25,7 +25,8 @@ VSCODE_EXTS := Catppuccin.catppuccin-vsc \
                bradlc.vscode-tailwindcss \
                kamikillerto.vscode-colorize \
                pranaygp.vscode-css-peek \
-               bbenoist.QML
+               bbenoist.QML \
+               sst-dev.opencode
 
 vscode-all: vscode-install vscode-pkgs
 

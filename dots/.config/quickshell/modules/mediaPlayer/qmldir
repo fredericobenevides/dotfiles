@@ -1,0 +1,4 @@
+singleton MprisController 1.0 MprisController.qml
+MediaPlayerButton 1.0 MediaPlayerButton.qml
+MediaPlayerModal 1.0 MediaPlayerModal.qml
+MarqueeText 1.0 MarqueeText.qml

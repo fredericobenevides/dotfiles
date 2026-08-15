@@ -1,0 +1,3 @@
+singleton SystemUpdatesService 1.0 SystemUpdatesService.qml
+SystemUpdatesButton 1.0 SystemUpdatesButton.qml
+SystemUpdatesModal 1.0 SystemUpdatesModal.qml

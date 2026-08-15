@@ -1,6 +1,6 @@
 HYPR_CONFIG_DIR := $(HOME)/.config/hypr
 
-HYPR_PKGS := wayland waybar hyprcursor hyprland hypridle hyprlock hyprpicker awww rofi-wayland grim slurp imv swaync brightnessctl
+HYPR_PKGS := wayland hyprcursor hyprland hypridle hyprlock hyprpicker awww grim slurp imv brightnessctl
 HYPR_AUR_PKGS := bibata-cursor-theme 
 
 hyprland-all:

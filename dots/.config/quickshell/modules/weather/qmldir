@@ -1,0 +1,3 @@
+singleton WeatherService 1.0 WeatherService.qml
+WeatherButton 1.0 WeatherButton.qml
+WeatherModal 1.0 WeatherModal.qml
