@@ -144,7 +144,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: "Pesquisar aplicativos..."
+                        text: "Search applications..."
                         color: Theme.surfaceVariantText
                         font.pixelSize: Theme.fontLabelLarge
                         anchors.verticalCenter: parent.verticalCenter

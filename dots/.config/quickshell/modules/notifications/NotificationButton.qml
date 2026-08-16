@@ -4,7 +4,7 @@ import Quickshell
 import qs.modules.notifications
 import qs.theme
 
-Item {
+Rectangle {
     id: root
 
     property var modal
@@ -12,6 +12,8 @@ Item {
 
     implicitWidth: 24
     implicitHeight: 24
+    radius: 12
+    color: Theme.surfaceContainerHigh
 
     FontLoader {
         id: materialSymbols

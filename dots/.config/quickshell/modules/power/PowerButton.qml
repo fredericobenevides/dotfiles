@@ -7,6 +7,7 @@ Item {
     readonly property string powerIcon: ""
     readonly property int iconSize: 15
     property bool hovered: false
+    property var modal
 
     implicitWidth: bg.width
     implicitHeight: bg.height
@@ -41,7 +42,13 @@ Item {
             onEntered: root.hovered = true
             onExited: root.hovered = false
             onClicked: {
-                shell.toggleMenu(powerMenu);
+                if (!root.modal)
+                    return ;
+
+                root.modal.visible = !root.modal.visible;
+                if (root.modal.visible && root.modal.open)
+                    root.modal.open();
+
             }
         }
 

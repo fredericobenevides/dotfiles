@@ -7,6 +7,7 @@ Item {
     readonly property string volumeIcon: "\uF028"
     readonly property int iconSize: 15
     property bool hovered: false
+    property var modal
 
     implicitWidth: 24
     implicitHeight: 24
@@ -33,7 +34,13 @@ Item {
         onEntered: root.hovered = true
         onExited: root.hovered = false
         onClicked: {
-            shell.toggleMenu(volumeMenu);
+            if (!root.modal)
+                return ;
+
+            root.modal.visible = !root.modal.visible;
+            if (root.modal.visible && root.modal.open)
+                root.modal.open();
+
         }
     }
 

@@ -4,15 +4,17 @@ import Quickshell
 import qs.modules.weather
 import qs.theme
 
-Item {
+Rectangle {
     id: root
 
     property var modal
     property bool hovered: false
     readonly property bool hasWeather: WeatherService.weatherUpdatedAt > 0 || WeatherService.available
 
-    implicitWidth: contentRow.implicitWidth + 12
+    implicitWidth: contentRow.implicitWidth + 20
     implicitHeight: 24
+    radius: 12
+    color: Theme.surfaceContainerHigh
 
     FontLoader {
         id: materialSymbols

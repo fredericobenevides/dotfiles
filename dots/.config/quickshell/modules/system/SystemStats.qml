@@ -21,9 +21,11 @@ Singleton {
     property int totalProcessCount: 0
     property real totalMemKB: 0
     property bool processesActive: false
+    property bool processesLoading: false
 
     onProcessesActiveChanged: {
         if (processesActive) {
+            processesLoading = true;
             processProcess.running = true;
             processTimer.restart();
         } else {
@@ -279,6 +281,10 @@ Singleton {
                 result.sort((a, b) => (b.cpu || 0) - (a.cpu || 0));
                 root.processes = result;
             }
+        }
+
+        onExited: {
+            root.processesLoading = false;
         }
     }
 

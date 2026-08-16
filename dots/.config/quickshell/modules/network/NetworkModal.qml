@@ -14,9 +14,12 @@ PanelWindow {
     readonly property string fontFamily: "JetBrainsMono Nerd Font"
     property var ethernetDevices: []
     property string activeEthernetDevice: ""
-    property var wifiNetworks: []
+    property var wifiAccumulated: []
+    property int wifiScanAttempts: 0
+    readonly property int wifiMaxScanAttempts: 5
     property string activeWifiDevice: ""
     property var savedNetworks: []
+    property bool wifiScanning: false
     property string passwordTarget: ""
     property string passwordInput: ""
     property var infoTarget: ({
@@ -34,15 +37,49 @@ PanelWindow {
     property var savedBuffer: []
 
     function refresh() {
+        wifiAccumulated = [];
+        wifiScanAttempts = 0;
         typeBuffer = [];
         typeProcess.command = ["nmcli", "-t", "-f", "TYPE", "connection", "show", "--active"];
         typeProcess.running = true;
         refreshWifi();
     }
 
+    function mergeWifiNetworks(newList) {
+        const map = {
+        };
+        for (let i = 0; i < wifiAccumulated.length; i++) {
+            const n = wifiAccumulated[i];
+            map[n.ssid] = n;
+        }
+        for (let i = 0; i < newList.length; i++) {
+            const n = newList[i];
+            const existing = map[n.ssid];
+            if (!existing)
+                map[n.ssid] = n;
+            else if (n.active && !existing.active)
+                map[n.ssid] = n;
+            else if (n.signal > existing.signal)
+                map[n.ssid] = n;
+        }
+        const merged = [];
+        for (const key in map) merged.push(map[key])
+        merged.sort((a, b) => {
+            if (a.active !== b.active)
+                return a.active ? -1 : 1;
+
+            return (b.signal || 0) - (a.signal || 0);
+        });
+        return merged;
+    }
+
     function refreshWifi() {
+        wifiScanning = true;
+        if (wifiListProcess.running)
+            return ;
+
         wifiBuffer = [];
-        wifiListProcess.command = ["nmcli", "-t", "-f", "SSID,SIGNAL,SECURITY,ACTIVE", "device", "wifi", "list"];
+        wifiListProcess.command = ["sh", "-c", "nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE device wifi list --rescan yes || nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE device wifi list --rescan no"];
         wifiListProcess.running = true;
         savedProcess.running = true;
     }
@@ -158,37 +195,37 @@ PanelWindow {
 
         if (data.kind === "wifi") {
             rows.push({
-                "label": "Rede",
+                "label": "Network",
                 "value": data.ssid
             });
             rows.push({
-                "label": "Sinal",
+                "label": "Signal",
                 "value": data.signal + "%"
             });
             rows.push({
-                "label": "Segurança",
-                "value": data.security || "Aberta"
+                "label": "Security",
+                "value": data.security || "Open"
             });
             rows.push({
-                "label": "Salva",
-                "value": data.saved ? "Sim" : "Não"
+                "label": "Saved",
+                "value": data.saved ? "Yes" : "No"
             });
             rows.push({
-                "label": "Conectada",
-                "value": data.active ? "Sim" : "Não"
+                "label": "Connected",
+                "value": data.active ? "Yes" : "No"
             });
         } else if (data.kind === "ethernet") {
             rows.push({
-                "label": "Dispositivo",
+                "label": "Device",
                 "value": data.device
             });
             rows.push({
-                "label": "Estado",
+                "label": "State",
                 "value": data.state
             });
             if (data.connection)
                 rows.push({
-                "label": "Conexão",
+                "label": "Connection",
                 "value": data.connection
             });
 
@@ -232,7 +269,7 @@ PanelWindow {
 
     function buildInfoRows(map) {
         const rows = [];
-        const defs = [["GENERAL.DEVICE", "Dispositivo"], ["GENERAL.CONNECTION", "Conexão"], ["IP4.ADDRESS", "IPv4"], ["IP4.GATEWAY", "Gateway"], ["IP4.DNS", "DNS"], ["IP6.ADDRESS", "IPv6"], ["IP6.GATEWAY", "Gateway IPv6"]];
+        const defs = [["GENERAL.DEVICE", "Device"], ["GENERAL.CONNECTION", "Connection"], ["IP4.ADDRESS", "IPv4"], ["IP4.GATEWAY", "Gateway"], ["IP4.DNS", "DNS"], ["IP6.ADDRESS", "IPv6"], ["IP6.GATEWAY", "Gateway IPv6"]];
         for (let i = 0; i < defs.length; i++) {
             const key = defs[i][0];
             const label = defs[i][1];
@@ -259,6 +296,8 @@ PanelWindow {
         if (visible) {
             bg.forceActiveFocus();
             refresh();
+        } else {
+            wifiRescanTimer.stop();
         }
     }
 
@@ -399,10 +438,22 @@ PanelWindow {
         }
     }
 
+    Timer {
+        id: wifiRescanTimer
+
+        interval: 3500
+        onTriggered: {
+            if (visible && selectedTab === "wifi")
+                refreshWifi();
+
+        }
+    }
+
     Process {
         id: wifiListProcess
 
         onExited: {
+            wifiScanning = false;
             const list = [];
             const seen = {
             };
@@ -433,7 +484,11 @@ PanelWindow {
                     "saved": savedNetworks.indexOf(ssid) !== -1
                 });
             }
-            wifiNetworks = list;
+            wifiAccumulated = mergeWifiNetworks(list);
+            wifiScanAttempts += 1;
+            if (wifiScanAttempts < wifiMaxScanAttempts && visible && selectedTab === "wifi")
+                wifiRescanTimer.start();
+
         }
 
         stdout: SplitParser {
@@ -458,8 +513,6 @@ PanelWindow {
             }
             savedNetworks = saved;
             savedBuffer = [];
-            wifiBuffer = [];
-            wifiListProcess.running = true;
         }
 
         stdout: SplitParser {
@@ -669,7 +722,7 @@ PanelWindow {
                                         spacing: 6
 
                                         Text {
-                                            text: isCurrent ? "Conectado" : "Desconectado"
+                                            text: isCurrent ? "Connected" : "Disconnected"
                                             font.pixelSize: Theme.fontLabelSmall
                                             color: isCurrent ? Theme.primary : Theme.surfaceVariantText
                                         }
@@ -710,18 +763,18 @@ PanelWindow {
                                             const items = [];
                                             if (isCurrent)
                                                 items.push({
-                                                    "label": "Disconnect",
-                                                    "action": function() {
-                                                        networkMenu.disconnectDevice(modelData.device);
-                                                    }
-                                                });
+                                                "label": "Disconnect",
+                                                "action": function() {
+                                                    networkMenu.disconnectDevice(modelData.device);
+                                                }
+                                            });
                                             else
                                                 items.push({
-                                                    "label": "Connect",
-                                                    "action": function() {
-                                                        connectDevice(modelData.device);
-                                                    }
-                                                });
+                                                "label": "Connect",
+                                                "action": function() {
+                                                    connectDevice(modelData.device);
+                                                }
+                                            });
                                             items.push({
                                                 "label": "Network Info",
                                                 "action": function() {
@@ -764,7 +817,21 @@ PanelWindow {
                     clip: true
                     spacing: 4
                     boundsBehavior: Flickable.StopAtBounds
-                    model: networkMenu.wifiNetworks
+                    visible: networkMenu.wifiAccumulated.length > 0
+                    model: networkMenu.wifiAccumulated
+
+                    ScrollBar.vertical: ScrollBar {
+                        policy: ScrollBar.AsNeeded
+                        width: 14
+                        minimumSize: 0.25
+
+                        contentItem: Rectangle {
+                            implicitWidth: 14
+                            radius: 7
+                            color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
+                        }
+
+                    }
 
                     delegate: Rectangle {
                         required property var modelData
@@ -834,7 +901,7 @@ PanelWindow {
                                     spacing: 6
 
                                     Text {
-                                        text: isActive ? "Conectado" : (modelData.security !== "" ? "Secure" : "Open")
+                                        text: isActive ? "Connected" : (modelData.security !== "" ? "Secure" : "Open")
                                         font.pixelSize: Theme.fontLabelSmall
                                         color: isActive ? Theme.primary : Theme.surfaceVariantText
                                     }
@@ -954,6 +1021,41 @@ PanelWindow {
 
                 }
 
+                Item {
+                    Layout.fillWidth: true
+                    height: 300
+                    visible: networkMenu.wifiAccumulated.length === 0
+
+                    RowLayout {
+                        anchors.centerIn: parent
+                        spacing: 10
+                        visible: networkMenu.wifiScanning
+
+                        BusyIndicator {
+                            Layout.preferredWidth: 26
+                            Layout.preferredHeight: 26
+                            running: networkMenu.wifiScanning
+                            palette.text: Theme.primary
+                        }
+
+                        Text {
+                            text: "Searching for networks..."
+                            font.pixelSize: Theme.fontLabelMedium
+                            color: Theme.surfaceVariantText
+                        }
+
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "No networks found"
+                        font.pixelSize: Theme.fontLabelMedium
+                        color: Theme.surfaceVariantText
+                        visible: !networkMenu.wifiScanning
+                    }
+
+                }
+
             }
 
             Rectangle {
@@ -991,7 +1093,7 @@ PanelWindow {
 
                         Text {
                             Layout.fillWidth: true
-                            text: "Conectar a " + networkMenu.passwordTarget
+                            text: "Connect to " + networkMenu.passwordTarget
                             elide: Text.ElideRight
                             font.pixelSize: Theme.fontLabelLarge
                             font.bold: true
@@ -1072,7 +1174,7 @@ PanelWindow {
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "Conectar"
+                                    text: "Connect"
                                     font.pixelSize: Theme.fontLabelMedium
                                     font.bold: true
                                     color: connectBtn.containsMouse ? Theme.primaryText : Theme.surfaceText

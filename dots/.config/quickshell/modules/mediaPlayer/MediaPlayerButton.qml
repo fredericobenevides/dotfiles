@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import Quickshell.Services.Mpris
 import qs.theme
 
-Item {
+Rectangle {
     id: root
 
     property var modal
@@ -25,28 +25,14 @@ Item {
     width: implicitWidth
     height: implicitHeight
     implicitHeight: 24
-    implicitWidth: Math.max(240, contentRow.implicitWidth + 20)
+    implicitWidth: Math.max(240, contentRow.implicitWidth + 20) + 16
+    radius: 12
+    color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     FontLoader {
         id: materialSymbols
 
         source: Qt.resolvedUrl("/usr/share/quickshell/dms/assets/fonts/material-design-icons/variablefont/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf")
-    }
-
-    Rectangle {
-        id: bg
-
-        anchors.fill: parent
-        radius: 12
-        color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-
-        Behavior on color {
-            ColorAnimation {
-                duration: 160
-            }
-
-        }
-
     }
 
     Row {
@@ -180,6 +166,13 @@ Item {
         onEntered: root.hovered = true
         onExited: root.hovered = false
         onClicked: root.toggleModal()
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 160
+        }
+
     }
 
 }

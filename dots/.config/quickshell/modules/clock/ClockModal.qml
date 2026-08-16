@@ -9,8 +9,8 @@ PanelWindow {
 
     property date selectedDate: new Date()
     property date viewDate: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
-    readonly property var monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-    readonly property var weekDayNames: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+    readonly property var monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    readonly property var weekDayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     property var monthCells: (() => {
         const cells = [];
         const first = viewDate.getDay();

@@ -6,9 +6,7 @@ Item {
     id: root
 
     property bool hovered: false
-
-    implicitWidth: bg.width
-    implicitHeight: bg.height
+    property var modal
 
     function currentDate() {
         return Qt.formatDateTime(new Date(), "dd/MM/yyyy");
@@ -17,6 +15,9 @@ Item {
     function currentTime() {
         return Qt.formatDateTime(new Date(), "hh:mm:ss");
     }
+
+    implicitWidth: bg.width
+    implicitHeight: bg.height
 
     Timer {
         interval: 1000
@@ -69,7 +70,13 @@ Item {
             onEntered: root.hovered = true
             onExited: root.hovered = false
             onClicked: {
-                shell.toggleMenu(clockMenu);
+                if (!root.modal)
+                    return ;
+
+                root.modal.visible = !root.modal.visible;
+                if (root.modal.visible && root.modal.open)
+                    root.modal.open();
+
             }
         }
 

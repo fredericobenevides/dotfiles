@@ -7,6 +7,7 @@ import Quickshell.Wayland
 import qs.modules.appLauncher
 import qs.modules.bluetooth
 import qs.modules.clock
+import qs.modules.devices
 import qs.modules.idleInhibitor
 import qs.modules.mediaPlayer
 import qs.modules.network
@@ -131,6 +132,7 @@ ShellRoot {
                         spacing: 8
 
                         AppLauncherButton {
+                            modal: launcherMenu
                         }
 
                         WorkspacesPanel {
@@ -155,29 +157,11 @@ ShellRoot {
                     }
 
                     // Center (fixed)
-                    Item {
+                    MediaPlayerButton {
+                        id: mediaPlayerButton
+
+                        modal: mediaPlayerModal
                         anchors.centerIn: parent
-                        implicitHeight: mediaPlayerButtonBg.height
-                        implicitWidth: mediaPlayerButtonBg.width
-
-                        Rectangle {
-                            id: mediaPlayerButtonBg
-
-                            anchors.centerIn: parent
-                            height: 24
-                            width: mediaPlayerButton.implicitWidth + 16
-                            radius: 12
-                            color: Theme.surfaceContainerHigh
-
-                            MediaPlayerButton {
-                                id: mediaPlayerButton
-
-                                modal: mediaPlayerModal
-                                anchors.fill: parent
-                            }
-
-                        }
-
                     }
 
                     // Right side
@@ -186,86 +170,29 @@ ShellRoot {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 8
 
-                        Rectangle {
-                            height: 24
-                            width: 24
-                            radius: 12
-                            color: idleInhibitorButton.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-
-                            IdleInhibitorButton {
-                                id: idleInhibitorButton
-
-                                anchors.centerIn: parent
-                            }
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 160
-                                }
-
-                            }
-
+                        IdleInhibitorButton {
                         }
 
-                        Rectangle {
-                            height: 24
-                            width: systemButtonsRow.implicitWidth + 8
-                            radius: 12
-                            color: Theme.surfaceContainerHigh
-
-                            RowLayout {
-                                id: systemButtonsRow
-
-                                anchors.centerIn: parent
-                                spacing: 4
-
-                                BluetoothButton {
-                                }
-
-                                NetworkButton {
-                                }
-
-                                VolumeButton {
-                                }
-
-                            }
-
+                        DevicesButton {
+                            bluetoothModal: bluetoothMenu
+                            networkModal: networkMenu
+                            volumeModal: volumeMenu
                         }
 
-                        Rectangle {
-                            height: 24
-                            width: weatherButton.implicitWidth + 8
-                            radius: 12
-                            color: Theme.surfaceContainerHigh
-
-                            WeatherButton {
-                                id: weatherButton
-
-                                modal: weatherModal
-                                anchors.fill: parent
-                            }
-
+                        WeatherButton {
+                            modal: weatherModal
                         }
 
-                        Rectangle {
-                            height: 24
-                            width: 24
-                            radius: 12
-                            color: Theme.surfaceContainerHigh
-
-                            NotificationButton {
-                                id: notificationButton
-
-                                modal: notificationsModal
-                                anchors.fill: parent
-                            }
-
+                        NotificationButton {
+                            modal: notificationsModal
                         }
 
                         ClockButton {
+                            modal: clockMenu
                         }
 
                         PowerButton {
+                            modal: powerMenu
                         }
 
                     }

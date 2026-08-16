@@ -571,242 +571,268 @@ PanelWindow {
                         color: Theme.surfaceContainerHighest
                     }
 
-                    ListView {
+                    Item {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        clip: true
-                        model: systemModal.visibleProcesses
-                        spacing: 2
 
-                        ScrollBar.vertical: ScrollBar {
-                            policy: ScrollBar.AsNeeded
-                            width: 14
-                            minimumSize: 0.25
+                        ListView {
+                            anchors.fill: parent
+                            clip: true
+                            visible: !SystemStats.processesLoading
+                            model: systemModal.visibleProcesses
+                            spacing: 2
 
-                            contentItem: Rectangle {
-                                implicitWidth: 14
-                                radius: 7
-                                color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
+                            ScrollBar.vertical: ScrollBar {
+                                policy: ScrollBar.AsNeeded
+                                width: 14
+                                minimumSize: 0.25
+
+                                contentItem: Rectangle {
+                                    implicitWidth: 14
+                                    radius: 7
+                                    color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
+                                }
+
+                            }
+
+                            delegate: Column {
+                                width: ListView.view.width
+                                spacing: 2
+
+                                RowLayout {
+                                    width: parent.width
+                                    height: 24
+                                    spacing: systemModal.colSpacing
+
+                                    Text {
+                                        Layout.preferredWidth: systemModal.colName
+                                        Layout.alignment: Qt.AlignVCenter
+                                        text: modelData.name
+                                        font.pixelSize: Theme.fontLabelMedium
+                                        color: Theme.surfaceText
+                                        elide: Text.ElideRight
+                                    }
+
+                                    Item {
+                                        Layout.preferredWidth: systemModal.colCpu
+                                        Layout.preferredHeight: 24
+                                        Layout.alignment: Qt.AlignVCenter
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            anchors.horizontalCenterOffset: -38
+                                            text: modelData.cpu.toFixed(1) + "%"
+                                            font.pixelSize: Theme.fontLabelMedium
+                                            color: Theme.surfaceVariantText
+                                        }
+
+                                    }
+
+                                    Item {
+                                        Layout.preferredWidth: systemModal.colGap
+                                        Layout.preferredHeight: 24
+                                        Layout.alignment: Qt.AlignVCenter
+                                    }
+
+                                    Item {
+                                        Layout.preferredWidth: systemModal.colMem
+                                        Layout.preferredHeight: 24
+                                        Layout.alignment: Qt.AlignVCenter
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            anchors.horizontalCenterOffset: -68
+                                            text: systemModal.formatMem(modelData.rss)
+                                            font.pixelSize: Theme.fontLabelMedium
+                                            color: Theme.surfaceVariantText
+                                        }
+
+                                    }
+
+                                    Item {
+                                        Layout.preferredWidth: systemModal.colPid
+                                        Layout.preferredHeight: 24
+                                        Layout.alignment: Qt.AlignVCenter
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            anchors.horizontalCenterOffset: -46
+                                            text: modelData.pid
+                                            font.pixelSize: Theme.fontLabelMedium
+                                            color: Theme.surfaceText
+                                        }
+
+                                    }
+
+                                    Item {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: 24
+                                        Layout.alignment: Qt.AlignVCenter
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            anchors.horizontalCenterOffset: -18
+                                            text: systemModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
+                                            font.family: materialSymbols.name
+                                            font.pixelSize: 14
+                                            color: systemModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: systemModal.expandedPid = (systemModal.expandedPid === modelData.pid) ? "" : modelData.pid
+                                        }
+
+                                    }
+
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    visible: systemModal.expandedPid === modelData.pid
+                                    radius: 8
+                                    color: Theme.surfaceContainer
+                                    border.color: Theme.surfaceContainerHighest
+                                    border.width: 1
+                                    implicitHeight: expandedContent.implicitHeight + 24
+
+                                    RowLayout {
+                                        id: expandedContent
+
+                                        anchors.fill: parent
+                                        anchors.margins: 14
+                                        spacing: 16
+
+                                        ColumnLayout {
+                                            Layout.fillWidth: true
+                                            Layout.fillHeight: true
+                                            Layout.alignment: Qt.AlignVCenter
+                                            spacing: 6
+
+                                            Text {
+                                                Layout.fillWidth: true
+                                                text: "<b>Full command:</b> " + (modelData.fullCommand || modelData.name)
+                                                textFormat: Text.RichText
+                                                font.pixelSize: Theme.fontLabelSmall
+                                                color: Theme.surfaceText
+                                                wrapMode: Text.Wrap
+                                            }
+
+                                            Item {
+                                                Layout.preferredHeight: 2
+                                            }
+
+                                            RowLayout {
+                                                Layout.fillWidth: true
+                                                spacing: 16
+
+                                                Text {
+                                                    text: "<b>PPID:</b> " + modelData.ppid
+                                                    textFormat: Text.RichText
+                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    color: Theme.surfaceVariantText
+                                                }
+
+                                                Text {
+                                                    text: "<b>Memory:</b> " + (SystemStats.totalMemKB > 0 ? ((modelData.rss / SystemStats.totalMemKB) * 100).toFixed(1) + "%" : "--")
+                                                    textFormat: Text.RichText
+                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    color: Theme.surfaceVariantText
+                                                }
+
+                                            }
+
+                                            Item {
+                                                Layout.fillHeight: true
+                                            }
+
+                                        }
+
+                                        RowLayout {
+                                            Layout.fillHeight: true
+                                            Layout.alignment: Qt.AlignVCenter
+                                            spacing: 6
+
+                                            Rectangle {
+                                                Layout.preferredWidth: 48
+                                                Layout.preferredHeight: 22
+                                                radius: 11
+                                                color: killMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                                                Text {
+                                                    anchors.centerIn: parent
+                                                    text: "Kill"
+                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.bold: true
+                                                    color: Theme.surfaceText
+                                                }
+
+                                                MouseArea {
+                                                    id: killMouse
+
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    onClicked: SystemStats.killProcess(modelData.pid, 15)
+                                                }
+
+                                            }
+
+                                            Rectangle {
+                                                Layout.preferredWidth: 76
+                                                Layout.preferredHeight: 22
+                                                radius: 11
+                                                color: forceMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                                                Text {
+                                                    anchors.centerIn: parent
+                                                    text: "Force kill"
+                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.bold: true
+                                                    color: Theme.error
+                                                }
+
+                                                MouseArea {
+                                                    id: forceMouse
+
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    onClicked: SystemStats.killProcess(modelData.pid, 9)
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
                             }
 
                         }
 
-                        delegate: Column {
-                            width: ListView.view.width
-                            spacing: 2
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 10
+                            visible: SystemStats.processesLoading
 
-                            RowLayout {
-                                width: parent.width
-                                height: 24
-                                spacing: systemModal.colSpacing
-
-                                Text {
-                                    Layout.preferredWidth: systemModal.colName
-                                    Layout.alignment: Qt.AlignVCenter
-                                    text: modelData.name
-                                    font.pixelSize: Theme.fontLabelMedium
-                                    color: Theme.surfaceText
-                                    elide: Text.ElideRight
-                                }
-
-                                Item {
-                                    Layout.preferredWidth: systemModal.colCpu
-                                    Layout.preferredHeight: 24
-                                    Layout.alignment: Qt.AlignVCenter
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        anchors.horizontalCenterOffset: -38
-                                        text: modelData.cpu.toFixed(1) + "%"
-                                        font.pixelSize: Theme.fontLabelMedium
-                                        color: Theme.surfaceVariantText
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.preferredWidth: systemModal.colGap
-                                    Layout.preferredHeight: 24
-                                    Layout.alignment: Qt.AlignVCenter
-                                }
-
-                                Item {
-                                    Layout.preferredWidth: systemModal.colMem
-                                    Layout.preferredHeight: 24
-                                    Layout.alignment: Qt.AlignVCenter
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        anchors.horizontalCenterOffset: -68
-                                        text: systemModal.formatMem(modelData.rss)
-                                        font.pixelSize: Theme.fontLabelMedium
-                                        color: Theme.surfaceVariantText
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.preferredWidth: systemModal.colPid
-                                    Layout.preferredHeight: 24
-                                    Layout.alignment: Qt.AlignVCenter
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        anchors.horizontalCenterOffset: -46
-                                        text: modelData.pid
-                                        font.pixelSize: Theme.fontLabelMedium
-                                        color: Theme.surfaceText
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: 24
-                                    Layout.alignment: Qt.AlignVCenter
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        anchors.horizontalCenterOffset: -18
-                                        text: systemModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
-                                        font.family: materialSymbols.name
-                                        font.pixelSize: 14
-                                        color: systemModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
-                                        horizontalAlignment: Text.AlignHCenter
-                                        verticalAlignment: Text.AlignVCenter
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: systemModal.expandedPid = (systemModal.expandedPid === modelData.pid) ? "" : modelData.pid
-                                    }
-
-                                }
-
+                            BusyIndicator {
+                                Layout.preferredWidth: 26
+                                Layout.preferredHeight: 26
+                                running: SystemStats.processesLoading
+                                palette.text: Theme.primary
                             }
 
-                            Rectangle {
-                                width: parent.width
-                                visible: systemModal.expandedPid === modelData.pid
-                                radius: 8
-                                color: Theme.surfaceContainer
-                                border.color: Theme.surfaceContainerHighest
-                                border.width: 1
-                                implicitHeight: expandedContent.implicitHeight + 24
-
-                                RowLayout {
-                                    id: expandedContent
-
-                                    anchors.fill: parent
-                                    anchors.margins: 14
-                                    spacing: 16
-
-                                    ColumnLayout {
-                                        Layout.fillWidth: true
-                                        Layout.fillHeight: true
-                                        Layout.alignment: Qt.AlignVCenter
-                                        spacing: 6
-
-                                        Text {
-                                            Layout.fillWidth: true
-                                            text: "<b>Full command:</b> " + (modelData.fullCommand || modelData.name)
-                                            textFormat: Text.RichText
-                                            font.pixelSize: Theme.fontLabelSmall
-                                            color: Theme.surfaceText
-                                            wrapMode: Text.Wrap
-                                        }
-
-                                        Item {
-                                            Layout.preferredHeight: 2
-                                        }
-
-                                        RowLayout {
-                                            Layout.fillWidth: true
-                                            spacing: 16
-
-                                            Text {
-                                                text: "<b>PPID:</b> " + modelData.ppid
-                                                textFormat: Text.RichText
-                                                font.pixelSize: Theme.fontLabelSmall
-                                                color: Theme.surfaceVariantText
-                                            }
-
-                                            Text {
-                                                text: "<b>Memory:</b> " + (SystemStats.totalMemKB > 0 ? ((modelData.rss / SystemStats.totalMemKB) * 100).toFixed(1) + "%" : "--")
-                                                textFormat: Text.RichText
-                                                font.pixelSize: Theme.fontLabelSmall
-                                                color: Theme.surfaceVariantText
-                                            }
-
-                                        }
-
-                                        Item {
-                                            Layout.fillHeight: true
-                                        }
-
-                                    }
-
-                                    RowLayout {
-                                        Layout.fillHeight: true
-                                        Layout.alignment: Qt.AlignVCenter
-                                        spacing: 6
-
-                                        Rectangle {
-                                            Layout.preferredWidth: 48
-                                            Layout.preferredHeight: 22
-                                            radius: 11
-                                            color: killMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-
-                                            Text {
-                                                anchors.centerIn: parent
-                                                text: "Kill"
-                                                font.pixelSize: Theme.fontLabelSmall
-                                                font.bold: true
-                                                color: Theme.surfaceText
-                                            }
-
-                                            MouseArea {
-                                                id: killMouse
-
-                                                anchors.fill: parent
-                                                hoverEnabled: true
-                                                cursorShape: Qt.PointingHandCursor
-                                                onClicked: SystemStats.killProcess(modelData.pid, 15)
-                                            }
-
-                                        }
-
-                                        Rectangle {
-                                            Layout.preferredWidth: 76
-                                            Layout.preferredHeight: 22
-                                            radius: 11
-                                            color: forceMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-
-                                            Text {
-                                                anchors.centerIn: parent
-                                                text: "Force kill"
-                                                font.pixelSize: Theme.fontLabelSmall
-                                                font.bold: true
-                                                color: Theme.error
-                                            }
-
-                                            MouseArea {
-                                                id: forceMouse
-
-                                                anchors.fill: parent
-                                                hoverEnabled: true
-                                                cursorShape: Qt.PointingHandCursor
-                                                onClicked: SystemStats.killProcess(modelData.pid, 9)
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-
+                            Text {
+                                text: "Loading processes..."
+                                font.pixelSize: Theme.fontLabelMedium
+                                color: Theme.surfaceVariantText
                             }
 
                         }

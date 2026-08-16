@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell.Io
 import qs.theme
 
-Item {
+Rectangle {
     id: root
 
     readonly property string activeIcon: "\uF06E"
@@ -13,6 +13,8 @@ Item {
 
     implicitWidth: 24
     implicitHeight: 24
+    radius: 12
+    color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     Process {
         id: inhibitProcess
@@ -48,6 +50,13 @@ Item {
             else
                 inhibitProcess.running = true;
         }
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 160
+        }
+
     }
 
 }

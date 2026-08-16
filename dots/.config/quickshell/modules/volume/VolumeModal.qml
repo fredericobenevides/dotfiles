@@ -180,7 +180,7 @@ PanelWindow {
 
                             Text {
                                 Layout.fillWidth: true
-                                text: volumeMenu.nodeLabel(outputSink) || "Sem dispositivo"
+                                text: volumeMenu.nodeLabel(outputSink) || "No device"
                                 elide: Text.ElideRight
                                 font.pixelSize: Theme.fontLabelSmall
                                 color: Theme.surfaceText
@@ -269,7 +269,7 @@ PanelWindow {
 
                             Text {
                                 Layout.fillWidth: true
-                                text: volumeMenu.nodeLabel(inputSource) || "Sem dispositivo"
+                                text: volumeMenu.nodeLabel(inputSource) || "No device"
                                 elide: Text.ElideRight
                                 font.pixelSize: Theme.fontLabelSmall
                                 color: Theme.surfaceText
