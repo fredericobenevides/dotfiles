@@ -265,7 +265,7 @@ PanelWindow {
                             Text {
                                 text: modelData.icon
                                 font.family: materialSymbols.name
-                                font.pixelSize: 12
+                                font.pixelSize: 18
                                 color: modelData.hot ? Theme.error : Theme.primary
                                 anchors.verticalCenter: parent.verticalCenter
                             }

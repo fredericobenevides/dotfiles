@@ -375,11 +375,16 @@ Singleton {
             }
         }
         root.cloudCover = hourly.cloud_cover?.[startIndex] ?? 0;
-        for (let i = startIndex; i < Math.min(hours.length, startIndex + 7); i++) {
+        for (let i = startIndex; i < Math.min(hours.length, startIndex + 5); i++) {
             hourList.push({
                 "time": hours[i],
                 "code": hourly.weather_code?.[i] ?? 0,
-                "temp": hourly.temperature_2m?.[i] ?? 0
+                "temp": hourly.temperature_2m?.[i] ?? 0,
+                "humidity": hourly.relative_humidity_2m?.[i] ?? 0,
+                "wind": hourly.wind_speed_10m?.[i] ?? 0,
+                "pressure": hourly.surface_pressure?.[i] ?? 0,
+                "cloudCover": hourly.cloud_cover?.[i] ?? 0,
+                "precip": hourly.precipitation?.[i] ?? 0
             });
         }
         root.hourlyList = hourList;

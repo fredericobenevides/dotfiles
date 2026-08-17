@@ -11,7 +11,6 @@ PanelWindow {
     property bool showHourly: false
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -333,10 +332,12 @@ PanelWindow {
                         border.color: Theme.surfaceContainerHighest
                         border.width: 1
 
+                        // Daily layout (centered column)
                         ColumnLayout {
                             anchors.fill: parent
                             anchors.margins: 8
                             spacing: 4
+                            visible: !weatherModal.showHourly
 
                             Item {
                                 Layout.fillHeight: true
@@ -344,7 +345,7 @@ PanelWindow {
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                text: weatherModal.showHourly ? WeatherService.formatHour(modelData.time) : WeatherService.formatDayName(modelData.date, index)
+                                text: WeatherService.formatDayName(modelData.date, index)
                                 font.pixelSize: Theme.fontLabelSmall
                                 font.bold: true
                                 color: Theme.surfaceText
@@ -352,7 +353,7 @@ PanelWindow {
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                text: weatherModal.showHourly ? WeatherService.getWeatherIcon(modelData.code, WeatherService.hourIsDay(modelData.time)) : WeatherService.getWeatherIcon(modelData.code, true)
+                                text: WeatherService.getWeatherIcon(modelData.code, true)
                                 font.family: materialSymbols.name
                                 font.pixelSize: 26
                                 color: Theme.primary
@@ -360,14 +361,14 @@ PanelWindow {
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                text: weatherModal.showHourly ? (WeatherService.formatTemp(modelData.temp) || "--") : WeatherService.formatTemp(modelData.tempMin) + " / " + WeatherService.formatTemp(modelData.tempMax)
+                                text: WeatherService.formatTemp(modelData.tempMin) + " / " + WeatherService.formatTemp(modelData.tempMax)
                                 font.pixelSize: Theme.fontLabelSmall
                                 color: Theme.surfaceVariantText
                             }
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                visible: !weatherModal.showHourly && modelData.precip > 0
+                                visible: modelData.precip > 0
                                 text: WeatherService.formatPrecipitation(modelData.precip)
                                 font.pixelSize: Theme.fontLabelSmall
                                 color: Theme.surfaceVariantText
@@ -375,6 +376,89 @@ PanelWindow {
 
                             Item {
                                 Layout.fillHeight: true
+                            }
+
+                        }
+
+                        // Hourly layout (icon left, data right)
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.margins: 10
+                            spacing: 10
+                            visible: weatherModal.showHourly
+
+                            ColumnLayout {
+                                Layout.preferredWidth: 60
+                                Layout.alignment: Qt.AlignVCenter
+                                spacing: 2
+
+                                Text {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    text: WeatherService.formatHour(modelData.time)
+                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.bold: true
+                                    color: Theme.surfaceText
+                                }
+
+                                Text {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    text: WeatherService.getWeatherIcon(modelData.code, WeatherService.hourIsDay(modelData.time))
+                                    font.family: materialSymbols.name
+                                    font.pixelSize: 28
+                                    color: Theme.primary
+                                }
+
+                                Text {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    text: WeatherService.formatTemp(modelData.temp) || "--"
+                                    font.pixelSize: Theme.fontLabelSmall
+                                    color: Theme.surfaceVariantText
+                                }
+
+                            }
+
+                            GridLayout {
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                columns: 1
+                                rowSpacing: 4
+
+                                Repeater {
+                                    model: [{
+                                        "label": "Humidity",
+                                        "value": WeatherService.formatPercent(modelData.humidity)
+                                    }, {
+                                        "label": "Wind",
+                                        "value": WeatherService.formatSpeed(modelData.wind)
+                                    }, {
+                                        "label": "Pressure",
+                                        "value": WeatherService.formatPressure(modelData.pressure)
+                                    }, {
+                                        "label": "Cloud",
+                                        "value": WeatherService.formatPercent(modelData.cloudCover)
+                                    }]
+
+                                    delegate: ColumnLayout {
+                                        Layout.fillWidth: true
+                                        spacing: 0
+
+                                        Text {
+                                            text: modelData.label
+                                            font.pixelSize: 9
+                                            color: Theme.surfaceVariantText
+                                        }
+
+                                        Text {
+                                            text: modelData.value
+                                            font.pixelSize: Theme.fontLabelSmall
+                                            font.bold: true
+                                            color: Theme.surfaceText
+                                        }
+
+                                    }
+
+                                }
+
                             }
 
                         }
