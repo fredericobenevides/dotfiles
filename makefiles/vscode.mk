@@ -35,6 +35,9 @@ vscode-install:
 
 vscode-setup:
 	@echo "#### Installing VSCode (bin)"
+	@echo -e "\033[0;31m⚠ WARNING: AUR packages are not officially supported. Review the PKGBUILD before proceeding:\033[0m"
+	@echo -e "\033[0;31m  https://aur.archlinux.org/packages/visual-studio-code-bin\033[0m"
+	@read -p "Continue? (y/N) " confirm && [ "$$confirm" = "y" ] || exit 1
 	yay -S --needed --noconfirm visual-studio-code-bin
 
 vscode-pkgs:
