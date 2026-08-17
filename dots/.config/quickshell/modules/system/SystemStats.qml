@@ -20,6 +20,12 @@ Singleton {
     property var processes: []
     property int totalProcessCount: 0
     property real totalMemKB: 0
+    property real usedMemKB: 0
+    property real totalSwapKB: 0
+    property real usedSwapKB: 0
+    property real diskUsedKB: 0
+    property real diskTotalKB: 0
+    property real cpuFreqMHz: 0
     property bool processesActive: false
     property bool processesLoading: false
 
@@ -66,6 +72,8 @@ Singleton {
         tempProcess.running = true;
         hostnameProcess.running = true;
         uptimeProcess.running = true;
+        freqProcess.running = true;
+        swapProcess.running = true;
     }
 
     Process {
@@ -115,6 +123,7 @@ Singleton {
                 }
                 if (total > 0) {
                     root.totalMemKB = total;
+                    root.usedMemKB = total - avail;
                     root.memPercent = Math.round((1 - avail / total) * 100);
                 }
             }
@@ -133,8 +142,50 @@ Singleton {
                     return;
 
                 const fields = lines[1].trim().split(/\s+/);
+                if (fields.length >= 3) {
+                    root.diskTotalKB = parseFloat(fields[1]);
+                    root.diskUsedKB = parseFloat(fields[2]);
+                }
                 if (fields.length >= 5)
                     root.diskPercent = parseFloat(fields[4].replace("%", ""));
+            }
+        }
+    }
+
+    Process {
+        id: freqProcess
+
+        command: ["sh", "-c", "f=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq 2>/dev/null); if [ -n \"$f\" ]; then echo $((f / 1000)); else awk -F': ' '/cpu MHz/{print int($2); exit}' /proc/cpuinfo; fi"]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const value = parseFloat(text.trim());
+                if (!isNaN(value) && value > 0)
+                    root.cpuFreqMHz = value;
+            }
+        }
+    }
+
+    Process {
+        id: swapProcess
+
+        command: ["sh", "-c", "awk '/SwapTotal|SwapFree/ {print $1,$2}' /proc/meminfo"]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const lines = text.trim().split("\n");
+                let total = 0;
+                let free = 0;
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].startsWith("SwapTotal"))
+                        total = parseFloat(lines[i].split(/\s+/)[1]);
+                    else if (lines[i].startsWith("SwapFree"))
+                        free = parseFloat(lines[i].split(/\s+/)[1]);
+                }
+                if (total > 0) {
+                    root.totalSwapKB = total;
+                    root.usedSwapKB = total - free;
+                }
             }
         }
     }
@@ -158,7 +209,7 @@ Singleton {
     Process {
         id: hostnameProcess
 
-        command: ["sh", "-c", "cat /etc/hostname 2>/dev/null || hostname"]
+        command: ["uname", "-n", "-r"]
 
         stdout: StdioCollector {
             onStreamFinished: {

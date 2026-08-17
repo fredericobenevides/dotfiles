@@ -143,7 +143,7 @@ PanelWindow {
 
             anchors.fill: parent
             anchors.margins: 16
-            spacing: 14
+            spacing: 0
 
             RowLayout {
                 Layout.fillWidth: true
@@ -291,41 +291,192 @@ PanelWindow {
                 Layout.fillWidth: true
                 spacing: 2
 
-                Text {
+                Row {
+                    spacing: 4
                     Layout.fillWidth: true
-                    text: SystemStats.hostname
-                    font.pixelSize: Theme.fontLabelLarge
-                    font.bold: true
-                    color: Theme.surfaceText
-                }
 
-                Text {
-                    Layout.fillWidth: true
-                    text: "Uptime: " + SystemStats.uptimeText
-                    font.pixelSize: Theme.fontLabelSmall
-                    color: Theme.surfaceVariantText
-                }
+                    Text {
+                        text: "Info:"
+                        font.pixelSize: Theme.fontLabelMedium
+                        color: Theme.surfaceVariantText
+                    }
 
-                Text {
-                    Layout.fillWidth: true
-                    text: "Total processes: " + SystemStats.totalProcessCount
-                    font.pixelSize: Theme.fontLabelSmall
-                    color: Theme.surfaceVariantText
+                    Text {
+                        text: SystemStats.hostname
+                        font.pixelSize: Theme.fontLabelMedium
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
                 }
 
             }
 
-            RowLayout {
+            Rectangle {
                 Layout.fillWidth: true
                 Layout.topMargin: 8
-                spacing: 8
+                height: 1
+                color: Theme.outlineVariant
+            }
 
-                Text {
-                    text: "Processes"
-                    font.pixelSize: Theme.fontLabelLarge
-                    font.bold: true
-                    color: Theme.surfaceText
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+                spacing: 2
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "Uptime:"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: SystemStats.uptimeText
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
                 }
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "CPU Frequency:"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: SystemStats.cpuFreqMHz > 0 ? (SystemStats.cpuFreqMHz / 1000).toFixed(2) + " GHz" : "--"
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
+                }
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "RAM Usage:"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: systemModal.formatMem(SystemStats.usedMemKB) + " / " + systemModal.formatMem(SystemStats.totalMemKB)
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
+                }
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "Swap Usage:"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: systemModal.formatMem(SystemStats.usedSwapKB) + " / " + systemModal.formatMem(SystemStats.totalSwapKB)
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
+                }
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "Processes:"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: SystemStats.totalProcessCount
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
+                }
+
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+                height: 1
+                color: Theme.outlineVariant
+            }
+
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+                spacing: 2
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "File systems:"
+                        font.pixelSize: Theme.fontLabelMedium
+                        color: Theme.surfaceVariantText
+                    }
+
+                }
+
+                Row {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Text {
+                        text: "/ :"
+                        font.pixelSize: Theme.fontLabelSmall
+                        color: Theme.surfaceVariantText
+                    }
+
+                    Text {
+                        text: systemModal.formatMem(SystemStats.diskUsedKB) + " / " + systemModal.formatMem(SystemStats.diskTotalKB)
+                        font.pixelSize: Theme.fontLabelSmall
+                        font.bold: true
+                        color: Theme.surfaceText
+                    }
+
+                }
+
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.topMargin: 2
+                height: 1
+                color: Theme.outlineVariant
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 15
+                spacing: 8
 
                 Rectangle {
                     Layout.preferredWidth: 48
@@ -448,6 +599,7 @@ PanelWindow {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 320
+                Layout.topMargin: 12
                 radius: 14
                 color: Theme.surfaceContainerHigh
                 border.color: Theme.surfaceContainerHighest
