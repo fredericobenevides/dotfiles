@@ -124,6 +124,7 @@ PanelWindow {
     }
 
     function buildSectionedRows(map) {
+        const rows = [];
         function pushSection(title, defs) {
             const values = [];
             for (let i = 0; i < defs.length; i++) {
@@ -157,7 +158,6 @@ PanelWindow {
             }
         }
 
-        const rows = [];
         const general = [["GENERAL.DEVICE", "Interface"], ["GENERAL.DRIVER", "Driver"], ["GENERAL.HWADDR", "MAC Addr"], ["GENERAL.SPEED", "Speed"]];
         const ip4 = [["IP4.ADDRESS", "IPv4 address"], ["IP4.GATEWAY", "Gateway"], ["IP4.DNS", "DNS"]];
         const ip6 = [["IP6.ADDRESS", "IPv6 address"], ["IP6.GATEWAY", "Gateway"], ["IP6.DNS", "DNS"]];
@@ -285,7 +285,7 @@ PanelWindow {
     }
 
     focusable: true
-    exclusionMode: PanelWindow.None
+
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -1061,7 +1061,8 @@ PanelWindow {
             Rectangle {
                 id: passwordOverlay
 
-                anchors.fill: parent
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 visible: networkMenu.passwordTarget !== ""
                 color: "#99000000"
                 z: 100

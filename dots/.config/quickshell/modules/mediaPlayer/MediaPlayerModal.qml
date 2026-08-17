@@ -26,7 +26,7 @@ PanelWindow {
     }
 
     focusable: true
-    exclusionMode: PanelWindow.None
+
     visible: false
     color: "transparent"
     anchors.top: true

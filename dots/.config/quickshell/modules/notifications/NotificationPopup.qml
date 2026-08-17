@@ -21,15 +21,15 @@ PanelWindow {
     }
 
     focusable: false
-    exclusionMode: PanelWindow.None
+
     visible: false
     anchors.top: true
     anchors.right: true
     margins.top: 6
     margins.right: 6
     color: "transparent"
-    width: popupColumn.width + 6
-    height: popupColumn.height + 6
+    implicitWidth: popupColumn.width + 6
+    implicitHeight: popupColumn.height + 6
     onPopupsChanged: visible = popups.length > 0
 
     FontLoader {

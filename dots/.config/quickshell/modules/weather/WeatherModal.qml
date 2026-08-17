@@ -11,7 +11,7 @@ PanelWindow {
     property bool showHourly: false
 
     focusable: true
-    exclusionMode: PanelWindow.None
+
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -212,9 +212,6 @@ PanelWindow {
 
                             Repeater {
                                 model: [{
-                                    "label": "Feels like",
-                                    "value": WeatherService.formatTemp(WeatherService.feelsLike) || "--"
-                                }, {
                                     "label": "Humidity",
                                     "value": WeatherService.formatPercent(WeatherService.humidity) || "--"
                                 }, {
@@ -223,6 +220,9 @@ PanelWindow {
                                 }, {
                                     "label": "Pressure",
                                     "value": WeatherService.formatPressure(WeatherService.pressure) || "--"
+                                }, {
+                                    "label": "Cloud Cover",
+                                    "value": WeatherService.formatPercent(WeatherService.cloudCover)
                                 }, {
                                     "label": "Sunrise",
                                     "value": WeatherService.sunrise
@@ -361,6 +361,14 @@ PanelWindow {
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
                                 text: weatherModal.showHourly ? (WeatherService.formatTemp(modelData.temp) || "--") : WeatherService.formatTemp(modelData.tempMin) + " / " + WeatherService.formatTemp(modelData.tempMax)
+                                font.pixelSize: Theme.fontLabelSmall
+                                color: Theme.surfaceVariantText
+                            }
+
+                            Text {
+                                Layout.alignment: Qt.AlignHCenter
+                                visible: !weatherModal.showHourly && modelData.precip > 0
+                                text: WeatherService.formatPrecipitation(modelData.precip)
                                 font.pixelSize: Theme.fontLabelSmall
                                 color: Theme.surfaceVariantText
                             }

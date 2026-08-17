@@ -90,7 +90,6 @@ PanelWindow {
         SystemStats.processesActive = visible;
     }
     focusable: true
-    exclusionMode: PanelWindow.None
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -468,7 +467,7 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 2
+                Layout.topMargin: 8
                 height: 1
                 color: Theme.outlineVariant
             }

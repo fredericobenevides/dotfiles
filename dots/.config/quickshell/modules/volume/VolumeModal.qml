@@ -60,7 +60,7 @@ PanelWindow {
     }
 
     focusable: true
-    exclusionMode: PanelWindow.None
+
     visible: false
     anchors.top: true
     anchors.bottom: true

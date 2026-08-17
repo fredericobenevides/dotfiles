@@ -86,20 +86,15 @@ Singleton {
         "99": "thunderstorm"
     })
 
-    property var forecast: []
-    property var hourlyForecast: []
     property var dailyForecast: []
     property var hourlyList: []
     property string sunrise: "--"
     property string sunset: "--"
     property int temp: 0
-    property int tempF: 0
-    property int feelsLike: 0
-    property int feelsLikeF: 0
     property int humidity: 0
     property string wind: ""
     property int pressure: 0
-    property int precipitationProbability: 0
+    property int cloudCover: 0
     property int wCode: 0
     property bool isDay: true
     property bool _bootstrapStarted: false
@@ -198,6 +193,12 @@ Singleton {
         if (hpa == null)
             return null
         return includeUnits ? Math.round(hpa) + " hPa" : Math.round(hpa)
+    }
+
+    function formatPrecipitation(mm, includeUnits = true) {
+        if (mm == null || mm === 0)
+            return "0 mm"
+        return includeUnits ? mm.toFixed(1) + " mm" : mm.toFixed(1)
     }
 
     function formatPercent(percent, includeUnits = true) {
@@ -339,19 +340,13 @@ Singleton {
         const hourly = data.hourly || {};
         root.weather = data;
         root.temp = current.temperature_2m ?? 0;
-        root.tempF = Math.round((root.temp * 9 / 5) + 32);
-        root.feelsLike = current.apparent_temperature ?? root.temp;
-        root.feelsLikeF = Math.round((root.feelsLike * 9 / 5) + 32);
         root.humidity = current.relative_humidity_2m ?? 0;
         root.wind = current.wind_speed_10m ?? "";
         root.pressure = current.surface_pressure ?? 0;
-        root.precipitationProbability = current.precipitation ?? 0;
         root.wCode = current.weather_code ?? 0;
         root.isDay = current.is_day === 1;
         root.sunrise = daily.sunrise?.[0] ? root.formatTime(daily.sunrise[0]) : "--";
         root.sunset = daily.sunset?.[0] ? root.formatTime(daily.sunset[0]) : "--";
-        root.forecast = daily.time || [];
-        root.hourlyForecast = hourly.time || [];
         const days = daily.time || [];
         const dailyList = [];
         for (let i = 0; i < days.length; i++) {
@@ -360,7 +355,7 @@ Singleton {
                 "code": daily.weather_code?.[i] ?? 0,
                 "tempMax": daily.temperature_2m_max?.[i] ?? 0,
                 "tempMin": daily.temperature_2m_min?.[i] ?? 0,
-                "precip": daily.precipitation_probability_max?.[i] ?? 0
+                "precip": daily.precipitation_sum?.[i] ?? 0
             });
         }
         root.dailyForecast = dailyList;
@@ -379,6 +374,7 @@ Singleton {
             } catch (e) {
             }
         }
+        root.cloudCover = hourly.cloud_cover?.[startIndex] ?? 0;
         for (let i = startIndex; i < Math.min(hours.length, startIndex + 7); i++) {
             hourList.push({
                 "time": hours[i],
@@ -425,7 +421,7 @@ Singleton {
     }
 
     function fetchWeather(lat, lon, city, country) {
-        const url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,surface_pressure,wind_speed_10m&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&hourly=temperature_2m,weather_code,precipitation_probability,wind_speed_10m,apparent_temperature,relative_humidity_2m,surface_pressure,visibility,cloud_cover&timezone=auto&forecast_days=7"
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,relative_humidity_2m,is_day,weather_code,surface_pressure,wind_speed_10m&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,surface_pressure,visibility,cloud_cover&timezone=auto&forecast_days=7"
         root.latitude = lat
         root.longitude = lon
         root.city = city || "Local Weather"
