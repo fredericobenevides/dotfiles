@@ -1,7 +1,6 @@
 HYPR_CONFIG_DIR := $(HOME)/.config/hypr
 
 HYPR_PKGS := wayland hyprcursor hyprland hypridle hyprlock hyprpicker awww grim slurp imv brightnessctl
-HYPR_AUR_PKGS := bibata-cursor-theme 
 
 hyprland-all:
 	@pacman -Q hyprland > /dev/null 2>&1 && test -d $(HYPR_CONFIG_DIR) && echo "#### Hyprland already configured!" || $(MAKE) hyprland-setup hyprland-pkgs
@@ -18,5 +17,4 @@ hyprland-setup:
 hyprland-pkgs:
 	@echo "-- Installing system packages"
 	sudo pacman -S --needed --noconfirm $(HYPR_PKGS)
-	yay -S $(HYPR_AUR_PKGS)
 	

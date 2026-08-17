@@ -2,6 +2,7 @@ DOTS_DIR := $(HOME)/.dotfiles/dots
 
 include makefiles/clojure.mk
 include makefiles/cloudflare.mk
+include makefiles/cursor.mk
 include makefiles/docker.mk
 include makefiles/emacs.mk
 include makefiles/flatpak.mk
@@ -29,7 +30,7 @@ include makefiles/zsh.mk
 
 system: swap-all pacman-all flatpak-all docker-all kitty-all cloudflare-all
 
-gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all
+gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all cursor-all
 
 langs: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all
 
