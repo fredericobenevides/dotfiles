@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-// import qs.modules.bar
 import qs.modules.appLauncher
 import qs.modules.bluetooth
 import qs.modules.clock

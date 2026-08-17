@@ -1,8 +1,7 @@
-# Variáveis
 CLOUDFLARE_PKG = cloudflare-warp-bin
 
 cloudflare-all:
-	@pacman -Qs $(CLOUDFLARE_PKG) > /dev/null 2>&1 && echo "#### Cloudflare WARP already installed!" || $(MAKE) warp-install
+	@pacman -Qs $(CLOUDFLARE_PKG) > /dev/null 2>&1 && echo "#### Cloudflare WARP already installed!" || $(MAKE) cloudflare-install
 
 cloudflare-install:
 	@echo "#### Installing Cloudflare WARP from AUR"

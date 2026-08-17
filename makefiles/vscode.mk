@@ -31,7 +31,7 @@ VSCODE_EXTS := Catppuccin.catppuccin-vsc \
 vscode-all: vscode-install vscode-pkgs
 
 vscode-install:
-	@pacman -Qi code > /dev/null 2>&1 && echo "#### VSCode already installed!" || $(MAKE) vscode-setup
+	@pacman -Q code > /dev/null 2>&1 && echo "#### VSCode already installed!" || $(MAKE) vscode-setup
 
 vscode-setup:
 	@echo "#### Installing VSCode (bin)"
@@ -41,7 +41,7 @@ vscode-pkgs:
 	@echo "#### Configuring VSCode (linking settings)"
 	@mkdir -p $(VSCODE_CONFIG_DIR)
 
-	@$(foreach file,$(shell ls $(DOTS_DIR)/.config/Code/User),ln -sf $(DOTS_DIR)/.config/Code/User/$(file) $(VSCODE_CONFIG_DIR)/$(file);)
+	@$(foreach file,$(wildcard $(DOTS_DIR)/.config/Code/User/*),ln -sf $(file) $(VSCODE_CONFIG_DIR)/$(notdir $(file));)
 
 	@echo "#### Installing VSCode extensions"
 	@$(foreach ext, $(VSCODE_EXTS), code --install-extension $(ext) --force;)

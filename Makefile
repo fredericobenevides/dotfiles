@@ -19,19 +19,17 @@ include makefiles/nodejs.mk
 include makefiles/pacman.mk
 include makefiles/python.mk
 include makefiles/quickshell.mk
-include makefiles/rofi.mk
 include makefiles/rust.mk
 include makefiles/sdkman.mk
 include makefiles/swap.mk
 include makefiles/vscode.mk
-include makefiles/waybar.mk
 include makefiles/zsh.mk
 
 .DEFAULT_GOAL := all
 
 system: swap-all pacman-all flatpak-all docker-all kitty-all cloudflare-all
 
-gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all rofi-all waybar-all
+gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all
 
 langs: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all
 

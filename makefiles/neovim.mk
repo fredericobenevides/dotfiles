@@ -22,6 +22,6 @@ neovim-pkgs:
 
 	@echo "-- Linking configuration files"
 	@ln -sf $(DOTS_DIR)/.vimrc $(HOME)/.vimrc
-	@$(foreach file,$(shell ls $(DOTS_DIR)/.config/nvim),ln -sf $(DOTS_DIR)/.config/nvim/$(file) $(NVIM_CONFIG_DIR)/$(file);)
+	@$(foreach file,$(wildcard $(DOTS_DIR)/.config/nvim/*),ln -sf $(file) $(NVIM_CONFIG_DIR)/$(notdir $(file));)
 	
 	@echo "Tip: Run :PlugInstall inside Neovim to install plugins."
