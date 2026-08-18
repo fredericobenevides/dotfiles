@@ -92,6 +92,36 @@ Rectangle {
         }
 
         Rectangle {
+            width: 16
+            height: 16
+            radius: 8
+            anchors.verticalCenter: parent.verticalCenter
+            color: rewindMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+            opacity: hasPlayer && player.positionSupported ? 1 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+                text: "\uE020"
+                font.family: materialSymbols.name
+                font.pixelSize: 15
+                color: Theme.surfaceText
+            }
+
+            MouseArea {
+                id: rewindMouse
+
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                preventStealing: true
+                acceptedButtons: Qt.LeftButton
+                enabled: hasPlayer && player.positionSupported
+                onClicked: MprisController.seekBy(-5)
+            }
+
+        }
+
+        Rectangle {
             width: 24
             height: 24
             radius: 12
@@ -121,6 +151,36 @@ Rectangle {
                         player.togglePlaying();
 
                 }
+            }
+
+        }
+
+        Rectangle {
+            width: 16
+            height: 16
+            radius: 8
+            anchors.verticalCenter: parent.verticalCenter
+            color: forwardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+            opacity: hasPlayer && player.positionSupported ? 1 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+                text: "\uE01F"
+                font.family: materialSymbols.name
+                font.pixelSize: 15
+                color: Theme.surfaceText
+            }
+
+            MouseArea {
+                id: forwardMouse
+
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                preventStealing: true
+                acceptedButtons: Qt.LeftButton
+                enabled: hasPlayer && player.positionSupported
+                onClicked: MprisController.seekBy(5)
             }
 
         }

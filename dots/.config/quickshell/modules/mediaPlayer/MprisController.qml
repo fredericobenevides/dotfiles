@@ -118,6 +118,14 @@ Singleton {
             player.next();
     }
 
+    function seekBy(seconds) {
+        const player = activePlayer;
+        if (!player || !player.positionSupported || !player.lengthSupported || player.length <= 0)
+            return;
+
+        player.position = Math.max(0.1, Math.min(player.position + seconds, player.length * 0.99));
+    }
+
     function seekToFraction(fraction) {
         const player = activePlayer;
         if (!player || !player.positionSupported || !player.lengthSupported || player.length <= 0)
