@@ -26,7 +26,6 @@ PanelWindow {
     }
 
     focusable: true
-
     visible: false
     color: "transparent"
     anchors.top: true
@@ -223,6 +222,33 @@ PanelWindow {
                     }
 
                     Rectangle {
+                        width: 16
+                        height: 16
+                        radius: 8
+                        color: rewindModalMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+                        opacity: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported ? (rewindModalMouse.containsMouse ? 1 : 0.7) : 0.3
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\uE020"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 14
+                            color: Theme.surfaceText
+                        }
+
+                        MouseArea {
+                            id: rewindModalMouse
+
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            enabled: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported
+                            onClicked: MprisController.seekBy(-5)
+                        }
+
+                    }
+
+                    Rectangle {
                         width: 18
                         height: 18
                         radius: 9
@@ -245,6 +271,33 @@ PanelWindow {
                             cursorShape: Qt.PointingHandCursor
                             enabled: mediaPlayerModal.player && mediaPlayerModal.player.canTogglePlaying
                             onClicked: mediaPlayerModal.player.togglePlaying()
+                        }
+
+                    }
+
+                    Rectangle {
+                        width: 16
+                        height: 16
+                        radius: 8
+                        color: forwardModalMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+                        opacity: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported ? (forwardModalMouse.containsMouse ? 1 : 0.7) : 0.3
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\uE01F"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 14
+                            color: Theme.surfaceText
+                        }
+
+                        MouseArea {
+                            id: forwardModalMouse
+
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            enabled: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported
+                            onClicked: MprisController.seekBy(5)
                         }
 
                     }
