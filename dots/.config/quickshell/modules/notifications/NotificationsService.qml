@@ -130,7 +130,7 @@ Singleton {
 
     function removeFromHistory(entry) {
         const arr = root.history.slice();
-        const idx = arr.indexOf(entry);
+        const idx = arr.findIndex(e => e.appName === entry.appName && e.summary === entry.summary && e.time === entry.time);
         if (idx !== -1) {
             arr.splice(idx, 1);
             root.history = arr;
