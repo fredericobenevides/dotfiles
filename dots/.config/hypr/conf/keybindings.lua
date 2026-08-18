@@ -110,5 +110,6 @@ hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.exec_cmd("hyprctl eval \"hl.c
 hl.bind(mainMod .. " + SHIFT + mouse_up",   hl.dsp.exec_cmd("hyprctl eval \"hl.config({ cursor = { zoom_factor = hl.get_config('cursor.zoom_factor') + 0.7 } })\""), { desc = "Zoom Out" })
 hl.bind(mainMod .. " + SHIFT + Z",          hl.dsp.exec_cmd("hyprctl eval \"hl.config({ cursor = { zoom_factor = 1 } })\""), { desc = "Zoom Reset" })
 
--- Swaync
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"), { desc = "Notification Center" })
+-- Notifications
+hl.bind(mainMod .. " + N", hl.dsp.global("quickshell:toggle-notifications"), { desc = "Notification Center" })
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.global("quickshell:toggle-notifications-history"), { desc = "Notification History" })

@@ -270,4 +270,32 @@ ShellRoot {
         onPressed: shell.toggleMenu(launcherMenu)
     }
 
+    GlobalShortcut {
+        name: "toggle-notifications"
+        description: "Toggle notifications modal"
+        onPressed: {
+            if (notificationsModal.visible && !notificationsModal.showHistory) {
+                notificationsModal.visible = false;
+            } else {
+                notificationsModal.showHistory = false;
+                notificationsModal.visible = true;
+                shell.closeOtherModals(notificationsModal);
+            }
+        }
+    }
+
+    GlobalShortcut {
+        name: "toggle-notifications-history"
+        description: "Toggle notifications history"
+        onPressed: {
+            if (notificationsModal.visible && notificationsModal.showHistory) {
+                notificationsModal.visible = false;
+            } else {
+                notificationsModal.showHistory = true;
+                notificationsModal.visible = true;
+                shell.closeOtherModals(notificationsModal);
+            }
+        }
+    }
+
 }
