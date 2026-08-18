@@ -52,8 +52,8 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 341
-        height: 96
+        width: 420
+        height: 110
         anchors.top: parent.top
         anchors.topMargin: 6
         anchors.horizontalCenter: parent.horizontalCenter
@@ -82,8 +82,8 @@ PanelWindow {
             spacing: 0
 
             Rectangle {
-                Layout.preferredWidth: 83
-                Layout.preferredHeight: 83
+                Layout.preferredWidth: 96
+                Layout.preferredHeight: 96
                 radius: 20
                 color: Theme.surfaceContainerHigh
                 clip: true
@@ -117,6 +117,7 @@ PanelWindow {
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                Layout.topMargin: 4
                 spacing: 2
 
                 MarqueeText {
@@ -124,6 +125,10 @@ PanelWindow {
                     text: mediaPlayerModal.title
                     fontSize: 13
                     bold: true
+                }
+
+                Item {
+                    Layout.preferredHeight: 4
                 }
 
                 Text {
@@ -135,7 +140,7 @@ PanelWindow {
                 }
 
                 Item {
-                    Layout.preferredHeight: 5
+                    Layout.preferredHeight: 8
                 }
 
                 Rectangle {
@@ -177,7 +182,7 @@ PanelWindow {
                 }
 
                 Item {
-                    Layout.preferredHeight: 5
+                    Layout.preferredHeight: 8
                 }
 
                 RowLayout {

@@ -25,7 +25,7 @@ Rectangle {
     width: implicitWidth
     height: implicitHeight
     implicitHeight: 24
-    implicitWidth: Math.max(240, contentRow.implicitWidth + 20) + 16
+    implicitWidth: Math.max(240, contentRow.implicitWidth + buttonsRow.implicitWidth + 36) + 16
     radius: 12
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
@@ -60,6 +60,17 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             onClicked: root.toggleModal()
         }
+
+    }
+
+    Row {
+        id: buttonsRow
+
+        z: 1
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: 4
 
         Rectangle {
             width: 16
