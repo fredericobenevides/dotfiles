@@ -113,3 +113,6 @@ hl.bind(mainMod .. " + SHIFT + Z",          hl.dsp.exec_cmd("hyprctl eval \"hl.c
 -- Notifications
 hl.bind(mainMod .. " + N", hl.dsp.global("quickshell:toggle-notifications"), { desc = "Notification Center" })
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.global("quickshell:toggle-notifications-history"), { desc = "Notification History" })
+
+-- Power
+hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggle-power"), { desc = "Power Menu" })

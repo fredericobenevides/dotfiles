@@ -298,4 +298,10 @@ ShellRoot {
         }
     }
 
+    GlobalShortcut {
+        name: "toggle-power"
+        description: "Toggle power menu"
+        onPressed: shell.toggleMenu(powerMenu)
+    }
+
 }
