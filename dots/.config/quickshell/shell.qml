@@ -247,6 +247,10 @@ ShellRoot {
         }
     }
 
+    VolumeOSD {
+        id: volumeOSD
+    }
+
     PowerModal {
         id: powerMenu
 
