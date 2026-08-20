@@ -11,6 +11,14 @@ Rectangle {
     readonly property bool active: inhibitProcess.running
     property bool hovered: false
 
+    function toggle() {
+        if (inhibitProcess.running)
+            inhibitProcess.signal(15);
+        else
+            inhibitProcess.running = true;
+    }
+
+    Component.onCompleted: shell.idleInhibitorRef = root
     implicitWidth: 24
     implicitHeight: 24
     radius: 12
@@ -44,12 +52,7 @@ Rectangle {
         hoverEnabled: true
         onEntered: root.hovered = true
         onExited: root.hovered = false
-        onClicked: {
-            if (inhibitProcess.running)
-                inhibitProcess.signal(15);
-            else
-                inhibitProcess.running = true;
-        }
+        onClicked: root.toggle()
     }
 
     Behavior on color {
