@@ -15,7 +15,7 @@ include makefiles/idea.mk
 include makefiles/keyboard.mk
 include makefiles/kitty.mk
 include makefiles/neovim.mk
-include makefiles/nerd-fonts.mk
+include makefiles/fonts.mk
 include makefiles/nodejs.mk
 include makefiles/pacman.mk
 include makefiles/python.mk
@@ -30,7 +30,7 @@ include makefiles/zsh.mk
 
 system: swap-all pacman-all flatpak-all docker-all kitty-all cloudflare-all
 
-gui: keyboard-all nerd-fonts-all hyprland-all quickshell-all cursor-all
+gui: keyboard-all fonts-all hyprland-all quickshell-all cursor-all
 
 langs: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all
 
