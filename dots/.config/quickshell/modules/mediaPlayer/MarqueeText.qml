@@ -9,12 +9,14 @@ Item {
     property real fontSize: 13
     property bool bold: false
     property real spacing: 32
-    readonly property real loopWidth: label.implicitWidth / 2
+    readonly property real singleWidth: labelSingle.implicitWidth
+    readonly property bool needsScroll: singleWidth > root.width
+    readonly property real loopWidth: singleWidth + 32
 
     signal clicked()
 
     function startScroll() {
-        if (label.implicitWidth <= root.width) {
+        if (!needsScroll) {
             label.x = 0;
             return ;
         }
@@ -32,15 +34,25 @@ Item {
     implicitHeight: label.implicitHeight
     clip: true
     onTextChanged: {
+        scrollAnim.stop();
         label.x = 0;
         scrollTimer.restart();
     }
     onWidthChanged: scrollTimer.restart()
 
     Text {
+        id: labelSingle
+
+        visible: false
+        text: root.text
+        font.pixelSize: root.fontSize
+        font.weight: root.bold ? Font.Bold : Font.Normal
+    }
+
+    Text {
         id: label
 
-        text: root.text ? root.text + (root.text ? "          " : "") + root.text : ""
+        text: root.needsScroll ? root.text + "          " + root.text : root.text
         color: root.color
         font.pixelSize: root.fontSize
         font.weight: root.bold ? Font.Bold : Font.Normal
@@ -59,7 +71,7 @@ Item {
         interval: 1800
         repeat: false
         onTriggered: {
-            if (label.implicitWidth > root.width)
+            if (root.needsScroll)
                 root.startScroll();
 
         }
