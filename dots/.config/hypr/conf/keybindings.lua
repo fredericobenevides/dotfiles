@@ -116,3 +116,6 @@ hl.bind(mainMod .. " + SHIFT + N", hl.dsp.global("quickshell:toggle-notification
 
 -- Power
 hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggle-power"), { desc = "Power Menu" })
+
+-- Idle Inhibitor
+hl.bind(mainMod .. " + I", hl.dsp.global("quickshell:toggle-idle-inhibitor"), { desc = "Toggle Idle Inhibitor" })

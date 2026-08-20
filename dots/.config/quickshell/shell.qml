@@ -22,6 +22,8 @@ import qs.theme
 ShellRoot {
     id: shell
 
+    property var idleInhibitorRef
+
     function closeOtherModals(exclude) {
         const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemModal, systemUpdatesModal, notificationsModal];
         for (let i = 0; i < modals.length; i++) {
@@ -170,6 +172,7 @@ ShellRoot {
                         spacing: 8
 
                         IdleInhibitorButton {
+                            id: idleInhibitor
                         }
 
                         DevicesButton {
@@ -302,6 +305,16 @@ ShellRoot {
         name: "toggle-power"
         description: "Toggle power menu"
         onPressed: shell.toggleMenu(powerMenu)
+    }
+
+    GlobalShortcut {
+        name: "toggle-idle-inhibitor"
+        description: "Toggle idle inhibitor"
+        onPressed: {
+            if (shell.idleInhibitorRef)
+                shell.idleInhibitorRef.toggle();
+
+        }
     }
 
 }
