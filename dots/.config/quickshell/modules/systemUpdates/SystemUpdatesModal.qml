@@ -12,25 +12,8 @@ PanelWindow {
 
     property bool showRepo: false
     property bool showAur: false
-    readonly property var visiblePackages: {
-        let list = [];
-        if (systemUpdatesModal.showRepo)
-            for (let i = 0; i < SystemUpdatesService.repoPackages.length; i++) list.push({
-            "type": "repo",
-            "name": SystemUpdatesService.repoPackages[i]
-        });
-
-        if (systemUpdatesModal.showAur)
-            for (let i = 0; i < SystemUpdatesService.aurPackages.length; i++) list.push({
-            "type": "aur",
-            "name": SystemUpdatesService.aurPackages[i]
-        });
-
-        return list;
-    }
-    readonly property bool visibleLoading: (systemUpdatesModal.showRepo && SystemUpdatesService.repoLoading) || (systemUpdatesModal.showAur && SystemUpdatesService.aurLoading)
     readonly property int listHeight: 260
-    readonly property int packageBoxHeight: 16 + 4 + systemUpdatesModal.listHeight + 20
+    readonly property int packageBoxHeight: 16 + systemUpdatesModal.listHeight + 20
 
     function open() {
         visible = true;
@@ -41,7 +24,6 @@ PanelWindow {
     }
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -67,12 +49,12 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 380
+        width: 640
         implicitHeight: contentColumn.implicitHeight + 24
         anchors.top: parent.top
         anchors.topMargin: 6
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: -520
+        anchors.horizontalCenterOffset: -390
         radius: 20
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
@@ -222,113 +204,148 @@ PanelWindow {
                 color: Theme.surfaceContainerHigh
                 clip: true
 
-                Column {
-                    id: packagesColumn
-
-                    width: parent.width
-                    anchors.top: parent.top
+                Row {
+                    anchors.fill: parent
                     anchors.topMargin: 10
-                    anchors.bottom: parent.bottom
                     anchors.bottomMargin: 10
-                    spacing: 4
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
+                    spacing: 10
 
-                    Text {
-                        height: 16
-                        verticalAlignment: Text.AlignVCenter
-                        visible: systemUpdatesModal.visibleLoading
-                        text: "Loading..."
-                        font.pixelSize: Theme.fontLabelSmall
-                        color: Theme.surfaceVariantText
-                    }
+                    Column {
+                        width: (parent.width - 10) / 2
+                        height: parent.height
+                        spacing: 4
 
-                    ListView {
-                        id: packageList
+                        RowLayout {
+                            width: parent.width
+                            height: 16
+                            spacing: 8
 
-                        width: parent.width
-                        height: systemUpdatesModal.listHeight
-                        clip: true
-                        interactive: systemUpdatesModal.visiblePackages.length > 10
-                        model: systemUpdatesModal.visiblePackages
+                            Text {
+                                text: "Repo (" + SystemUpdatesService.repoPackages.length + ")"
+                                font.pixelSize: Theme.fontLabelSmall
+                                font.bold: true
+                                color: Theme.primary
+                            }
 
-                        ScrollBar.vertical: ScrollBar {
-                            policy: ScrollBar.AsNeeded
-                            width: 14
-                            minimumSize: 0.25
-
-                            contentItem: Rectangle {
-                                implicitWidth: 14
-                                radius: 7
-                                color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
+                            Rectangle {
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignVCenter
+                                height: 1
+                                color: Theme.surfaceContainerHighest
                             }
 
                         }
 
-                        delegate: Item {
-                            readonly property bool repoHeader: modelData.type === "repo" && index === 0 && systemUpdatesModal.showRepo && SystemUpdatesService.repoPackages.length > 0
-                            readonly property bool aurHeader: modelData.type === "aur" && index === (systemUpdatesModal.showRepo ? SystemUpdatesService.repoPackages.length : 0) && SystemUpdatesService.aurPackages.length > 0
-                            readonly property bool isHeader: repoHeader || aurHeader
+                        Text {
+                            visible: systemUpdatesModal.showRepo && SystemUpdatesService.repoLoading
+                            text: "Loading..."
+                            font.pixelSize: Theme.fontLabelSmall
+                            color: Theme.surfaceVariantText
+                        }
 
-                            width: packageList.width
-                            height: isHeader ? (aurHeader ? 46 : 38) : 22
+                        ListView {
+                            width: parent.width
+                            height: systemUpdatesModal.listHeight
+                            clip: true
+                            interactive: SystemUpdatesService.repoPackages.length > 10
+                            model: systemUpdatesModal.showRepo ? SystemUpdatesService.repoPackages : []
 
-                            RowLayout {
-                                visible: parent.repoHeader
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                height: 16
-                                spacing: 8
+                            ScrollBar.vertical: ScrollBar {
+                                policy: ScrollBar.AsNeeded
+                                width: 14
+                                minimumSize: 0.25
 
-                                Text {
-                                    text: "Repo (" + SystemUpdatesService.repoPackages.length + ")"
-                                    font.pixelSize: Theme.fontLabelSmall
-                                    font.bold: true
-                                    color: Theme.primary
-                                }
-
-                                Rectangle {
-                                    Layout.fillWidth: true
-                                    Layout.alignment: Qt.AlignVCenter
-                                    height: 1
-                                    color: Theme.surfaceContainerHighest
+                                contentItem: Rectangle {
+                                    implicitWidth: 14
+                                    radius: 7
+                                    color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
                                 }
 
                             }
 
-                            RowLayout {
-                                visible: parent.aurHeader
-                                anchors.top: parent.top
-                                anchors.topMargin: 8
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                height: 16
-                                spacing: 8
-
-                                Text {
-                                    text: "AUR (" + SystemUpdatesService.aurPackages.length + ")"
-                                    font.pixelSize: Theme.fontLabelSmall
-                                    font.bold: true
-                                    color: Theme.primary
-                                }
-
-                                Rectangle {
-                                    Layout.fillWidth: true
-                                    Layout.alignment: Qt.AlignVCenter
-                                    height: 1
-                                    color: Theme.surfaceContainerHighest
-                                }
-
-                            }
-
-                            Text {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.bottom: parent.bottom
+                            delegate: Text {
+                                width: ListView.view.width
                                 height: 22
                                 verticalAlignment: Text.AlignVCenter
-                                text: "• " + modelData.name
+                                text: "• " + modelData
                                 font.pixelSize: Theme.fontLabelSmall
-                                color: modelData.type === "aur" ? Theme.surfaceText : Theme.surfaceVariantText
+                                color: Theme.surfaceVariantText
+                                elide: Text.ElideRight
+                            }
+
+                        }
+
+                    }
+
+                    Rectangle {
+                        width: 1
+                        height: parent.height - 20
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Theme.surfaceContainerHighest
+                    }
+
+                    Column {
+                        width: (parent.width - 10) / 2
+                        height: parent.height
+                        spacing: 4
+
+                        RowLayout {
+                            width: parent.width
+                            height: 16
+                            spacing: 8
+
+                            Text {
+                                text: "AUR (" + SystemUpdatesService.aurPackages.length + ")"
+                                font.pixelSize: Theme.fontLabelSmall
+                                font.bold: true
+                                color: Theme.primary
+                            }
+
+                            Rectangle {
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignVCenter
+                                height: 1
+                                color: Theme.surfaceContainerHighest
+                            }
+
+                        }
+
+                        Text {
+                            visible: systemUpdatesModal.showAur && SystemUpdatesService.aurLoading
+                            text: "Loading..."
+                            font.pixelSize: Theme.fontLabelSmall
+                            color: Theme.surfaceVariantText
+                        }
+
+                        ListView {
+                            width: parent.width
+                            height: systemUpdatesModal.listHeight
+                            clip: true
+                            interactive: SystemUpdatesService.aurPackages.length > 10
+                            model: systemUpdatesModal.showAur ? SystemUpdatesService.aurPackages : []
+
+                            ScrollBar.vertical: ScrollBar {
+                                policy: ScrollBar.AsNeeded
+                                width: 14
+                                minimumSize: 0.25
+
+                                contentItem: Rectangle {
+                                    implicitWidth: 14
+                                    radius: 7
+                                    color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
+                                }
+
+                            }
+
+                            delegate: Text {
+                                width: ListView.view.width
+                                height: 22
+                                verticalAlignment: Text.AlignVCenter
+                                text: "• " + modelData
+                                font.pixelSize: Theme.fontLabelSmall
+                                color: Theme.surfaceText
                                 elide: Text.ElideRight
                             }
 
