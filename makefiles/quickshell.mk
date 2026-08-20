@@ -1,6 +1,6 @@
 QUICKSHELL_CONFIG_DIR := $(HOME)/.config/quickshell
 
-QUICKSHELL_PKGS := quickshell-git qt6-5compat
+QUICKSHELL_PKGS := quickshell qt6-5compat
 
 quickshell-all:
 	@pacman -Q quickshell > /dev/null 2>&1 && test -d $(QUICKSHELL_CONFIG_DIR) && echo "#### Quickshell already configured!" || $(MAKE) quickshell-setup quickshell-pkgs

@@ -36,7 +36,6 @@ PanelWindow {
     }
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -52,7 +51,7 @@ PanelWindow {
     FontLoader {
         id: materialSymbols
 
-        source: Qt.resolvedUrl("/usr/share/quickshell/dms/assets/fonts/material-design-icons/variablefont/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf")
+        source: Qt.resolvedUrl("/usr/share/fonts/TTF/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf")
     }
 
     MouseArea {
