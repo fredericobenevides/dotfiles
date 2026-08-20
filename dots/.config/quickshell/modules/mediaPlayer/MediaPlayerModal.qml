@@ -52,8 +52,8 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 420
-        height: 110
+        width: 580
+        height: 140
         anchors.top: parent.top
         anchors.topMargin: 6
         anchors.horizontalCenter: parent.horizontalCenter
@@ -75,15 +75,15 @@ PanelWindow {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 12
-            anchors.rightMargin: 12
+            anchors.leftMargin: 16
+            anchors.rightMargin: 16
             anchors.topMargin: 0
             anchors.bottomMargin: 0
             spacing: 0
 
             Rectangle {
-                Layout.preferredWidth: 96
-                Layout.preferredHeight: 96
+                Layout.preferredWidth: 120
+                Layout.preferredHeight: 120
                 radius: 20
                 color: Theme.surfaceContainerHigh
                 clip: true
@@ -111,19 +111,19 @@ PanelWindow {
             }
 
             Item {
-                width: 8
+                width: 12
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.topMargin: 4
+                Layout.topMargin: 0
                 spacing: 2
 
                 MarqueeText {
                     Layout.fillWidth: true
                     text: mediaPlayerModal.title
-                    fontSize: 13
+                    fontSize: 15
                     bold: true
                 }
 
@@ -134,18 +134,18 @@ PanelWindow {
                 Text {
                     Layout.fillWidth: true
                     text: mediaPlayerModal.artist
-                    font.pixelSize: 10
+                    font.pixelSize: 12
                     color: Theme.surfaceVariantText
                     elide: Text.ElideRight
                 }
 
                 Item {
-                    Layout.preferredHeight: 8
+                    Layout.preferredHeight: 18
                 }
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 2
+                    Layout.preferredHeight: 5
                     radius: 5
                     color: Theme.surfaceContainerHigh
 
@@ -168,8 +168,8 @@ PanelWindow {
                         }
 
                         anchors.fill: parent
-                        anchors.topMargin: -7
-                        anchors.bottomMargin: -7
+                        anchors.topMargin: -8
+                        anchors.bottomMargin: -8
                         cursorShape: Qt.PointingHandCursor
                         onClicked: seekTo(mouse.x)
                         onPositionChanged: {
@@ -191,7 +191,7 @@ PanelWindow {
 
                     Text {
                         text: MprisController.positionText
-                        font.pixelSize: 10
+                        font.pixelSize: 11
                         color: Theme.surfaceVariantText
                     }
 
@@ -210,7 +210,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE045"
                             font.family: materialSymbols.name
-                            font.pixelSize: 14
+                            font.pixelSize: 15
                             color: Theme.surfaceText
                         }
 
@@ -237,7 +237,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE020"
                             font.family: materialSymbols.name
-                            font.pixelSize: 14
+                            font.pixelSize: 15
                             color: Theme.surfaceText
                         }
 
@@ -254,9 +254,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 18
-                        height: 18
-                        radius: 9
+                        width: 24
+                        height: 24
+                        radius: 12
                         color: playMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.primary
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.canTogglePlaying ? 1 : 0.55
 
@@ -264,7 +264,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: mediaPlayerModal.player && mediaPlayerModal.player.playbackState === MprisPlaybackState.Playing ? "\uE034" : "\uE037"
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: 17
                             color: Theme.surfaceContainer
                         }
 
@@ -291,7 +291,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE01F"
                             font.family: materialSymbols.name
-                            font.pixelSize: 14
+                            font.pixelSize: 15
                             color: Theme.surfaceText
                         }
 
@@ -318,7 +318,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE044"
                             font.family: materialSymbols.name
-                            font.pixelSize: 14
+                            font.pixelSize: 15
                             color: Theme.surfaceText
                         }
 
@@ -340,7 +340,7 @@ PanelWindow {
 
                     Text {
                         text: MprisController.lengthText
-                        font.pixelSize: 10
+                        font.pixelSize: 11
                         color: Theme.surfaceVariantText
                     }
 
