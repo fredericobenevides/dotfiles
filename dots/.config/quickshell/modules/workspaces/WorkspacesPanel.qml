@@ -38,23 +38,24 @@ Item {
 
                     required property var modelData
                     property bool isActive: Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === modelData.id
+                    property bool isAttention: modelData.urgent && !isActive
 
                     width: isActive ? 32 : 20
                     height: 20
                     radius: 10
-                    color: isActive ? Theme.primary : Theme.outlineVariant
+                    color: isActive ? Theme.primary : (isAttention ? Theme.attention : Theme.outlineVariant)
 
                     Text {
                         anchors.centerIn: parent
                         text: wsBox.modelData.name
                         font.pixelSize: Theme.fontLabelMedium
-                        color: isActive ? Theme.primaryText : Theme.surfaceVariantText
+                        color: isActive ? Theme.primaryText : (wsBox.isAttention ? Theme.primaryText : Theme.surfaceVariantText)
                     }
 
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: Hyprland.dispatch("workspace " + wsBox.modelData.id)
+                        onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + wsBox.modelData.id + " })")
                     }
 
                 }
