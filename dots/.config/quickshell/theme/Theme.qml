@@ -15,4 +15,5 @@ QtObject {
     readonly property color surfaceVariant: "#45475a"
     readonly property color surfaceVariantText: "#a6adc8"
     readonly property color error: "#f38ba8"
+    readonly property color attention: "#b4befe"
 }
