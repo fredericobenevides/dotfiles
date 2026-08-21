@@ -51,11 +51,25 @@ Singleton {
 
         Connections {
             property var watched: null
+            property bool isInitial: true
+            property bool soundCooldown: false
 
             target: watched
 
+            function onBodyChanged() {
+                if (!isInitial && !soundCooldown) {
+                    soundCooldown = true;
+                    Quickshell.execDetached(["paplay", Quickshell.env("HOME") + "/.config/quickshell/assets/sounds/message.oga"]);
+                    Qt.callLater(function() { soundCooldown = false; });
+                }
+            }
+
             function onClosed() {
                 NotificationsService.remove(watched);
+            }
+
+            Component.onCompleted: {
+                Qt.callLater(function() { isInitial = false; });
             }
         }
     }
