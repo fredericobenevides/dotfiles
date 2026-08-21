@@ -120,6 +120,7 @@ ShellRoot {
                 anchors.rightMargin: 5
                 color: Theme.surfaceContainer
                 radius: 5
+                opacity: 0.9
 
                 Item {
                     anchors.fill: parent
