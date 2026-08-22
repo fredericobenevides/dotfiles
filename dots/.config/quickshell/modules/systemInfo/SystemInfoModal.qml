@@ -3,11 +3,11 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import qs.modules.system
+import qs.modules.systemInfo
 import qs.theme
 
 PanelWindow {
-    id: systemModal
+    id: systemInfoModal
 
     property string processFilter: "all"
     property string sortField: "cpu"
@@ -23,15 +23,15 @@ PanelWindow {
     readonly property real colArrow: 16
     readonly property real colSpacing: 14
     readonly property var visibleProcesses: {
-        const procs = SystemStats.processes;
+        const procs = SystemInfoStats.processes;
         let filtered = procs;
         if (processFilter === "user")
             filtered = procs.filter((p) => {
-            return p.user === SystemStats.username;
+            return p.user === SystemInfoStats.username;
         });
         else if (processFilter === "system")
             filtered = procs.filter((p) => {
-            return p.user !== SystemStats.username;
+            return p.user !== SystemInfoStats.username;
         });
         if (searchText.length > 0) {
             const term = searchText.toLowerCase();
@@ -87,7 +87,7 @@ PanelWindow {
     }
 
     onVisibleChanged: {
-        SystemStats.processesActive = visible;
+        SystemInfoStats.processesActive = visible;
         if (visible)
             bg.forceActiveFocus();
 
@@ -103,11 +103,11 @@ PanelWindow {
     Timer {
         interval: 500
         repeat: true
-        running: SystemStats.cpuTemp >= SystemStats.hotTempThreshold
-        onTriggered: systemModal._tempFlashOn = !systemModal._tempFlashOn
+        running: SystemInfoStats.cpuTemp >= SystemInfoStats.hotTempThreshold
+        onTriggered: systemInfoModal._tempFlashOn = !systemInfoModal._tempFlashOn
         onRunningChanged: {
             if (!running)
-                systemModal._tempFlashOn = false;
+                systemInfoModal._tempFlashOn = false;
 
         }
     }
@@ -120,7 +120,7 @@ PanelWindow {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: systemModal.closeModal()
+        onClicked: systemInfoModal.closeModal()
     }
 
     Rectangle {
@@ -137,15 +137,15 @@ PanelWindow {
         border.width: 1
         Keys.onPressed: (event) => {
             const filters = ["all", "user", "system"];
-            const idx = filters.indexOf(systemModal.processFilter);
+            const idx = filters.indexOf(systemInfoModal.processFilter);
             if (event.key === Qt.Key_Escape) {
-                systemModal.closeModal();
+                systemInfoModal.closeModal();
                 event.accepted = true;
             } else if (event.key === Qt.Key_Left) {
-                systemModal.processFilter = filters[(idx - 1 + filters.length) % filters.length];
+                systemInfoModal.processFilter = filters[(idx - 1 + filters.length) % filters.length];
                 event.accepted = true;
             } else if (event.key === Qt.Key_Right) {
-                systemModal.processFilter = filters[(idx + 1) % filters.length];
+                systemInfoModal.processFilter = filters[(idx + 1) % filters.length];
                 event.accepted = true;
             } else if (event.key === Qt.Key_Tab) {
                 searchField.forceActiveFocus();
@@ -194,27 +194,27 @@ PanelWindow {
                     model: [{
                         "icon": "\uE322",
                         "label": "CPU",
-                        "display": Math.round(SystemStats.cpuPercent) + "%",
-                        "percent": SystemStats.cpuPercent,
+                        "display": Math.round(SystemInfoStats.cpuPercent) + "%",
+                        "percent": SystemInfoStats.cpuPercent,
                         "hot": false
                     }, {
                         "icon": "\uE30D",
                         "label": "Memory",
-                        "display": Math.round(SystemStats.memPercent) + "%",
-                        "percent": SystemStats.memPercent,
+                        "display": Math.round(SystemInfoStats.memPercent) + "%",
+                        "percent": SystemInfoStats.memPercent,
                         "hot": false
                     }, {
                         "icon": "\uF80E",
                         "label": "HD",
-                        "display": Math.round(SystemStats.diskPercent) + "%",
-                        "percent": SystemStats.diskPercent,
+                        "display": Math.round(SystemInfoStats.diskPercent) + "%",
+                        "percent": SystemInfoStats.diskPercent,
                         "hot": false
                     }, {
                         "icon": "\uE1FF",
                         "label": "Temperature",
-                        "display": Math.round(SystemStats.cpuTemp) + "°C",
-                        "percent": Math.min(100, SystemStats.cpuTemp),
-                        "hot": SystemStats.cpuTemp >= SystemStats.hotTempThreshold
+                        "display": Math.round(SystemInfoStats.cpuTemp) + "°C",
+                        "percent": Math.min(100, SystemInfoStats.cpuTemp),
+                        "hot": SystemInfoStats.cpuTemp >= SystemInfoStats.hotTempThreshold
                     }]
 
                     delegate: Item {
@@ -246,7 +246,7 @@ PanelWindow {
                                     ctx.beginPath();
                                     ctx.arc(cx, cy, r, 0, Math.PI * 2);
                                     ctx.stroke();
-                                    ctx.strokeStyle = modelData.hot ? (systemModal._tempFlashOn ? "#ff8080" : Theme.error) : Theme.primary;
+                                    ctx.strokeStyle = modelData.hot ? (systemInfoModal._tempFlashOn ? "#ff8080" : Theme.error) : Theme.primary;
                                     ctx.beginPath();
                                     ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * value);
                                     ctx.stroke();
@@ -263,7 +263,7 @@ PanelWindow {
                                     text: modelData.display
                                     font.pixelSize: 18
                                     font.bold: true
-                                    color: modelData.hot ? (systemModal._tempFlashOn ? "#ffffff" : Theme.error) : Theme.surfaceText
+                                    color: modelData.hot ? (systemInfoModal._tempFlashOn ? "#ffffff" : Theme.error) : Theme.surfaceText
                                 }
 
                                 Text {
@@ -322,7 +322,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: SystemStats.hostname
+                        text: SystemInfoStats.hostname
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
                         color: Theme.surfaceText
@@ -355,7 +355,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: SystemStats.uptimeText
+                        text: SystemInfoStats.uptimeText
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -374,7 +374,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: SystemStats.cpuFreqMHz > 0 ? (SystemStats.cpuFreqMHz / 1000).toFixed(2) + " GHz" : "--"
+                        text: SystemInfoStats.cpuFreqMHz > 0 ? (SystemInfoStats.cpuFreqMHz / 1000).toFixed(2) + " GHz" : "--"
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -393,7 +393,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: systemModal.formatMem(SystemStats.usedMemKB) + " / " + systemModal.formatMem(SystemStats.totalMemKB)
+                        text: systemInfoModal.formatMem(SystemInfoStats.usedMemKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.totalMemKB)
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -412,7 +412,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: systemModal.formatMem(SystemStats.usedSwapKB) + " / " + systemModal.formatMem(SystemStats.totalSwapKB)
+                        text: systemInfoModal.formatMem(SystemInfoStats.usedSwapKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.totalSwapKB)
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -431,7 +431,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: SystemStats.totalProcessCount
+                        text: SystemInfoStats.totalProcessCount
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -476,7 +476,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: systemModal.formatMem(SystemStats.diskUsedKB) + " / " + systemModal.formatMem(SystemStats.diskTotalKB)
+                        text: systemInfoModal.formatMem(SystemInfoStats.diskUsedKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.diskTotalKB)
                         font.pixelSize: Theme.fontLabelSmall
                         font.bold: true
                         color: Theme.surfaceText
@@ -502,21 +502,21 @@ PanelWindow {
                     Layout.preferredWidth: 48
                     Layout.preferredHeight: 24
                     radius: 12
-                    color: systemModal.processFilter === "all" ? Theme.primary : Theme.surfaceContainerHigh
+                    color: systemInfoModal.processFilter === "all" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "ALL"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: systemModal.processFilter === "all" ? Theme.primaryText : Theme.surfaceVariantText
+                        color: systemInfoModal.processFilter === "all" ? Theme.primaryText : Theme.surfaceVariantText
                     }
 
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: systemModal.processFilter = "all"
+                        onClicked: systemInfoModal.processFilter = "all"
                     }
 
                 }
@@ -525,21 +525,21 @@ PanelWindow {
                     Layout.preferredWidth: 52
                     Layout.preferredHeight: 24
                     radius: 12
-                    color: systemModal.processFilter === "user" ? Theme.primary : Theme.surfaceContainerHigh
+                    color: systemInfoModal.processFilter === "user" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "USER"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: systemModal.processFilter === "user" ? Theme.primaryText : Theme.surfaceVariantText
+                        color: systemInfoModal.processFilter === "user" ? Theme.primaryText : Theme.surfaceVariantText
                     }
 
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: systemModal.processFilter = "user"
+                        onClicked: systemInfoModal.processFilter = "user"
                     }
 
                 }
@@ -548,21 +548,21 @@ PanelWindow {
                     Layout.preferredWidth: 62
                     Layout.preferredHeight: 24
                     radius: 12
-                    color: systemModal.processFilter === "system" ? Theme.primary : Theme.surfaceContainerHigh
+                    color: systemInfoModal.processFilter === "system" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "System"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: systemModal.processFilter === "system" ? Theme.primaryText : Theme.surfaceVariantText
+                        color: systemInfoModal.processFilter === "system" ? Theme.primaryText : Theme.surfaceVariantText
                     }
 
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: systemModal.processFilter = "system"
+                        onClicked: systemInfoModal.processFilter = "system"
                     }
 
                 }
@@ -616,7 +616,7 @@ PanelWindow {
                                 font.pixelSize: Theme.fontLabelLarge
                                 selectByMouse: true
                                 verticalAlignment: Text.AlignVCenter
-                                onTextChanged: systemModal.searchText = text
+                                onTextChanged: systemInfoModal.searchText = text
                                 Keys.onPressed: (event) => {
                                     if (event.key === Qt.Key_Escape) {
                                         searchField.text = "";
@@ -653,100 +653,100 @@ PanelWindow {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: systemModal.colSpacing
+                        spacing: systemInfoModal.colSpacing
 
                         Item {
-                            Layout.preferredWidth: systemModal.colName
+                            Layout.preferredWidth: systemInfoModal.colName
                             Layout.preferredHeight: 24
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.fill: parent
-                                text: "Name " + (systemModal.sortField === "name" ? (systemModal.sortAscending ? "\u25B4" : "\u25BE") : "")
+                                text: "Name " + (systemInfoModal.sortField === "name" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
                                 font.pixelSize: Theme.fontLabelMedium
                                 font.bold: true
-                                color: systemModal.sortField === "name" ? Theme.primary : Theme.surfaceVariantText
+                                color: systemInfoModal.sortField === "name" ? Theme.primary : Theme.surfaceVariantText
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: systemModal.setSort("name")
+                                onClicked: systemInfoModal.setSort("name")
                             }
 
                         }
 
                         Item {
-                            Layout.preferredWidth: systemModal.colCpu
+                            Layout.preferredWidth: systemInfoModal.colCpu
                             Layout.preferredHeight: 24
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -18
-                                text: "CPU " + (systemModal.sortField === "cpu" ? (systemModal.sortAscending ? "\u25B4" : "\u25BE") : "")
+                                text: "CPU " + (systemInfoModal.sortField === "cpu" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
                                 font.pixelSize: Theme.fontLabelMedium
                                 font.bold: true
-                                color: systemModal.sortField === "cpu" ? Theme.primary : Theme.surfaceVariantText
+                                color: systemInfoModal.sortField === "cpu" ? Theme.primary : Theme.surfaceVariantText
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: systemModal.setSort("cpu")
+                                onClicked: systemInfoModal.setSort("cpu")
                             }
 
                         }
 
                         Item {
-                            Layout.preferredWidth: systemModal.colGap
+                            Layout.preferredWidth: systemInfoModal.colGap
                             Layout.preferredHeight: 24
                         }
 
                         Item {
-                            Layout.preferredWidth: systemModal.colMem
+                            Layout.preferredWidth: systemInfoModal.colMem
                             Layout.preferredHeight: 24
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -38
-                                text: "Memory " + (systemModal.sortField === "mem" ? (systemModal.sortAscending ? "\u25B4" : "\u25BE") : "")
+                                text: "Memory " + (systemInfoModal.sortField === "mem" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
                                 font.pixelSize: Theme.fontLabelMedium
                                 font.bold: true
-                                color: systemModal.sortField === "mem" ? Theme.primary : Theme.surfaceVariantText
+                                color: systemInfoModal.sortField === "mem" ? Theme.primary : Theme.surfaceVariantText
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: systemModal.setSort("mem")
+                                onClicked: systemInfoModal.setSort("mem")
                             }
 
                         }
 
                         Item {
-                            Layout.preferredWidth: systemModal.colPid
+                            Layout.preferredWidth: systemInfoModal.colPid
                             Layout.preferredHeight: 24
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -16
-                                text: "PID " + (systemModal.sortField === "pid" ? (systemModal.sortAscending ? "\u25B4" : "\u25BE") : "")
+                                text: "PID " + (systemInfoModal.sortField === "pid" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
                                 font.pixelSize: Theme.fontLabelMedium
                                 font.bold: true
-                                color: systemModal.sortField === "pid" ? Theme.primary : Theme.surfaceVariantText
+                                color: systemInfoModal.sortField === "pid" ? Theme.primary : Theme.surfaceVariantText
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: systemModal.setSort("pid")
+                                onClicked: systemInfoModal.setSort("pid")
                             }
 
                         }
@@ -771,8 +771,8 @@ PanelWindow {
                         ListView {
                             anchors.fill: parent
                             clip: true
-                            visible: !SystemStats.processesLoading
-                            model: systemModal.visibleProcesses
+                            visible: !SystemInfoStats.processesLoading
+                            model: systemInfoModal.visibleProcesses
                             spacing: 2
 
                             ScrollBar.vertical: ScrollBar {
@@ -795,10 +795,10 @@ PanelWindow {
                                 RowLayout {
                                     width: parent.width
                                     height: 24
-                                    spacing: systemModal.colSpacing
+                                    spacing: systemInfoModal.colSpacing
 
                                     Text {
-                                        Layout.preferredWidth: systemModal.colName
+                                        Layout.preferredWidth: systemInfoModal.colName
                                         Layout.alignment: Qt.AlignVCenter
                                         text: modelData.name
                                         font.pixelSize: Theme.fontLabelMedium
@@ -807,7 +807,7 @@ PanelWindow {
                                     }
 
                                     Item {
-                                        Layout.preferredWidth: systemModal.colCpu
+                                        Layout.preferredWidth: systemInfoModal.colCpu
                                         Layout.preferredHeight: 24
                                         Layout.alignment: Qt.AlignVCenter
 
@@ -822,20 +822,20 @@ PanelWindow {
                                     }
 
                                     Item {
-                                        Layout.preferredWidth: systemModal.colGap
+                                        Layout.preferredWidth: systemInfoModal.colGap
                                         Layout.preferredHeight: 24
                                         Layout.alignment: Qt.AlignVCenter
                                     }
 
                                     Item {
-                                        Layout.preferredWidth: systemModal.colMem
+                                        Layout.preferredWidth: systemInfoModal.colMem
                                         Layout.preferredHeight: 24
                                         Layout.alignment: Qt.AlignVCenter
 
                                         Text {
                                             anchors.centerIn: parent
                                             anchors.horizontalCenterOffset: -68
-                                            text: systemModal.formatMem(modelData.rss)
+                                            text: systemInfoModal.formatMem(modelData.rss)
                                             font.pixelSize: Theme.fontLabelMedium
                                             color: Theme.surfaceVariantText
                                         }
@@ -843,7 +843,7 @@ PanelWindow {
                                     }
 
                                     Item {
-                                        Layout.preferredWidth: systemModal.colPid
+                                        Layout.preferredWidth: systemInfoModal.colPid
                                         Layout.preferredHeight: 24
                                         Layout.alignment: Qt.AlignVCenter
 
@@ -865,10 +865,10 @@ PanelWindow {
                                         Text {
                                             anchors.centerIn: parent
                                             anchors.horizontalCenterOffset: -18
-                                            text: systemModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
+                                            text: systemInfoModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
                                             font.family: materialSymbols.name
                                             font.pixelSize: 14
-                                            color: systemModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
+                                            color: systemInfoModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
                                         }
@@ -877,7 +877,7 @@ PanelWindow {
                                             anchors.fill: parent
                                             hoverEnabled: true
                                             cursorShape: Qt.PointingHandCursor
-                                            onClicked: systemModal.expandedPid = (systemModal.expandedPid === modelData.pid) ? "" : modelData.pid
+                                            onClicked: systemInfoModal.expandedPid = (systemInfoModal.expandedPid === modelData.pid) ? "" : modelData.pid
                                         }
 
                                     }
@@ -886,7 +886,7 @@ PanelWindow {
 
                                 Rectangle {
                                     width: parent.width
-                                    visible: systemModal.expandedPid === modelData.pid
+                                    visible: systemInfoModal.expandedPid === modelData.pid
                                     radius: 8
                                     color: Theme.surfaceContainer
                                     border.color: Theme.surfaceContainerHighest
@@ -931,7 +931,7 @@ PanelWindow {
                                                 }
 
                                                 Text {
-                                                    text: "<b>Memory:</b> " + (SystemStats.totalMemKB > 0 ? ((modelData.rss / SystemStats.totalMemKB) * 100).toFixed(1) + "%" : "--")
+                                                    text: "<b>Memory:</b> " + (SystemInfoStats.totalMemKB > 0 ? ((modelData.rss / SystemInfoStats.totalMemKB) * 100).toFixed(1) + "%" : "--")
                                                     textFormat: Text.RichText
                                                     font.pixelSize: Theme.fontLabelSmall
                                                     color: Theme.surfaceVariantText
@@ -970,7 +970,7 @@ PanelWindow {
                                                     anchors.fill: parent
                                                     hoverEnabled: true
                                                     cursorShape: Qt.PointingHandCursor
-                                                    onClicked: SystemStats.killProcess(modelData.pid, 15)
+                                                    onClicked: SystemInfoStats.killProcess(modelData.pid, 15)
                                                 }
 
                                             }
@@ -995,7 +995,7 @@ PanelWindow {
                                                     anchors.fill: parent
                                                     hoverEnabled: true
                                                     cursorShape: Qt.PointingHandCursor
-                                                    onClicked: SystemStats.killProcess(modelData.pid, 9)
+                                                    onClicked: SystemInfoStats.killProcess(modelData.pid, 9)
                                                 }
 
                                             }
@@ -1013,12 +1013,12 @@ PanelWindow {
                         RowLayout {
                             anchors.centerIn: parent
                             spacing: 10
-                            visible: SystemStats.processesLoading
+                            visible: SystemInfoStats.processesLoading
 
                             BusyIndicator {
                                 Layout.preferredWidth: 26
                                 Layout.preferredHeight: 26
-                                running: SystemStats.processesLoading
+                                running: SystemInfoStats.processesLoading
                                 palette.text: Theme.primary
                             }
 

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import qs.modules.system
+import qs.modules.systemInfo
 import qs.theme
 
 Item {
@@ -9,7 +9,7 @@ Item {
 
     property var modal
     property bool hovered: false
-    readonly property bool tempHot: SystemStats.cpuTemp >= SystemStats.hotTempThreshold
+    readonly property bool tempHot: SystemInfoStats.cpuTemp >= SystemInfoStats.hotTempThreshold
     property bool _tempFlashOn: false
 
     implicitWidth: contentRow.implicitWidth + 16
@@ -70,7 +70,7 @@ Item {
             }
 
             Text {
-                text: Math.round(SystemStats.cpuPercent) + "%"
+                text: Math.round(SystemInfoStats.cpuPercent) + "%"
                 font.pixelSize: Theme.fontLabelMedium
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
@@ -91,7 +91,7 @@ Item {
             }
 
             Text {
-                text: Math.round(SystemStats.memPercent) + "%"
+                text: Math.round(SystemInfoStats.memPercent) + "%"
                 font.pixelSize: Theme.fontLabelMedium
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
@@ -112,7 +112,7 @@ Item {
             }
 
             Text {
-                text: Math.round(SystemStats.diskPercent) + "%"
+                text: Math.round(SystemInfoStats.diskPercent) + "%"
                 font.pixelSize: Theme.fontLabelMedium
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
@@ -133,7 +133,7 @@ Item {
             }
 
             Text {
-                text: Math.round(SystemStats.cpuTemp) + "°C"
+                text: Math.round(SystemInfoStats.cpuTemp) + "°C"
                 font.pixelSize: Theme.fontLabelMedium
                 font.bold: true
                 color: root.tempHot ? (root._tempFlashOn ? "#ffffff" : Theme.error) : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText)
