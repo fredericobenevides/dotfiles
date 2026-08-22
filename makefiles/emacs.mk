@@ -6,11 +6,11 @@ EMACS_FILES    := early-init.el \
 emacs-all: emacs-install emacs-pkgs
 
 emacs-install:
-	@pacman -Q emacs > /dev/null 2>&1 && echo "#### Emacs already installed!" || $(MAKE) emacs-setup
+	@pacman -Q emacs-wayland > /dev/null 2>&1 && echo "#### Emacs already installed!" || $(MAKE) emacs-setup
 
 emacs-setup:
 	@echo "#### Installing Emacs"
-	sudo pacman -S --needed --noconfirm emacs
+	sudo pacman -S --needed --noconfirm emacs-wayland
 
 emacs-pkgs:
 	@echo "#### Configuring Emacs (linking files)"
