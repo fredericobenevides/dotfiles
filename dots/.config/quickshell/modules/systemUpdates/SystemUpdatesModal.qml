@@ -66,10 +66,10 @@ PanelWindow {
                 systemUpdatesModal.closeModal();
                 event.accepted = true;
             } else if (event.key === Qt.Key_Left) {
-                systemUpdatesModal.selectedButton = Math.max(0, systemUpdatesModal.selectedButton - 1);
+                systemUpdatesModal.selectedButton = (systemUpdatesModal.selectedButton - 1 + 3) % 3;
                 event.accepted = true;
             } else if (event.key === Qt.Key_Right) {
-                systemUpdatesModal.selectedButton = Math.min(2, systemUpdatesModal.selectedButton + 1);
+                systemUpdatesModal.selectedButton = (systemUpdatesModal.selectedButton + 1) % 3;
                 event.accepted = true;
             } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                 if (systemUpdatesModal.selectedButton === 0)

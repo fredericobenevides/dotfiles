@@ -107,12 +107,22 @@ PanelWindow {
                     notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
                 }
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Delete) {
+                if (notificationsModal.selectedIndex >= 0 && notificationsModal.selectedIndex < count) {
+                    const item = list[notificationsModal.selectedIndex];
+                    if (notificationsModal.showHistory)
+                        NotificationsService.removeFromHistory(item);
+                    else
+                        NotificationsService.dismissApp(item.appName);
+                    notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
+                }
+                event.accepted = true;
             } else if (event.key === Qt.Key_Left) {
-                notificationsModal.showHistory = false;
+                notificationsModal.showHistory = !notificationsModal.showHistory;
                 notificationsModal.selectedIndex = -1;
                 event.accepted = true;
             } else if (event.key === Qt.Key_Right) {
-                notificationsModal.showHistory = true;
+                notificationsModal.showHistory = !notificationsModal.showHistory;
                 notificationsModal.selectedIndex = -1;
                 event.accepted = true;
             }
@@ -131,6 +141,21 @@ PanelWindow {
             height: 1
             color: "transparent"
             focus: true
+            Keys.onPressed: (event) => {
+                if (event.key === Qt.Key_Delete) {
+                    const list = notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems;
+                    const count = list.length;
+                    if (notificationsModal.selectedIndex >= 0 && notificationsModal.selectedIndex < count) {
+                        const item = list[notificationsModal.selectedIndex];
+                        if (notificationsModal.showHistory)
+                            NotificationsService.removeFromHistory(item);
+                        else
+                            NotificationsService.dismissApp(item.appName);
+                        notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
+                    }
+                    event.accepted = true;
+                }
+            }
         }
 
         ColumnLayout {
