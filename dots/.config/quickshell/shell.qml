@@ -343,4 +343,28 @@ ShellRoot {
         onPressed: shell.toggleMenu(clipboardModal)
     }
 
+    GlobalShortcut {
+        name: "toggle-system"
+        description: "Toggle system modal"
+        onPressed: shell.toggleMenu(systemModal)
+    }
+
+    GlobalShortcut {
+        name: "toggle-system-updates"
+        description: "Toggle system updates modal"
+        onPressed: shell.toggleMenu(systemUpdatesModal)
+    }
+
+    GlobalShortcut {
+        name: "toggle-media-player"
+        description: "Toggle media player modal"
+        onPressed: shell.toggleMenu(mediaPlayerModal)
+    }
+
+    GlobalShortcut {
+        name: "toggle-clock"
+        description: "Toggle clock modal"
+        onPressed: shell.toggleMenu(clockMenu)
+    }
+
 }

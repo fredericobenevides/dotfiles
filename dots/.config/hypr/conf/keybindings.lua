@@ -15,7 +15,7 @@ hl.bind(mainMod .. " + Return",        hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + b",             hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + E",             hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE",         hl.dsp.global("quickshell:toggle-launcher"))
-hl.bind(mainMod .. " + C",             hl.dsp.exec_cmd(colorPicker))
+hl.bind(mainMod .. " + SHIFT + C",     hl.dsp.exec_cmd(colorPicker))
 
 -- Windows
 hl.bind(mainMod .. " + Q",             hl.dsp.window.close())
@@ -118,7 +118,17 @@ hl.bind(mainMod .. " + SHIFT + N", hl.dsp.global("quickshell:toggle-notification
 hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggle-power"), { desc = "Power Menu" })
 
 -- Idle Inhibitor
-hl.bind(mainMod .. " + I", hl.dsp.global("quickshell:toggle-idle-inhibitor"), { desc = "Toggle Idle Inhibitor" })
+hl.bind(mainMod .. " + SHIFT + I", hl.dsp.global("quickshell:toggle-idle-inhibitor"), { desc = "Toggle Idle Inhibitor" })
 
 -- Clipboard
 hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:toggle-clipboard"), { desc = "Clipboard History" })
+
+-- System
+hl.bind(mainMod .. " + I", hl.dsp.global("quickshell:toggle-system"), { desc = "System Info" })
+hl.bind(mainMod .. " + U", hl.dsp.global("quickshell:toggle-system-updates"), { desc = "System Updates" })
+
+-- Media Player
+hl.bind(mainMod .. " + M", hl.dsp.global("quickshell:toggle-media-player"), { desc = "Media Player" })
+
+-- Clock
+hl.bind(mainMod .. " + C", hl.dsp.global("quickshell:toggle-clock"), { desc = "Clock" })
