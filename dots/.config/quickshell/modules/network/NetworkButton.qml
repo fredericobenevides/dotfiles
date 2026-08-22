@@ -1,4 +1,5 @@
 import QtQuick
+import qs.modules.vpn
 import qs.theme
 
 Item {
@@ -8,6 +9,8 @@ Item {
     readonly property int iconSize: 15
     property bool hovered: false
     property var modal
+    readonly property bool vpnActive: VpnService.connected
+    readonly property bool vpnConnecting: VpnService.connecting
 
     implicitWidth: 24
     implicitHeight: 24
@@ -17,7 +20,7 @@ Item {
         text: root.wifiIcon
         font.family: "JetBrainsMono Nerd Font"
         font.pixelSize: root.iconSize
-        color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
+        color: root.vpnConnecting ? "#f9e2af" : (root.vpnActive ? Theme.success : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText))
 
         Behavior on color {
             ColorAnimation {

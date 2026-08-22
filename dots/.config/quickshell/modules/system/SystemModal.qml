@@ -187,6 +187,7 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
+                Layout.topMargin: 15
                 spacing: 12
 
                 Repeater {

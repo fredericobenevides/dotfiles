@@ -16,6 +16,7 @@ import qs.modules.power
 import qs.modules.system
 import qs.modules.systemUpdates
 import qs.modules.volume
+import qs.modules.vpn
 import qs.modules.weather
 import qs.modules.workspaces
 import qs.theme

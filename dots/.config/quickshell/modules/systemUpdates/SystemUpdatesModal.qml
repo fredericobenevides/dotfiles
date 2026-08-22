@@ -148,6 +148,7 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
+                Layout.topMargin: 8
                 spacing: 8
 
                 Rectangle {

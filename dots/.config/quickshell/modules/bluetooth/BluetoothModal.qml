@@ -112,6 +112,7 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
+                Layout.topMargin: 8
                 Layout.preferredHeight: 34
                 visible: Bluetooth.defaultAdapter !== null
                 radius: 7
