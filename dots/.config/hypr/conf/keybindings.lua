@@ -119,3 +119,6 @@ hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggle-power"), { desc = "P
 
 -- Idle Inhibitor
 hl.bind(mainMod .. " + I", hl.dsp.global("quickshell:toggle-idle-inhibitor"), { desc = "Toggle Idle Inhibitor" })
+
+-- Clipboard
+hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:toggle-clipboard"), { desc = "Clipboard History" })

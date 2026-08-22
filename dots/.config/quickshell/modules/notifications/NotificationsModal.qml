@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Notifications
@@ -10,6 +11,8 @@ PanelWindow {
     id: notificationsModal
 
     property bool showHistory: false
+    property int selectedIndex: -1
+    property bool anyCardHovered: false
     readonly property var groupedItems: {
         const items = NotificationsService.items;
         const groups = {
@@ -37,6 +40,7 @@ PanelWindow {
 
     function open() {
         visible = true;
+        selectedIndex = -1;
     }
 
     function closeModal() {
@@ -50,6 +54,11 @@ PanelWindow {
     anchors.left: true
     anchors.right: true
     color: "transparent"
+    onVisibleChanged: {
+        if (visible)
+            focusInput.forceActiveFocus();
+
+    }
 
     FontLoader {
         id: materialSymbols
@@ -75,9 +84,53 @@ PanelWindow {
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
         border.width: 1
+        focus: true
+        Keys.onPressed: function(event) {
+            const list = notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems;
+            const count = list.length;
+            if (event.key === Qt.Key_Escape) {
+                notificationsModal.closeModal();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Down) {
+                notificationsModal.selectedIndex = Math.min(notificationsModal.selectedIndex + 1, count - 1);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Up) {
+                notificationsModal.selectedIndex = Math.max(notificationsModal.selectedIndex - 1, 0);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                if (notificationsModal.selectedIndex >= 0 && notificationsModal.selectedIndex < count) {
+                    const item = list[notificationsModal.selectedIndex];
+                    if (notificationsModal.showHistory)
+                        NotificationsService.removeFromHistory(item);
+                    else
+                        NotificationsService.dismissApp(item.appName);
+                    notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
+                }
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                notificationsModal.showHistory = false;
+                notificationsModal.selectedIndex = -1;
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                notificationsModal.showHistory = true;
+                notificationsModal.selectedIndex = -1;
+                event.accepted = true;
+            }
+        }
 
         MouseArea {
             anchors.fill: parent
+            hoverEnabled: true
+            onExited: notificationsModal.anyCardHovered = false
+        }
+
+        TextInput {
+            id: focusInput
+
+            width: 1
+            height: 1
+            color: "transparent"
+            focus: true
         }
 
         ColumnLayout {
@@ -105,17 +158,17 @@ PanelWindow {
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 24
-                    Layout.preferredHeight: 24
-                    radius: 12
-                    color: clearMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    Layout.preferredWidth: 36
+                    Layout.preferredHeight: 36
+                    radius: 18
+                    color: clearMouse.containsMouse ? Theme.error : "transparent"
                     visible: notificationsModal.showHistory ? NotificationsService.history.length > 0 : NotificationsService.count > 0
 
                     Text {
                         anchors.centerIn: parent
-                        text: "\uE872"
+                        text: "\uE16C"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: 22
                         color: Theme.surfaceText
                     }
 
@@ -199,6 +252,13 @@ PanelWindow {
                 clip: true
                 spacing: 14
                 model: notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems
+                currentIndex: notificationsModal.selectedIndex
+                highlightFollowsCurrentItem: true
+                highlightMoveDuration: 100
+
+                ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                }
 
                 delegate: Rectangle {
                     id: notificationCard
@@ -207,16 +267,26 @@ PanelWindow {
                     readonly property int groupCount: isGroup ? modelData.count : 0
                     readonly property var notif: modelData.latest !== undefined ? modelData.latest : modelData
                     readonly property bool critical: notificationsModal.showHistory ? (modelData.urgency === 2) : (notif.urgency === NotificationUrgency.Critical)
+                    readonly property bool hovered: cardHover.containsMouse
                     property bool expandedGroup: false
                     property real collapsedHeight: 0
 
                     width: ListView.view.width
                     clip: true
                     radius: 12
-                    color: Theme.surfaceContainerHigh
-                    border.color: critical ? Theme.primary : Theme.surfaceContainerHighest
+                    color: ((ListView.isCurrentItem && !notificationsModal.anyCardHovered) || hovered) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: ((ListView.isCurrentItem && !notificationsModal.anyCardHovered) || hovered) ? Theme.primary : (critical ? Theme.primary : Theme.surfaceContainerHighest)
                     border.width: 1
                     implicitHeight: cardContent.implicitHeight + 40
+
+                    MouseArea {
+                        id: cardHover
+
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        acceptedButtons: Qt.NoButton
+                        onEntered: notificationsModal.anyCardHovered = true
+                    }
 
                     Rectangle {
                         anchors.fill: parent
@@ -258,6 +328,39 @@ PanelWindow {
                         }
                     }
 
+                    Rectangle {
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.margins: 8
+                        width: 18
+                        height: 18
+                        radius: 9
+                        color: dismissMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainer
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "\uE5CD"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 12
+                            color: Theme.surfaceVariantText
+                        }
+
+                        MouseArea {
+                            id: dismissMouse
+
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (notificationsModal.showHistory)
+                                    NotificationsService.removeFromHistory(modelData);
+                                else
+                                    NotificationsService.dismissApp(notificationCard.notif.appName);
+                            }
+                        }
+
+                    }
+
                     ColumnLayout {
                         id: cardContent
 
@@ -292,40 +395,6 @@ PanelWindow {
                                     font.pixelSize: 9
                                     font.bold: true
                                     color: Theme.primaryText
-                                }
-
-                            }
-
-                            Item {
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                Layout.preferredWidth: 18
-                                Layout.preferredHeight: 18
-                                radius: 9
-                                color: dismissMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainer
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: "\uE5CD"
-                                    font.family: materialSymbols.name
-                                    font.pixelSize: 12
-                                    color: Theme.surfaceVariantText
-                                }
-
-                                MouseArea {
-                                    id: dismissMouse
-
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        if (notificationsModal.showHistory)
-                                            NotificationsService.removeFromHistory(modelData);
-                                        else
-                                            NotificationsService.dismissApp(notificationCard.notif.appName);
-                                    }
                                 }
 
                             }

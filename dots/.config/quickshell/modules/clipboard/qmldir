@@ -1,0 +1,3 @@
+singleton ClipboardService 1.0 ClipboardService.qml
+ClipboardButton 1.0 ClipboardButton.qml
+ClipboardModal 1.0 ClipboardModal.qml
