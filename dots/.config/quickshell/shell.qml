@@ -5,6 +5,7 @@ import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.modules.appLauncher
 import qs.modules.bluetooth
+import qs.modules.clipboard
 import qs.modules.clock
 import qs.modules.devices
 import qs.modules.idleInhibitor
@@ -25,7 +26,7 @@ ShellRoot {
     property var idleInhibitorRef
 
     function closeOtherModals(exclude) {
-        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemModal, systemUpdatesModal, notificationsModal];
+        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemModal, systemUpdatesModal, notificationsModal, clipboardModal];
         for (let i = 0; i < modals.length; i++) {
             if (modals[i] !== exclude && modals[i].visible)
                 modals[i].visible = false;
@@ -87,6 +88,16 @@ ShellRoot {
         onVisibleChanged: {
             if (visible)
                 shell.closeOtherModals(notificationsModal);
+
+        }
+    }
+
+    ClipboardModal {
+        id: clipboardModal
+
+        onVisibleChanged: {
+            if (visible)
+                shell.closeOtherModals(clipboardModal);
 
         }
     }
@@ -184,6 +195,10 @@ ShellRoot {
 
                         WeatherButton {
                             modal: weatherModal
+                        }
+
+                        ClipboardButton {
+                            modal: clipboardModal
                         }
 
                         NotificationButton {
@@ -320,6 +335,12 @@ ShellRoot {
                 shell.idleInhibitorRef.toggle();
 
         }
+    }
+
+    GlobalShortcut {
+        name: "toggle-clipboard"
+        description: "Toggle clipboard history"
+        onPressed: shell.toggleMenu(clipboardModal)
     }
 
 }

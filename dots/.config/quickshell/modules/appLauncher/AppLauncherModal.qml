@@ -11,10 +11,10 @@ PanelWindow {
     id: launcherMenu
 
     property string searchText: ""
+    property bool anyCardHovered: false
     readonly property string launcherIcon: "󰀻"
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -25,6 +25,7 @@ PanelWindow {
         if (visible) {
             searchInput.text = "";
             searchInput.forceActiveFocus();
+            anyCardHovered = false;
         }
     }
 
@@ -80,6 +81,8 @@ PanelWindow {
 
         MouseArea {
             anchors.fill: parent
+            hoverEnabled: true
+            onExited: launcherMenu.anyCardHovered = false
         }
 
         Rectangle {
@@ -208,9 +211,9 @@ PanelWindow {
                 width: appsGrid.cellWidth
                 height: appsGrid.cellHeight
                 radius: 12
-                color: (delegateMouse.containsMouse || isCurrent) ? Theme.surfaceContainerHighest : "transparent"
-                border.color: isCurrent ? Theme.primary : "transparent"
-                border.width: isCurrent ? 1 : 0
+                color: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? Theme.surfaceContainerHighest : "transparent"
+                border.color: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? Theme.primary : "transparent"
+                border.width: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? 1 : 0
 
                 ColumnLayout {
                     anchors.centerIn: parent
@@ -241,6 +244,7 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
+                    onEntered: launcherMenu.anyCardHovered = true
                     onClicked: {
                         modelData.execute();
                         searchInput.text = "";
