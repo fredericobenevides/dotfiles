@@ -65,6 +65,11 @@ PanelWindow {
             if (event.key === Qt.Key_Escape) {
                 mediaPlayerModal.closeModal();
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Space) {
+                if (mediaPlayerModal.player && mediaPlayerModal.player.canTogglePlaying)
+                    mediaPlayerModal.player.togglePlaying();
+
+                event.accepted = true;
             } else if (event.key === Qt.Key_Left && (event.modifiers & Qt.ShiftModifier)) {
                 MprisController.seekBy(-5);
                 event.accepted = true;
