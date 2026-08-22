@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import qs.modules.vpn
 import qs.theme
 
 PanelWindow {
@@ -589,6 +590,7 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
+                Layout.topMargin: 8
                 spacing: 8
 
                 Rectangle {
@@ -649,6 +651,36 @@ PanelWindow {
                             selectedTab = "wifi";
                             refreshWifi();
                             refreshInfoForActive();
+                        }
+                    }
+
+                }
+
+                Rectangle {
+                    id: vpnTab
+
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    height: 34
+                    radius: 7
+                    color: selectedTab === "vpn" ? Theme.primary : vpnTabMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "VPN"
+                        font.pixelSize: 16
+                        font.bold: true
+                        color: selectedTab === "vpn" ? Theme.primaryText : Theme.surfaceText
+                    }
+
+                    MouseArea {
+                        id: vpnTabMouse
+
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            selectedTab = "vpn";
                         }
                     }
 
@@ -1051,6 +1083,85 @@ PanelWindow {
                         font.pixelSize: Theme.fontLabelMedium
                         color: Theme.surfaceVariantText
                         visible: !networkMenu.wifiScanning
+                    }
+
+                }
+
+            }
+
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 10
+                visible: selectedTab === "vpn"
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 56
+                    radius: 7
+                    color: vpnCardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: VpnService.connected ? Theme.success : "transparent"
+                    border.width: VpnService.connected ? 1 : 0
+
+                    MouseArea {
+                        id: vpnCardMouse
+
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: VpnService.toggle()
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                        anchors.rightMargin: 8
+                        spacing: 8
+
+                        Text {
+                            text: "\uF3E7"
+                            font.family: networkMenu.fontFamily
+                            font.pixelSize: 16
+                            color: VpnService.connected ? Theme.success : (VpnService.connecting ? "#f9e2af" : Theme.surfaceVariantText)
+                        }
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: "Cloudflare WARP"
+                                elide: Text.ElideRight
+                                font.pixelSize: Theme.fontLabelMedium
+                                font.bold: true
+                                color: Theme.surfaceText
+                            }
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: {
+                                    if (VpnService.connecting)
+                                        return "Connecting...";
+
+                                    return VpnService.connected ? "Connected" : "Disconnected";
+                                }
+                                font.pixelSize: Theme.fontLabelSmall
+                                color: VpnService.connected ? Theme.success : (VpnService.connecting ? "#f9e2af" : Theme.surfaceVariantText)
+                            }
+
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Text {
+                            text: VpnService.connected ? "\uE5C9" : "\uE5CB"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 16
+                            color: vpnCardMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                        }
+
                     }
 
                 }

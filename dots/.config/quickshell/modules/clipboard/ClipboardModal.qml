@@ -146,6 +146,7 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
+                Layout.topMargin: 8
                 Layout.preferredHeight: 36
                 radius: 18
                 color: Theme.surfaceContainerHigh
