@@ -12,6 +12,7 @@ PanelWindow {
 
     property bool showRepo: false
     property bool showAur: false
+    property int selectedButton: 2
     readonly property int listHeight: 260
     readonly property int packageBoxHeight: 16 + systemUpdatesModal.listHeight + 20
 
@@ -34,6 +35,7 @@ PanelWindow {
         if (visible) {
             systemUpdatesModal.showRepo = true;
             systemUpdatesModal.showAur = true;
+            systemUpdatesModal.selectedButton = 2;
             SystemUpdatesService.loadRepoPackages();
             SystemUpdatesService.loadAurPackages();
             SystemUpdatesService.refresh();
@@ -61,6 +63,21 @@ PanelWindow {
         border.width: 1
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
+                systemUpdatesModal.closeModal();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                systemUpdatesModal.selectedButton = Math.max(0, systemUpdatesModal.selectedButton - 1);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                systemUpdatesModal.selectedButton = Math.min(2, systemUpdatesModal.selectedButton + 1);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                if (systemUpdatesModal.selectedButton === 0)
+                    pacmanProc.running = true;
+                else if (systemUpdatesModal.selectedButton === 1)
+                    yayProc.running = true;
+                else
+                    fullProc.running = true;
                 systemUpdatesModal.closeModal();
                 event.accepted = true;
             }
@@ -365,14 +382,16 @@ PanelWindow {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 52
                     radius: 12
-                    color: pacmanMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    color: (systemUpdatesModal.selectedButton === 0 || pacmanMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: systemUpdatesModal.selectedButton === 0 ? Theme.primary : "transparent"
+                    border.width: systemUpdatesModal.selectedButton === 0 ? 1 : 0
 
                     Text {
                         anchors.centerIn: parent
                         text: "Repo"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: Theme.surfaceText
+                        color: systemUpdatesModal.selectedButton === 0 ? Theme.primary : Theme.surfaceText
                     }
 
                     MouseArea {
@@ -393,14 +412,16 @@ PanelWindow {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 52
                     radius: 12
-                    color: yayMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    color: (systemUpdatesModal.selectedButton === 1 || yayMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: systemUpdatesModal.selectedButton === 1 ? Theme.primary : "transparent"
+                    border.width: systemUpdatesModal.selectedButton === 1 ? 1 : 0
 
                     Text {
                         anchors.centerIn: parent
                         text: "AUR"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: Theme.surfaceText
+                        color: systemUpdatesModal.selectedButton === 1 ? Theme.primary : Theme.surfaceText
                     }
 
                     MouseArea {
@@ -421,14 +442,16 @@ PanelWindow {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 52
                     radius: 12
-                    color: fullMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    color: (systemUpdatesModal.selectedButton === 2 || fullMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: systemUpdatesModal.selectedButton === 2 ? Theme.primary : "transparent"
+                    border.width: systemUpdatesModal.selectedButton === 2 ? 1 : 0
 
                     Text {
                         anchors.centerIn: parent
                         text: "Repo+AUR"
                         font.pixelSize: Theme.fontLabelMedium
                         font.bold: true
-                        color: Theme.primary
+                        color: systemUpdatesModal.selectedButton === 2 ? Theme.primary : Theme.surfaceText
                     }
 
                     MouseArea {
