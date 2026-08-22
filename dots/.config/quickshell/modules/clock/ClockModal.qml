@@ -34,7 +34,6 @@ PanelWindow {
     }
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
@@ -69,6 +68,12 @@ PanelWindow {
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 clockMenu.visible = false;
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                clockMenu.prevMonth();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                clockMenu.nextMonth();
                 event.accepted = true;
             }
         }

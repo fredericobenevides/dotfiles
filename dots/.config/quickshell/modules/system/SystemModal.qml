@@ -88,6 +88,9 @@ PanelWindow {
 
     onVisibleChanged: {
         SystemStats.processesActive = visible;
+        if (visible)
+            bg.forceActiveFocus();
+
     }
     focusable: true
     visible: false
@@ -132,6 +135,23 @@ PanelWindow {
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
         border.width: 1
+        Keys.onPressed: (event) => {
+            const filters = ["all", "user", "system"];
+            const idx = filters.indexOf(systemModal.processFilter);
+            if (event.key === Qt.Key_Escape) {
+                systemModal.closeModal();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                systemModal.processFilter = filters[(idx - 1 + filters.length) % filters.length];
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                systemModal.processFilter = filters[(idx + 1) % filters.length];
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Tab) {
+                searchField.forceActiveFocus();
+                event.accepted = true;
+            }
+        }
 
         MouseArea {
             anchors.fill: parent
@@ -571,22 +591,43 @@ PanelWindow {
                             color: Theme.surfaceVariantText
                         }
 
-                        TextInput {
-                            id: searchField
-
+                        Item {
                             Layout.fillWidth: true
-                            clip: true
-                            color: Theme.surfaceText
-                            font.pixelSize: Theme.fontLabelLarge
-                            selectByMouse: true
-                            onTextChanged: systemModal.searchText = text
-                            Keys.onPressed: (event) => {
-                                if (event.key === Qt.Key_Escape) {
-                                    searchField.text = "";
-                                    searchField.focus = false;
-                                    event.accepted = true;
+                            Layout.preferredHeight: 24
+                            Layout.alignment: Qt.AlignVCenter
+
+                            Text {
+                                anchors.left: parent.left
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: "Search processes..."
+                                font.pixelSize: Theme.fontLabelLarge
+                                color: Theme.surfaceVariantText
+                                visible: searchField.text === "" && !searchField.activeFocus
+                            }
+
+                            TextInput {
+                                id: searchField
+
+                                anchors.fill: parent
+                                z: 1
+                                clip: true
+                                color: Theme.surfaceText
+                                font.pixelSize: Theme.fontLabelLarge
+                                selectByMouse: true
+                                verticalAlignment: Text.AlignVCenter
+                                onTextChanged: systemModal.searchText = text
+                                Keys.onPressed: (event) => {
+                                    if (event.key === Qt.Key_Escape) {
+                                        searchField.text = "";
+                                        searchField.focus = false;
+                                        event.accepted = true;
+                                    } else if (event.key === Qt.Key_Tab) {
+                                        bg.forceActiveFocus();
+                                        event.accepted = true;
+                                    }
                                 }
                             }
+
                         }
 
                     }

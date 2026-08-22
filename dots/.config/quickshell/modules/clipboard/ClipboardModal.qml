@@ -14,7 +14,7 @@ PanelWindow {
         visible = true;
         ClipboardService.refresh();
         searchField.text = "";
-        searchField.forceActiveFocus();
+        bg.forceActiveFocus();
     }
 
     function closeModal() {
@@ -29,25 +29,6 @@ PanelWindow {
     anchors.left: true
     anchors.right: true
     color: "transparent"
-    Keys.onPressed: function(event) {
-        if (event.key === Qt.Key_Escape) {
-            clipboardModal.closeModal();
-            event.accepted = true;
-        } else if (event.key === Qt.Key_Down) {
-            ClipboardService.selectNext();
-            event.accepted = true;
-        } else if (event.key === Qt.Key_Up) {
-            ClipboardService.selectPrev();
-            event.accepted = true;
-        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-            const list = ClipboardService.filteredEntries;
-            if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length) {
-                ClipboardService.copyEntry(list[ClipboardService.selectedIndex]);
-                clipboardModal.closeModal();
-            }
-            event.accepted = true;
-        }
-    }
 
     FontLoader {
         id: materialSymbols
@@ -73,6 +54,37 @@ PanelWindow {
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
         border.width: 1
+        Keys.onPressed: function(event) {
+            if (event.key === Qt.Key_Escape) {
+                clipboardModal.closeModal();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Down) {
+                ClipboardService.selectNext();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Up) {
+                if (ClipboardService.selectedIndex <= 0)
+                    searchField.forceActiveFocus();
+                else
+                    ClipboardService.selectPrev();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                const list = ClipboardService.filteredEntries;
+                if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length) {
+                    ClipboardService.copyEntry(list[ClipboardService.selectedIndex]);
+                    clipboardModal.closeModal();
+                }
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Delete) {
+                const list = ClipboardService.filteredEntries;
+                if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length)
+                    ClipboardService.deleteEntry(list[ClipboardService.selectedIndex]);
+
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Tab) {
+                searchField.forceActiveFocus();
+                event.accepted = true;
+            }
+        }
 
         MouseArea {
             anchors.fill: parent
@@ -153,34 +165,63 @@ PanelWindow {
                         color: Theme.surfaceVariantText
                     }
 
-                    TextInput {
-                        id: searchField
-
+                    Item {
                         Layout.fillWidth: true
-                        clip: true
-                        color: Theme.surfaceText
-                        font.pixelSize: 14
-                        selectByMouse: true
-                        onTextChanged: ClipboardService.searchText = text
-                        Keys.onPressed: function(event) {
-                            if (event.key === Qt.Key_Escape) {
-                                clipboardModal.closeModal();
-                                event.accepted = true;
-                            } else if (event.key === Qt.Key_Down) {
-                                ClipboardService.selectNext();
-                                event.accepted = true;
-                            } else if (event.key === Qt.Key_Up) {
-                                ClipboardService.selectPrev();
-                                event.accepted = true;
-                            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                                const list = ClipboardService.filteredEntries;
-                                if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length) {
-                                    ClipboardService.copyEntry(list[ClipboardService.selectedIndex]);
+                        Layout.preferredHeight: 24
+                        Layout.alignment: Qt.AlignVCenter
+
+                        Text {
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "Search clipboard..."
+                            font.pixelSize: 14
+                            color: Theme.surfaceVariantText
+                            visible: searchField.text === "" && !searchField.activeFocus
+                        }
+
+                        TextInput {
+                            id: searchField
+
+                            anchors.fill: parent
+                            z: 1
+                            clip: true
+                            color: Theme.surfaceText
+                            font.pixelSize: 14
+                            selectByMouse: true
+                            verticalAlignment: Text.AlignVCenter
+                            onTextChanged: ClipboardService.searchText = text
+                            Keys.onPressed: function(event) {
+                                if (event.key === Qt.Key_Escape) {
                                     clipboardModal.closeModal();
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Down) {
+                                    ClipboardService.selectNext();
+                                    bg.forceActiveFocus();
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Up) {
+                                    ClipboardService.selectPrev();
+                                    bg.forceActiveFocus();
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                    const list = ClipboardService.filteredEntries;
+                                    if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length) {
+                                        ClipboardService.copyEntry(list[ClipboardService.selectedIndex]);
+                                        clipboardModal.closeModal();
+                                    }
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Delete) {
+                                    const list = ClipboardService.filteredEntries;
+                                    if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length)
+                                        ClipboardService.deleteEntry(list[ClipboardService.selectedIndex]);
+
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Tab) {
+                                    bg.forceActiveFocus();
+                                    event.accepted = true;
                                 }
-                                event.accepted = true;
                             }
                         }
+
                     }
 
                 }
