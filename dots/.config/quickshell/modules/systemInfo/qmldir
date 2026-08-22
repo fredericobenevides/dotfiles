@@ -1,0 +1,3 @@
+singleton SystemInfoStats 1.0 SystemInfoStats.qml
+SystemInfoButton 1.0 SystemInfoButton.qml
+SystemInfoModal 1.0 SystemInfoModal.qml

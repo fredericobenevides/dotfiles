@@ -13,7 +13,7 @@ import qs.modules.mediaPlayer
 import qs.modules.network
 import qs.modules.notifications
 import qs.modules.power
-import qs.modules.system
+import qs.modules.systemInfo
 import qs.modules.systemUpdates
 import qs.modules.volume
 import qs.modules.vpn
@@ -27,7 +27,7 @@ ShellRoot {
     property var idleInhibitorRef
 
     function closeOtherModals(exclude) {
-        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemModal, systemUpdatesModal, notificationsModal, clipboardModal];
+        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal];
         for (let i = 0; i < modals.length; i++) {
             if (modals[i] !== exclude && modals[i].visible)
                 modals[i].visible = false;
@@ -63,12 +63,12 @@ ShellRoot {
         }
     }
 
-    SystemModal {
-        id: systemModal
+    SystemInfoModal {
+        id: systemInfoModal
 
         onVisibleChanged: {
             if (visible)
-                shell.closeOtherModals(systemModal);
+                shell.closeOtherModals(systemInfoModal);
 
         }
     }
@@ -153,10 +153,10 @@ ShellRoot {
                             currentMonitor: topBar.modelData
                         }
 
-                        SystemButton {
+                        SystemInfoButton {
                             id: systemButton
 
-                            modal: systemModal
+                            modal: systemInfoModal
                             Layout.leftMargin: 8
                         }
 
@@ -347,7 +347,7 @@ ShellRoot {
     GlobalShortcut {
         name: "toggle-system"
         description: "Toggle system modal"
-        onPressed: shell.toggleMenu(systemModal)
+        onPressed: shell.toggleMenu(systemInfoModal)
     }
 
     GlobalShortcut {
