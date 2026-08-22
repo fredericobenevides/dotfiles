@@ -65,6 +65,18 @@ PanelWindow {
             if (event.key === Qt.Key_Escape) {
                 mediaPlayerModal.closeModal();
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Left && (event.modifiers & Qt.ShiftModifier)) {
+                MprisController.seekBy(-5);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                MprisController.previousOrRewind();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right && (event.modifiers & Qt.ShiftModifier)) {
+                MprisController.seekBy(5);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                MprisController.next();
+                event.accepted = true;
             }
         }
 
