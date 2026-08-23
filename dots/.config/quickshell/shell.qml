@@ -11,6 +11,7 @@ import qs.modules.devices
 import qs.modules.idleInhibitor
 import qs.modules.mediaPlayer
 import qs.modules.network
+import qs.modules.nightLight
 import qs.modules.notifications
 import qs.modules.power
 import qs.modules.systemInfo
@@ -25,9 +26,10 @@ ShellRoot {
     id: shell
 
     property var idleInhibitorRef
+    property var nightLightRef
 
     function closeOtherModals(exclude) {
-        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal];
+        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal, nightLightMenu];
         for (let i = 0; i < modals.length; i++) {
             if (modals[i] !== exclude && modals[i].visible)
                 modals[i].visible = false;
@@ -99,6 +101,16 @@ ShellRoot {
         onVisibleChanged: {
             if (visible)
                 shell.closeOtherModals(clipboardModal);
+
+        }
+    }
+
+    NightLightModal {
+        id: nightLightMenu
+
+        onVisibleChanged: {
+            if (visible)
+                shell.closeOtherModals(nightLightMenu);
 
         }
     }
@@ -186,6 +198,12 @@ ShellRoot {
 
                         IdleInhibitorButton {
                             id: idleInhibitor
+                        }
+
+                        NightLightButton {
+                            id: nightLight
+
+                            modal: nightLightMenu
                         }
 
                         DevicesButton {
@@ -334,6 +352,16 @@ ShellRoot {
         onPressed: {
             if (shell.idleInhibitorRef)
                 shell.idleInhibitorRef.toggle();
+
+        }
+    }
+
+    GlobalShortcut {
+        name: "toggle-night-light"
+        description: "Toggle night light"
+        onPressed: {
+            if (shell.nightLightRef)
+                shell.nightLightRef.toggle();
 
         }
     }
