@@ -1,6 +1,6 @@
 HYPR_CONFIG_DIR := $(HOME)/.config/hypr
 
-HYPR_PKGS := wayland hyprcursor hyprland hypridle hyprlock hyprpicker awww grim slurp imv brightnessctl wl-clipboard cliphist
+HYPR_PKGS := wayland hyprcursor hyprland hypridle hyprlock hyprpicker awww grim slurp imv brightnessctl wl-clipboard cliphist gammastep
 
 hyprland-all:
 	@pacman -Q hyprland > /dev/null 2>&1 && test -d $(HYPR_CONFIG_DIR) && echo "#### Hyprland already configured!" || $(MAKE) hyprland-setup hyprland-pkgs

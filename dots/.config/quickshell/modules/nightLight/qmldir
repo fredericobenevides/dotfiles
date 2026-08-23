@@ -1,0 +1,4 @@
+singleton NightLightService 1.0 NightLightService.qml
+NightLightButton 1.0 NightLightButton.qml
+NightLightSlider 1.0 NightLightSlider.qml
+NightLightModal 1.0 NightLightModal.qml
