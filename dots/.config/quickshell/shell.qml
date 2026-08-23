@@ -10,7 +10,7 @@ import qs.modules.clock
 import qs.modules.devices
 import qs.modules.idleInhibitor
 import qs.modules.mediaPlayer
-import qs.modules.network
+import qs.modules.networkSpeed
 import qs.modules.nightLight
 import qs.modules.notifications
 import qs.modules.power
@@ -206,9 +206,12 @@ ShellRoot {
                             modal: nightLightMenu
                         }
 
+                        NetworkSpeedButton {
+                            modal: networkMenu
+                        }
+
                         DevicesButton {
                             bluetoothModal: bluetoothMenu
-                            networkModal: networkMenu
                             volumeModal: volumeMenu
                         }
 
@@ -262,7 +265,7 @@ ShellRoot {
         }
     }
 
-    NetworkModal {
+    NetworkSpeedModal {
         id: networkMenu
 
         onVisibleChanged: {

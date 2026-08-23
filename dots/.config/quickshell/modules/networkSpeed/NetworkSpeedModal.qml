@@ -1155,11 +1155,39 @@ PanelWindow {
                             Layout.fillWidth: true
                         }
 
-                        Text {
-                            text: VpnService.connected ? "\uE5C9" : "\uE5CB"
-                            font.family: materialSymbols.name
-                            font.pixelSize: 16
-                            color: vpnCardMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                        Rectangle {
+                            Layout.preferredWidth: 34
+                            Layout.preferredHeight: 20
+                            Layout.alignment: Qt.AlignVCenter
+                            radius: 10
+                            color: VpnService.connected ? Theme.success : Theme.surfaceContainerHigh
+                            border.color: VpnService.connected ? "transparent" : Theme.outlineVariant
+                            border.width: 1
+
+                            Rectangle {
+                                width: 16
+                                height: 16
+                                radius: 8
+                                x: VpnService.connected ? parent.width - width - 2 : 2
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: VpnService.connected ? Theme.primaryText : Theme.surfaceVariantText
+
+                                Behavior on x {
+                                    NumberAnimation {
+                                        duration: 160
+                                        easing.type: Easing.OutCubic
+                                    }
+
+                                }
+
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: VpnService.toggle()
+                            }
+
                         }
 
                     }
