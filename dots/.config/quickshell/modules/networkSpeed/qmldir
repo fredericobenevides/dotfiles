@@ -1,0 +1,3 @@
+singleton NetworkSpeedService 1.0 NetworkSpeedService.qml
+NetworkSpeedButton 1.0 NetworkSpeedButton.qml
+NetworkSpeedModal 1.0 NetworkSpeedModal.qml
