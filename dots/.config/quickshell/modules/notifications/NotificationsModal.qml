@@ -40,7 +40,8 @@ PanelWindow {
 
     function open() {
         visible = true;
-        selectedIndex = -1;
+        const list = showHistory ? NotificationsService.history : groupedItems;
+        selectedIndex = list.length > 0 ? 0 : -1;
     }
 
     function closeModal() {
@@ -117,13 +118,10 @@ PanelWindow {
                     notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
                 }
                 event.accepted = true;
-            } else if (event.key === Qt.Key_Left) {
+            } else if (event.key === Qt.Key_Left || event.key === Qt.Key_Right) {
                 notificationsModal.showHistory = !notificationsModal.showHistory;
-                notificationsModal.selectedIndex = -1;
-                event.accepted = true;
-            } else if (event.key === Qt.Key_Right) {
-                notificationsModal.showHistory = !notificationsModal.showHistory;
-                notificationsModal.selectedIndex = -1;
+                const list = notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems;
+                notificationsModal.selectedIndex = list.length > 0 ? 0 : -1;
                 event.accepted = true;
             }
         }
