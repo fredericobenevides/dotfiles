@@ -11,6 +11,7 @@ Singleton {
     id: root
 
     signal popupRequested(var notif)
+    signal popupClosed(var notif)
 
     property var items: []
     property int count: items.length
@@ -66,6 +67,7 @@ Singleton {
 
             function onClosed() {
                 NotificationsService.remove(watched);
+                NotificationsService.popupClosed(watched);
             }
 
             Component.onCompleted: {
