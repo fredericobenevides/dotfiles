@@ -53,6 +53,14 @@ PanelWindow {
         target: NotificationsService
     }
 
+    Connections {
+        function onPopupClosed(notif) {
+            notificationPopup.removePopup(notif);
+        }
+
+        target: NotificationsService
+    }
+
     Component {
         id: popupTimerComponent
 
@@ -87,6 +95,12 @@ PanelWindow {
                 border.color: Theme.surfaceContainerHighest
                 border.width: 1
                 implicitHeight: cardContent.implicitHeight + 40
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: notificationPopup.removePopup(modelData)
+                }
 
                 Rectangle {
                     anchors.fill: parent
@@ -186,12 +200,6 @@ PanelWindow {
                         elide: Text.ElideRight
                     }
 
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: notificationPopup.removePopup(modelData)
                 }
 
             }
