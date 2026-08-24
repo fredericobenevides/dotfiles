@@ -53,6 +53,12 @@ PanelWindow {
             if (event.key === Qt.Key_Escape) {
                 nightLightMenu.closeModal();
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Left) {
+                NightLightService.setTemperature(Math.max(2000, NightLightService.temperature - 100));
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Right) {
+                NightLightService.setTemperature(Math.min(6500, NightLightService.temperature + 100));
+                event.accepted = true;
             }
         }
 

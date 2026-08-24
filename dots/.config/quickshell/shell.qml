@@ -370,6 +370,12 @@ ShellRoot {
     }
 
     GlobalShortcut {
+        name: "toggle-night-light-modal"
+        description: "Toggle night light modal"
+        onPressed: shell.toggleMenu(nightLightMenu)
+    }
+
+    GlobalShortcut {
         name: "toggle-clipboard"
         description: "Toggle clipboard history"
         onPressed: shell.toggleMenu(clipboardModal)
