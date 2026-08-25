@@ -13,7 +13,7 @@ Rectangle {
     implicitWidth: 24
     implicitHeight: 24
     radius: 12
-    color: Theme.surfaceContainerHigh
+    color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     FontLoader {
         id: materialSymbols
@@ -44,6 +44,13 @@ Rectangle {
                 root.modal.open();
 
         }
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 160
+        }
+
     }
 
 }
