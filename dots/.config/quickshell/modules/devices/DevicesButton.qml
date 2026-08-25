@@ -9,11 +9,12 @@ Rectangle {
 
     property var bluetoothModal
     property var volumeModal
+    property bool hovered: bluetoothBtn.hovered || volumeBtn.hovered
 
     implicitWidth: buttonsRow.implicitWidth + 15
     implicitHeight: 24
     radius: 12
-    color: Theme.surfaceContainerHigh
+    color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     RowLayout {
         id: buttonsRow
@@ -22,11 +23,22 @@ Rectangle {
         spacing: 4
 
         BluetoothButton {
+            id: bluetoothBtn
+
             modal: root.bluetoothModal
         }
 
         VolumeButton {
+            id: volumeBtn
+
             modal: root.volumeModal
+        }
+
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 160
         }
 
     }

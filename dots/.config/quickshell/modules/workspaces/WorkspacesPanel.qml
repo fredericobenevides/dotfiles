@@ -39,11 +39,27 @@ Item {
                     required property var modelData
                     property bool isActive: Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === modelData.id
                     property bool isAttention: modelData.urgent && !isActive
+                    property bool hovered: mouseArea.containsMouse
 
                     width: isActive ? 32 : 20
                     height: 20
                     radius: 10
                     color: isActive ? Theme.primary : (isAttention ? Theme.attention : Theme.outlineVariant)
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 10
+                        color: "white"
+                        opacity: wsBox.hovered ? 0.15 : 0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 160
+                            }
+
+                        }
+
+                    }
 
                     Text {
                         anchors.centerIn: parent
@@ -53,8 +69,11 @@ Item {
                     }
 
                     MouseArea {
+                        id: mouseArea
+
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
                         onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + wsBox.modelData.id + " })")
                     }
 
