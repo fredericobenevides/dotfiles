@@ -143,6 +143,18 @@ PanelWindow {
                                 appsGrid.forceActiveFocus();
                                 event.accepted = true;
                             }
+                        } else if (event.key === Qt.Key_Right && (searchInput.text.length === 0 || searchInput.cursorPosition === searchInput.text.length)) {
+                            if (appsGrid.count > 0) {
+                                appsGrid.forceActiveFocus();
+                                appsGrid.currentIndex = Math.min(1, appsGrid.count - 1);
+                                event.accepted = true;
+                            }
+                        } else if (event.key === Qt.Key_Left && (searchInput.text.length === 0 || searchInput.cursorPosition === 0)) {
+                            if (appsGrid.count > 0) {
+                                appsGrid.forceActiveFocus();
+                                appsGrid.currentIndex = 0;
+                                event.accepted = true;
+                            }
                         }
                     }
 
