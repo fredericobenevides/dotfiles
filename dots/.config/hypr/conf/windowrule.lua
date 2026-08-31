@@ -29,7 +29,7 @@ hl.window_rule({ name = "kitty-opacity",       match = { class = "^kitty" },    
 hl.window_rule({ name = "code-opacity",         match = { class = "^code" },               opacity = "0.95 0.95" })
 hl.window_rule({ name = "jetbrains-opacity",    match = { class = "^jetbrains-idea" },     opacity = "0.95 0.95" })
 hl.window_rule({ name = "spotify-opacity",      match = { class = "^spotify" },            opacity = "0.95 0.95" })
-hl.window_rule({ name = "vivaldi-opacity",      match = { class = "^vivaldi-stable" },     opacity = "1.0 0.90" })
+hl.window_rule({ name = "vivaldi-opacity",      match = { class = "^vivaldi-stable" },     opacity = "1.0 1.0" })
 
 -- Float/center rules for dialogs
 hl.window_rule({ name = "open-file-dialog",     match = { title = "^Open File" },     float = true, center = true })
