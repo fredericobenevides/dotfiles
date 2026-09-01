@@ -792,94 +792,117 @@ PanelWindow {
                                 width: ListView.view.width
                                 spacing: 2
 
-                                RowLayout {
+                                Item {
                                     width: parent.width
                                     height: 24
-                                    spacing: systemInfoModal.colSpacing
 
-                                    Text {
-                                        Layout.preferredWidth: systemInfoModal.colName
-                                        Layout.alignment: Qt.AlignVCenter
-                                        text: modelData.name
-                                        font.pixelSize: Theme.fontLabelMedium
-                                        color: Theme.surfaceText
-                                        elide: Text.ElideRight
-                                    }
-
-                                    Item {
-                                        Layout.preferredWidth: systemInfoModal.colCpu
-                                        Layout.preferredHeight: 24
-                                        Layout.alignment: Qt.AlignVCenter
+                                    RowLayout {
+                                        width: parent.width
+                                        height: 24
+                                        spacing: systemInfoModal.colSpacing
+                                        z: rowMouse.containsMouse ? 1 : 0
 
                                         Text {
-                                            anchors.centerIn: parent
-                                            anchors.horizontalCenterOffset: -38
-                                            text: modelData.cpu.toFixed(1) + "%"
+                                            Layout.preferredWidth: systemInfoModal.colName
+                                            Layout.alignment: Qt.AlignVCenter
+                                            text: modelData.name
                                             font.pixelSize: Theme.fontLabelMedium
-                                            color: Theme.surfaceVariantText
+                                            color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceText
+                                            elide: Text.ElideRight
+                                        }
+
+                                        Item {
+                                            Layout.preferredWidth: systemInfoModal.colCpu
+                                            Layout.preferredHeight: 24
+                                            Layout.alignment: Qt.AlignVCenter
+
+                                            Text {
+                                                anchors.centerIn: parent
+                                                anchors.horizontalCenterOffset: -38
+                                                text: modelData.cpu.toFixed(1) + "%"
+                                                font.pixelSize: Theme.fontLabelMedium
+                                                color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                                            }
+
+                                        }
+
+                                        Item {
+                                            Layout.preferredWidth: systemInfoModal.colGap
+                                            Layout.preferredHeight: 24
+                                            Layout.alignment: Qt.AlignVCenter
+                                        }
+
+                                        Item {
+                                            Layout.preferredWidth: systemInfoModal.colMem
+                                            Layout.preferredHeight: 24
+                                            Layout.alignment: Qt.AlignVCenter
+
+                                            Text {
+                                                anchors.centerIn: parent
+                                                anchors.horizontalCenterOffset: -68
+                                                text: systemInfoModal.formatMem(modelData.rss)
+                                                font.pixelSize: Theme.fontLabelMedium
+                                                color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                                            }
+
+                                        }
+
+                                        Item {
+                                            Layout.preferredWidth: systemInfoModal.colPid
+                                            Layout.preferredHeight: 24
+                                            Layout.alignment: Qt.AlignVCenter
+
+                                            Text {
+                                                anchors.centerIn: parent
+                                                anchors.horizontalCenterOffset: -46
+                                                text: modelData.pid
+                                                font.pixelSize: Theme.fontLabelMedium
+                                                color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceText
+                                            }
+
+                                        }
+
+                                        Item {
+                                            Layout.fillWidth: true
+                                            Layout.preferredHeight: 24
+                                            Layout.alignment: Qt.AlignVCenter
+
+                                            Text {
+                                                anchors.centerIn: parent
+                                                anchors.horizontalCenterOffset: -18
+                                                text: systemInfoModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
+                                                font.family: materialSymbols.name
+                                                font.pixelSize: 14
+                                                color: systemInfoModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
+                                                horizontalAlignment: Text.AlignHCenter
+                                                verticalAlignment: Text.AlignVCenter
+                                            }
+
+                                            MouseArea {
+                                                anchors.fill: parent
+                                                hoverEnabled: true
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: systemInfoModal.expandedPid = (systemInfoModal.expandedPid === modelData.pid) ? "" : modelData.pid
+                                            }
+
                                         }
 
                                     }
 
-                                    Item {
-                                        Layout.preferredWidth: systemInfoModal.colGap
-                                        Layout.preferredHeight: 24
-                                        Layout.alignment: Qt.AlignVCenter
+                                    Rectangle {
+                                        anchors.fill: parent
+                                        radius: 4
+                                        color: rowMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+                                        z: -1
                                     }
 
-                                    Item {
-                                        Layout.preferredWidth: systemInfoModal.colMem
-                                        Layout.preferredHeight: 24
-                                        Layout.alignment: Qt.AlignVCenter
+                                    MouseArea {
+                                        id: rowMouse
 
-                                        Text {
-                                            anchors.centerIn: parent
-                                            anchors.horizontalCenterOffset: -68
-                                            text: systemInfoModal.formatMem(modelData.rss)
-                                            font.pixelSize: Theme.fontLabelMedium
-                                            color: Theme.surfaceVariantText
-                                        }
-
-                                    }
-
-                                    Item {
-                                        Layout.preferredWidth: systemInfoModal.colPid
-                                        Layout.preferredHeight: 24
-                                        Layout.alignment: Qt.AlignVCenter
-
-                                        Text {
-                                            anchors.centerIn: parent
-                                            anchors.horizontalCenterOffset: -46
-                                            text: modelData.pid
-                                            font.pixelSize: Theme.fontLabelMedium
-                                            color: Theme.surfaceText
-                                        }
-
-                                    }
-
-                                    Item {
-                                        Layout.fillWidth: true
-                                        Layout.preferredHeight: 24
-                                        Layout.alignment: Qt.AlignVCenter
-
-                                        Text {
-                                            anchors.centerIn: parent
-                                            anchors.horizontalCenterOffset: -18
-                                            text: systemInfoModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
-                                            font.family: materialSymbols.name
-                                            font.pixelSize: 14
-                                            color: systemInfoModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
-                                            horizontalAlignment: Text.AlignHCenter
-                                            verticalAlignment: Text.AlignVCenter
-                                        }
-
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            hoverEnabled: true
-                                            cursorShape: Qt.PointingHandCursor
-                                            onClicked: systemInfoModal.expandedPid = (systemInfoModal.expandedPid === modelData.pid) ? "" : modelData.pid
-                                        }
-
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: systemInfoModal.expandedPid = (systemInfoModal.expandedPid === modelData.pid) ? "" : modelData.pid
                                     }
 
                                 }
