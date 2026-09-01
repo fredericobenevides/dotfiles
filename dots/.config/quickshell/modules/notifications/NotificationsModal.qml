@@ -108,6 +108,13 @@ PanelWindow {
                     notificationsModal.selectedIndex = Math.max(0, notificationsModal.selectedIndex - 1);
                 }
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Delete && (event.modifiers & Qt.ControlModifier)) {
+                if (notificationsModal.showHistory)
+                    NotificationsService.clearHistory();
+                else
+                    NotificationsService.dismissAll();
+                notificationsModal.selectedIndex = -1;
+                event.accepted = true;
             } else if (event.key === Qt.Key_Delete) {
                 if (notificationsModal.selectedIndex >= 0 && notificationsModal.selectedIndex < count) {
                     const item = list[notificationsModal.selectedIndex];
@@ -140,7 +147,14 @@ PanelWindow {
             color: "transparent"
             focus: true
             Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Delete) {
+                if (event.key === Qt.Key_Delete && (event.modifiers & Qt.ControlModifier)) {
+                    if (notificationsModal.showHistory)
+                        NotificationsService.clearHistory();
+                    else
+                        NotificationsService.dismissAll();
+                    notificationsModal.selectedIndex = -1;
+                    event.accepted = true;
+                } else if (event.key === Qt.Key_Delete) {
                     const list = notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems;
                     const count = list.length;
                     if (notificationsModal.selectedIndex >= 0 && notificationsModal.selectedIndex < count) {
