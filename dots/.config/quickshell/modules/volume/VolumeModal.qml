@@ -34,18 +34,31 @@ PanelWindow {
             return ;
 
         const isSink = mode === "sink";
+        const active = isSink ? Pipewire.defaultAudioSink : Pipewire.defaultAudioSource;
         const nodes = Pipewire.nodes.values;
+        const seen = new Set();
         const result = [];
         for (let i = 0; i < nodes.length; i++) {
             const node = nodes[i];
             if (!node || !node.audio || node.isStream)
                 continue;
 
-            if (node.isSink === isSink)
-                result.push(node);
+            if (node.isSink !== isSink)
+                continue;
 
+            const label = volumeMenu.nodeLabel(node);
+            if (!label || seen.has(label))
+                continue;
+
+            seen.add(label);
+            result.push(node);
         }
         result.sort((a, b) => {
+            const aActive = active && active.id === a.id;
+            const bActive = active && active.id === b.id;
+            if (aActive !== bActive)
+                return aActive ? -1 : 1;
+
             return volumeMenu.nodeLabel(a).localeCompare(volumeMenu.nodeLabel(b));
         });
         pickerModel = result;
@@ -60,7 +73,6 @@ PanelWindow {
     }
 
     focusable: true
-
     visible: false
     anchors.top: true
     anchors.bottom: true
