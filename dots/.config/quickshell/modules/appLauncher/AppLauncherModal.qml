@@ -13,6 +13,43 @@ PanelWindow {
     property string searchText: ""
     property bool anyCardHovered: false
     readonly property string launcherIcon: "󰀻"
+    readonly property bool isMathExpression: {
+        if (!searchText)
+            return false;
+
+        return evaluateMath(searchText) !== null;
+    }
+    readonly property string mathResult: {
+        if (!isMathExpression)
+            return "";
+
+        return String(evaluateMath(searchText));
+    }
+
+    function evaluateMath(expr) {
+        const clean = expr.replace(/\s/g, '');
+        if (clean.length === 0)
+            return null;
+
+        if (!/^[0-9+\-*/().%^]+$/.test(clean))
+            return null;
+
+        const jsExpr = clean.replace(/\^/g, '**');
+        try {
+            const result = eval(jsExpr);
+            if (typeof result !== 'number' || !isFinite(result))
+                return null;
+
+            return result;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function copyCalcResult() {
+        calcCopyProcess.command = ["wl-copy", "--", launcherMenu.mathResult];
+        calcCopyProcess.running = true;
+    }
 
     focusable: true
     visible: false
@@ -29,6 +66,18 @@ PanelWindow {
         }
     }
 
+    FontLoader {
+        id: materialSymbols
+
+        source: Qt.resolvedUrl("/usr/share/fonts/TTF/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf")
+    }
+
+    Process {
+        id: calcCopyProcess
+
+        command: ["wl-copy", ""]
+    }
+
     ScriptModel {
         id: filteredAppsModel
 
@@ -37,7 +86,7 @@ PanelWindow {
             if (!launcherMenu.searchText)
                 return apps;
 
-            return apps.filter((app) => {
+            const filtered = apps.filter((app) => {
                 const q = launcherMenu.searchText;
                 const fields = [app.name, app.genericName, app.id, app.execString];
                 for (let i = 0; i < fields.length; i++) {
@@ -55,6 +104,23 @@ PanelWindow {
                 }
                 return false;
             });
+            if (launcherMenu.isMathExpression) {
+                const r = launcherMenu.mathResult;
+                const expr = launcherMenu.searchText;
+                return [{
+                    "name": expr + " = " + r,
+                    "icon": "accessories-calculator",
+                    "genericName": "Calculator",
+                    "id": "calculator-result",
+                    "execString": "",
+                    "keywords": [],
+                    "execute": function() {
+                        launcherMenu.copyCalcResult();
+                        launcherMenu.visible = false;
+                    }
+                }].concat(filtered);
+            }
+            return filtered;
         }
     }
 
@@ -231,11 +297,26 @@ PanelWindow {
                     anchors.centerIn: parent
                     spacing: 8
 
-                    IconImage {
-                        Layout.alignment: Qt.AlignHCenter
+                    Item {
                         Layout.preferredWidth: 44
                         Layout.preferredHeight: 44
-                        source: Quickshell.iconPath(modelData.icon, "application-x-executable")
+                        Layout.alignment: Qt.AlignHCenter
+
+                        Text {
+                            text: "\uE8F0"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 40
+                            color: Theme.primary
+                            anchors.centerIn: parent
+                            visible: modelData.id === "calculator-result"
+                        }
+
+                        IconImage {
+                            anchors.fill: parent
+                            source: Quickshell.iconPath(modelData.icon, "application-x-executable")
+                            visible: modelData.id !== "calculator-result"
+                        }
+
                     }
 
                     Text {
