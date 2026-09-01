@@ -24,6 +24,12 @@ PanelWindow {
         visible = false;
     }
 
+    function openAurPackage(pkgLine) {
+        const name = pkgLine.split(/\s+/)[0];
+        aurLinkProcess.command = ["xdg-open", "https://aur.archlinux.org/packages/" + name];
+        aurLinkProcess.running = true;
+    }
+
     focusable: true
     visible: false
     anchors.top: true
@@ -357,14 +363,36 @@ PanelWindow {
 
                             }
 
-                            delegate: Text {
+                            delegate: Item {
                                 width: ListView.view.width
                                 height: 22
-                                verticalAlignment: Text.AlignVCenter
-                                text: "• " + modelData
-                                font.pixelSize: Theme.fontLabelSmall
-                                color: Theme.surfaceText
-                                elide: Text.ElideRight
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: 4
+                                    color: aurMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+                                }
+
+                                Text {
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.leftMargin: 4
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: "• " + modelData
+                                    font.pixelSize: Theme.fontLabelSmall
+                                    color: aurMouse.containsMouse ? Theme.primary : Theme.surfaceText
+                                    elide: Text.ElideRight
+                                }
+
+                                MouseArea {
+                                    id: aurMouse
+
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: systemUpdatesModal.openAurPackage(modelData)
+                                }
+
                             }
 
                         }
@@ -491,6 +519,12 @@ PanelWindow {
         id: fullProc
 
         command: ["kitty", "--title", "qs-kitty-update", "sh", "-c", "yay -Syu; echo ''; echo 'Press Enter to close...'; read"]
+    }
+
+    Process {
+        id: aurLinkProcess
+
+        command: ["xdg-open", ""]
     }
 
 }
