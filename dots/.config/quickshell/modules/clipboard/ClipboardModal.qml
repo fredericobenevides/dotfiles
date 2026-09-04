@@ -74,6 +74,9 @@ PanelWindow {
                     clipboardModal.closeModal();
                 }
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Delete && (event.modifiers & Qt.ControlModifier)) {
+                ClipboardService.clearAll();
+                event.accepted = true;
             } else if (event.key === Qt.Key_Delete) {
                 const list = ClipboardService.filteredEntries;
                 if (list.length > 0 && ClipboardService.selectedIndex >= 0 && ClipboardService.selectedIndex < list.length)
@@ -209,6 +212,9 @@ PanelWindow {
                                         ClipboardService.copyEntry(list[ClipboardService.selectedIndex]);
                                         clipboardModal.closeModal();
                                     }
+                                    event.accepted = true;
+                                } else if (event.key === Qt.Key_Delete && (event.modifiers & Qt.ControlModifier)) {
+                                    ClipboardService.clearAll();
                                     event.accepted = true;
                                 } else if (event.key === Qt.Key_Delete) {
                                     const list = ClipboardService.filteredEntries;
