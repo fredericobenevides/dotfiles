@@ -69,6 +69,9 @@ PanelWindow {
             if (a.active !== b.active)
                 return a.active ? -1 : 1;
 
+            if (a.saved !== b.saved)
+                return a.saved ? -1 : 1;
+
             return (b.signal || 0) - (a.signal || 0);
         });
         return merged;
