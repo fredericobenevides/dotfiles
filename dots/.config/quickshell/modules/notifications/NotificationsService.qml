@@ -42,7 +42,7 @@ Singleton {
             if (!notif.lastGeneration) {
                 root.addToHistory(notif);
                 root.popupRequested(notif);
-                Quickshell.execDetached(["paplay", Quickshell.env("HOME") + "/.config/quickshell/assets/sounds/message.oga"]);
+                Quickshell.execDetached(["pw-play", Quickshell.env("HOME") + "/.config/quickshell/assets/sounds/message.oga"]);
             }
         }
     }
@@ -60,7 +60,7 @@ Singleton {
             function onBodyChanged() {
                 if (!isInitial && !soundCooldown) {
                     soundCooldown = true;
-                    Quickshell.execDetached(["paplay", Quickshell.env("HOME") + "/.config/quickshell/assets/sounds/message.oga"]);
+                    Quickshell.execDetached(["pw-play", Quickshell.env("HOME") + "/.config/quickshell/assets/sounds/message.oga"]);
                     Qt.callLater(function() { soundCooldown = false; });
                 }
             }
