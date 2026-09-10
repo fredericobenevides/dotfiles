@@ -278,6 +278,7 @@ ShellRoot {
     VolumeModal {
         id: volumeMenu
 
+        osd: volumeOSD
         onVisibleChanged: {
             if (visible)
                 shell.closeOtherModals(volumeMenu);

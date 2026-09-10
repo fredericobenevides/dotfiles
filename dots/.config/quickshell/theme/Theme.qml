@@ -17,4 +17,5 @@ QtObject {
     readonly property color error: "#f38ba8"
     readonly property color attention: "#b4befe"
     readonly property color success: "#a6e3a1"
+    readonly property color fallback: "#89b4fa"
 }
