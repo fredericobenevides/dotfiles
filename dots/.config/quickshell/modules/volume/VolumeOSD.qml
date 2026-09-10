@@ -11,13 +11,19 @@ PanelWindow {
     readonly property var outputSink: Pipewire.defaultAudioSink
     readonly property real currentVolume: outputSink && outputSink.audio ? outputSink.audio.volume : 0
     readonly property bool isMuted: outputSink && outputSink.audio ? outputSink.audio.muted : false
+    property bool suppress: false
 
     function pct(value) {
         return Number.isFinite(value) ? Math.round(value * 100) + "%" : "--";
     }
 
     function show() {
-        visible = true;
+        if (volumeOSD.suppress)
+            return ;
+
+        if (!volumeOSD.visible)
+            volumeOSD.visible = true;
+
         hideTimer.restart();
     }
 

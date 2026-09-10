@@ -19,6 +19,9 @@ PanelWindow {
     property int wifiScanAttempts: 0
     readonly property int wifiMaxScanAttempts: 5
     property string activeWifiDevice: ""
+    property string activeWifiSsid: ""
+    property var ambiguousSsid: ({
+    })
     property var savedNetworks: []
     property bool wifiScanning: false
     property string passwordTarget: ""
@@ -36,10 +39,30 @@ PanelWindow {
     property var infoBuffer: []
     property var wifiBuffer: []
     property var savedBuffer: []
+    property var routeTable: []
+    property string defaultRouteDevice: ""
+    property bool wifiRadioEnabled: true
+    property var savedAutoconnect: ({
+    })
+    property bool showPassword: false
+    property bool disconnecting: false
+    property string disconnectingWifiSsid: ""
+    property string disconnectingDev: ""
+    property bool connecting: false
+    property string connectingSsid: ""
+    property string connectingDev: ""
+    property var routeBuffer: []
+    property var radioBuffer: []
 
     function refresh() {
         wifiAccumulated = [];
         wifiScanAttempts = 0;
+        routeBuffer = [];
+        routeProcess.command = ["sh", "-c", "ip route show default"];
+        routeProcess.running = true;
+        radioBuffer = [];
+        radioProcess.command = ["nmcli", "-t", "radio"];
+        radioProcess.running = true;
         typeBuffer = [];
         typeProcess.command = ["nmcli", "-t", "-f", "TYPE", "connection", "show", "--active"];
         typeProcess.running = true;
@@ -51,17 +74,19 @@ PanelWindow {
         };
         for (let i = 0; i < wifiAccumulated.length; i++) {
             const n = wifiAccumulated[i];
-            map[n.ssid] = n;
+            const key = n.ssid + "|" + (n.band || "2.4GHz");
+            map[key] = n;
         }
         for (let i = 0; i < newList.length; i++) {
             const n = newList[i];
-            const existing = map[n.ssid];
+            const key = n.ssid + "|" + (n.band || "2.4GHz");
+            const existing = map[key];
             if (!existing)
-                map[n.ssid] = n;
+                map[key] = n;
             else if (n.active && !existing.active)
-                map[n.ssid] = n;
+                map[key] = n;
             else if (n.signal > existing.signal)
-                map[n.ssid] = n;
+                map[key] = n;
         }
         const merged = [];
         for (const key in map) merged.push(map[key])
@@ -77,13 +102,28 @@ PanelWindow {
         return merged;
     }
 
+    function buildAmbiguousSsid() {
+        const counts = {
+        };
+        for (let i = 0; i < wifiAccumulated.length; i++) {
+            const ssid = wifiAccumulated[i].ssid;
+            counts[ssid] = (counts[ssid] || 0) + 1;
+        }
+        const amb = {
+        };
+        for (const key in counts) if (counts[key] > 1) {
+            amb[key] = true;
+        }
+        ambiguousSsid = amb;
+    }
+
     function refreshWifi() {
         wifiScanning = true;
         if (wifiListProcess.running)
             return ;
 
         wifiBuffer = [];
-        wifiListProcess.command = ["sh", "-c", "nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE device wifi list --rescan yes || nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE device wifi list --rescan no"];
+        wifiListProcess.command = ["sh", "-c", "nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE,FREQ,RATE device wifi list --rescan yes || nmcli -t -f SSID,SIGNAL,SECURITY,ACTIVE,FREQ,RATE device wifi list --rescan no"];
         wifiListProcess.running = true;
         savedProcess.running = true;
     }
@@ -111,7 +151,17 @@ PanelWindow {
     }
 
     function connectWifi(ssid) {
-        wifiConnectProcess.command = ["nmcli", "device", "wifi", "connect", ssid];
+        if (wifiListProcess.running)
+            wifiListProcess.running = false;
+
+        connecting = true;
+        connectingSsid = ssid;
+        connectingDev = "";
+        transitionTimeout.restart();
+        if (savedNetworks.indexOf(ssid) !== -1)
+            wifiConnectProcess.command = ["nmcli", "connection", "up", ssid];
+        else
+            wifiConnectProcess.command = ["nmcli", "device", "wifi", "connect", ssid];
         wifiConnectProcess.running = true;
     }
 
@@ -123,8 +173,30 @@ PanelWindow {
     function connectWifiWithPassword(ssid, password) {
         passwordTarget = "";
         passwordInput = "";
+        if (wifiListProcess.running)
+            wifiListProcess.running = false;
+
+        connecting = true;
+        connectingSsid = ssid;
+        connectingDev = "";
+        transitionTimeout.restart();
         wifiConnectProcess.command = ["nmcli", "device", "wifi", "connect", ssid, "password", password];
         wifiConnectProcess.running = true;
+    }
+
+    function setAutoconnect(name, enabled) {
+        autoconnectProcess.command = ["nmcli", "connection", "modify", name, "connection.autoconnect", enabled ? "yes" : "no"];
+        autoconnectProcess.running = true;
+    }
+
+    function toggleWifiRadio() {
+        radioToggleProcess.command = ["nmcli", "radio", "wifi", wifiRadioEnabled ? "off" : "on"];
+        radioToggleProcess.running = true;
+    }
+
+    function refreshSaved() {
+        savedBuffer = [];
+        savedProcess.running = true;
     }
 
     function buildSectionedRows(map) {
@@ -262,11 +334,19 @@ PanelWindow {
     }
 
     function connectDevice(device) {
+        connecting = true;
+        connectingDev = device;
+        connectingSsid = "";
+        transitionTimeout.restart();
         connectProcess.command = ["nmcli", "device", "connect", device];
         connectProcess.running = true;
     }
 
     function disconnectDevice(device) {
+        disconnecting = true;
+        disconnectingWifiSsid = device === activeWifiDevice ? activeWifiSsid : "";
+        disconnectingDev = device === activeEthernetDevice ? device : "";
+        transitionTimeout.restart();
         disconnectProcess.command = ["nmcli", "device", "disconnect", device];
         disconnectProcess.running = true;
     }
@@ -340,6 +420,7 @@ PanelWindow {
             const ethList = [];
             let ethActive = "";
             let wifiActive = "";
+            let wifiActiveSsid = "";
             for (let i = 0; i < deviceBuffer.length; i++) {
                 const parts = deviceBuffer[i].split(":");
                 if (parts.length < 3 || parts[0] === "DEVICE")
@@ -356,11 +437,31 @@ PanelWindow {
 
                 } else if (parts[1] === "wifi" && parts[2] === "connected") {
                     wifiActive = parts[0];
+                    wifiActiveSsid = parts[3] || "";
                 }
             }
             ethernetDevices = ethList;
             activeEthernetDevice = ethActive;
             activeWifiDevice = wifiActive;
+            activeWifiSsid = wifiActiveSsid;
+            if (disconnectingWifiSsid !== "" && activeWifiSsid === "") {
+                disconnecting = false;
+                disconnectingWifiSsid = "";
+            }
+            if (disconnectingDev !== "" && activeEthernetDevice !== disconnectingDev) {
+                disconnecting = false;
+                disconnectingDev = "";
+            }
+            if (connectingSsid !== "" && activeWifiSsid !== "") {
+                connecting = false;
+                connectingSsid = "";
+                connectingDev = "";
+            }
+            if (connectingDev !== "" && activeEthernetDevice === connectingDev) {
+                connecting = false;
+                connectingSsid = "";
+                connectingDev = "";
+            }
             refreshInfoForActive();
         }
 
@@ -422,6 +523,13 @@ PanelWindow {
             refreshDevices();
             refreshWifi();
         }
+
+        stderr: SplitParser {
+            onRead: (data) => {
+                console.log("connect stderr:", data);
+            }
+        }
+
     }
 
     Process {
@@ -431,6 +539,13 @@ PanelWindow {
             refreshDevices();
             refreshWifi();
         }
+
+        stderr: SplitParser {
+            onRead: (data) => {
+                console.log("disconnect stderr:", data);
+            }
+        }
+
     }
 
     Process {
@@ -452,6 +567,33 @@ PanelWindow {
         }
     }
 
+    Timer {
+        id: routeRefreshTimer
+
+        interval: 5000
+        repeat: true
+        running: visible
+        onTriggered: {
+            routeBuffer = [];
+            routeProcess.running = true;
+            refreshDevices();
+        }
+    }
+
+    Timer {
+        id: transitionTimeout
+
+        interval: 8000
+        onTriggered: {
+            connecting = false;
+            connectingSsid = "";
+            connectingDev = "";
+            disconnecting = false;
+            disconnectingWifiSsid = "";
+            disconnectingDev = "";
+        }
+    }
+
     Process {
         id: wifiListProcess
 
@@ -469,25 +611,36 @@ PanelWindow {
                 const signal = parseInt(parts[1]) || 0;
                 const security = parts[2] || "";
                 const active = parts[3] === "yes";
-                if (seen[ssid] !== undefined) {
-                    const existing = list[seen[ssid]];
+                const freq = parts[4] || "";
+                const rate = parts[5] || "";
+                const freqMhz = parseFloat(freq) || 0;
+                const band = freqMhz >= 5000 ? "5GHz" : "2.4GHz";
+                const key = ssid + "|" + band;
+                if (seen[key] !== undefined) {
+                    const existing = list[seen[key]];
                     if (signal > existing.signal) {
                         existing.signal = signal;
                         existing.security = security;
                         existing.active = active;
+                        existing.freq = freq;
+                        existing.rate = rate;
                     }
                     continue;
                 }
-                seen[ssid] = list.length;
+                seen[key] = list.length;
                 list.push({
                     "ssid": ssid,
                     "signal": signal,
                     "security": security,
                     "active": active,
+                    "freq": freq,
+                    "rate": rate,
+                    "band": band,
                     "saved": savedNetworks.indexOf(ssid) !== -1
                 });
             }
             wifiAccumulated = mergeWifiNetworks(list);
+            buildAmbiguousSsid();
             wifiScanAttempts += 1;
             if (wifiScanAttempts < wifiMaxScanAttempts && visible && selectedTab === "wifi")
                 wifiRescanTimer.start();
@@ -505,16 +658,20 @@ PanelWindow {
     Process {
         id: savedProcess
 
-        command: ["nmcli", "-t", "-f", "NAME,TYPE", "connection", "show"]
+        command: ["nmcli", "-t", "-f", "NAME,TYPE,AUTOCONNECT", "connection", "show"]
         onExited: {
             const saved = [];
+            const autoconnect = {
+            };
             for (let i = 0; i < savedBuffer.length; i++) {
                 const parts = savedBuffer[i].split(":");
-                if (parts.length >= 2 && parts[1] === "802-11-wireless")
+                if (parts.length >= 3 && parts[1] === "802-11-wireless") {
                     saved.push(parts[0]);
-
+                    autoconnect[parts[0]] = parts[2] === "yes";
+                }
             }
             savedNetworks = saved;
+            savedAutoconnect = autoconnect;
             savedBuffer = [];
         }
 
@@ -527,12 +684,103 @@ PanelWindow {
     }
 
     Process {
+        id: autoconnectProcess
+
+        onExited: {
+            refreshSaved();
+        }
+    }
+
+    Process {
+        id: routeProcess
+
+        onExited: {
+            const table = [];
+            for (let i = 0; i < routeBuffer.length; i++) {
+                const parts = routeBuffer[i].split(/\s+/);
+                if (parts.length === 0 || parts[0] !== "default")
+                    continue;
+
+                let device = "";
+                let metric = 0;
+                for (let j = 1; j < parts.length; j++) {
+                    if (parts[j] === "dev" && j + 1 < parts.length)
+                        device = parts[++j];
+                    else if (parts[j] === "metric" && j + 1 < parts.length)
+                        metric = parseInt(parts[++j]) || 0;
+                }
+                if (device)
+                    table.push({
+                    "device": device,
+                    "metric": metric
+                });
+
+            }
+            routeTable = table;
+            let best = "";
+            let bestMetric = Number.MAX_SAFE_INTEGER;
+            for (let i = 0; i < table.length; i++) {
+                if (table[i].metric < bestMetric) {
+                    bestMetric = table[i].metric;
+                    best = table[i].device;
+                }
+            }
+            defaultRouteDevice = best;
+        }
+
+        stdout: SplitParser {
+            onRead: (data) => {
+                routeBuffer.push(data);
+            }
+        }
+
+    }
+
+    Process {
+        id: radioProcess
+
+        onExited: {
+            const parts = radioBuffer.length > 0 ? radioBuffer[0].split(":") : [];
+            wifiRadioEnabled = parts.length >= 2 ? parts[1] === "enabled" : true;
+        }
+
+        stdout: SplitParser {
+            onRead: (data) => {
+                radioBuffer.push(data);
+            }
+        }
+
+    }
+
+    Process {
+        id: radioToggleProcess
+
+        onExited: {
+            radioBuffer = [];
+            radioProcess.running = true;
+            if (wifiListProcess.running)
+                wifiListProcess.running = false;
+
+            wifiAccumulated = [];
+            wifiScanAttempts = 0;
+            refreshWifi();
+        }
+    }
+
+    Process {
         id: wifiConnectProcess
 
         onExited: {
             refreshWifi();
             refreshDevices();
         }
+
+        stderr: SplitParser {
+            onRead: (data) => {
+                console.log("wifi connect stderr:", data);
+            }
+        }
+
     }
 
     MouseArea {
@@ -706,12 +954,14 @@ PanelWindow {
                         delegate: Rectangle {
                             required property var modelData
                             readonly property bool isCurrent: modelData.device === networkMenu.activeEthernetDevice
+                            readonly property bool isDefaultRoute: isCurrent && modelData.device === networkMenu.defaultRouteDevice
+                            readonly property bool isFallback: isCurrent && networkMenu.defaultRouteDevice !== "" && modelData.device !== networkMenu.defaultRouteDevice
 
                             Layout.fillWidth: true
                             height: 56
                             radius: 7
                             color: ethItemMouse.containsMouse || isCurrent ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-                            border.color: isCurrent ? Theme.primary : "transparent"
+                            border.color: isDefaultRoute ? Theme.primary : (isFallback ? Theme.fallback : "transparent")
                             border.width: isCurrent ? 1 : 0
 
                             MouseArea {
@@ -735,7 +985,7 @@ PanelWindow {
                                     text: "\uEB2F"
                                     font.family: materialSymbols.name
                                     font.pixelSize: 12
-                                    color: Theme.surfaceVariantText
+                                    color: isFallback ? Theme.fallback : Theme.surfaceVariantText
                                 }
 
                                 ColumnLayout {
@@ -748,17 +998,52 @@ PanelWindow {
                                         elide: Text.ElideRight
                                         font.pixelSize: Theme.fontLabelMedium
                                         font.bold: true
-                                        color: Theme.surfaceText
+                                        color: isFallback ? Theme.fallback : Theme.surfaceText
                                     }
 
                                     RowLayout {
                                         Layout.fillWidth: true
                                         spacing: 6
 
+                                        Rectangle {
+                                            Layout.alignment: Qt.AlignVCenter
+                                            width: 6
+                                            height: 6
+                                            radius: 3
+                                            color: Theme.success
+                                            visible: VpnService.connected && isCurrent && modelData.device === networkMenu.defaultRouteDevice
+                                        }
+
                                         Text {
-                                            text: isCurrent ? "Connected" : "Disconnected"
+                                            text: networkMenu.connectingDev === modelData.device ? "Connecting..." : networkMenu.disconnectingDev === modelData.device ? "Disconnecting..." : isCurrent ? "Connected" : "Disconnected"
                                             font.pixelSize: Theme.fontLabelSmall
-                                            color: isCurrent ? Theme.primary : Theme.surfaceVariantText
+                                            color: networkMenu.connectingDev === modelData.device ? "#f9e2af" : networkMenu.disconnectingDev === modelData.device ? "#f9e2af" : isDefaultRoute ? Theme.primary : (isFallback ? Theme.fallback : Theme.surfaceVariantText)
+                                        }
+
+                                        Text {
+                                            text: {
+                                                const t = networkMenu.routeTable;
+                                                for (let i = 0; i < t.length; i++) {
+                                                    if (t[i].device === modelData.device)
+                                                        return ((modelData.device === networkMenu.defaultRouteDevice && VpnService.connected) ? "WARP · " : "") + (modelData.device === networkMenu.defaultRouteDevice ? "Default route" : "Fallback") + " · " + t[i].metric;
+
+                                                }
+                                                return "";
+                                            }
+                                            visible: {
+                                                if (!isCurrent)
+                                                    return false;
+
+                                                const t = networkMenu.routeTable;
+                                                for (let i = 0; i < t.length; i++) {
+                                                    if (t[i].device === modelData.device)
+                                                        return true;
+
+                                                }
+                                                return false;
+                                            }
+                                            font.pixelSize: Theme.fontLabelSmall
+                                            color: networkMenu.defaultRouteDevice === modelData.device && VpnService.connected ? Theme.success : modelData.device === networkMenu.defaultRouteDevice ? Theme.primary : (isCurrent ? Theme.fallback : Theme.surfaceVariantText)
                                         }
 
                                     }
@@ -843,6 +1128,101 @@ PanelWindow {
                 spacing: 10
                 visible: selectedTab === "wifi"
 
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 56
+                    radius: 7
+                    color: wifiRadioCardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+                    border.color: networkMenu.wifiRadioEnabled ? Theme.primary : "transparent"
+                    border.width: networkMenu.wifiRadioEnabled ? 1 : 0
+
+                    MouseArea {
+                        id: wifiRadioCardMouse
+
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: networkMenu.toggleWifiRadio()
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                        anchors.rightMargin: 8
+                        spacing: 8
+
+                        Text {
+                            text: networkMenu.wifiRadioEnabled ? "\uE63E" : "\uE648"
+                            font.family: materialSymbols.name
+                            font.pixelSize: 16
+                            color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceVariantText
+                        }
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: "WiFi enabled"
+                                elide: Text.ElideRight
+                                font.pixelSize: Theme.fontLabelMedium
+                                font.bold: true
+                                color: Theme.surfaceText
+                            }
+
+                            Text {
+                                Layout.fillWidth: true
+                                text: networkMenu.wifiRadioEnabled ? "On" : "Off"
+                                font.pixelSize: Theme.fontLabelSmall
+                                color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceVariantText
+                            }
+
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Rectangle {
+                            Layout.preferredWidth: 34
+                            Layout.preferredHeight: 20
+                            Layout.alignment: Qt.AlignVCenter
+                            radius: 10
+                            color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceContainerHigh
+                            border.color: networkMenu.wifiRadioEnabled ? "transparent" : Theme.outlineVariant
+                            border.width: 1
+
+                            Rectangle {
+                                width: 16
+                                height: 16
+                                radius: 8
+                                x: networkMenu.wifiRadioEnabled ? parent.width - width - 2 : 2
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: networkMenu.wifiRadioEnabled ? Theme.primaryText : Theme.surfaceVariantText
+
+                                Behavior on x {
+                                    NumberAnimation {
+                                        duration: 160
+                                        easing.type: Easing.OutCubic
+                                    }
+
+                                }
+
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: networkMenu.toggleWifiRadio()
+                            }
+
+                        }
+
+                    }
+
+                }
+
                 ListView {
                     id: wifiList
 
@@ -869,13 +1249,15 @@ PanelWindow {
 
                     delegate: Rectangle {
                         required property var modelData
-                        readonly property bool isActive: modelData.active
+                        readonly property bool isActive: modelData.active || (networkMenu.activeWifiSsid !== "" && modelData.ssid === networkMenu.activeWifiSsid && !networkMenu.ambiguousSsid[modelData.ssid])
+                        readonly property bool isDefaultRouteConnected: isActive && networkMenu.activeWifiDevice !== "" && networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice
+                        readonly property bool isFallbackConnected: isActive && networkMenu.defaultRouteDevice !== "" && networkMenu.activeWifiDevice !== networkMenu.defaultRouteDevice
 
                         width: wifiList.width
                         height: 56
                         radius: 7
                         color: wifiItemMouse.containsMouse || isActive ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
-                        border.color: isActive ? Theme.primary : "transparent"
+                        border.color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : "transparent")
                         border.width: isActive ? 1 : 0
 
                         MouseArea {
@@ -914,56 +1296,118 @@ PanelWindow {
                                 }
                                 font.family: materialSymbols.name
                                 font.pixelSize: 16
-                                color: isActive ? Theme.primary : Theme.surfaceVariantText
+                                color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                             }
 
                             ColumnLayout {
                                 Layout.fillWidth: true
                                 spacing: 2
 
-                                Text {
+                                Item {
                                     Layout.fillWidth: true
-                                    text: modelData.ssid
-                                    elide: Text.ElideRight
-                                    font.pixelSize: Theme.fontLabelMedium
-                                    font.bold: true
-                                    color: Theme.surfaceText
+                                    Layout.preferredHeight: wifiSsidText.implicitHeight
+
+                                    Text {
+                                        id: wifiSsidText
+
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: modelData.ssid
+                                        font.pixelSize: Theme.fontLabelMedium
+                                        font.bold: true
+                                        color: Theme.surfaceText
+                                    }
+
+                                    Text {
+                                        id: wifiBandTag
+
+                                        anchors.left: wifiSsidText.right
+                                        anchors.leftMargin: 6
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: "(" + (modelData.rate ? modelData.band + " · " + modelData.rate.replace("Mbit/s", "Mb/s") : modelData.band) + ")"
+                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.bold: true
+                                        color: isFallbackConnected ? Theme.fallback : (modelData.band === "5GHz" ? Theme.primary : Theme.surfaceVariantText)
+                                    }
+
                                 }
 
                                 RowLayout {
                                     Layout.fillWidth: true
                                     spacing: 6
 
+                                    Rectangle {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        width: 6
+                                        height: 6
+                                        radius: 3
+                                        color: Theme.success
+                                        visible: VpnService.connected && isActive && networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice
+                                    }
+
                                     Text {
-                                        text: isActive ? "Connected" : (modelData.security !== "" ? "Secure" : "Open")
+                                        text: networkMenu.connectingSsid === modelData.ssid ? "Connecting..." : networkMenu.disconnectingWifiSsid === modelData.ssid ? "Disconnecting..." : isActive ? "Connected" : (modelData.security !== "" ? "Secure" : "Open")
                                         font.pixelSize: Theme.fontLabelSmall
-                                        color: isActive ? Theme.primary : Theme.surfaceVariantText
+                                        color: networkMenu.connectingSsid === modelData.ssid ? "#f9e2af" : networkMenu.disconnectingWifiSsid === modelData.ssid ? "#f9e2af" : isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                                     }
 
                                     Text {
                                         text: "•"
                                         font.pixelSize: Theme.fontLabelSmall
-                                        color: Theme.surfaceVariantText
+                                        color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
                                         visible: modelData.saved
                                     }
 
                                     Text {
                                         text: "Saved"
                                         font.pixelSize: Theme.fontLabelSmall
-                                        color: Theme.primary
+                                        color: isFallbackConnected ? Theme.fallback : Theme.primary
                                         visible: modelData.saved
                                     }
 
                                     Text {
                                         text: "•"
                                         font.pixelSize: Theme.fontLabelSmall
-                                        color: Theme.surfaceVariantText
+                                        color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
                                     }
 
                                     Text {
                                         text: modelData.signal + "%"
                                         font.pixelSize: Theme.fontLabelSmall
-                                        color: Theme.surfaceVariantText
+                                        color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
+                                    }
+
+                                    Text {
+                                        text: "•"
+                                        font.pixelSize: Theme.fontLabelSmall
+                                        color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
+                                        visible: {
+                                            if (!isActive)
+                                                return false;
+
+                                            const t = networkMenu.routeTable;
+                                            for (let i = 0; i < t.length; i++) {
+                                                if (t[i].device === networkMenu.activeWifiDevice)
+                                                    return true;
+
+                                            }
+                                            return false;
+                                        }
+                                    }
+
+                                    Text {
+                                        text: {
+                                            const t = networkMenu.routeTable;
+                                            for (let i = 0; i < t.length; i++) {
+                                                if (t[i].device === networkMenu.activeWifiDevice)
+                                                    return ((networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice && VpnService.connected) ? "WARP · " : "") + (networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice ? "Default route" : "Fallback") + " · " + t[i].metric;
+
+                                            }
+                                            return "";
+                                        }
+                                        visible: isActive
+                                        font.pixelSize: Theme.fontLabelSmall
+                                        color: networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice && VpnService.connected ? Theme.success : networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                                     }
 
                                 }
@@ -985,7 +1429,7 @@ PanelWindow {
                                     text: "..."
                                     font.pixelSize: Theme.fontLabelLarge
                                     font.bold: true
-                                    color: wifiMenuMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                                    color: isFallbackConnected ? Theme.fallback : (wifiMenuMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText)
                                 }
 
                                 MouseArea {
@@ -1015,6 +1459,12 @@ PanelWindow {
                                                     networkMenu.forgetNetwork(modelData.ssid);
                                                 }
                                             });
+                                            items.push({
+                                                "label": (networkMenu.savedAutoconnect[modelData.ssid] === true ? "Autoconnect: On" : "Autoconnect: Off"),
+                                                "action": function() {
+                                                    networkMenu.setAutoconnect(modelData.ssid, networkMenu.savedAutoconnect[modelData.ssid] !== true);
+                                                }
+                                            });
                                         } else {
                                             items.push({
                                                 "label": "Connect",
@@ -1028,6 +1478,14 @@ PanelWindow {
                                                     }
                                                 }
                                             });
+                                            if (modelData.saved)
+                                                items.push({
+                                                "label": (networkMenu.savedAutoconnect[modelData.ssid] === true ? "Autoconnect: On" : "Autoconnect: Off"),
+                                                "action": function() {
+                                                    networkMenu.setAutoconnect(modelData.ssid, networkMenu.savedAutoconnect[modelData.ssid] !== true);
+                                                }
+                                            });
+
                                         }
                                         items.push({
                                             "label": "Network Info",
@@ -1063,7 +1521,7 @@ PanelWindow {
                     RowLayout {
                         anchors.centerIn: parent
                         spacing: 10
-                        visible: networkMenu.wifiScanning
+                        visible: networkMenu.wifiScanning && networkMenu.wifiRadioEnabled
 
                         BusyIndicator {
                             Layout.preferredWidth: 26
@@ -1085,7 +1543,15 @@ PanelWindow {
                         text: "No networks found"
                         font.pixelSize: Theme.fontLabelMedium
                         color: Theme.surfaceVariantText
-                        visible: !networkMenu.wifiScanning
+                        visible: !networkMenu.wifiScanning && networkMenu.wifiRadioEnabled
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "WiFi disabled"
+                        font.pixelSize: Theme.fontLabelMedium
+                        color: Theme.surfaceVariantText
+                        visible: !networkMenu.wifiRadioEnabled
                     }
 
                 }
@@ -1208,9 +1674,10 @@ PanelWindow {
                 color: "#99000000"
                 z: 100
                 onVisibleChanged: {
-                    if (visible)
+                    if (visible) {
+                        networkMenu.showPassword = false;
                         passwordField.forceActiveFocus();
-
+                    }
                 }
 
                 MouseArea {
@@ -1255,11 +1722,11 @@ PanelWindow {
 
                                 anchors.fill: parent
                                 anchors.leftMargin: 12
-                                anchors.rightMargin: 12
+                                anchors.rightMargin: 40
                                 verticalAlignment: TextInput.AlignVCenter
                                 font.pixelSize: Theme.fontLabelLarge
                                 color: Theme.surfaceText
-                                echoMode: TextInput.Password
+                                echoMode: networkMenu.showPassword ? TextInput.Normal : TextInput.Password
                                 text: networkMenu.passwordInput
                                 onTextChanged: networkMenu.passwordInput = text
                                 Keys.onPressed: (event) => {
@@ -1271,6 +1738,33 @@ PanelWindow {
                                         event.accepted = true;
                                     }
                                 }
+                            }
+
+                            Rectangle {
+                                width: 36
+                                height: 38
+                                anchors.right: parent.right
+                                anchors.verticalCenter: parent.verticalCenter
+                                radius: 7
+                                color: passEyeMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: networkMenu.showPassword ? "\uE8F4" : "\uE8F5"
+                                    font.family: materialSymbols.name
+                                    font.pixelSize: 16
+                                    color: passEyeMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
+                                }
+
+                                MouseArea {
+                                    id: passEyeMouse
+
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: networkMenu.showPassword = !networkMenu.showPassword
+                                }
+
                             }
 
                         }

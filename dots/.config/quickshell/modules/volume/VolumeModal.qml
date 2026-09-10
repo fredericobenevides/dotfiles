@@ -12,6 +12,7 @@ PanelWindow {
     readonly property var inputSource: Pipewire.defaultAudioSource
     property string pickerMode: ""
     property var pickerModel: []
+    property var osd: null
 
     function clamp(value) {
         return Math.max(0, Math.min(1, value));
@@ -80,9 +81,15 @@ PanelWindow {
     anchors.right: true
     color: "transparent"
     onVisibleChanged: {
+        if (volumeMenu.osd)
+            volumeMenu.osd.suppress = visible;
+
         if (visible) {
             pickerMode = "";
             bg.forceActiveFocus();
+            if (volumeMenu.osd)
+                volumeMenu.osd.visible = false;
+
         }
     }
 
