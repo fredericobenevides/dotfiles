@@ -22,6 +22,16 @@ PanelWindow {
         return Number.isFinite(value) ? Math.round(value * 100) + "%" : "--";
     }
 
+    function levelColor(level) {
+        if (level >= 0.8)
+            return Theme.error;
+
+        if (level >= 0.5)
+            return "#f9e2af";
+
+        return Theme.success;
+    }
+
     function nodeLabel(node) {
         if (!node)
             return "";
@@ -95,6 +105,20 @@ PanelWindow {
 
     PwObjectTracker {
         objects: Pipewire.defaultAudioSink && Pipewire.defaultAudioSource ? [Pipewire.defaultAudioSink, Pipewire.defaultAudioSource] : Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : Pipewire.defaultAudioSource ? [Pipewire.defaultAudioSource] : []
+    }
+
+    PwNodePeakMonitor {
+        id: micPeakMonitor
+
+        node: Pipewire.defaultAudioSource ? Pipewire.defaultAudioSource : null
+        enabled: volumeMenu.visible && Pipewire.defaultAudioSource !== null
+    }
+
+    PwNodePeakMonitor {
+        id: sinkPeakMonitor
+
+        node: Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink : null
+        enabled: volumeMenu.visible && Pipewire.defaultAudioSink !== null
     }
 
     MouseArea {
@@ -175,6 +199,59 @@ PanelWindow {
                                 outputSink.audio.volume = value;
 
                         }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 8
+
+                        Text {
+                            text: "\uF028"
+                            font.pixelSize: 12
+                            color: Theme.surfaceVariantText
+                        }
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 8
+                            radius: 4
+                            color: Theme.surfaceContainerHighest
+
+                            Rectangle {
+                                id: sinkLevelFill
+
+                                anchors.left: parent.left
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                width: parent.width * (sinkPeakMonitor.peak || 0)
+                                radius: 4
+                                color: volumeMenu.levelColor(sinkPeakMonitor.peak)
+
+                                Behavior on width {
+                                    NumberAnimation {
+                                        duration: 60
+                                        easing.type: Easing.OutQuad
+                                    }
+
+                                }
+
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        Text {
+                            text: volumeMenu.pct(sinkPeakMonitor.peak)
+                            font.pixelSize: Theme.fontLabelSmall
+                            color: Theme.surfaceVariantText
+                        }
+
                     }
 
                     Rectangle {
@@ -264,6 +341,59 @@ PanelWindow {
                                 inputSource.audio.volume = value;
 
                         }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 8
+
+                        Text {
+                            text: "\uF130"
+                            font.pixelSize: 12
+                            color: Theme.surfaceVariantText
+                        }
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 8
+                            radius: 4
+                            color: Theme.surfaceContainerHighest
+
+                            Rectangle {
+                                id: micLevelFill
+
+                                anchors.left: parent.left
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                width: parent.width * (micPeakMonitor.peak || 0)
+                                radius: 4
+                                color: volumeMenu.levelColor(micPeakMonitor.peak)
+
+                                Behavior on width {
+                                    NumberAnimation {
+                                        duration: 60
+                                        easing.type: Easing.OutQuad
+                                    }
+
+                                }
+
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        Text {
+                            text: volumeMenu.pct(micPeakMonitor.peak)
+                            font.pixelSize: Theme.fontLabelSmall
+                            color: Theme.surfaceVariantText
+                        }
+
                     }
 
                     Rectangle {
