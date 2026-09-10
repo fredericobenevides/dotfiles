@@ -1,0 +1,4 @@
+singleton GSRService 1.0 GSRService.qml
+OptionButton 1.0 OptionButton.qml
+RecorderButton 1.0 RecorderButton.qml
+RecorderModal 1.0 RecorderModal.qml

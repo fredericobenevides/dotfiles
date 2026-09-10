@@ -3,8 +3,10 @@ PACMAN_PKGS := alacritty \
 		conky \
 		flameshot \
 		gdb \
+		gpu-screen-recorder \
 		htop \
 		opencode \
+		shotcut \
 		vivaldi \
 		xdotool \
 		zathura-pdf-mupdf
