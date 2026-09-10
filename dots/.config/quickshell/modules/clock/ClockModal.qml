@@ -15,11 +15,28 @@ PanelWindow {
         const cells = [];
         const first = viewDate.getDay();
         const days = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
+        const prevDays = new Date(viewDate.getFullYear(), viewDate.getMonth(), 0).getDate();
         const total = Math.ceil((first + days) / 7) * 7;
         for (let i = 0; i < total; i++) {
-            const day = i - first + 1;
+            let day;
+            let inView;
+            let offset = 0;
+            if (i < first) {
+                day = prevDays - first + 1 + i;
+                inView = false;
+                offset = -1;
+            } else if (i >= first + days) {
+                day = i - first - days + 1;
+                inView = false;
+                offset = 1;
+            } else {
+                day = i - first + 1;
+                inView = true;
+            }
             cells.push({
-                "day": day >= 1 && day <= days ? day : 0
+                "day": day,
+                "inView": inView,
+                "offset": offset
             });
         }
         return cells;
@@ -154,12 +171,13 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
+                spacing: 4
 
                 Repeater {
                     model: clockMenu.weekDayNames
 
                     Text {
-                        Layout.fillWidth: true
+                        Layout.preferredWidth: 36
                         horizontalAlignment: Text.AlignHCenter
                         text: modelData
                         font.pixelSize: Theme.fontLabelSmall
@@ -184,7 +202,7 @@ PanelWindow {
                     delegate: Rectangle {
                         id: cell
 
-                        readonly property bool isInMonth: modelData.day > 0
+                        readonly property bool isInMonth: modelData.inView
                         readonly property bool isToday: isInMonth && modelData.day === new Date().getDate() && viewDate.getMonth() === new Date().getMonth() && viewDate.getFullYear() === new Date().getFullYear()
                         readonly property bool isSelected: isInMonth && modelData.day === clockMenu.selectedDate.getDate() && viewDate.getMonth() === clockMenu.selectedDate.getMonth() && viewDate.getFullYear() === clockMenu.selectedDate.getFullYear()
 
@@ -197,10 +215,10 @@ PanelWindow {
 
                         Text {
                             anchors.centerIn: parent
-                            text: modelData.day > 0 ? modelData.day : ""
-                            font.pixelSize: Theme.fontLabelMedium
+                            text: modelData.day
+                            font.pixelSize: isInMonth ? Theme.fontLabelMedium : Theme.fontLabelSmall
                             font.bold: isSelected || isToday
-                            color: isSelected ? Theme.primaryText : (isInMonth ? Theme.surfaceText : "transparent")
+                            color: isSelected ? Theme.primaryText : (isInMonth ? Theme.surfaceText : Theme.surfaceVariantText)
                         }
 
                         MouseArea {
@@ -210,10 +228,8 @@ PanelWindow {
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
-                                if (modelData.day > 0) {
-                                    clockMenu.selectedDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), modelData.day);
-                                    clockMenu.visible = false;
-                                }
+                                clockMenu.selectedDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + modelData.offset, modelData.day);
+                                clockMenu.visible = false;
                             }
                         }
 
