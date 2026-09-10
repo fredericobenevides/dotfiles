@@ -21,15 +21,15 @@ PanelWindow {
         if (GSRService.saving)
             return ;
 
-        if (GSRService.recording)
-            GSRService.stop();
-        else
-            GSRService.startScreen();
+        GSRService.toggleRecording();
     }
 
     function statusText() {
         if (GSRService.saving)
             return "Saving...";
+
+        if (GSRService.recording && !GSRService.capturing)
+            return "Waiting for selection...";
 
         if (GSRService.recording)
             return "Recording " + GSRService.formatElapsed();
@@ -422,6 +422,45 @@ PanelWindow {
                 color: Theme.surfaceContainerHighest
             }
 
+            Text {
+                text: "Area"
+                font.pixelSize: Theme.fontLabelSmall
+                color: Theme.surfaceVariantText
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 6
+                enabled: !GSRService.recording && !GSRService.saving
+
+                OptionButton {
+                    Layout.fillWidth: true
+                    text: "Select area"
+                    onClicked: GSRService.selectRegion()
+                }
+
+                OptionButton {
+                    Layout.fillWidth: true
+                    text: GSRService.regionLabel
+                    visible: GSRService.hasRegion
+                    checked: GSRService.regionEnabled
+                    onClicked: GSRService.toggleRegionEnabled()
+                }
+
+                OptionButton {
+                    Layout.fillWidth: true
+                    text: "No area saved"
+                    visible: !GSRService.hasRegion
+                }
+
+                OptionButton {
+                    text: "✕"
+                    visible: GSRService.hasRegion
+                    onClicked: GSRService.clearRegion()
+                }
+
+            }
+
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 6
@@ -447,7 +486,7 @@ PanelWindow {
             Button {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 38
-                text: GSRService.recording ? "Stop and save" : "Start recording"
+                text: GSRService.recording ? "Stop and save" : (GSRService.hasRegion && GSRService.regionEnabled ? "Start Recording with Selected Area" : "Start recording")
                 enabled: !GSRService.saving
                 onClicked: recorderModal.toggleRecording()
 

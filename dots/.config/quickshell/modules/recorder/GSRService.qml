@@ -12,6 +12,7 @@ Singleton {
     property bool audioSystem: true
     property bool audioMic: false
     property bool recording: false
+    property bool capturing: false
     property bool saving: false
     property bool paused: false
     property int elapsed: 0
@@ -26,6 +27,10 @@ Singleton {
             "audioMic": false
         }
     })
+    property var region: null
+    property bool regionEnabled: true
+    readonly property bool hasRegion: region !== null
+    readonly property string regionLabel: hasRegion ? region.w + "x" + region.h + "@" + region.x + "," + region.y : ""
     readonly property string cachePath: Quickshell.env("HOME") + "/.cache/quickshell/recorder.json"
 
     function pad2(n) {
@@ -67,9 +72,68 @@ Singleton {
         root.elapsed = 0;
         root.paused = false;
         root.saving = false;
+        root.capturing = false;
         root.recording = true;
         recorderProc.command = ["sh", "-c", cmd];
         recorderProc.running = true;
+    }
+
+    function startRegion() {
+        if (root.recording || !root.hasRegion)
+            return ;
+
+        const r = root.region;
+        const file = "$HOME/Videos/gsr-" + root.timestamp() + ".mp4";
+        const cmd = "gpu-screen-recorder -w " + r.w + "x" + r.h + "+" + r.x + "+" + r.y + " -f " + root.fps + " -q " + root.quality + " " + root.buildAudio() + " -c mp4 -k h264 -cursor yes -ipc \"$XDG_RUNTIME_DIR/gsr-qsh.sock\" -o " + file;
+        root.elapsed = 0;
+        root.paused = false;
+        root.saving = false;
+        root.capturing = false;
+        root.recording = true;
+        recorderProc.command = ["sh", "-c", cmd];
+        recorderProc.running = true;
+    }
+
+    function selectRegion() {
+        if (root.recording)
+            return ;
+
+        regionProc.command = ["sh", "-c", "rm -f /tmp/qs-region.txt; kitty --title \"Select recording region\" sh -c \"slurp -f '%o %x %y %w %h' > /tmp/qs-region.txt\"; cat /tmp/qs-region.txt 2>/dev/null"];
+        regionProc.running = true;
+    }
+
+    function clearRegion() {
+        const p = root.presetData[root.presetName];
+        if (p) {
+            p.region = null;
+            p.regionEnabled = false;
+        }
+        root.region = null;
+        root.regionEnabled = false;
+        root.savePresetCache();
+    }
+
+    function toggleRegionEnabled() {
+        if (!root.hasRegion)
+            return ;
+
+        root.regionEnabled = !root.regionEnabled;
+        const p = root.presetData[root.presetName];
+        if (p)
+            p.regionEnabled = root.regionEnabled;
+
+        root.savePresetCache();
+    }
+
+    function toggleRecording() {
+        if (root.recording) {
+            root.stop();
+            return ;
+        }
+        if (root.hasRegion && root.regionEnabled)
+            root.startRegion();
+        else
+            root.startScreen();
     }
 
     function stop() {
@@ -77,6 +141,7 @@ Singleton {
             return ;
 
         root.saving = true;
+        root.capturing = false;
         root.paused = false;
         stopProc.command = ["sh", "-c", "gsr-cli -ipc \"$XDG_RUNTIME_DIR/gsr-qsh.sock\" stop"];
         stopProc.running = true;
@@ -95,11 +160,7 @@ Singleton {
     }
 
     function toggleShortcut() {
-        if (root.recording) {
-            root.stop();
-            return ;
-        }
-        root.startScreen();
+        root.toggleRecording();
     }
 
     function openVideos() {
@@ -121,7 +182,9 @@ Singleton {
             "fps": 60,
             "quality": "high",
             "audioSystem": true,
-            "audioMic": false
+            "audioMic": false,
+            "region": null,
+            "regionEnabled": false
         };
     }
 
@@ -148,6 +211,8 @@ Singleton {
         root.quality = data.quality;
         root.audioSystem = data.audioSystem;
         root.audioMic = data.audioMic;
+        root.region = data.region || null;
+        root.regionEnabled = root.region !== null && data.regionEnabled === false ? false : true;
         root.presetName = name;
         root.savePresetCache();
     }
@@ -161,7 +226,9 @@ Singleton {
             "fps": root.fps,
             "quality": root.quality,
             "audioSystem": root.audioSystem,
-            "audioMic": root.audioMic
+            "audioMic": root.audioMic,
+            "region": root.region,
+            "regionEnabled": root.regionEnabled
         };
         root.presetNames = root.sortPresetNames();
         root.applyPreset(trimmed);
@@ -196,12 +263,22 @@ Singleton {
                     if (typeof data.lastPreset === "string")
                         loaded.lastPreset = data.lastPreset;
 
+                    if (data.region && typeof data.region === "object" && data.region.w > 0 && data.region.h > 0) {
+                        loaded.legacyRegion = data.region;
+                        loaded.legacyRegionEnabled = data.regionEnabled;
+                    }
+
                 }
             }
         } catch (e) {
         }
         if (!loaded.presets.Default)
             loaded.presets.Default = root.defaultPreset();
+
+        if (loaded.legacyRegion && loaded.presets.Default && loaded.presets.Default.region === undefined) {
+            loaded.presets.Default.region = loaded.legacyRegion;
+            loaded.presets.Default.regionEnabled = loaded.legacyRegionEnabled;
+        }
 
         root.presetData = loaded.presets;
         root.presetNames = root.sortPresetNames();
@@ -227,7 +304,7 @@ Singleton {
         repeat: true
         running: root.recording
         onTriggered: {
-            if (root.recording)
+            if (root.capturing && !root.paused)
                 root.elapsed += 1;
 
         }
@@ -241,6 +318,7 @@ Singleton {
                 root.notify("Failed to start recording");
 
             root.recording = false;
+            root.capturing = false;
             root.paused = false;
             root.saving = false;
         }
@@ -259,6 +337,9 @@ Singleton {
                 const t = data.trim();
                 if (t !== "")
                     console.log("gsr-err:", t);
+
+                if (!root.capturing && (t.indexOf("update fps:") >= 0 || t.indexOf("new state: \"streaming\"") >= 0))
+                    root.capturing = true;
 
             }
         }
@@ -325,6 +406,48 @@ Singleton {
             onRead: (data) => {
                 const t = data.trim();
                 root.lastFile = t === "none" ? "" : t;
+            }
+        }
+
+    }
+
+    Process {
+        id: regionProc
+
+        stdout: SplitParser {
+            onRead: (data) => {
+                const t = data.trim();
+                const m = t.match(/^(\S+) (\-?\d+) (\-?\d+) (\d+) (\d+)$/);
+                if (!m)
+                    return;
+
+                const x = parseInt(m[2]);
+                const y = parseInt(m[3]);
+                const w = parseInt(m[4]);
+                const h = parseInt(m[5]);
+                if (w < 16 || h < 16)
+                    return;
+
+                if (!root.hasRegion || x !== root.region.x || y !== root.region.y || w !== root.region.w || h !== root.region.h) {
+                    root.region = {
+                        "x": x,
+                        "y": y,
+                        "w": w,
+                        "h": h
+                    };
+                    root.regionEnabled = true;
+                    const p = root.presetData[root.presetName];
+                    if (p) {
+                        p.region = {
+                            "x": x,
+                            "y": y,
+                            "w": w,
+                            "h": h
+                        };
+                        p.regionEnabled = true;
+                    }
+                    root.savePresetCache();
+                }
             }
         }
 
