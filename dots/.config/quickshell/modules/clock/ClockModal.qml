@@ -92,6 +92,12 @@ PanelWindow {
             } else if (event.key === Qt.Key_Right) {
                 clockMenu.nextMonth();
                 event.accepted = true;
+            } else if (event.key === Qt.Key_Up) {
+                viewDate = new Date(viewDate.getFullYear() + 1, viewDate.getMonth(), 1);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Down) {
+                viewDate = new Date(viewDate.getFullYear() - 1, viewDate.getMonth(), 1);
+                event.accepted = true;
             }
         }
 
@@ -111,6 +117,7 @@ PanelWindow {
                 spacing: 8
 
                 Rectangle {
+                    Layout.alignment: Qt.AlignVCenter
                     width: 24
                     height: 24
                     radius: 7
@@ -134,16 +141,84 @@ PanelWindow {
 
                 }
 
-                Text {
+                Item {
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignHCenter
-                    text: clockMenu.monthNames[viewDate.getMonth()] + " " + viewDate.getFullYear()
-                    font.pixelSize: Theme.fontLabelLarge
-                    font.bold: true
-                    color: Theme.surfaceText
+                    Layout.fillHeight: true
+
+                    RowLayout {
+                        anchors.centerIn: parent
+                        spacing: 10
+
+                        Text {
+                            Layout.alignment: Qt.AlignVCenter
+                            text: clockMenu.monthNames[viewDate.getMonth()] + " " + viewDate.getFullYear()
+                            font.pixelSize: Theme.fontLabelLarge
+                            font.bold: true
+                            color: Theme.surfaceText
+                        }
+
+                        RowLayout {
+                            Layout.alignment: Qt.AlignVCenter
+                            spacing: 5
+
+                            Rectangle {
+                                Layout.alignment: Qt.AlignVCenter
+                                width: 16
+                                height: 16
+                                radius: 5
+                                color: upYearMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                                Text {
+                                    text: "▲"
+                                    anchors.centerIn: parent
+                                    font.pixelSize: 8
+                                    color: Theme.surfaceText
+                                }
+
+                                MouseArea {
+                                    id: upYearMouse
+
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: viewDate = new Date(viewDate.getFullYear() + 1, viewDate.getMonth(), 1)
+                                }
+
+                            }
+
+                            Rectangle {
+                                Layout.alignment: Qt.AlignVCenter
+                                width: 16
+                                height: 16
+                                radius: 5
+                                color: downYearMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                                Text {
+                                    text: "▼"
+                                    anchors.centerIn: parent
+                                    font.pixelSize: 8
+                                    color: Theme.surfaceText
+                                }
+
+                                MouseArea {
+                                    id: downYearMouse
+
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: viewDate = new Date(viewDate.getFullYear() - 1, viewDate.getMonth(), 1)
+                                }
+
+                            }
+
+                        }
+
+                    }
+
                 }
 
                 Rectangle {
+                    Layout.alignment: Qt.AlignVCenter
                     width: 24
                     height: 24
                     radius: 7
