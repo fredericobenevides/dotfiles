@@ -16,6 +16,9 @@ hl.bind(mainMod .. " + b",             hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + E",             hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE",         hl.dsp.global("quickshell:toggle-launcher"))
 hl.bind(mainMod .. " + SHIFT + C",     hl.dsp.exec_cmd(colorPicker))
+hl.bind(mainMod .. " + R",             hl.dsp.global("quickshell:toggle-recorder"))
+hl.bind(mainMod .. " + SHIFT + R",     hl.dsp.global("quickshell:force-record"))
+hl.bind(mainMod .. " + CTRL + SHIFT + R", hl.dsp.exec_cmd("thunar \"$HOME/Videos\""), { desc = "Open Videos Folder" })
 
 -- Windows
 hl.bind(mainMod .. " + Q",             hl.dsp.window.close())

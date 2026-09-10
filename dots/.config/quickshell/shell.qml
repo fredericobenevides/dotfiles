@@ -14,6 +14,7 @@ import qs.modules.networkSpeed
 import qs.modules.nightLight
 import qs.modules.notifications
 import qs.modules.power
+import qs.modules.recorder
 import qs.modules.systemInfo
 import qs.modules.systemUpdates
 import qs.modules.volume
@@ -29,7 +30,7 @@ ShellRoot {
     property var nightLightRef
 
     function closeOtherModals(exclude) {
-        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal, nightLightMenu];
+        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal, nightLightMenu, recorderModal];
         for (let i = 0; i < modals.length; i++) {
             if (modals[i] !== exclude && modals[i].visible)
                 modals[i].visible = false;
@@ -219,6 +220,10 @@ ShellRoot {
                             modal: weatherModal
                         }
 
+                        RecorderButton {
+                            modal: recorderModal
+                        }
+
                         ClipboardButton {
                             modal: clipboardModal
                         }
@@ -271,6 +276,16 @@ ShellRoot {
         onVisibleChanged: {
             if (visible)
                 shell.closeOtherModals(networkMenu);
+
+        }
+    }
+
+    RecorderModal {
+        id: recorderModal
+
+        onVisibleChanged: {
+            if (visible)
+                shell.closeOtherModals(recorderModal);
 
         }
     }
@@ -404,6 +419,18 @@ ShellRoot {
         name: "toggle-clock"
         description: "Toggle clock modal"
         onPressed: shell.toggleMenu(clockMenu)
+    }
+
+    GlobalShortcut {
+        name: "toggle-recorder"
+        description: "Toggle recorder modal"
+        onPressed: shell.toggleMenu(recorderModal)
+    }
+
+    GlobalShortcut {
+        name: "force-record"
+        description: "Start or stop a recording"
+        onPressed: GSRService.toggleShortcut()
     }
 
 }
