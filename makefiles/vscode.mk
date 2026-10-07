@@ -27,7 +27,8 @@ VSCODE_EXTS := Catppuccin.catppuccin-vsc \
                pranaygp.vscode-css-peek \
                bbenoist.QML \
                humao.rest-client \
-               sst-dev.opencode
+               sst-dev.opencode \
+               GraphQL.vscode-graphql
 
 vscode-all: vscode-install vscode-pkgs
 
