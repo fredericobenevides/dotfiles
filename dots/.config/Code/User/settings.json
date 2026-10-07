@@ -1,13 +1,21 @@
 {
+  "chat.viewSessions.orientation": "stacked",
+
   "workbench.colorTheme": "Catppuccin Macchiato",
   "workbench.iconTheme": "vscode-icons",
+  "workbench.editor.enablePreview": false,
+
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
 
   "editor.fontFamily": "'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace'",
   "editor.fontSize": 14,
   "editor.fontWeight": "600",
   "editor.fontLigatures": false,
-  "editor.cursorBlinking": "expand",
-  "editor.cursorSmoothCaretAnimation": "on",
+
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
 
   "indentRainbow.indicatorStyle": "light",
   "indentRainbow.lightIndicatorStyleLineWidth": 1,
@@ -18,9 +26,6 @@
     "rgba(79,236,236,0.4)"
   ],
 
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
   "files.autoSave": "onFocusChange",
   "keyboard.dispatch": "keyCode",
 
@@ -94,6 +99,5 @@
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "typescript": "typescriptreact"
-  },
-  "chat.viewSessions.orientation": "stacked"
+  }
 }
