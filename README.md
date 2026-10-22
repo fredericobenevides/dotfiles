@@ -4,12 +4,17 @@ Config files to set up my system using EndeavourOS
 
 ## Installation
 
-Download the dotfiles to the root path and goes to the dotfiles folder
+Download the dotfiles to the root path and go to the dotfiles folder
 
-`$ git clone git://github.com/fredericobenevides/dotfiles ~/.dotfiles && cd ~/.dotfiles`
+```bash
+git clone git@github.com:fredericobenevides/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+```
 
 Run with the command:
 
-`make`
+```bash
+make
+```
 
-**Have Fun**
+## Have Fun
