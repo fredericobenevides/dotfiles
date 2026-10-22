@@ -23,7 +23,7 @@
     "rgba(255,255,64,0.4)",
     "rgba(127,255,127,0.4)",
     "rgba(255,127,255,0.4)",
-    "rgba(79,236,236,0.4)"
+    "rgba(79,236,236,0.4)",
   ],
 
   "files.autoSave": "onFocusChange",
@@ -40,64 +40,64 @@
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "always"
-    }
+      "source.fixAll.eslint": "always",
+    },
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "always"
-    }
+      "source.fixAll.eslint": "always",
+    },
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
   },
   "[makefile]": {
     "editor.insertSpaces": false,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
   },
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.formatOnSave": true,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
   },
   "[qml]": {
     "editor.formatOnSave": true,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
   },
 
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
-    "typescript": "typescriptreact"
-  }
+    "typescript": "typescriptreact",
+  },
 }
