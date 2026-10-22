@@ -145,6 +145,16 @@ fi
 
 
 
+### GOOGLE CLOUD SDK
+if [[ -d "$HOME/.gcloud" ]]; then
+  export GCLOUD_HOME="$HOME/.gcloud"
+  export PATH="$GCLOUD_HOME/bin:$PATH"
+  source "$GCLOUD_HOME/path.zsh.inc"
+  source "$GCLOUD_HOME/completion.zsh.inc"
+fi
+
+
+
 
 ### GOLANG
 export PATH="$PATH:$HOME/go/bin"
