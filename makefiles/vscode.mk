@@ -1,34 +1,68 @@
 VSCODE_CONFIG_DIR := $(HOME)/.config/Code/User
 
-VSCODE_EXTS := Catppuccin.catppuccin-vsc \
-               vscode-icons-team.vscode-icons \
-               alefragnani.Bookmarks \
-               bierner.emojisense \
-               ritwickdey.LiveServer \
-               usernamehw.find-jump \
-               vadimcn.vscode-lldb \
-               wayou.vscode-todo-highlight \
-               oderwat.indent-rainbow \
-               kisstkondoros.vscode-gutter-preview \
-               mikestead.dotenv \
-               donjayamanne.githistory \
-               eamodio.gitlens \
-               ms-azuretools.vscode-docker \
-               golang.Go \
-               rust-lang.rust-analyzer \
-               tamasfe.even-better-toml \
-               esbenp.prettier-vscode \
-               fill-labs.dependi \
-               formulahendry.auto-rename-tag \
-               dbaeumer.vscode-eslint \
-               xabikos.JavaScriptSnippets \
-               bradlc.vscode-tailwindcss \
-               kamikillerto.vscode-colorize \
-               pranaygp.vscode-css-peek \
-               bbenoist.QML \
-               humao.rest-client \
-               sst-dev.opencode \
-               GraphQL.vscode-graphql
+# --- Appearance (theme and icons) ---
+VSCODE_EXTS_UI := Catppuccin.catppuccin-vsc \
+                   vscode-icons-team.vscode-icons
+
+# --- Editor and productivity ---
+VSCODE_EXTS_EDITOR := alefragnani.Bookmarks \
+                       bierner.emojisense \
+                       formulahendry.auto-rename-tag \
+                       kamikillerto.vscode-colorize \
+                       mikestead.dotenv \
+                       oderwat.indent-rainbow \
+                       usernamehw.find-jump \
+                       wayou.vscode-todo-highlight
+
+# --- Languages and frameworks ---
+VSCODE_EXTS_LANG := bbenoist.QML \
+                     bradlc.vscode-tailwindcss \
+                     golang.Go \
+                     GraphQL.vscode-graphql \
+                     humao.rest-client \
+                     rust-lang.rust-analyzer \
+                     xabikos.JavaScriptSnippets
+
+# --- Lint and formatting ---
+VSCODE_EXTS_LINT := dbaeumer.vscode-eslint \
+                     esbenp.prettier-vscode \
+                     tamasfe.even-better-toml
+
+# --- Infra: docker, make and debug ---
+VSCODE_EXTS_INFRA := ms-azuretools.vscode-docker \
+                      ms-vscode.makefile-tools \
+                      vadimcn.vscode-lldb
+
+# --- Git and dependencies ---
+VSCODE_EXTS_GIT := donjayamanne.githistory \
+                    eamodio.gitlens \
+                    fill-labs.dependi
+
+# --- Preview and servers ---
+VSCODE_EXTS_PREVIEW := kisstkondoros.vscode-gutter-preview \
+                        pranaygp.vscode-css-peek \
+                        ritwickdey.LiveServer
+
+# --- Markdown ---
+VSCODE_EXTS_MARKDOWN := DavidAnson.vscode-markdownlint \
+                         shd101wyy.markdown-preview-enhanced \
+                         yzhang.markdown-all-in-one
+
+# --- AI ---
+VSCODE_EXTS_AI := sst-dev.opencode
+
+# --- Optional (installed separately, heavy) ---
+VSCODE_EXTS_OPTIONAL := GoogleCloudTools.cloudcode
+
+VSCODE_EXTS := $(VSCODE_EXTS_UI) \
+               $(VSCODE_EXTS_EDITOR) \
+               $(VSCODE_EXTS_LANG) \
+               $(VSCODE_EXTS_LINT) \
+               $(VSCODE_EXTS_INFRA) \
+               $(VSCODE_EXTS_GIT) \
+               $(VSCODE_EXTS_PREVIEW) \
+               $(VSCODE_EXTS_MARKDOWN) \
+               $(VSCODE_EXTS_AI)
 
 vscode-all: vscode-install vscode-pkgs
 
@@ -50,3 +84,7 @@ vscode-pkgs:
 
 	@echo "#### Installing VSCode extensions"
 	@$(foreach ext, $(VSCODE_EXTS), code --install-extension $(ext) --force;)
+
+vscode-optional:
+	@echo "#### Installing optional VSCode extensions"
+	@$(foreach ext, $(VSCODE_EXTS_OPTIONAL), code --install-extension $(ext) --force;)
