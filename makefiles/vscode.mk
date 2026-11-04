@@ -17,6 +17,7 @@ VSCODE_EXTS_EDITOR := alefragnani.Bookmarks \
 # --- Languages and frameworks ---
 VSCODE_EXTS_LANG := bbenoist.QML \
                      bradlc.vscode-tailwindcss \
+                     DrBlury.protobuf-vsc \
                      golang.Go \
                      GraphQL.vscode-graphql \
                      humao.rest-client \
