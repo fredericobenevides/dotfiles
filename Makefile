@@ -25,6 +25,7 @@ include makefiles/quickshell.mk
 include makefiles/rust.mk
 include makefiles/sdkman.mk
 include makefiles/swap.mk
+include makefiles/virtualbox.mk
 include makefiles/vscode.mk
 include makefiles/zsh.mk
 
