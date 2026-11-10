@@ -31,8 +31,9 @@ VSCODE_EXTS_LINT := dbaeumer.vscode-eslint \
 
 # --- Infra: docker, make and debug ---
 VSCODE_EXTS_INFRA := ms-azuretools.vscode-docker \
-                      ms-vscode.makefile-tools \
-                      vadimcn.vscode-lldb
+                       ms-vscode.makefile-tools \
+                       HashiCorp.terraform \
+                       vadimcn.vscode-lldb
 
 # --- Git and dependencies ---
 VSCODE_EXTS_GIT := donjayamanne.githistory \
