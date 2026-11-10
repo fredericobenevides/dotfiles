@@ -25,6 +25,7 @@ include makefiles/quickshell.mk
 include makefiles/rust.mk
 include makefiles/sdkman.mk
 include makefiles/swap.mk
+include makefiles/terraform.mk
 include makefiles/virtualbox.mk
 include makefiles/vscode.mk
 include makefiles/zsh.mk
@@ -39,7 +40,7 @@ gui: keyboard-all fonts-all hyprland-all quickshell-all cursor-all kitty-all \
 tools: fzf-all git-all zsh-all
 
 dev: sdkman-all clojure-all flutter-all go-all nodejs-all python-all rust-all \
-     docker-all k8s-all gcloud-all pacman-dev-all flatpak-dev-all
+	 docker-all k8s-all gcloud-all terraform-all pacman-dev-all flatpak-dev-all
 
 editors: emacs-all idea-all neovim-all vscode-all
 
