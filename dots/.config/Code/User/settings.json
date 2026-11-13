@@ -26,12 +26,17 @@
     "rgba(79,236,236,0.4)",
   ],
 
+  "files.associations": {
+    "*.tfvars": "terraform",
+  },
   "files.autoSave": "onFocusChange",
+
   "keyboard.dispatch": "keyCode",
 
   "html.autoClosingTags": false,
   "prettier.singleQuote": true,
   "prettier.arrowParens": "avoid",
+  "prettier.semi": false,
 
   "telemetry.telemetryLevel": "off",
 
@@ -89,6 +94,10 @@
   "[qml]": {
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
+  },
+  "[terraform]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
