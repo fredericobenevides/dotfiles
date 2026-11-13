@@ -9,6 +9,7 @@ import qs.theme
 PanelWindow {
     id: systemInfoModal
 
+    property var targetScreen: null
     property string processFilter: "all"
     property string sortField: "cpu"
     property bool sortAscending: false
@@ -94,6 +95,7 @@ PanelWindow {
     }
     focusable: true
     visible: false
+    screen: targetScreen
     anchors.top: true
     anchors.bottom: true
     anchors.left: true
@@ -128,9 +130,7 @@ PanelWindow {
 
         width: 600
         height: content.implicitHeight + 32
-        anchors.top: parent.top
-        anchors.topMargin: 6
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         radius: 16
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest

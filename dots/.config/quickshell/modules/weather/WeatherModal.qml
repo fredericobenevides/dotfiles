@@ -8,10 +8,12 @@ import qs.theme
 PanelWindow {
     id: weatherModal
 
+    property var targetScreen: null
     property bool showHourly: false
 
     focusable: true
     visible: false
+    screen: targetScreen
     anchors.top: true
     anchors.bottom: true
     anchors.left: true
@@ -39,9 +41,7 @@ PanelWindow {
 
         width: 720
         height: content.implicitHeight + 48
-        anchors.top: parent.top
-        anchors.topMargin: 6
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         radius: 16
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest

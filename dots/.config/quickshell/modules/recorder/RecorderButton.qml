@@ -8,6 +8,7 @@ Item {
 
     property bool hovered: false
     property var modal
+    property var targetScreen
     readonly property bool recording: GSRService.recording
 
     implicitWidth: bg.width
@@ -74,10 +75,11 @@ Item {
             onEntered: root.hovered = true
             onExited: root.hovered = false
             onClicked: {
-                if (!root.modal)
-                    return ;
+            if (!root.modal)
+                return ;
 
-                root.modal.visible = !root.modal.visible;
+            root.modal.targetScreen = root.targetScreen;
+            root.modal.visible = !root.modal.visible;
                 if (root.modal.visible && root.modal.open)
                     root.modal.open();
 

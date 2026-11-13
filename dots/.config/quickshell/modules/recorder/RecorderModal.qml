@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: recorderModal
 
+    property var targetScreen: null
     property bool createMode: false
     property bool presetOpen: false
 
@@ -39,6 +40,7 @@ PanelWindow {
 
     focusable: true
     visible: false
+    screen: targetScreen
     color: "transparent"
     anchors.top: true
     anchors.bottom: true
@@ -67,9 +69,7 @@ PanelWindow {
 
         width: 390
         implicitHeight: column.implicitHeight + 32
-        anchors.top: parent.top
-        anchors.topMargin: 6
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         radius: 20
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
