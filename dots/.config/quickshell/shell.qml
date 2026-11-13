@@ -7,6 +7,7 @@ import qs.modules.appLauncher
 import qs.modules.bluetooth
 import qs.modules.clipboard
 import qs.modules.clock
+import qs.modules.compact
 import qs.modules.devices
 import qs.modules.idleInhibitor
 import qs.modules.mediaPlayer
@@ -30,7 +31,7 @@ ShellRoot {
     property var nightLightRef
 
     function closeOtherModals(exclude) {
-        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal, nightLightMenu, recorderModal];
+        const modals = [launcherMenu, bluetoothMenu, networkMenu, volumeMenu, powerMenu, clockMenu, mediaPlayerModal, weatherModal, systemInfoModal, systemUpdatesModal, notificationsModal, clipboardModal, nightLightMenu, recorderModal, compactControlsModal];
         for (let i = 0; i < modals.length; i++) {
             if (modals[i] !== exclude && modals[i].visible)
                 modals[i].visible = false;
@@ -106,6 +107,25 @@ ShellRoot {
         }
     }
 
+    CompactControlsModal {
+        id: compactControlsModal
+
+        systemInfoModal: systemInfoModal
+        systemUpdatesModal: systemUpdatesModal
+        nightLightModal: nightLightMenu
+        networkModal: networkMenu
+        weatherModal: weatherModal
+        recorderModal: recorderModal
+        clipboardModal: clipboardModal
+        targetScreen: null
+
+        onVisibleChanged: {
+            if (visible)
+                shell.closeOtherModals(compactControlsModal);
+
+        }
+    }
+
     NightLightModal {
         id: nightLightMenu
 
@@ -128,12 +148,14 @@ ShellRoot {
 
             required property var modelData
 
-            screen: modelData
+                screen: modelData
             implicitHeight: 45
             anchors.top: true
             anchors.left: true
             anchors.right: true
             color: "transparent"
+
+            readonly property bool compact: width < 1100
 
             Rectangle {
                 anchors.top: parent.top
@@ -170,15 +192,19 @@ ShellRoot {
                             id: systemButton
 
                             modal: systemInfoModal
+                            targetScreen: topBar.modelData
                             Layout.leftMargin: 8
+                            visible: !topBar.compact
                         }
 
                         SystemUpdatesButton {
                             id: systemUpdatesButton
 
                             modal: systemUpdatesModal
+                            targetScreen: topBar.modelData
                             Layout.leftMargin: 5
                             Layout.rightMargin: 5
+                            visible: !topBar.compact
                         }
 
                     }
@@ -199,16 +225,20 @@ ShellRoot {
 
                         IdleInhibitorButton {
                             id: idleInhibitor
+
+                            visible: !topBar.compact
                         }
 
                         NightLightButton {
                             id: nightLight
 
                             modal: nightLightMenu
+                            visible: !topBar.compact
                         }
 
                         NetworkSpeedButton {
                             modal: networkMenu
+                            visible: !topBar.compact
                         }
 
                         DevicesButton {
@@ -218,14 +248,46 @@ ShellRoot {
 
                         WeatherButton {
                             modal: weatherModal
+                            targetScreen: topBar.modelData
+                            visible: !topBar.compact
                         }
 
                         RecorderButton {
                             modal: recorderModal
+                            targetScreen: topBar.modelData
+                            visible: !topBar.compact
                         }
 
                         ClipboardButton {
                             modal: clipboardModal
+                            visible: !topBar.compact
+                        }
+
+                        Rectangle {
+                            visible: topBar.compact
+                            implicitWidth: 24
+                            implicitHeight: 24
+                            radius: 12
+                            color: compactControlsMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "▦"
+                                font.pixelSize: 16
+                                color: Theme.surfaceVariantText
+                            }
+
+                            MouseArea {
+                                id: compactControlsMouse
+
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    compactControlsModal.targetScreen = topBar.modelData;
+                                    shell.toggleMenu(compactControlsModal);
+                                }
+                            }
                         }
 
                         NotificationButton {

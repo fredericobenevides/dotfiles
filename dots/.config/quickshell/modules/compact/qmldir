@@ -1,0 +1,3 @@
+module qs.modules.compact
+CompactControlsModal 1.0 CompactControlsModal.qml
+CompactControlButton 1.0 CompactControlButton.qml

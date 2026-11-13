@@ -8,6 +8,7 @@ Rectangle {
     id: root
 
     property var modal
+    property var targetScreen
     property bool hovered: false
     readonly property bool hasWeather: WeatherService.weatherUpdatedAt > 0 || WeatherService.available
 
@@ -58,6 +59,7 @@ Rectangle {
             if (!root.modal)
                 return ;
 
+            root.modal.targetScreen = root.targetScreen;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();
