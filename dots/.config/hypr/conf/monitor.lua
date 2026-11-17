@@ -11,16 +11,24 @@ hl.monitor({
 
 hl.monitor({
     output   = "DP-3",
-    mode     = "1920x1080@165",
+    mode     = "2560x1440@240",
     position = "0x1080",
-    scale    = 1,
+    scale    = 1.33,
     transform = 0,
 })
 
 hl.monitor({
     output   = "DP-2",
     mode     = "1920x1080@165",
-    position = "-1080x100",
+    position = "-1080x300",
     scale    = 1,
     transform = 3,
+})
+
+hl.monitor({
+    output   = "DP-1",
+    mode     = "1920x1080@165",
+    position = "1921x300",
+    scale    = 1,
+    transform = 1,
 })
