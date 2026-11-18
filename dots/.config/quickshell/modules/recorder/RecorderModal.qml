@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: recorderModal
 
+    property real fontScale: 1.0
     property var targetScreen: null
     property bool createMode: false
     property bool presetOpen: false
@@ -67,13 +68,13 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 390
-        implicitHeight: column.implicitHeight + 32
+        width: Theme.scaledSize(390, recorderModal.fontScale)
+        implicitHeight: column.implicitHeight + Theme.scaledSize(32, recorderModal.fontScale)
         anchors.centerIn: parent
-        radius: 20
+        radius: Theme.scaledSize(20, recorderModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, recorderModal.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 recorderModal.closeModal();
@@ -93,23 +94,23 @@ PanelWindow {
             id: column
 
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 12
+            anchors.margins: Theme.scaledSize(16, recorderModal.fontScale)
+            spacing: Theme.scaledSize(12, recorderModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, recorderModal.fontScale)
 
                 Text {
                     text: "\uE04B"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, recorderModal.fontScale)
                     color: GSRService.recording ? Theme.error : Theme.surfaceVariantText
                 }
 
                 Text {
                     text: "Recorder"
-                    font.pixelSize: Theme.fontLabelLarge
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, recorderModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
@@ -119,8 +120,10 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     visible: GSRService.recording
-                    implicitWidth: 64
+                    implicitWidth: Theme.scaledSize(64, recorderModal.fontScale)
                     text: GSRService.paused ? "Resume" : "Pause"
                     checked: GSRService.paused
                     activeColor: GSRService.paused ? "#f9e2af" : Theme.surfaceVariantText
@@ -128,7 +131,9 @@ PanelWindow {
                 }
 
                 OptionButton {
-                    implicitWidth: 32
+
+                    fontScale: recorderModal.fontScale
+                    implicitWidth: Theme.scaledSize(32, recorderModal.fontScale)
                     text: "✕"
                     onClicked: recorderModal.closeModal()
                 }
@@ -137,54 +142,54 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                height: 1
+                height: Theme.scaledSize(1, recorderModal.fontScale)
                 color: Theme.surfaceContainerHighest
             }
 
             Text {
                 text: "Preset"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             Item {
                 Layout.fillWidth: true
-                implicitHeight: 26
+                implicitHeight: Theme.scaledSize(26, recorderModal.fontScale)
                 z: 10
                 enabled: !GSRService.recording
 
                 RowLayout {
                     anchors.fill: parent
-                    spacing: 6
+                    spacing: Theme.scaledSize(6, recorderModal.fontScale)
 
                     Rectangle {
                         id: presetBox
 
                         Layout.fillWidth: true
-                        implicitHeight: 26
-                        radius: 6
+                        implicitHeight: Theme.scaledSize(26, recorderModal.fontScale)
+                        radius: Theme.scaledSize(6, recorderModal.fontScale)
                         color: presetBoxMA.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                         border.color: Theme.surfaceContainerHighest
-                        border.width: 1
+                        border.width: Theme.scaledSize(1, recorderModal.fontScale)
 
                         RowLayout {
                             anchors.fill: parent
-                            spacing: 0
+                            spacing: Theme.scaledSize(0, recorderModal.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
-                                Layout.leftMargin: 10
+                                Layout.leftMargin: Theme.scaledSize(10, recorderModal.fontScale)
                                 text: GSRService.presetName
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                                 elide: Text.ElideRight
                             }
 
                             Text {
-                                Layout.rightMargin: 8
+                                Layout.rightMargin: Theme.scaledSize(8, recorderModal.fontScale)
                                 text: "▾"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -206,16 +211,20 @@ PanelWindow {
                     }
 
                     OptionButton {
+
+                        fontScale: recorderModal.fontScale
                         visible: GSRService.presetName !== "Default" && !recorderModal.createMode
-                        Layout.preferredWidth: 26
+                        Layout.preferredWidth: Theme.scaledSize(26, recorderModal.fontScale)
                         Layout.alignment: Qt.AlignVCenter
                         text: "－"
                         onClicked: GSRService.deletePreset(GSRService.presetName)
                     }
 
                     OptionButton {
+
+                        fontScale: recorderModal.fontScale
                         visible: !recorderModal.createMode
-                        Layout.preferredWidth: 26
+                        Layout.preferredWidth: Theme.scaledSize(26, recorderModal.fontScale)
                         Layout.alignment: Qt.AlignVCenter
                         text: "＋"
                         onClicked: {
@@ -229,27 +238,29 @@ PanelWindow {
                 Rectangle {
                     visible: recorderModal.presetOpen
                     anchors.top: parent.top
-                    anchors.topMargin: 30
+                    anchors.topMargin: Theme.scaledSize(30, recorderModal.fontScale)
                     anchors.left: parent.left
                     anchors.right: parent.right
                     z: 5
-                    implicitHeight: chips.implicitHeight + 8
-                    radius: 8
+                    implicitHeight: chips.implicitHeight + Theme.scaledSize(8, recorderModal.fontScale)
+                    radius: Theme.scaledSize(8, recorderModal.fontScale)
                     color: Theme.surfaceContainerHigh
                     border.color: Theme.surfaceContainerHighest
-                    border.width: 1
+                    border.width: Theme.scaledSize(1, recorderModal.fontScale)
 
                     ColumnLayout {
                         id: chips
 
                         anchors.fill: parent
-                        anchors.margins: 4
-                        spacing: 4
+                        anchors.margins: Theme.scaledSize(4, recorderModal.fontScale)
+                        spacing: Theme.scaledSize(4, recorderModal.fontScale)
 
                         Repeater {
                             model: GSRService.presetNames
 
                             delegate: OptionButton {
+
+                                fontScale: recorderModal.fontScale
                                 required property string modelData
 
                                 Layout.fillWidth: true
@@ -272,7 +283,7 @@ PanelWindow {
             RowLayout {
                 visible: recorderModal.createMode
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
 
                 TextField {
                     id: nameField
@@ -294,6 +305,8 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "Save"
                     onClicked: {
                         if (GSRService.createPreset(nameField.text))
@@ -307,34 +320,42 @@ PanelWindow {
 
             Text {
                 text: "FPS"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
                 enabled: !GSRService.recording
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "30"
                     checked: GSRService.fps === 30
                     onClicked: GSRService.fps = 30
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "60"
                     checked: GSRService.fps === 60
                     onClicked: GSRService.fps = 60
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "120"
                     checked: GSRService.fps === 120
                     onClicked: GSRService.fps = 120
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "144"
                     checked: GSRService.fps === 144
                     onClicked: GSRService.fps = 144
@@ -348,16 +369,18 @@ PanelWindow {
 
             Text {
                 text: "Quality"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
                 enabled: !GSRService.recording
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "Low"
                     checked: GSRService.quality === "medium"
@@ -365,6 +388,8 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "Medium"
                     checked: GSRService.quality === "high"
@@ -372,6 +397,8 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "High"
                     checked: GSRService.quality === "very_high"
@@ -379,6 +406,8 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "Ultra"
                     checked: GSRService.quality === "ultra"
@@ -389,16 +418,18 @@ PanelWindow {
 
             Text {
                 text: "Audio"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
                 enabled: !GSRService.recording
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "System"
                     checked: GSRService.audioSystem
@@ -407,6 +438,8 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "Microphone"
                     checked: GSRService.audioMic
@@ -418,28 +451,32 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                height: 1
+                height: Theme.scaledSize(1, recorderModal.fontScale)
                 color: Theme.surfaceContainerHighest
             }
 
             Text {
                 text: "Area"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
                 enabled: !GSRService.recording && !GSRService.saving
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "Select area"
                     onClicked: GSRService.selectRegion()
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: GSRService.regionLabel
                     visible: GSRService.hasRegion
@@ -448,12 +485,16 @@ PanelWindow {
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     Layout.fillWidth: true
                     text: "No area saved"
                     visible: !GSRService.hasRegion
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "✕"
                     visible: GSRService.hasRegion
                     onClicked: GSRService.clearRegion()
@@ -463,12 +504,12 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: Theme.scaledSize(6, recorderModal.fontScale)
 
                 Rectangle {
-                    width: 8
-                    height: 8
-                    radius: 4
+                    width: Theme.scaledSize(8, recorderModal.fontScale)
+                    height: Theme.scaledSize(8, recorderModal.fontScale)
+                    radius: Theme.scaledSize(4, recorderModal.fontScale)
                     color: GSRService.recording ? Theme.error : (GSRService.saving ? "#f9e2af" : Theme.surfaceVariantText)
                     visible: !GSRService.paused || GSRService.saving
                 }
@@ -476,7 +517,7 @@ PanelWindow {
                 Text {
                     Layout.fillWidth: true
                     text: recorderModal.statusText()
-                    font.pixelSize: Theme.fontLabelMedium
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, recorderModal.fontScale)
                     font.bold: true
                     color: GSRService.recording ? Theme.error : (GSRService.saving ? "#f9e2af" : Theme.surfaceText)
                 }
@@ -485,13 +526,13 @@ PanelWindow {
 
             Button {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 38
+                Layout.preferredHeight: Theme.scaledSize(38, recorderModal.fontScale)
                 text: GSRService.recording ? "Stop and save" : (GSRService.hasRegion && GSRService.regionEnabled ? "Start Recording with Selected Area" : "Start recording")
                 enabled: !GSRService.saving
                 onClicked: recorderModal.toggleRecording()
 
                 background: Rectangle {
-                    radius: 9
+                    radius: Theme.scaledSize(9, recorderModal.fontScale)
                     color: !GSRService.recording ? Theme.primary : Theme.error
 
                     Behavior on color {
@@ -505,7 +546,7 @@ PanelWindow {
 
                 contentItem: Text {
                     text: parent.text
-                    font.pixelSize: Theme.fontLabelMedium
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, recorderModal.fontScale)
                     font.bold: true
                     color: Theme.primaryText
                     horizontalAlignment: Text.AlignHCenter
@@ -516,25 +557,27 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                height: 1
+                height: Theme.scaledSize(1, recorderModal.fontScale)
                 color: Theme.surfaceContainerHighest
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, recorderModal.fontScale)
 
                 Text {
                     Layout.fillWidth: true
                     text: GSRService.lastFile !== "" ? "Last: " + GSRService.lastFile : "No recordings yet"
                     elide: Text.ElideMiddle
-                    font.pixelSize: Theme.fontLabelSmall
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, recorderModal.fontScale)
                     color: Theme.surfaceVariantText
                 }
 
                 OptionButton {
+
+                    fontScale: recorderModal.fontScale
                     text: "Open folder"
-                    implicitWidth: 76
+                    implicitWidth: Theme.scaledSize(76, recorderModal.fontScale)
                     onClicked: GSRService.openVideos()
                 }
 

@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: volumeMenu
 
+    property real fontScale: 1.0
     readonly property var outputSink: Pipewire.defaultAudioSink
     readonly property var inputSource: Pipewire.defaultAudioSource
     property string pickerMode: ""
@@ -129,16 +130,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 590
-        height: content.implicitHeight + 24
+        width: Theme.scaledSize(590, volumeMenu.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(24, volumeMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, volumeMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 118
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(118, volumeMenu.fontScale)
+        radius: Theme.scaledSize(16, volumeMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, volumeMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 volumeMenu.visible = false;
@@ -154,44 +155,45 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Theme.scaledSize(12, volumeMenu.fontScale)
+            spacing: Theme.scaledSize(10, volumeMenu.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 12
+                spacing: Theme.scaledSize(12, volumeMenu.fontScale)
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1
-                    spacing: 10
+                    Layout.preferredWidth: Theme.scaledSize(1, volumeMenu.fontScale)
+                    spacing: Theme.scaledSize(10, volumeMenu.fontScale)
 
                     RowLayout {
                         Layout.fillWidth: true
 
                         Text {
                             text: "\uF028"
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.scaledFont(14, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         Text {
                             Layout.fillWidth: true
                             text: "Volume"
-                            font.pixelSize: Theme.fontLabelLarge
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, volumeMenu.fontScale)
                             font.bold: true
                             color: Theme.surfaceText
                         }
 
                         Text {
                             text: volumeMenu.pct(outputSink && outputSink.audio ? outputSink.audio.volume : NaN)
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                     }
 
                     VolumeSlider {
+                        fontScale: volumeMenu.fontScale
                         Layout.fillWidth: true
                         currentValue: outputSink && outputSink.audio ? outputSink.audio.volume : 0
                         onValueChange: (value) => {
@@ -203,18 +205,18 @@ PanelWindow {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: 8
+                        spacing: Theme.scaledSize(8, volumeMenu.fontScale)
 
                         Text {
                             text: "\uF028"
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.scaledFont(12, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         Rectangle {
                             Layout.fillWidth: true
-                            height: 8
-                            radius: 4
+                            height: Theme.scaledSize(8, volumeMenu.fontScale)
+                            radius: Theme.scaledSize(4, volumeMenu.fontScale)
                             color: Theme.surfaceContainerHighest
 
                             Rectangle {
@@ -224,7 +226,7 @@ PanelWindow {
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 width: parent.width * (sinkPeakMonitor.peak || 0)
-                                radius: 4
+                                radius: Theme.scaledSize(4, volumeMenu.fontScale)
                                 color: volumeMenu.levelColor(sinkPeakMonitor.peak)
 
                                 Behavior on width {
@@ -248,7 +250,7 @@ PanelWindow {
 
                         Text {
                             text: volumeMenu.pct(sinkPeakMonitor.peak)
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -258,19 +260,19 @@ PanelWindow {
                         id: outputButton
 
                         Layout.fillWidth: true
-                        height: 40
-                        radius: 7
+                        height: Theme.scaledSize(40, volumeMenu.fontScale)
+                        radius: Theme.scaledSize(7, volumeMenu.fontScale)
                         color: outputButtonMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                         RowLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: 12
-                            anchors.rightMargin: 8
-                            spacing: 8
+                            anchors.leftMargin: Theme.scaledSize(12, volumeMenu.fontScale)
+                            anchors.rightMargin: Theme.scaledSize(8, volumeMenu.fontScale)
+                            spacing: Theme.scaledSize(8, volumeMenu.fontScale)
 
                             Text {
                                 text: "\uF028"
-                                font.pixelSize: 14
+                                font.pixelSize: Theme.scaledFont(14, volumeMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -278,13 +280,13 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: volumeMenu.nodeLabel(outputSink) || "No device"
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, volumeMenu.fontScale)
                                 color: Theme.surfaceText
                             }
 
                             Text {
                                 text: "\uF078"
-                                font.pixelSize: 10
+                                font.pixelSize: Theme.scaledFont(10, volumeMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -305,35 +307,36 @@ PanelWindow {
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1
-                    spacing: 10
+                    Layout.preferredWidth: Theme.scaledSize(1, volumeMenu.fontScale)
+                    spacing: Theme.scaledSize(10, volumeMenu.fontScale)
 
                     RowLayout {
                         Layout.fillWidth: true
 
                         Text {
                             text: "\uF130"
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.scaledFont(14, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         Text {
                             Layout.fillWidth: true
                             text: "Microphone"
-                            font.pixelSize: Theme.fontLabelLarge
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, volumeMenu.fontScale)
                             font.bold: true
                             color: Theme.surfaceText
                         }
 
                         Text {
                             text: volumeMenu.pct(inputSource && inputSource.audio ? inputSource.audio.volume : NaN)
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                     }
 
                     VolumeSlider {
+                        fontScale: volumeMenu.fontScale
                         Layout.fillWidth: true
                         currentValue: inputSource && inputSource.audio ? inputSource.audio.volume : 0
                         onValueChange: (value) => {
@@ -345,18 +348,18 @@ PanelWindow {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: 8
+                        spacing: Theme.scaledSize(8, volumeMenu.fontScale)
 
                         Text {
                             text: "\uF130"
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.scaledFont(12, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         Rectangle {
                             Layout.fillWidth: true
-                            height: 8
-                            radius: 4
+                            height: Theme.scaledSize(8, volumeMenu.fontScale)
+                            radius: Theme.scaledSize(4, volumeMenu.fontScale)
                             color: Theme.surfaceContainerHighest
 
                             Rectangle {
@@ -366,7 +369,7 @@ PanelWindow {
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 width: parent.width * (micPeakMonitor.peak || 0)
-                                radius: 4
+                                radius: Theme.scaledSize(4, volumeMenu.fontScale)
                                 color: volumeMenu.levelColor(micPeakMonitor.peak)
 
                                 Behavior on width {
@@ -390,7 +393,7 @@ PanelWindow {
 
                         Text {
                             text: volumeMenu.pct(micPeakMonitor.peak)
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, volumeMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -400,19 +403,19 @@ PanelWindow {
                         id: inputButton
 
                         Layout.fillWidth: true
-                        height: 40
-                        radius: 7
+                        height: Theme.scaledSize(40, volumeMenu.fontScale)
+                        radius: Theme.scaledSize(7, volumeMenu.fontScale)
                         color: inputButtonMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                         RowLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: 12
-                            anchors.rightMargin: 8
-                            spacing: 8
+                            anchors.leftMargin: Theme.scaledSize(12, volumeMenu.fontScale)
+                            anchors.rightMargin: Theme.scaledSize(8, volumeMenu.fontScale)
+                            spacing: Theme.scaledSize(8, volumeMenu.fontScale)
 
                             Text {
                                 text: "\uF130"
-                                font.pixelSize: 14
+                                font.pixelSize: Theme.scaledFont(14, volumeMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -420,13 +423,13 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: volumeMenu.nodeLabel(inputSource) || "No device"
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, volumeMenu.fontScale)
                                 color: Theme.surfaceText
                             }
 
                             Text {
                                 text: "\uF078"
-                                font.pixelSize: 10
+                                font.pixelSize: Theme.scaledFont(10, volumeMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -449,7 +452,7 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: Theme.scaledSize(4, volumeMenu.fontScale)
                 visible: pickerMode !== ""
 
                 Repeater {
@@ -462,21 +465,21 @@ PanelWindow {
                         readonly property bool isDefault: (pickerMode === "sink" && outputSink && outputSink.id === modelData.id) || (pickerMode === "source" && inputSource && inputSource.id === modelData.id)
 
                         Layout.fillWidth: true
-                        height: 36
-                        radius: 7
+                        height: Theme.scaledSize(36, volumeMenu.fontScale)
+                        radius: Theme.scaledSize(7, volumeMenu.fontScale)
                         color: deviceMouse.containsMouse || isDefault ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                         border.color: isDefault ? Theme.primary : "transparent"
-                        border.width: isDefault ? 1 : 0
+                        border.width: isDefault ? Theme.scaledSize(1, volumeMenu.fontScale) : Theme.scaledSize(0, volumeMenu.fontScale)
 
                         RowLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: 12
-                            anchors.rightMargin: 12
-                            spacing: 8
+                            anchors.leftMargin: Theme.scaledSize(12, volumeMenu.fontScale)
+                            anchors.rightMargin: Theme.scaledSize(12, volumeMenu.fontScale)
+                            spacing: Theme.scaledSize(8, volumeMenu.fontScale)
 
                             Text {
                                 text: modelData.isSink ? "\uF028" : "\uF130"
-                                font.pixelSize: 12
+                                font.pixelSize: Theme.scaledFont(12, volumeMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -484,14 +487,14 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: volumeMenu.nodeLabel(modelData)
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, volumeMenu.fontScale)
                                 color: Theme.surfaceText
                             }
 
                             Text {
                                 visible: isDefault
                                 text: "\uF00C"
-                                font.pixelSize: 12
+                                font.pixelSize: Theme.scaledFont(12, volumeMenu.fontScale)
                                 color: Theme.primary
                             }
 

@@ -7,14 +7,15 @@ import qs.theme
 Rectangle {
     id: root
 
+    property real fontScale: 1.0
     property var modal
     property var targetScreen
     property bool hovered: false
     readonly property bool hasWeather: WeatherService.weatherUpdatedAt > 0 || WeatherService.available
 
-    implicitWidth: contentRow.implicitWidth + 20
-    implicitHeight: 24
-    radius: 12
+    implicitWidth: contentRow.implicitWidth + Theme.scaledSize(20, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
+    radius: Theme.scaledSize(12, root.fontScale)
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     FontLoader {
@@ -27,21 +28,21 @@ Rectangle {
         id: contentRow
 
         anchors.left: parent.left
-        anchors.leftMargin: 6
+        anchors.leftMargin: Theme.scaledSize(6, root.fontScale)
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 6
+        spacing: Theme.scaledSize(6, root.fontScale)
 
         Text {
             text: hasWeather ? WeatherService.getWeatherIcon(WeatherService.wCode, WeatherService.isDay) : "\uE2BD"
             font.family: materialSymbols.name
-            font.pixelSize: 16
+            font.pixelSize: Theme.scaledFont(16, root.fontScale)
             color: Theme.primary
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             text: hasWeather ? (WeatherService.formatTemp(WeatherService.temp) || "--°C") : "--°C"
-            font.pixelSize: Theme.fontLabelSmall
+            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, root.fontScale)
             font.bold: true
             color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
             anchors.verticalCenter: parent.verticalCenter
@@ -60,6 +61,7 @@ Rectangle {
                 return ;
 
             root.modal.targetScreen = root.targetScreen;
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

@@ -6,6 +6,7 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property bool hovered: false
     property var modal
     property var targetScreen
@@ -23,28 +24,28 @@ Item {
     Rectangle {
         id: bg
 
-        width: root.recording ? recRow.implicitWidth + 18 : 24
-        height: 24
-        radius: 7
+        width: root.recording ? recRow.implicitWidth + Theme.scaledSize(18, root.fontScale) : Theme.scaledSize(24, root.fontScale)
+        height: Theme.scaledSize(24, root.fontScale)
+        radius: Theme.scaledSize(7, root.fontScale)
         color: root.recording ? Theme.error : (root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh)
 
         RowLayout {
             id: recRow
 
             anchors.centerIn: parent
-            spacing: 5
+            spacing: Theme.scaledSize(5, root.fontScale)
 
             Text {
                 text: "\uE04B"
                 font.family: materialSymbols.name
-                font.pixelSize: 15
+                font.pixelSize: Theme.scaledFont(15, root.fontScale)
                 color: root.recording ? Theme.surfaceText : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText)
             }
 
             Rectangle {
-                width: 6
-                height: 6
-                radius: 3
+                width: Theme.scaledSize(6, root.fontScale)
+                height: Theme.scaledSize(6, root.fontScale)
+                radius: Theme.scaledSize(3, root.fontScale)
                 color: Theme.surfaceText
                 visible: root.recording
                 opacity: recPulse.recToggled ? 1 : 0.3
@@ -62,7 +63,7 @@ Item {
                 text: GSRService.formatElapsed()
                 visible: root.recording
                 font.family: "JetBrainsMono Nerd Font"
-                font.pixelSize: 11
+                font.pixelSize: Theme.scaledFont(11, root.fontScale)
                 color: Theme.surfaceText
             }
 
@@ -79,6 +80,7 @@ Item {
                 return ;
 
             root.modal.targetScreen = root.targetScreen;
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
                 if (root.modal.visible && root.modal.open)
                     root.modal.open();

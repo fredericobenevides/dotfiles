@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: launcherMenu
 
+    property real fontScale: 1.0
     property string searchText: ""
     property bool anyCardHovered: false
     readonly property string launcherIcon: "󰀻"
@@ -132,11 +133,11 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 600
-        height: 600
+        width: Theme.scaledSize(600, launcherMenu.fontScale)
+        height: Theme.scaledSize(600, launcherMenu.fontScale)
         anchors.centerIn: parent
         color: Theme.surfaceContainer
-        radius: 16
+        radius: Theme.scaledSize(16, launcherMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 searchInput.text = "";
@@ -154,27 +155,27 @@ PanelWindow {
         Rectangle {
             id: searchBar
 
-            height: 46
+            height: Theme.scaledSize(46, launcherMenu.fontScale)
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: 16
-            radius: 10
+            anchors.margins: Theme.scaledSize(16, launcherMenu.fontScale)
+            radius: Theme.scaledSize(10, launcherMenu.fontScale)
             color: Theme.surfaceContainerHigh
             border.color: Theme.primary
-            border.width: 2
+            border.width: Theme.scaledSize(2, launcherMenu.fontScale)
 
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: 14
-                anchors.rightMargin: 14
-                spacing: 10
+                anchors.leftMargin: Theme.scaledSize(14, launcherMenu.fontScale)
+                anchors.rightMargin: Theme.scaledSize(14, launcherMenu.fontScale)
+                spacing: Theme.scaledSize(10, launcherMenu.fontScale)
 
                 Text {
                     id: searchIcon
 
                     text: "󰍉"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, launcherMenu.fontScale)
                     color: Theme.surfaceVariantText
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -185,7 +186,7 @@ PanelWindow {
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: Theme.fontLabelLarge
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, launcherMenu.fontScale)
                     color: Theme.surfaceText
                     focus: launcherMenu.visible
                     onTextChanged: {
@@ -227,7 +228,7 @@ PanelWindow {
                     Text {
                         text: "Search applications..."
                         color: Theme.surfaceVariantText
-                        font.pixelSize: Theme.fontLabelLarge
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, launcherMenu.fontScale)
                         anchors.verticalCenter: parent.verticalCenter
                         visible: !parent.text && !parent.activeFocus
                     }
@@ -245,10 +246,10 @@ PanelWindow {
             anchors.bottom: statusBar.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.topMargin: 16
-            anchors.bottomMargin: 8
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.topMargin: Theme.scaledSize(16, launcherMenu.fontScale)
+            anchors.bottomMargin: Theme.scaledSize(8, launcherMenu.fontScale)
+            anchors.leftMargin: Theme.scaledSize(16, launcherMenu.fontScale)
+            anchors.rightMargin: Theme.scaledSize(16, launcherMenu.fontScale)
             clip: true
             cellWidth: (bg.width - 32) / 4
             cellHeight: 110
@@ -288,24 +289,24 @@ PanelWindow {
 
                 width: appsGrid.cellWidth
                 height: appsGrid.cellHeight
-                radius: 12
+                radius: Theme.scaledSize(12, launcherMenu.fontScale)
                 color: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? Theme.surfaceContainerHighest : "transparent"
                 border.color: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? Theme.primary : "transparent"
-                border.width: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? 1 : 0
+                border.width: (delegateMouse.containsMouse || (isCurrent && !launcherMenu.anyCardHovered)) ? Theme.scaledSize(1, launcherMenu.fontScale) : Theme.scaledSize(0, launcherMenu.fontScale)
 
                 ColumnLayout {
                     anchors.centerIn: parent
-                    spacing: 8
+                    spacing: Theme.scaledSize(8, launcherMenu.fontScale)
 
                     Item {
-                        Layout.preferredWidth: 44
-                        Layout.preferredHeight: 44
+                        Layout.preferredWidth: Theme.scaledSize(44, launcherMenu.fontScale)
+                        Layout.preferredHeight: Theme.scaledSize(44, launcherMenu.fontScale)
                         Layout.alignment: Qt.AlignHCenter
 
                         Text {
                             text: "\uE8F0"
                             font.family: materialSymbols.name
-                            font.pixelSize: 40
+                            font.pixelSize: Theme.scaledFont(40, launcherMenu.fontScale)
                             color: Theme.primary
                             anchors.centerIn: parent
                             visible: modelData.id === "calculator-result"
@@ -321,12 +322,12 @@ PanelWindow {
 
                     Text {
                         text: modelData.name
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, launcherMenu.fontScale)
                         color: Theme.surfaceText
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
                         elide: Text.ElideRight
-                        Layout.maximumWidth: appsGrid.cellWidth - 10
+                        Layout.maximumWidth: appsGrid.cellWidth - Theme.scaledSize(10, launcherMenu.fontScale)
                     }
 
                 }
@@ -352,7 +353,7 @@ PanelWindow {
         Rectangle {
             id: statusBar
 
-            height: 38
+            height: Theme.scaledSize(38, launcherMenu.fontScale)
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -360,16 +361,16 @@ PanelWindow {
 
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: 12
-                anchors.rightMargin: 12
+                anchors.leftMargin: Theme.scaledSize(12, launcherMenu.fontScale)
+                anchors.rightMargin: Theme.scaledSize(12, launcherMenu.fontScale)
 
                 RowLayout {
-                    spacing: 8
+                    spacing: Theme.scaledSize(8, launcherMenu.fontScale)
                     Layout.alignment: Qt.AlignVCenter
 
                     Text {
                         text: launcherMenu.launcherIcon
-                        font.pixelSize: 18
+                        font.pixelSize: Theme.scaledFont(18, launcherMenu.fontScale)
                         color: Theme.surfaceVariantText
                         Layout.alignment: Qt.AlignVCenter
                     }
@@ -377,7 +378,7 @@ PanelWindow {
                     Text {
                         text: "Applications: " + appsGrid.count
                         color: Theme.surfaceVariantText
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, launcherMenu.fontScale)
                         Layout.alignment: Qt.AlignVCenter
                     }
 
@@ -388,21 +389,21 @@ PanelWindow {
                 }
 
                 RowLayout {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, launcherMenu.fontScale)
                     Layout.alignment: Qt.AlignVCenter
 
                     Rectangle {
-                        width: 24
-                        height: 18
+                        width: Theme.scaledSize(24, launcherMenu.fontScale)
+                        height: Theme.scaledSize(18, launcherMenu.fontScale)
                         color: Theme.surfaceContainerHighest
-                        radius: 4
+                        radius: Theme.scaledSize(4, launcherMenu.fontScale)
                         border.color: Theme.surfaceVariantText
-                        border.width: 1
+                        border.width: Theme.scaledSize(1, launcherMenu.fontScale)
 
                         Text {
                             text: "↑↓"
                             color: Theme.surfaceText
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, launcherMenu.fontScale)
                             font.bold: true
                             anchors.centerIn: parent
                         }
@@ -412,31 +413,31 @@ PanelWindow {
                     Text {
                         text: "Nav"
                         color: Theme.surfaceVariantText
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, launcherMenu.fontScale)
                     }
 
                 }
 
                 Item {
-                    width: 8
+                    width: Theme.scaledSize(8, launcherMenu.fontScale)
                 }
 
                 RowLayout {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, launcherMenu.fontScale)
                     Layout.alignment: Qt.AlignVCenter
 
                     Rectangle {
-                        width: 42
-                        height: 18
+                        width: Theme.scaledSize(42, launcherMenu.fontScale)
+                        height: Theme.scaledSize(18, launcherMenu.fontScale)
                         color: Theme.surfaceContainerHighest
-                        radius: 4
+                        radius: Theme.scaledSize(4, launcherMenu.fontScale)
                         border.color: Theme.surfaceVariantText
-                        border.width: 1
+                        border.width: Theme.scaledSize(1, launcherMenu.fontScale)
 
                         Text {
                             text: "Enter"
                             color: Theme.surfaceText
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, launcherMenu.fontScale)
                             font.bold: true
                             anchors.centerIn: parent
                         }
@@ -446,7 +447,7 @@ PanelWindow {
                     Text {
                         text: "Execute"
                         color: Theme.surfaceVariantText
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, launcherMenu.fontScale)
                     }
 
                 }

@@ -6,6 +6,7 @@ import qs.theme
 Rectangle {
     id: root
 
+    property real fontScale: 1.0
     property var modal
     property bool hovered: false
     readonly property var player: MprisController.activePlayer
@@ -16,6 +17,7 @@ Rectangle {
         if (!root.modal)
             return ;
 
+        root.modal.fontScale = root.fontScale;
         root.modal.visible = !root.modal.visible;
         if (root.modal.visible && root.modal.open)
             root.modal.open();
@@ -24,9 +26,9 @@ Rectangle {
 
     width: implicitWidth
     height: implicitHeight
-    implicitHeight: 24
-    implicitWidth: Math.max(240, contentRow.implicitWidth + buttonsRow.implicitWidth + 36) + 16
-    radius: 12
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
+    implicitWidth: Math.max(Theme.scaledSize(240, root.fontScale), contentRow.implicitWidth + buttonsRow.implicitWidth + Theme.scaledSize(36, root.fontScale)) + Theme.scaledSize(16, root.fontScale)
+    radius: Theme.scaledSize(12, root.fontScale)
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     FontLoader {
@@ -40,22 +42,23 @@ Rectangle {
 
         z: 1
         anchors.left: parent.left
-        anchors.leftMargin: 12
+        anchors.leftMargin: Theme.scaledSize(12, root.fontScale)
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 8
+        spacing: Theme.scaledSize(8, root.fontScale)
 
         Text {
             text: "\uE405"
             font.family: materialSymbols.name
-            font.pixelSize: 16
+            font.pixelSize: Theme.scaledFont(16, root.fontScale)
             color: Theme.primary
             anchors.verticalCenter: parent.verticalCenter
         }
 
         MarqueeText {
-            width: 128
+            width: Theme.scaledSize(128, root.fontScale)
             text: root.trackTitle
             fontSize: Theme.fontLabelMedium
+            fontScale: root.fontScale
             color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
             anchors.verticalCenter: parent.verticalCenter
             onClicked: root.toggleModal()
@@ -68,14 +71,14 @@ Rectangle {
 
         z: 1
         anchors.right: parent.right
-        anchors.rightMargin: 8
+        anchors.rightMargin: Theme.scaledSize(8, root.fontScale)
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 4
+        spacing: Theme.scaledSize(4, root.fontScale)
 
         Rectangle {
-            width: 16
-            height: 16
-            radius: 8
+            width: Theme.scaledSize(16, root.fontScale)
+            height: Theme.scaledSize(16, root.fontScale)
+            radius: Theme.scaledSize(8, root.fontScale)
             anchors.verticalCenter: parent.verticalCenter
             color: prevMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
             opacity: hasPlayer && player.canGoPrevious ? 1 : 0.45
@@ -84,7 +87,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "\uE045"
                 font.family: materialSymbols.name
-                font.pixelSize: 15
+                font.pixelSize: Theme.scaledFont(15, root.fontScale)
                 color: Theme.surfaceText
             }
 
@@ -103,9 +106,9 @@ Rectangle {
         }
 
         Rectangle {
-            width: 16
-            height: 16
-            radius: 8
+            width: Theme.scaledSize(16, root.fontScale)
+            height: Theme.scaledSize(16, root.fontScale)
+            radius: Theme.scaledSize(8, root.fontScale)
             anchors.verticalCenter: parent.verticalCenter
             color: rewindMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
             opacity: hasPlayer && player.positionSupported ? 1 : 0.45
@@ -114,7 +117,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "\uE020"
                 font.family: materialSymbols.name
-                font.pixelSize: 15
+                font.pixelSize: Theme.scaledFont(15, root.fontScale)
                 color: Theme.surfaceText
             }
 
@@ -133,9 +136,9 @@ Rectangle {
         }
 
         Rectangle {
-            width: 24
-            height: 24
-            radius: 12
+            width: Theme.scaledSize(24, root.fontScale)
+            height: Theme.scaledSize(24, root.fontScale)
+            radius: Theme.scaledSize(12, root.fontScale)
             anchors.verticalCenter: parent.verticalCenter
             color: playMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.primary
             opacity: hasPlayer && player.canTogglePlaying ? 1 : 0.55
@@ -144,7 +147,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: root.player && root.player.playbackState === MprisPlaybackState.Playing ? "\uE034" : "\uE037"
                 font.family: materialSymbols.name
-                font.pixelSize: 17
+                font.pixelSize: Theme.scaledFont(17, root.fontScale)
                 color: Theme.surfaceContainer
             }
 
@@ -167,9 +170,9 @@ Rectangle {
         }
 
         Rectangle {
-            width: 16
-            height: 16
-            radius: 8
+            width: Theme.scaledSize(16, root.fontScale)
+            height: Theme.scaledSize(16, root.fontScale)
+            radius: Theme.scaledSize(8, root.fontScale)
             anchors.verticalCenter: parent.verticalCenter
             color: forwardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
             opacity: hasPlayer && player.positionSupported ? 1 : 0.45
@@ -178,7 +181,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "\uE01F"
                 font.family: materialSymbols.name
-                font.pixelSize: 15
+                font.pixelSize: Theme.scaledFont(15, root.fontScale)
                 color: Theme.surfaceText
             }
 
@@ -197,9 +200,9 @@ Rectangle {
         }
 
         Rectangle {
-            width: 16
-            height: 16
-            radius: 8
+            width: Theme.scaledSize(16, root.fontScale)
+            height: Theme.scaledSize(16, root.fontScale)
+            radius: Theme.scaledSize(8, root.fontScale)
             anchors.verticalCenter: parent.verticalCenter
             color: nextMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
             opacity: hasPlayer && player.canGoNext ? 1 : 0.45
@@ -208,7 +211,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "\uE044"
                 font.family: materialSymbols.name
-                font.pixelSize: 15
+                font.pixelSize: Theme.scaledFont(15, root.fontScale)
                 color: Theme.surfaceText
             }
 

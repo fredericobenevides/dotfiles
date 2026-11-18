@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: volumeOSD
 
+    readonly property real fontScale: Theme.fontScaleForScreen(volumeOSD.screen)
     readonly property var outputSink: Pipewire.defaultAudioSink
     readonly property real currentVolume: outputSink && outputSink.audio ? outputSink.audio.volume : 0
     readonly property bool isMuted: outputSink && outputSink.audio ? outputSink.audio.muted : false
@@ -96,27 +97,28 @@ PanelWindow {
                 Text {
                     text: volumeOSD.isMuted ? "\uE04E" : "\uE050"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, volumeOSD.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: volumeOSD.isMuted ? "Muted" : "Volume"
-                    font.pixelSize: Theme.fontLabelLarge
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, volumeOSD.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
 
                 Text {
                     text: volumeOSD.pct(volumeOSD.currentVolume)
-                    font.pixelSize: Theme.fontLabelMedium
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, volumeOSD.fontScale)
                     color: Theme.surfaceVariantText
                 }
 
             }
 
             VolumeSlider {
+                fontScale: volumeOSD.fontScale
                 Layout.fillWidth: true
                 currentValue: volumeOSD.currentVolume
                 onValueChange: (value) => {

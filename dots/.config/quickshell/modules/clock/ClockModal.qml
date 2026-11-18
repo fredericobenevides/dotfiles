@@ -7,6 +7,7 @@ import qs.theme
 PanelWindow {
     id: clockMenu
 
+    property real fontScale: 1.0
     property date selectedDate: new Date()
     property date viewDate: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
     readonly property var monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -72,16 +73,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 300
-        height: content.implicitHeight + 24
+        width: Theme.scaledSize(300, clockMenu.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(24, clockMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, clockMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 42
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(42, clockMenu.fontScale)
+        radius: Theme.scaledSize(16, clockMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, clockMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 clockMenu.visible = false;
@@ -109,24 +110,24 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 14
+            anchors.margins: Theme.scaledSize(12, clockMenu.fontScale)
+            spacing: Theme.scaledSize(14, clockMenu.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, clockMenu.fontScale)
 
                 Rectangle {
                     Layout.alignment: Qt.AlignVCenter
-                    width: 24
-                    height: 24
-                    radius: 7
+                    width: Theme.scaledSize(24, clockMenu.fontScale)
+                    height: Theme.scaledSize(24, clockMenu.fontScale)
+                    radius: Theme.scaledSize(7, clockMenu.fontScale)
                     color: prevMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         text: "‹"
                         anchors.centerIn: parent
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.scaledFont(16, clockMenu.fontScale)
                         color: Theme.surfaceText
                     }
 
@@ -147,31 +148,31 @@ PanelWindow {
 
                     RowLayout {
                         anchors.centerIn: parent
-                        spacing: 10
+                        spacing: Theme.scaledSize(10, clockMenu.fontScale)
 
                         Text {
                             Layout.alignment: Qt.AlignVCenter
                             text: clockMenu.monthNames[viewDate.getMonth()] + " " + viewDate.getFullYear()
-                            font.pixelSize: Theme.fontLabelLarge
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, clockMenu.fontScale)
                             font.bold: true
                             color: Theme.surfaceText
                         }
 
                         RowLayout {
                             Layout.alignment: Qt.AlignVCenter
-                            spacing: 5
+                            spacing: Theme.scaledSize(5, clockMenu.fontScale)
 
                             Rectangle {
                                 Layout.alignment: Qt.AlignVCenter
-                                width: 16
-                                height: 16
-                                radius: 5
+                                width: Theme.scaledSize(16, clockMenu.fontScale)
+                                height: Theme.scaledSize(16, clockMenu.fontScale)
+                                radius: Theme.scaledSize(5, clockMenu.fontScale)
                                 color: upYearMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                                 Text {
                                     text: "▲"
                                     anchors.centerIn: parent
-                                    font.pixelSize: 8
+                                    font.pixelSize: Theme.scaledFont(8, clockMenu.fontScale)
                                     color: Theme.surfaceText
                                 }
 
@@ -188,15 +189,15 @@ PanelWindow {
 
                             Rectangle {
                                 Layout.alignment: Qt.AlignVCenter
-                                width: 16
-                                height: 16
-                                radius: 5
+                                width: Theme.scaledSize(16, clockMenu.fontScale)
+                                height: Theme.scaledSize(16, clockMenu.fontScale)
+                                radius: Theme.scaledSize(5, clockMenu.fontScale)
                                 color: downYearMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                                 Text {
                                     text: "▼"
                                     anchors.centerIn: parent
-                                    font.pixelSize: 8
+                                    font.pixelSize: Theme.scaledFont(8, clockMenu.fontScale)
                                     color: Theme.surfaceText
                                 }
 
@@ -219,15 +220,15 @@ PanelWindow {
 
                 Rectangle {
                     Layout.alignment: Qt.AlignVCenter
-                    width: 24
-                    height: 24
-                    radius: 7
+                    width: Theme.scaledSize(24, clockMenu.fontScale)
+                    height: Theme.scaledSize(24, clockMenu.fontScale)
+                    radius: Theme.scaledSize(7, clockMenu.fontScale)
                     color: nextMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         text: "›"
                         anchors.centerIn: parent
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.scaledFont(16, clockMenu.fontScale)
                         color: Theme.surfaceText
                     }
 
@@ -246,16 +247,16 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: Theme.scaledSize(4, clockMenu.fontScale)
 
                 Repeater {
                     model: clockMenu.weekDayNames
 
                     Text {
-                        Layout.preferredWidth: 36
+                        Layout.preferredWidth: Theme.scaledSize(36, clockMenu.fontScale)
                         horizontalAlignment: Text.AlignHCenter
                         text: modelData
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, clockMenu.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
@@ -268,8 +269,8 @@ PanelWindow {
 
                 Layout.alignment: Qt.AlignHCenter
                 columns: 7
-                columnSpacing: 4
-                rowSpacing: 4
+                columnSpacing: Theme.scaledSize(4, clockMenu.fontScale)
+                rowSpacing: Theme.scaledSize(4, clockMenu.fontScale)
 
                 Repeater {
                     model: clockMenu.monthCells
@@ -281,17 +282,17 @@ PanelWindow {
                         readonly property bool isToday: isInMonth && modelData.day === new Date().getDate() && viewDate.getMonth() === new Date().getMonth() && viewDate.getFullYear() === new Date().getFullYear()
                         readonly property bool isSelected: isInMonth && modelData.day === clockMenu.selectedDate.getDate() && viewDate.getMonth() === clockMenu.selectedDate.getMonth() && viewDate.getFullYear() === clockMenu.selectedDate.getFullYear()
 
-                        width: 36
-                        height: 30
-                        radius: 7
+                        width: Theme.scaledSize(36, clockMenu.fontScale)
+                        height: Theme.scaledSize(30, clockMenu.fontScale)
+                        radius: Theme.scaledSize(7, clockMenu.fontScale)
                         color: isSelected ? Theme.primary : (cellMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent")
                         border.color: isToday ? Theme.primary : "transparent"
-                        border.width: isToday ? 1 : 0
+                        border.width: isToday ? Theme.scaledSize(1, clockMenu.fontScale) : Theme.scaledSize(0, clockMenu.fontScale)
 
                         Text {
                             anchors.centerIn: parent
                             text: modelData.day
-                            font.pixelSize: isInMonth ? Theme.fontLabelMedium : Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(isInMonth ? Theme.fontLabelMedium : Theme.fontLabelSmall, clockMenu.fontScale)
                             font.bold: isSelected || isToday
                             color: isSelected ? Theme.primaryText : (isInMonth ? Theme.surfaceText : Theme.surfaceVariantText)
                         }

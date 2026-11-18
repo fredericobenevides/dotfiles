@@ -4,6 +4,7 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property string text: ""
     property color color: Theme.surfaceText
     property real fontSize: 13
@@ -45,7 +46,7 @@ Item {
 
         visible: false
         text: root.text
-        font.pixelSize: root.fontSize
+        font.pixelSize: Theme.scaledFont(root.fontSize, root.fontScale)
         font.weight: root.bold ? Font.Bold : Font.Normal
     }
 
@@ -54,7 +55,7 @@ Item {
 
         text: root.needsScroll ? root.text + "          " + root.text : root.text
         color: root.color
-        font.pixelSize: root.fontSize
+        font.pixelSize: Theme.scaledFont(root.fontSize, root.fontScale)
         font.weight: root.bold ? Font.Bold : Font.Normal
         verticalAlignment: Text.AlignVCenter
     }

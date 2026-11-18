@@ -5,6 +5,7 @@ import qs.theme
 Rectangle {
     id: root
 
+    property real fontScale: 1.0
     readonly property string inactiveIcon: "\uF186"
     readonly property int iconSize: 15
     readonly property bool active: NightLightService.active
@@ -16,16 +17,16 @@ Rectangle {
     }
 
     Component.onCompleted: shell.nightLightRef = root
-    implicitWidth: 24
-    implicitHeight: 24
-    radius: 12
+    implicitWidth: Theme.scaledSize(24, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
+    radius: Theme.scaledSize(12, root.fontScale)
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     Text {
         anchors.centerIn: parent
         text: root.inactiveIcon
         font.family: "JetBrainsMono Nerd Font"
-        font.pixelSize: root.iconSize
+        font.pixelSize: Theme.scaledFont(root.iconSize, root.fontScale)
         color: root.active ? "#f9e2af" : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText)
 
         Behavior on color {
@@ -47,6 +48,7 @@ Rectangle {
             if (!root.modal)
                 return ;
 
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

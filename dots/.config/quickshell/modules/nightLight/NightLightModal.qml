@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: nightLightMenu
 
+    property real fontScale: 1.0
     property bool editingTemp: false
 
     function open() {
@@ -39,16 +40,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 320
-        height: content.implicitHeight + 24
+        width: Theme.scaledSize(320, nightLightMenu.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(24, nightLightMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, nightLightMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 118
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(118, nightLightMenu.fontScale)
+        radius: Theme.scaledSize(16, nightLightMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, nightLightMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 nightLightMenu.closeModal();
@@ -70,38 +71,38 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 14
+            anchors.margins: Theme.scaledSize(16, nightLightMenu.fontScale)
+            spacing: Theme.scaledSize(14, nightLightMenu.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, nightLightMenu.fontScale)
 
                 Text {
                     text: "\uF186"
                     font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, nightLightMenu.fontScale)
                     color: NightLightService.active ? "#f9e2af" : Theme.surfaceVariantText
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Night Light"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, nightLightMenu.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
 
                 Item {
                     Layout.alignment: Qt.AlignVCenter
-                    width: 64
-                    height: 24
+                    width: Theme.scaledSize(64, nightLightMenu.fontScale)
+                    height: Theme.scaledSize(24, nightLightMenu.fontScale)
 
                     Text {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         text: NightLightService.temperature + "K"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, nightLightMenu.fontScale)
                         color: NightLightService.active ? "#f9e2af" : Theme.surfaceVariantText
                         visible: !nightLightMenu.editingTemp
                     }
@@ -116,7 +117,7 @@ PanelWindow {
                         text: String(NightLightService.temperature)
                         visible: nightLightMenu.editingTemp
                         color: Theme.surfaceText
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, nightLightMenu.fontScale)
                         onAccepted: {
                             NightLightService.setTemperature(parseInt(text));
                             nightLightMenu.editingTemp = false;
@@ -151,6 +152,7 @@ PanelWindow {
             }
 
             NightLightSlider {
+                fontScale: nightLightMenu.fontScale
                 Layout.fillWidth: true
                 currentValue: NightLightService.temperature
                 onValueChange: (value) => {
@@ -160,29 +162,29 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, nightLightMenu.fontScale)
 
                 Text {
                     Layout.fillWidth: true
                     text: NightLightService.active ? "Ligado" : "Desligado"
-                    font.pixelSize: Theme.fontLabelMedium
+                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, nightLightMenu.fontScale)
                     font.bold: true
                     color: NightLightService.active ? Theme.success : Theme.surfaceVariantText
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 34
-                    Layout.preferredHeight: 20
+                    Layout.preferredWidth: Theme.scaledSize(34, nightLightMenu.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(20, nightLightMenu.fontScale)
                     Layout.alignment: Qt.AlignRight
-                    radius: 10
+                    radius: Theme.scaledSize(10, nightLightMenu.fontScale)
                     color: NightLightService.active ? Theme.primary : Theme.surfaceContainerHigh
                     border.color: NightLightService.active ? "transparent" : Theme.outlineVariant
-                    border.width: 1
+                    border.width: Theme.scaledSize(1, nightLightMenu.fontScale)
 
                     Rectangle {
-                        width: 16
-                        height: 16
-                        radius: 8
+                        width: Theme.scaledSize(16, nightLightMenu.fontScale)
+                        height: Theme.scaledSize(16, nightLightMenu.fontScale)
+                        radius: Theme.scaledSize(8, nightLightMenu.fontScale)
                         x: NightLightService.active ? parent.width - width - 2 : 2
                         anchors.verticalCenter: parent.verticalCenter
                         color: NightLightService.active ? Theme.primaryText : Theme.surfaceVariantText

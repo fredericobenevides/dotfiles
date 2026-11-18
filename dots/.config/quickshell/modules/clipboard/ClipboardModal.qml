@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: clipboardModal
 
+    property real fontScale: 1.0
     property bool anyCardHovered: false
 
     function open() {
@@ -44,16 +45,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 500
-        height: 520
+        width: Theme.scaledSize(500, clipboardModal.fontScale)
+        height: Theme.scaledSize(520, clipboardModal.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, clipboardModal.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 6
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(6, clipboardModal.fontScale)
+        radius: Theme.scaledSize(16, clipboardModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, clipboardModal.fontScale)
         Keys.onPressed: function(event) {
             if (event.key === Qt.Key_Escape) {
                 clipboardModal.closeModal();
@@ -97,40 +98,40 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Theme.scaledSize(12, clipboardModal.fontScale)
+            spacing: Theme.scaledSize(10, clipboardModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, clipboardModal.fontScale)
 
                 Text {
                     text: "\uE14F"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, clipboardModal.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Clipboard History (" + ClipboardService.filteredEntries.length + ")"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, clipboardModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 36
-                    Layout.preferredHeight: 36
+                    Layout.preferredWidth: Theme.scaledSize(36, clipboardModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(36, clipboardModal.fontScale)
                     Layout.alignment: Qt.AlignVCenter
-                    radius: 18
+                    radius: Theme.scaledSize(18, clipboardModal.fontScale)
                     color: clearArea.containsMouse ? Theme.error : "transparent"
 
                     Text {
                         anchors.centerIn: parent
                         text: "\uE16C"
                         font.family: materialSymbols.name
-                        font.pixelSize: 22
+                        font.pixelSize: Theme.scaledFont(22, clipboardModal.fontScale)
                         color: clearArea.containsMouse ? Theme.surfaceText : Theme.surfaceVariantText
                     }
 
@@ -149,36 +150,36 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                Layout.preferredHeight: 36
-                radius: 18
+                Layout.topMargin: Theme.scaledSize(8, clipboardModal.fontScale)
+                Layout.preferredHeight: Theme.scaledSize(36, clipboardModal.fontScale)
+                radius: Theme.scaledSize(18, clipboardModal.fontScale)
                 color: Theme.surfaceContainerHigh
                 border.color: searchField.activeFocus ? Theme.primary : "transparent"
-                border.width: 1
+                border.width: Theme.scaledSize(1, clipboardModal.fontScale)
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
-                    spacing: 6
+                    anchors.leftMargin: Theme.scaledSize(10, clipboardModal.fontScale)
+                    anchors.rightMargin: Theme.scaledSize(10, clipboardModal.fontScale)
+                    spacing: Theme.scaledSize(6, clipboardModal.fontScale)
 
                     Text {
                         text: "\uE8B6"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: Theme.scaledFont(14, clipboardModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Item {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 24
+                        Layout.preferredHeight: Theme.scaledSize(24, clipboardModal.fontScale)
                         Layout.alignment: Qt.AlignVCenter
 
                         Text {
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Search clipboard..."
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.scaledFont(14, clipboardModal.fontScale)
                             color: Theme.surfaceVariantText
                             visible: searchField.text === "" && !searchField.activeFocus
                         }
@@ -190,7 +191,7 @@ PanelWindow {
                             z: 1
                             clip: true
                             color: Theme.surfaceText
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.scaledFont(14, clipboardModal.fontScale)
                             selectByMouse: true
                             verticalAlignment: Text.AlignVCenter
                             onTextChanged: ClipboardService.searchText = text
@@ -241,7 +242,7 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 model: ClipboardService.filteredEntries
-                spacing: 8
+                spacing: Theme.scaledSize(8, clipboardModal.fontScale)
                 clip: true
                 currentIndex: ClipboardService.selectedIndex
                 highlightFollowsCurrentItem: true
@@ -250,7 +251,7 @@ PanelWindow {
                 Text {
                     anchors.centerIn: parent
                     text: ClipboardService.loading ? "Loading..." : "No clipboard entries"
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.scaledFont(14, clipboardModal.fontScale)
                     color: Theme.surfaceVariantText
                     visible: ClipboardService.filteredEntries.length === 0
                 }
@@ -265,11 +266,11 @@ PanelWindow {
                     readonly property bool selected: ListView.isCurrentItem && !clipboardModal.anyCardHovered
 
                     width: listView.width
-                    height: 80
-                    radius: 12
+                    height: Theme.scaledSize(80, clipboardModal.fontScale)
+                    radius: Theme.scaledSize(12, clipboardModal.fontScale)
                     color: (selected || cardHover.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: (selected || cardHover.containsMouse) ? Theme.primary : "transparent"
-                    border.width: (selected || cardHover.containsMouse) ? 1 : 0
+                    border.width: (selected || cardHover.containsMouse) ? Theme.scaledSize(1, clipboardModal.fontScale) : Theme.scaledSize(0, clipboardModal.fontScale)
 
                     MouseArea {
                         id: cardHover
@@ -283,17 +284,17 @@ PanelWindow {
                     Rectangle {
                         anchors.right: delBtnRect.left
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 8
-                        width: 26
-                        height: 26
-                        radius: 13
+                        anchors.rightMargin: Theme.scaledSize(8, clipboardModal.fontScale)
+                        width: Theme.scaledSize(26, clipboardModal.fontScale)
+                        height: Theme.scaledSize(26, clipboardModal.fontScale)
+                        radius: Theme.scaledSize(13, clipboardModal.fontScale)
                         color: copyBtnArea.containsMouse ? Theme.surfaceContainerHighest : "transparent"
 
                         Text {
                             anchors.centerIn: parent
                             text: "\uE14D"
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, clipboardModal.fontScale)
                             color: copyBtnArea.containsMouse ? Theme.primary : Theme.surfaceVariantText
                         }
 
@@ -316,17 +317,17 @@ PanelWindow {
 
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 10
-                        width: 26
-                        height: 26
-                        radius: 13
+                        anchors.rightMargin: Theme.scaledSize(10, clipboardModal.fontScale)
+                        width: Theme.scaledSize(26, clipboardModal.fontScale)
+                        height: Theme.scaledSize(26, clipboardModal.fontScale)
+                        radius: Theme.scaledSize(13, clipboardModal.fontScale)
                         color: delBtnArea.containsMouse ? Theme.surfaceContainerHighest : "transparent"
 
                         Text {
                             anchors.centerIn: parent
                             text: "\uE5CD"
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, clipboardModal.fontScale)
                             color: delBtnArea.containsMouse ? Theme.primary : Theme.surfaceVariantText
                         }
 
@@ -344,21 +345,21 @@ PanelWindow {
                     RowLayout {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: 10
-                        anchors.rightMargin: 72
-                        spacing: 10
+                        anchors.leftMargin: Theme.scaledSize(10, clipboardModal.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(72, clipboardModal.fontScale)
+                        spacing: Theme.scaledSize(10, clipboardModal.fontScale)
 
                         Rectangle {
-                            Layout.preferredWidth: 28
-                            Layout.preferredHeight: 28
+                            Layout.preferredWidth: Theme.scaledSize(28, clipboardModal.fontScale)
+                            Layout.preferredHeight: Theme.scaledSize(28, clipboardModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
-                            radius: 14
+                            radius: Theme.scaledSize(14, clipboardModal.fontScale)
                             color: Theme.primary
 
                             Text {
                                 anchors.centerIn: parent
                                 text: (index + 1).toString()
-                                font.pixelSize: 11
+                                font.pixelSize: Theme.scaledFont(11, clipboardModal.fontScale)
                                 font.bold: true
                                 color: Theme.primaryText
                             }
@@ -369,12 +370,12 @@ PanelWindow {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             Layout.alignment: Qt.AlignVCenter
-                            spacing: 8
+                            spacing: Theme.scaledSize(8, clipboardModal.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
                                 text: modelData.type === "image" ? "Image" : (modelData.type === "long_text" ? "Long Text" : "Text")
-                                font.pixelSize: 10
+                                font.pixelSize: Theme.scaledFont(10, clipboardModal.fontScale)
                                 font.bold: true
                                 color: Theme.primary
                                 elide: Text.ElideRight
@@ -383,7 +384,7 @@ PanelWindow {
                             Text {
                                 Layout.fillWidth: true
                                 text: modelData.type === "image" ? modelData.preview : modelData.preview.substring(0, 120)
-                                font.pixelSize: 12
+                                font.pixelSize: Theme.scaledFont(12, clipboardModal.fontScale)
                                 color: Theme.surfaceText
                                 elide: Text.ElideRight
                                 maximumLineCount: 2

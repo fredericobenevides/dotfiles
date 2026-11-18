@@ -9,6 +9,7 @@ import qs.theme
 PanelWindow {
     id: bluetoothMenu
 
+    property real fontScale: 1.0
     function deviceIcon(device) {
         const name = ((device.name || device.deviceName || "") + " " + (device.icon || "")).toLowerCase();
         if (name.includes("headset") || name.includes("audio") || name.includes("headphone") || name.includes("airpod"))
@@ -62,16 +63,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 380
-        height: content.implicitHeight + 24
+        width: Theme.scaledSize(380, bluetoothMenu.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(24, bluetoothMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, bluetoothMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 146
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(146, bluetoothMenu.fontScale)
+        radius: Theme.scaledSize(16, bluetoothMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, bluetoothMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 bluetoothMenu.visible = false;
@@ -87,8 +88,8 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Theme.scaledSize(12, bluetoothMenu.fontScale)
+            spacing: Theme.scaledSize(10, bluetoothMenu.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
@@ -96,14 +97,14 @@ PanelWindow {
                 Text {
                     text: "\uE1A7"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, bluetoothMenu.fontScale)
                     color: Theme.surfaceVariantText
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Bluetooth"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, bluetoothMenu.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
@@ -112,26 +113,26 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                Layout.preferredHeight: 34
+                Layout.topMargin: Theme.scaledSize(8, bluetoothMenu.fontScale)
+                Layout.preferredHeight: Theme.scaledSize(34, bluetoothMenu.fontScale)
                 visible: Bluetooth.defaultAdapter !== null
-                radius: 7
+                radius: Theme.scaledSize(7, bluetoothMenu.fontScale)
                 color: scanMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                 RowLayout {
                     anchors.centerIn: parent
-                    spacing: 8
+                    spacing: Theme.scaledSize(8, bluetoothMenu.fontScale)
 
                     Text {
                         text: Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering ? "\uE047" : "\uE60F"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: Theme.scaledFont(14, bluetoothMenu.fontScale)
                         color: Theme.primary
                     }
 
                     Text {
                         text: Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering ? "Scanning" : "Scan"
-                        font.pixelSize: Theme.fontLabelLarge
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, bluetoothMenu.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -170,12 +171,12 @@ PanelWindow {
 
             Text {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 176
+                Layout.preferredHeight: Theme.scaledSize(176, bluetoothMenu.fontScale)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 visible: Bluetooth.defaultAdapter !== null && !(Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering) && pairedModel.values.length === 0
                 text: "No paired devices"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                 color: Theme.surfaceVariantText
             }
 
@@ -183,10 +184,10 @@ PanelWindow {
                 id: pairedDevicesList
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 176
+                Layout.preferredHeight: Theme.scaledSize(176, bluetoothMenu.fontScale)
                 visible: pairedModel.values.length > 0
                 clip: true
-                spacing: 4
+                spacing: Theme.scaledSize(4, bluetoothMenu.fontScale)
                 boundsBehavior: Flickable.StopAtBounds
                 model: pairedModel
 
@@ -198,11 +199,11 @@ PanelWindow {
                     readonly property string deviceName: modelData.name || modelData.deviceName || "Desconhecido"
 
                     width: pairedDevicesList.width
-                    height: 56
-                    radius: 7
+                    height: Theme.scaledSize(56, bluetoothMenu.fontScale)
+                    radius: Theme.scaledSize(7, bluetoothMenu.fontScale)
                     color: itemMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: isConnected ? Theme.primary : "transparent"
-                    border.width: isConnected ? 1 : 0
+                    border.width: isConnected ? Theme.scaledSize(1, bluetoothMenu.fontScale) : Theme.scaledSize(0, bluetoothMenu.fontScale)
 
                     MouseArea {
                         id: itemMouse
@@ -222,33 +223,33 @@ PanelWindow {
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 8
-                        spacing: 8
+                        anchors.leftMargin: Theme.scaledSize(12, bluetoothMenu.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(8, bluetoothMenu.fontScale)
+                        spacing: Theme.scaledSize(8, bluetoothMenu.fontScale)
 
                         Text {
                             text: bluetoothMenu.deviceIcon(modelData)
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, bluetoothMenu.fontScale)
                             color: isConnected ? Theme.primary : Theme.surfaceVariantText
                         }
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 2
+                            spacing: Theme.scaledSize(2, bluetoothMenu.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
                                 text: deviceName
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                             }
 
                             RowLayout {
                                 Layout.fillWidth: true
-                                spacing: 6
+                                spacing: Theme.scaledSize(6, bluetoothMenu.fontScale)
 
                                 Text {
                                     text: {
@@ -263,7 +264,7 @@ PanelWindow {
 
                                         return "Paired";
                                     }
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, bluetoothMenu.fontScale)
                                     color: isConnected ? Theme.primary : Theme.surfaceVariantText
                                 }
 
@@ -274,7 +275,7 @@ PanelWindow {
 
                                         return "";
                                     }
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, bluetoothMenu.fontScale)
                                     color: Theme.surfaceVariantText
                                     visible: text.length > 0
                                 }
@@ -284,19 +285,19 @@ PanelWindow {
                         }
 
                         Item {
-                            Layout.preferredWidth: 30
-                            Layout.preferredHeight: 56
+                            Layout.preferredWidth: Theme.scaledSize(30, bluetoothMenu.fontScale)
+                            Layout.preferredHeight: Theme.scaledSize(56, bluetoothMenu.fontScale)
 
                             Rectangle {
                                 anchors.fill: parent
-                                radius: 7
+                                radius: Theme.scaledSize(7, bluetoothMenu.fontScale)
                                 color: deviceMenuMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                             }
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "..."
-                                font.pixelSize: Theme.fontLabelLarge
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, bluetoothMenu.fontScale)
                                 font.bold: true
                                 color: deviceMenuMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
                             }
@@ -348,19 +349,19 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 1
+                Layout.preferredHeight: Theme.scaledSize(1, bluetoothMenu.fontScale)
                 visible: Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering && availableModel.values.length > 0
                 color: Theme.surfaceContainerHighest
             }
 
             Text {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 176
+                Layout.preferredHeight: Theme.scaledSize(176, bluetoothMenu.fontScale)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 visible: Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering && availableModel.values.length === 0
                 text: "Searching for devices..."
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                 color: Theme.surfaceVariantText
             }
 
@@ -382,10 +383,10 @@ PanelWindow {
                 id: availableDevicesList
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 176
+                Layout.preferredHeight: Theme.scaledSize(176, bluetoothMenu.fontScale)
                 visible: Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering && availableModel.values.length > 0
                 clip: true
-                spacing: 4
+                spacing: Theme.scaledSize(4, bluetoothMenu.fontScale)
                 boundsBehavior: Flickable.StopAtBounds
                 model: availableModel
 
@@ -395,8 +396,8 @@ PanelWindow {
                     readonly property string deviceName: modelData.name || modelData.deviceName || "Desconhecido"
 
                     width: availableDevicesList.width
-                    height: 56
-                    radius: 7
+                    height: Theme.scaledSize(56, bluetoothMenu.fontScale)
+                    radius: Theme.scaledSize(7, bluetoothMenu.fontScale)
                     color: avMouse.containsMouse && !isBusy ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     opacity: isBusy ? 0.6 : 1
 
@@ -415,33 +416,33 @@ PanelWindow {
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 8
-                        spacing: 8
+                        anchors.leftMargin: Theme.scaledSize(12, bluetoothMenu.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(8, bluetoothMenu.fontScale)
+                        spacing: Theme.scaledSize(8, bluetoothMenu.fontScale)
 
                         Text {
                             text: bluetoothMenu.deviceIcon(modelData)
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, bluetoothMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 2
+                            spacing: Theme.scaledSize(2, bluetoothMenu.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
                                 text: deviceName
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                             }
 
                             Text {
                                 text: isBusy ? "Pairing..." : modelData.signalStrength > 0 ? modelData.signalStrength + "%" : "New device"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, bluetoothMenu.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -449,7 +450,7 @@ PanelWindow {
 
                         Text {
                             text: isBusy ? "Pairing..." : "Pair"
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, bluetoothMenu.fontScale)
                             font.bold: true
                             color: isBusy ? Theme.surfaceVariantText : Theme.primary
                         }
@@ -462,12 +463,12 @@ PanelWindow {
 
             Text {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 60
+                Layout.preferredHeight: Theme.scaledSize(60, bluetoothMenu.fontScale)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 visible: Bluetooth.defaultAdapter === null
                 text: "Bluetooth unavailable"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                 color: Theme.surfaceVariantText
             }
 
@@ -505,24 +506,24 @@ PanelWindow {
             open();
         }
 
-        width: 180
-        leftPadding: 4
-        rightPadding: 4
-        topPadding: 4
-        bottomPadding: 4
+        width: Theme.scaledSize(180, bluetoothMenu.fontScale)
+        leftPadding: Theme.scaledSize(4, bluetoothMenu.fontScale)
+        rightPadding: Theme.scaledSize(4, bluetoothMenu.fontScale)
+        topPadding: Theme.scaledSize(4, bluetoothMenu.fontScale)
+        bottomPadding: Theme.scaledSize(4, bluetoothMenu.fontScale)
         modal: true
         dim: false
         closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh
-            radius: 10
+            radius: Theme.scaledSize(10, bluetoothMenu.fontScale)
             border.color: Theme.outlineVariant
-            border.width: 1
+            border.width: Theme.scaledSize(1, bluetoothMenu.fontScale)
         }
 
         contentItem: ColumnLayout {
-            spacing: 2
+            spacing: Theme.scaledSize(2, bluetoothMenu.fontScale)
 
             Repeater {
                 model: deviceRowMenu.items
@@ -531,16 +532,16 @@ PanelWindow {
                     required property var modelData
 
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 32
-                    radius: 6
+                    Layout.preferredHeight: Theme.scaledSize(32, bluetoothMenu.fontScale)
+                    radius: Theme.scaledSize(6, bluetoothMenu.fontScale)
                     color: rowItemMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
 
                     Text {
                         anchors.left: parent.left
-                        anchors.leftMargin: 12
+                        anchors.leftMargin: Theme.scaledSize(12, bluetoothMenu.fontScale)
                         anchors.verticalCenter: parent.verticalCenter
                         text: modelData.label
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, bluetoothMenu.fontScale)
                         color: rowItemMouse.containsMouse ? Theme.primary : Theme.surfaceText
                     }
 

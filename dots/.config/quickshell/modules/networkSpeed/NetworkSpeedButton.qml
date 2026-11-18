@@ -7,6 +7,7 @@ import qs.theme
 Rectangle {
     id: root
 
+    property real fontScale: 1.0
     property bool hovered: false
     property var modal
     property bool downFlash: false
@@ -14,9 +15,9 @@ Rectangle {
     readonly property bool vpnActive: VpnService.connected
     readonly property bool vpnConnecting: VpnService.connecting
 
-    implicitWidth: speedRow.implicitWidth + 16
-    implicitHeight: 24
-    radius: 12
+    implicitWidth: speedRow.implicitWidth + Theme.scaledSize(16, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
+    radius: Theme.scaledSize(12, root.fontScale)
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     Timer {
@@ -35,12 +36,12 @@ Rectangle {
         id: speedRow
 
         anchors.centerIn: parent
-        spacing: 6
+        spacing: Theme.scaledSize(6, root.fontScale)
 
         Text {
             text: "\uF1EB"
             font.family: "JetBrainsMono Nerd Font"
-            font.pixelSize: 15
+            font.pixelSize: Theme.scaledFont(15, root.fontScale)
             color: root.vpnConnecting ? "#f9e2af" : (root.vpnActive ? Theme.success : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText))
 
             Behavior on color {
@@ -54,7 +55,7 @@ Rectangle {
 
         Text {
             text: "\u2193"
-            font.pixelSize: 14
+            font.pixelSize: Theme.scaledFont(14, root.fontScale)
             opacity: Math.round(NetworkSpeedService.downSpeed) > 0 ? (root.downFlash ? 1 : 0.4) : 1
             color: Math.round(NetworkSpeedService.downSpeed) > 0 ? "#89b4fa" : Theme.surfaceVariantText
 
@@ -69,7 +70,7 @@ Rectangle {
 
         Text {
             text: NetworkSpeedService.formatSpeed(NetworkSpeedService.downSpeed)
-            font.pixelSize: 11
+            font.pixelSize: Theme.scaledFont(11, root.fontScale)
             font.family: "JetBrainsMono Nerd Font"
             color: Theme.surfaceVariantText
             horizontalAlignment: Text.AlignRight
@@ -77,7 +78,7 @@ Rectangle {
 
         Text {
             text: "\u2191"
-            font.pixelSize: 14
+            font.pixelSize: Theme.scaledFont(14, root.fontScale)
             opacity: Math.round(NetworkSpeedService.upSpeed) > 0 ? (root.upFlash ? 1 : 0.4) : 1
             color: Math.round(NetworkSpeedService.upSpeed) > 0 ? "#fab387" : Theme.surfaceVariantText
 
@@ -92,7 +93,7 @@ Rectangle {
 
         Text {
             text: NetworkSpeedService.formatSpeed(NetworkSpeedService.upSpeed)
-            font.pixelSize: 11
+            font.pixelSize: Theme.scaledFont(11, root.fontScale)
             font.family: "JetBrainsMono Nerd Font"
             color: Theme.surfaceVariantText
             horizontalAlignment: Text.AlignRight
@@ -110,6 +111,7 @@ Rectangle {
             if (!root.modal)
                 return ;
 
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

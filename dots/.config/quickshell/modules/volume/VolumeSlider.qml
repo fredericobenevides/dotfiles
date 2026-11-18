@@ -4,13 +4,14 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property real currentValue: 0
     signal valueChange(real value)
 
     readonly property real safeValue: Number.isFinite(currentValue) ? currentValue : 0
 
-    implicitHeight: 20
-    implicitWidth: 100
+    implicitHeight: Theme.scaledSize(20, root.fontScale)
+    implicitWidth: Theme.scaledSize(100, root.fontScale)
 
     Rectangle {
         id: track
@@ -18,8 +19,8 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        height: 6
-        radius: 3
+        height: Theme.scaledSize(6, root.fontScale)
+        radius: Theme.scaledSize(3, root.fontScale)
         color: Theme.surfaceContainerHighest
 
         Rectangle {
@@ -27,7 +28,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: Math.max(0, Math.min(parent.width, parent.width * root.safeValue))
             height: parent.height
-            radius: 3
+            radius: Theme.scaledSize(3, root.fontScale)
             color: Theme.primary
         }
 

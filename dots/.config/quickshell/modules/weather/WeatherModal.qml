@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: weatherModal
 
+    property real fontScale: 1.0
     property var targetScreen: null
     property bool showHourly: false
 
@@ -39,13 +40,13 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 720
-        height: content.implicitHeight + 48
+        width: Theme.scaledSize(720, weatherModal.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(48, weatherModal.fontScale)
         anchors.centerIn: parent
-        radius: 16
+        radius: Theme.scaledSize(16, weatherModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, weatherModal.fontScale)
 
         MouseArea {
             anchors.fill: parent
@@ -55,24 +56,24 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 12
+            anchors.margins: Theme.scaledSize(12, weatherModal.fontScale)
+            spacing: Theme.scaledSize(12, weatherModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, weatherModal.fontScale)
 
                 Text {
                     text: "\uE2CA"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, weatherModal.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Weather"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, weatherModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
@@ -80,16 +81,16 @@ PanelWindow {
                 Rectangle {
                     id: refreshButton
 
-                    width: 24
-                    height: 24
-                    radius: 12
+                    width: Theme.scaledSize(24, weatherModal.fontScale)
+                    height: Theme.scaledSize(24, weatherModal.fontScale)
+                    radius: Theme.scaledSize(12, weatherModal.fontScale)
                     color: refreshMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "\uE5D5"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: Theme.scaledFont(14, weatherModal.fontScale)
                         color: Theme.surfaceText
                     }
 
@@ -107,16 +108,16 @@ PanelWindow {
                 Rectangle {
                     id: locationButton
 
-                    width: 24
-                    height: 24
-                    radius: 12
+                    width: Theme.scaledSize(24, weatherModal.fontScale)
+                    height: Theme.scaledSize(24, weatherModal.fontScale)
+                    radius: Theme.scaledSize(12, weatherModal.fontScale)
                     color: locationMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "\uE55C"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: Theme.scaledFont(14, weatherModal.fontScale)
                         color: Theme.surfaceText
                     }
 
@@ -135,55 +136,55 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                radius: 14
+                radius: Theme.scaledSize(14, weatherModal.fontScale)
                 color: Theme.surfaceContainerHigh
                 border.color: Theme.surfaceContainerHighest
-                border.width: 1
-                implicitHeight: heroContent.implicitHeight + 24
+                border.width: Theme.scaledSize(1, weatherModal.fontScale)
+                implicitHeight: heroContent.implicitHeight + Theme.scaledSize(24, weatherModal.fontScale)
 
                 RowLayout {
                     id: heroContent
 
                     anchors.fill: parent
-                    anchors.margins: 20
-                    spacing: 24
+                    anchors.margins: Theme.scaledSize(20, weatherModal.fontScale)
+                    spacing: Theme.scaledSize(24, weatherModal.fontScale)
 
                     ColumnLayout {
-                        Layout.preferredWidth: 260
+                        Layout.preferredWidth: Theme.scaledSize(260, weatherModal.fontScale)
                         Layout.alignment: Qt.AlignVCenter
-                        spacing: 4
+                        spacing: Theme.scaledSize(4, weatherModal.fontScale)
 
                         RowLayout {
-                            spacing: 10
+                            spacing: Theme.scaledSize(10, weatherModal.fontScale)
 
                             Text {
                                 text: WeatherService.getWeatherIcon(WeatherService.wCode, WeatherService.isDay)
                                 font.family: materialSymbols.name
-                                font.pixelSize: 48
+                                font.pixelSize: Theme.scaledFont(48, weatherModal.fontScale)
                                 color: Theme.primary
                             }
 
                             ColumnLayout {
                                 Layout.fillWidth: true
                                 Layout.alignment: Qt.AlignVCenter
-                                spacing: 2
+                                spacing: Theme.scaledSize(2, weatherModal.fontScale)
 
                                 Text {
                                     text: WeatherService.formatTemp(WeatherService.temp) || "--°C"
-                                    font.pixelSize: 40
+                                    font.pixelSize: Theme.scaledFont(40, weatherModal.fontScale)
                                     font.weight: Font.Light
                                     color: Theme.surfaceText
                                 }
 
                                 Text {
                                     text: WeatherService.getWeatherCondition(WeatherService.wCode)
-                                    font.pixelSize: Theme.fontLabelMedium
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, weatherModal.fontScale)
                                     color: Theme.surfaceVariantText
                                 }
 
                                 Text {
                                     text: WeatherService.city
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                     color: Theme.surfaceVariantText
                                 }
 
@@ -196,18 +197,18 @@ PanelWindow {
                     Rectangle {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        implicitHeight: 150
-                        radius: 12
+                        implicitHeight: Theme.scaledSize(150, weatherModal.fontScale)
+                        radius: Theme.scaledSize(12, weatherModal.fontScale)
                         color: Theme.surfaceContainer
                         border.color: Theme.surfaceContainerHighest
-                        border.width: 1
+                        border.width: Theme.scaledSize(1, weatherModal.fontScale)
 
                         GridLayout {
                             anchors.fill: parent
-                            anchors.margins: 16
+                            anchors.margins: Theme.scaledSize(16, weatherModal.fontScale)
                             columns: 3
-                            columnSpacing: 20
-                            rowSpacing: 12
+                            columnSpacing: Theme.scaledSize(20, weatherModal.fontScale)
+                            rowSpacing: Theme.scaledSize(12, weatherModal.fontScale)
 
                             Repeater {
                                 model: [{
@@ -232,17 +233,17 @@ PanelWindow {
 
                                 delegate: ColumnLayout {
                                     Layout.fillWidth: true
-                                    spacing: 2
+                                    spacing: Theme.scaledSize(2, weatherModal.fontScale)
 
                                     Text {
                                         text: modelData.label
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                         color: Theme.surfaceVariantText
                                     }
 
                                     Text {
                                         text: modelData.value
-                                        font.pixelSize: Theme.fontLabelLarge
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, weatherModal.fontScale)
                                         font.bold: true
                                         color: Theme.surfaceText
                                     }
@@ -261,22 +262,22 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, weatherModal.fontScale)
 
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, weatherModal.fontScale)
 
                     Rectangle {
-                        Layout.preferredWidth: 64
-                        Layout.preferredHeight: 24
-                        radius: 12
+                        Layout.preferredWidth: Theme.scaledSize(64, weatherModal.fontScale)
+                        Layout.preferredHeight: Theme.scaledSize(24, weatherModal.fontScale)
+                        radius: Theme.scaledSize(12, weatherModal.fontScale)
                         color: !weatherModal.showHourly ? Theme.primary : Theme.surfaceContainerHigh
 
                         Text {
                             anchors.centerIn: parent
                             text: "Daily"
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                             font.bold: true
                             color: !weatherModal.showHourly ? Theme.primaryText : Theme.surfaceVariantText
                         }
@@ -291,15 +292,15 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        Layout.preferredWidth: 64
-                        Layout.preferredHeight: 24
-                        radius: 12
+                        Layout.preferredWidth: Theme.scaledSize(64, weatherModal.fontScale)
+                        Layout.preferredHeight: Theme.scaledSize(24, weatherModal.fontScale)
+                        radius: Theme.scaledSize(12, weatherModal.fontScale)
                         color: weatherModal.showHourly ? Theme.primary : Theme.surfaceContainerHigh
 
                         Text {
                             anchors.centerIn: parent
                             text: "Hourly"
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                             font.bold: true
                             color: weatherModal.showHourly ? Theme.primaryText : Theme.surfaceVariantText
                         }
@@ -319,24 +320,24 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, weatherModal.fontScale)
 
                 Repeater {
                     model: weatherModal.showHourly ? WeatherService.hourlyList : WeatherService.dailyForecast
 
                     delegate: Rectangle {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 150
-                        radius: 12
+                        Layout.preferredHeight: Theme.scaledSize(150, weatherModal.fontScale)
+                        radius: Theme.scaledSize(12, weatherModal.fontScale)
                         color: Theme.surfaceContainerHigh
                         border.color: Theme.surfaceContainerHighest
-                        border.width: 1
+                        border.width: Theme.scaledSize(1, weatherModal.fontScale)
 
                         // Daily layout (centered column)
                         ColumnLayout {
                             anchors.fill: parent
-                            anchors.margins: 8
-                            spacing: 4
+                            anchors.margins: Theme.scaledSize(8, weatherModal.fontScale)
+                            spacing: Theme.scaledSize(4, weatherModal.fontScale)
                             visible: !weatherModal.showHourly
 
                             Item {
@@ -346,7 +347,7 @@ PanelWindow {
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
                                 text: WeatherService.formatDayName(modelData.date, index)
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                             }
@@ -355,14 +356,14 @@ PanelWindow {
                                 Layout.alignment: Qt.AlignHCenter
                                 text: WeatherService.getWeatherIcon(modelData.code, true)
                                 font.family: materialSymbols.name
-                                font.pixelSize: 26
+                                font.pixelSize: Theme.scaledFont(26, weatherModal.fontScale)
                                 color: Theme.primary
                             }
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
                                 text: WeatherService.formatTemp(modelData.tempMin) + " / " + WeatherService.formatTemp(modelData.tempMax)
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -370,7 +371,7 @@ PanelWindow {
                                 Layout.alignment: Qt.AlignHCenter
                                 visible: modelData.precip > 0
                                 text: WeatherService.formatPrecipitation(modelData.precip)
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -383,19 +384,19 @@ PanelWindow {
                         // Hourly layout (icon left, data right)
                         RowLayout {
                             anchors.fill: parent
-                            anchors.margins: 10
-                            spacing: 10
+                            anchors.margins: Theme.scaledSize(10, weatherModal.fontScale)
+                            spacing: Theme.scaledSize(10, weatherModal.fontScale)
                             visible: weatherModal.showHourly
 
                             ColumnLayout {
-                                Layout.preferredWidth: 60
+                                Layout.preferredWidth: Theme.scaledSize(60, weatherModal.fontScale)
                                 Layout.alignment: Qt.AlignVCenter
-                                spacing: 2
+                                spacing: Theme.scaledSize(2, weatherModal.fontScale)
 
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
                                     text: WeatherService.formatHour(modelData.time)
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                     font.bold: true
                                     color: Theme.surfaceText
                                 }
@@ -404,14 +405,14 @@ PanelWindow {
                                     Layout.alignment: Qt.AlignHCenter
                                     text: WeatherService.getWeatherIcon(modelData.code, WeatherService.hourIsDay(modelData.time))
                                     font.family: materialSymbols.name
-                                    font.pixelSize: 28
+                                    font.pixelSize: Theme.scaledFont(28, weatherModal.fontScale)
                                     color: Theme.primary
                                 }
 
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
                                     text: WeatherService.formatTemp(modelData.temp) || "--"
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                     color: Theme.surfaceVariantText
                                 }
 
@@ -421,7 +422,7 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 columns: 1
-                                rowSpacing: 4
+                                rowSpacing: Theme.scaledSize(4, weatherModal.fontScale)
 
                                 Repeater {
                                     model: [{
@@ -440,17 +441,17 @@ PanelWindow {
 
                                     delegate: ColumnLayout {
                                         Layout.fillWidth: true
-                                        spacing: 0
+                                        spacing: Theme.scaledSize(0, weatherModal.fontScale)
 
                                         Text {
                                             text: modelData.label
-                                            font.pixelSize: 9
+                                            font.pixelSize: Theme.scaledFont(9, weatherModal.fontScale)
                                             color: Theme.surfaceVariantText
                                         }
 
                                         Text {
                                             text: modelData.value
-                                            font.pixelSize: Theme.fontLabelSmall
+                                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                                             font.bold: true
                                             color: Theme.surfaceText
                                         }
@@ -482,12 +483,12 @@ PanelWindow {
             }
 
             visible: refreshMouse.containsMouse || locationMouse.containsMouse
-            width: tooltipLabel.implicitWidth + 14
-            height: tooltipLabel.implicitHeight + 8
-            radius: 6
+            width: tooltipLabel.implicitWidth + Theme.scaledSize(14, weatherModal.fontScale)
+            height: tooltipLabel.implicitHeight + Theme.scaledSize(8, weatherModal.fontScale)
+            radius: Theme.scaledSize(6, weatherModal.fontScale)
             color: Theme.surfaceContainerHighest
             border.color: Theme.outlineVariant
-            border.width: 1
+            border.width: Theme.scaledSize(1, weatherModal.fontScale)
             z: 100
             onVisibleChanged: positionTimer.restart()
 
@@ -504,7 +505,7 @@ PanelWindow {
 
                 anchors.centerIn: parent
                 text: refreshMouse.containsMouse ? "Refresh weather data" : "Re-detect location"
-                font.pixelSize: Theme.fontLabelSmall
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, weatherModal.fontScale)
                 color: Theme.surfaceText
             }
 

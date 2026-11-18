@@ -4,18 +4,19 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     readonly property string bluetoothIcon: "\uF293"
     readonly property int iconSize: 15
     property bool hovered: false
     property var modal
 
-    implicitWidth: 24
-    implicitHeight: 24
+    implicitWidth: Theme.scaledSize(24, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
 
     Text {
         anchors.centerIn: parent
         text: root.bluetoothIcon
-        font.pixelSize: root.iconSize
+        font.pixelSize: Theme.scaledFont(root.iconSize, root.fontScale)
         color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
 
         Behavior on color {
@@ -37,6 +38,7 @@ Item {
             if (!root.modal)
                 return ;
 
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

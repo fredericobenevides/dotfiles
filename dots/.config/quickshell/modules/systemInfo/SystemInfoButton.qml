@@ -7,14 +7,15 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property var modal
     property var targetScreen
     property bool hovered: false
     readonly property bool tempHot: SystemInfoStats.cpuTemp >= SystemInfoStats.hotTempThreshold
     property bool _tempFlashOn: false
 
-    implicitWidth: contentRow.implicitWidth + 16
-    implicitHeight: 24
+    implicitWidth: contentRow.implicitWidth + Theme.scaledSize(16, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
 
     Timer {
         interval: 500
@@ -36,7 +37,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: 12
+        radius: Theme.scaledSize(12, root.fontScale)
         color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
         Behavior on color {
@@ -53,26 +54,26 @@ Item {
 
         z: 1
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: Theme.scaledSize(8, root.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 8
+        anchors.rightMargin: Theme.scaledSize(8, root.fontScale)
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 10
+        spacing: Theme.scaledSize(10, root.fontScale)
 
         Row {
-            spacing: 3
+            spacing: Theme.scaledSize(3, root.fontScale)
 
             Text {
                 text: "\uE322"
                 font.family: materialSymbols.name
-                font.pixelSize: 14
+                font.pixelSize: Theme.scaledFont(14, root.fontScale)
                 color: Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: Math.round(SystemInfoStats.cpuPercent) + "%"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
                 anchors.verticalCenter: parent.verticalCenter
@@ -81,19 +82,19 @@ Item {
         }
 
         Row {
-            spacing: 3
+            spacing: Theme.scaledSize(3, root.fontScale)
 
             Text {
                 text: "\uE30D"
                 font.family: materialSymbols.name
-                font.pixelSize: 14
+                font.pixelSize: Theme.scaledFont(14, root.fontScale)
                 color: Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: Math.round(SystemInfoStats.memPercent) + "%"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
                 anchors.verticalCenter: parent.verticalCenter
@@ -102,19 +103,19 @@ Item {
         }
 
         Row {
-            spacing: 3
+            spacing: Theme.scaledSize(3, root.fontScale)
 
             Text {
                 text: "\uF80E"
                 font.family: materialSymbols.name
-                font.pixelSize: 14
+                font.pixelSize: Theme.scaledFont(14, root.fontScale)
                 color: Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: Math.round(SystemInfoStats.diskPercent) + "%"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
                 anchors.verticalCenter: parent.verticalCenter
@@ -123,19 +124,19 @@ Item {
         }
 
         Row {
-            spacing: 3
+            spacing: Theme.scaledSize(3, root.fontScale)
 
             Text {
                 text: "\uE1FF"
                 font.family: materialSymbols.name
-                font.pixelSize: 14
+                font.pixelSize: Theme.scaledFont(14, root.fontScale)
                 color: root.tempHot ? Theme.error : Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: Math.round(SystemInfoStats.cpuTemp) + "°C"
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: root.tempHot ? (root._tempFlashOn ? "#ffffff" : Theme.error) : (root.hovered ? Theme.surfaceText : Theme.surfaceVariantText)
                 anchors.verticalCenter: parent.verticalCenter
@@ -157,6 +158,7 @@ Item {
                 return ;
 
             root.modal.targetScreen = root.targetScreen;
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

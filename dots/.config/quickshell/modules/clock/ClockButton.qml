@@ -5,6 +5,7 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property bool hovered: false
     property var modal
 
@@ -32,22 +33,22 @@ Item {
     Rectangle {
         id: bg
 
-        height: 24
-        width: rowLayout.implicitWidth + 40
-        radius: 7
+        height: Theme.scaledSize(24, root.fontScale)
+        width: rowLayout.implicitWidth + Theme.scaledSize(40, root.fontScale)
+        radius: Theme.scaledSize(7, root.fontScale)
         color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
         RowLayout {
             id: rowLayout
 
             anchors.centerIn: parent
-            spacing: 12
+            spacing: Theme.scaledSize(12, root.fontScale)
 
             Text {
                 id: dateText
 
                 text: root.currentDate()
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: Theme.surfaceText
             }
@@ -56,7 +57,7 @@ Item {
                 id: timeText
 
                 text: root.currentTime()
-                font.pixelSize: Theme.fontLabelMedium
+                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                 font.bold: true
                 color: Theme.surfaceText
             }
@@ -73,6 +74,7 @@ Item {
                 if (!root.modal)
                     return ;
 
+                root.modal.fontScale = root.fontScale;
                 root.modal.visible = !root.modal.visible;
                 if (root.modal.visible && root.modal.open)
                     root.modal.open();

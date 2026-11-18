@@ -8,6 +8,7 @@ import qs.theme
 PanelWindow {
     id: powerMenu
 
+    property real fontScale: 1.0
     function execute(action) {
         switch (action) {
         case "lock":
@@ -92,16 +93,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 300
-        height: headerRow.height + 14 + optionsList.height + 36
+        width: Theme.scaledSize(300, powerMenu.fontScale)
+        height: headerRow.height + Theme.scaledSize(14, powerMenu.fontScale) + optionsList.height + Theme.scaledSize(36, powerMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, powerMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 6
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(6, powerMenu.fontScale)
+        radius: Theme.scaledSize(16, powerMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, powerMenu.fontScale)
 
         MouseArea {
             anchors.fill: parent
@@ -112,18 +113,18 @@ PanelWindow {
 
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 14
-            spacing: 8
+            anchors.topMargin: Theme.scaledSize(14, powerMenu.fontScale)
+            spacing: Theme.scaledSize(8, powerMenu.fontScale)
 
             Text {
                 text: "\uF011"
-                font.pixelSize: 20
+                font.pixelSize: Theme.scaledFont(20, powerMenu.fontScale)
                 color: Theme.surfaceVariantText
             }
 
             Text {
                 text: "Power"
-                font.pixelSize: 20
+                font.pixelSize: Theme.scaledFont(20, powerMenu.fontScale)
                 font.bold: true
                 color: Theme.surfaceText
             }
@@ -135,11 +136,11 @@ PanelWindow {
 
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: headerRow.bottom
-            anchors.topMargin: 14
-            width: bg.width - 16
+            anchors.topMargin: Theme.scaledSize(14, powerMenu.fontScale)
+            width: bg.width - Theme.scaledSize(16, powerMenu.fontScale)
             height: contentHeight
             model: optionsModel
-            spacing: 10
+            spacing: Theme.scaledSize(10, powerMenu.fontScale)
             keyNavigationEnabled: true
             highlightFollowsCurrentItem: true
             focus: true
@@ -162,28 +163,28 @@ PanelWindow {
                 readonly property bool isCurrent: ListView.isCurrentItem && optionsList.activeFocus
 
                 width: optionsList.width
-                height: 44
-                radius: 7
+                height: Theme.scaledSize(44, powerMenu.fontScale)
+                radius: Theme.scaledSize(7, powerMenu.fontScale)
                 color: (optionMouse.containsMouse || isCurrent) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                 border.color: isCurrent ? Theme.primary : "transparent"
-                border.width: isCurrent ? 1 : 0
+                border.width: isCurrent ? Theme.scaledSize(1, powerMenu.fontScale) : Theme.scaledSize(0, powerMenu.fontScale)
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: 14
-                    anchors.rightMargin: 14
-                    spacing: 12
+                    anchors.leftMargin: Theme.scaledSize(14, powerMenu.fontScale)
+                    anchors.rightMargin: Theme.scaledSize(14, powerMenu.fontScale)
+                    spacing: Theme.scaledSize(12, powerMenu.fontScale)
 
                     Text {
                         text: model.icon
-                        font.pixelSize: 18
+                        font.pixelSize: Theme.scaledFont(18, powerMenu.fontScale)
                         color: isCurrent ? Theme.primary : Theme.surfaceVariantText
                         Layout.alignment: Qt.AlignVCenter
                     }
 
                     Text {
                         text: model.label
-                        font.pixelSize: Theme.fontLabelLarge
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, powerMenu.fontScale)
                         color: Theme.surfaceText
                         Layout.alignment: Qt.AlignVCenter
                     }

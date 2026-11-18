@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: notificationsModal
 
+    property real fontScale: 1.0
     property bool showHistory: false
     property int selectedIndex: -1
     property bool anyCardHovered: false
@@ -75,16 +76,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 400
-        height: 420
+        width: Theme.scaledSize(400, notificationsModal.fontScale)
+        height: Theme.scaledSize(420, notificationsModal.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, notificationsModal.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 6
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(6, notificationsModal.fontScale)
+        radius: Theme.scaledSize(16, notificationsModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, notificationsModal.fontScale)
         focus: true
         Keys.onPressed: function(event) {
             const list = notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems;
@@ -142,8 +143,8 @@ PanelWindow {
         TextInput {
             id: focusInput
 
-            width: 1
-            height: 1
+            width: Theme.scaledSize(1, notificationsModal.fontScale)
+            height: Theme.scaledSize(1, notificationsModal.fontScale)
             color: "transparent"
             focus: true
             Keys.onPressed: (event) => {
@@ -172,32 +173,32 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Theme.scaledSize(12, notificationsModal.fontScale)
+            spacing: Theme.scaledSize(10, notificationsModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, notificationsModal.fontScale)
 
                 Text {
                     text: "\uE7F5"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, notificationsModal.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Notifications"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, notificationsModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 36
-                    Layout.preferredHeight: 36
-                    radius: 18
+                    Layout.preferredWidth: Theme.scaledSize(36, notificationsModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(36, notificationsModal.fontScale)
+                    radius: Theme.scaledSize(18, notificationsModal.fontScale)
                     color: clearMouse.containsMouse ? Theme.error : "transparent"
                     visible: notificationsModal.showHistory ? NotificationsService.history.length > 0 : NotificationsService.count > 0
 
@@ -205,7 +206,7 @@ PanelWindow {
                         anchors.centerIn: parent
                         text: "\uE16C"
                         font.family: materialSymbols.name
-                        font.pixelSize: 22
+                        font.pixelSize: Theme.scaledFont(22, notificationsModal.fontScale)
                         color: Theme.surfaceText
                     }
 
@@ -229,19 +230,19 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                spacing: 6
+                Layout.topMargin: Theme.scaledSize(8, notificationsModal.fontScale)
+                spacing: Theme.scaledSize(6, notificationsModal.fontScale)
 
                 Rectangle {
-                    Layout.preferredWidth: 88
-                    Layout.preferredHeight: 26
-                    radius: 13
+                    Layout.preferredWidth: Theme.scaledSize(88, notificationsModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(26, notificationsModal.fontScale)
+                    radius: Theme.scaledSize(13, notificationsModal.fontScale)
                     color: !notificationsModal.showHistory ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "Current (" + NotificationsService.count + ")"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, notificationsModal.fontScale)
                         font.bold: true
                         color: !notificationsModal.showHistory ? Theme.primaryText : Theme.surfaceVariantText
                     }
@@ -256,15 +257,15 @@ PanelWindow {
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 88
-                    Layout.preferredHeight: 26
-                    radius: 13
+                    Layout.preferredWidth: Theme.scaledSize(88, notificationsModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(26, notificationsModal.fontScale)
+                    radius: Theme.scaledSize(13, notificationsModal.fontScale)
                     color: notificationsModal.showHistory ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "History (" + NotificationsService.history.length + ")"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, notificationsModal.fontScale)
                         font.bold: true
                         color: notificationsModal.showHistory ? Theme.primaryText : Theme.surfaceVariantText
                     }
@@ -288,7 +289,7 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                spacing: 14
+                spacing: Theme.scaledSize(14, notificationsModal.fontScale)
                 model: notificationsModal.showHistory ? NotificationsService.history : notificationsModal.groupedItems
                 currentIndex: notificationsModal.selectedIndex
                 highlightFollowsCurrentItem: true
@@ -311,11 +312,11 @@ PanelWindow {
 
                     width: ListView.view.width
                     clip: true
-                    radius: 12
+                    radius: Theme.scaledSize(12, notificationsModal.fontScale)
                     color: ((ListView.isCurrentItem && !notificationsModal.anyCardHovered) || hovered) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: ((ListView.isCurrentItem && !notificationsModal.anyCardHovered) || hovered) ? Theme.primary : (critical ? Theme.primary : Theme.surfaceContainerHighest)
-                    border.width: 1
-                    implicitHeight: cardContent.implicitHeight + 40
+                    border.width: Theme.scaledSize(1, notificationsModal.fontScale)
+                    implicitHeight: cardContent.implicitHeight + Theme.scaledSize(40, notificationsModal.fontScale)
 
                     MouseArea {
                         id: cardHover
@@ -328,7 +329,7 @@ PanelWindow {
 
                     Rectangle {
                         anchors.fill: parent
-                        radius: 12
+                        radius: Theme.scaledSize(12, notificationsModal.fontScale)
                         visible: notificationCard.critical
 
                         gradient: Gradient {
@@ -369,17 +370,17 @@ PanelWindow {
                     Rectangle {
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.margins: 8
-                        width: 18
-                        height: 18
-                        radius: 9
+                        anchors.margins: Theme.scaledSize(8, notificationsModal.fontScale)
+                        width: Theme.scaledSize(18, notificationsModal.fontScale)
+                        height: Theme.scaledSize(18, notificationsModal.fontScale)
+                        radius: Theme.scaledSize(9, notificationsModal.fontScale)
                         color: dismissMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainer
 
                         Text {
                             anchors.centerIn: parent
                             text: "\uE5CD"
                             font.family: materialSymbols.name
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.scaledFont(12, notificationsModal.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -403,34 +404,34 @@ PanelWindow {
                         id: cardContent
 
                         x: 18
-                        width: parent.width - 28
+                        width: parent.width - Theme.scaledSize(28, notificationsModal.fontScale)
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 4
+                        spacing: Theme.scaledSize(4, notificationsModal.fontScale)
 
                         RowLayout {
                             Layout.fillWidth: true
-                            spacing: 8
+                            spacing: Theme.scaledSize(8, notificationsModal.fontScale)
 
                             Text {
                                 text: notif.appName || "Notification"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationsModal.fontScale)
                                 font.bold: true
                                 color: critical ? Theme.primary : Theme.surfaceVariantText
                                 elide: Text.ElideRight
-                                Layout.maximumWidth: 260
+                                Layout.maximumWidth: Theme.scaledSize(260, notificationsModal.fontScale)
                             }
 
                             Rectangle {
                                 visible: notificationCard.groupCount > 1
-                                Layout.preferredWidth: 18
-                                Layout.preferredHeight: 18
-                                radius: 9
+                                Layout.preferredWidth: Theme.scaledSize(18, notificationsModal.fontScale)
+                                Layout.preferredHeight: Theme.scaledSize(18, notificationsModal.fontScale)
+                                radius: Theme.scaledSize(9, notificationsModal.fontScale)
                                 color: Theme.primary
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: notificationCard.groupCount
-                                    font.pixelSize: 9
+                                    font.pixelSize: Theme.scaledFont(9, notificationsModal.fontScale)
                                     font.bold: true
                                     color: Theme.primaryText
                                 }
@@ -441,9 +442,9 @@ PanelWindow {
 
                         Rectangle {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 120
+                            Layout.preferredHeight: Theme.scaledSize(120, notificationsModal.fontScale)
                             visible: !!notificationCard.notif.image && notificationCard.notif.image !== ""
-                            radius: 8
+                            radius: Theme.scaledSize(8, notificationsModal.fontScale)
                             clip: true
                             color: Theme.surfaceContainer
 
@@ -460,7 +461,7 @@ PanelWindow {
                             Layout.fillWidth: true
                             visible: !notificationCard.expandedGroup
                             text: notificationCard.notif.summary
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, notificationsModal.fontScale)
                             font.bold: true
                             color: Theme.surfaceText
                             wrapMode: Text.Wrap
@@ -470,7 +471,7 @@ PanelWindow {
                             Layout.fillWidth: true
                             visible: !notificationCard.expandedGroup && notificationCard.notif.body && notificationCard.notif.body.length > 0
                             text: notificationCard.notif.body
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationsModal.fontScale)
                             color: Theme.surfaceVariantText
                             wrapMode: Text.Wrap
                             maximumLineCount: 3
@@ -480,53 +481,53 @@ PanelWindow {
                         ListView {
                             Layout.fillWidth: true
                             Layout.preferredHeight: Math.max(0, modelData.notifications.length * (notificationCard.collapsedHeight + 14) - 14)
-                            Layout.topMargin: 15
+                            Layout.topMargin: Theme.scaledSize(15, notificationsModal.fontScale)
                             visible: notificationCard.isGroup && notificationCard.expandedGroup
-                            spacing: 10
+                            spacing: Theme.scaledSize(10, notificationsModal.fontScale)
                             interactive: false
                             model: notificationCard.isGroup ? modelData.notifications : []
 
                             delegate: Rectangle {
                                 width: ListView.view.width
                                 height: notificationCard.collapsedHeight
-                                radius: 12
+                                radius: Theme.scaledSize(12, notificationsModal.fontScale)
                                 color: Theme.surfaceContainerHigh
                                 border.color: Theme.surfaceContainerHighest
-                                border.width: 1
+                                border.width: Theme.scaledSize(1, notificationsModal.fontScale)
                                 clip: true
 
                                 ColumnLayout {
                                     id: msgContent
 
                                     x: 12
-                                    width: parent.width - 22
+                                    width: parent.width - Theme.scaledSize(22, notificationsModal.fontScale)
                                     anchors.verticalCenter: parent.verticalCenter
-                                    spacing: 4
+                                    spacing: Theme.scaledSize(4, notificationsModal.fontScale)
 
                                     RowLayout {
                                         Layout.fillWidth: true
-                                        spacing: 8
+                                        spacing: Theme.scaledSize(8, notificationsModal.fontScale)
 
                                         Text {
                                             Layout.fillWidth: true
                                             text: modelData.appName || "Notification"
-                                            font.pixelSize: Theme.fontLabelSmall
+                                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationsModal.fontScale)
                                             font.bold: true
                                             color: modelData.urgency === NotificationUrgency.Critical ? Theme.primary : Theme.surfaceVariantText
                                             elide: Text.ElideRight
                                         }
 
                                         Rectangle {
-                                            Layout.preferredWidth: 18
-                                            Layout.preferredHeight: 18
-                                            radius: 9
+                                            Layout.preferredWidth: Theme.scaledSize(18, notificationsModal.fontScale)
+                                            Layout.preferredHeight: Theme.scaledSize(18, notificationsModal.fontScale)
+                                            radius: Theme.scaledSize(9, notificationsModal.fontScale)
                                             color: msgDismissMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainer
 
                                             Text {
                                                 anchors.centerIn: parent
                                                 text: "\uE5CD"
                                                 font.family: materialSymbols.name
-                                                font.pixelSize: 12
+                                                font.pixelSize: Theme.scaledFont(12, notificationsModal.fontScale)
                                                 color: Theme.surfaceVariantText
                                             }
 
@@ -546,7 +547,7 @@ PanelWindow {
                                     Text {
                                         Layout.fillWidth: true
                                         text: modelData.summary
-                                        font.pixelSize: Theme.fontLabelMedium
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, notificationsModal.fontScale)
                                         font.bold: true
                                         color: Theme.surfaceText
                                         wrapMode: Text.Wrap
@@ -556,7 +557,7 @@ PanelWindow {
                                         Layout.fillWidth: true
                                         visible: modelData.body && modelData.body.length > 0
                                         text: modelData.body
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationsModal.fontScale)
                                         color: Theme.surfaceVariantText
                                         wrapMode: Text.Wrap
                                     }

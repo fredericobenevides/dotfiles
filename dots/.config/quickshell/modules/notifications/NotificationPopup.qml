@@ -9,6 +9,7 @@ import qs.theme
 PanelWindow {
     id: notificationPopup
 
+    readonly property real fontScale: Theme.fontScaleForScreen(notificationPopup.screen)
     property var popups: []
 
     function removePopup(notif) {
@@ -144,7 +145,7 @@ PanelWindow {
                         Text {
                             Layout.fillWidth: true
                             text: modelData.appName || "Notification"
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationPopup.fontScale)
                             font.bold: true
                             color: isCritical ? Theme.primary : Theme.surfaceVariantText
                             elide: Text.ElideRight
@@ -160,7 +161,7 @@ PanelWindow {
                                 anchors.centerIn: parent
                                 text: "\uE5CD"
                                 font.family: materialSymbols.name
-                                font.pixelSize: 12
+                                font.pixelSize: Theme.scaledFont(12, notificationPopup.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -183,7 +184,7 @@ PanelWindow {
                     Text {
                         Layout.fillWidth: true
                         text: modelData.summary
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, notificationPopup.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                         wrapMode: Text.Wrap
@@ -193,7 +194,7 @@ PanelWindow {
                         Layout.fillWidth: true
                         visible: modelData.body && modelData.body.length > 0
                         text: modelData.body
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, notificationPopup.fontScale)
                         color: Theme.surfaceVariantText
                         wrapMode: Text.Wrap
                         maximumLineCount: 3

@@ -9,6 +9,7 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property var currentMonitor
 
     implicitWidth: bg.width
@@ -17,15 +18,15 @@ Item {
     Rectangle {
         id: bg
 
-        width: row.width + 15
-        height: row.height + 4
-        radius: 12
+        width: row.width + Theme.scaledSize(15, root.fontScale)
+        height: row.height + Theme.scaledSize(4, root.fontScale)
+        radius: Theme.scaledSize(12, root.fontScale)
         color: Theme.surfaceContainerHigh
 
         Row {
             id: row
 
-            spacing: 8
+            spacing: Theme.scaledSize(8, root.fontScale)
             anchors.centerIn: parent
 
             Repeater {
@@ -41,14 +42,14 @@ Item {
                     property bool isAttention: modelData.urgent && !isActive
                     property bool hovered: mouseArea.containsMouse
 
-                    width: isActive ? 32 : 20
-                    height: 20
-                    radius: 10
+                    width: isActive ? Theme.scaledSize(32, root.fontScale) : Theme.scaledSize(20, root.fontScale)
+                    height: Theme.scaledSize(20, root.fontScale)
+                    radius: Theme.scaledSize(10, root.fontScale)
                     color: isActive ? Theme.primary : (isAttention ? Theme.attention : Theme.outlineVariant)
 
                     Rectangle {
                         anchors.fill: parent
-                        radius: 10
+                        radius: Theme.scaledSize(10, root.fontScale)
                         color: "white"
                         opacity: wsBox.hovered ? 0.15 : 0
 
@@ -64,7 +65,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         text: wsBox.modelData.name
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
                         color: isActive ? Theme.primaryText : (wsBox.isAttention ? Theme.primaryText : Theme.surfaceVariantText)
                     }
 

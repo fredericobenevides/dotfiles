@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: networkMenu
 
+    property real fontScale: 1.0
     property string activeType: ""
     property string selectedTab: "ethernet"
     readonly property string fontFamily: "JetBrainsMono Nerd Font"
@@ -791,16 +792,16 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 590
-        height: content.implicitHeight + 24
+        width: Theme.scaledSize(590, networkMenu.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(24, networkMenu.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, networkMenu.fontScale)
         anchors.right: parent.right
-        anchors.rightMargin: 174
-        radius: 16
+        anchors.rightMargin: Theme.scaledSize(174, networkMenu.fontScale)
+        radius: Theme.scaledSize(16, networkMenu.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, networkMenu.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 networkMenu.visible = false;
@@ -816,8 +817,8 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: Theme.scaledSize(12, networkMenu.fontScale)
+            spacing: Theme.scaledSize(10, networkMenu.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
@@ -825,14 +826,14 @@ PanelWindow {
                 Text {
                     text: "\uF1EB"
                     font.family: networkMenu.fontFamily
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, networkMenu.fontScale)
                     color: Theme.surfaceVariantText
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "Network"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, networkMenu.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
@@ -841,22 +842,22 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                spacing: 8
+                Layout.topMargin: Theme.scaledSize(8, networkMenu.fontScale)
+                spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                 Rectangle {
                     id: ethTab
 
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1
-                    height: 34
-                    radius: 7
+                    Layout.preferredWidth: Theme.scaledSize(1, networkMenu.fontScale)
+                    height: Theme.scaledSize(34, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: selectedTab === "ethernet" ? Theme.primary : ethTabMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "Ethernet"
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                         font.bold: true
                         color: selectedTab === "ethernet" ? Theme.primaryText : Theme.surfaceText
                     }
@@ -879,15 +880,15 @@ PanelWindow {
                     id: wifiTab
 
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1
-                    height: 34
-                    radius: 7
+                    Layout.preferredWidth: Theme.scaledSize(1, networkMenu.fontScale)
+                    height: Theme.scaledSize(34, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: selectedTab === "wifi" ? Theme.primary : wifiTabMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "Wifi"
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                         font.bold: true
                         color: selectedTab === "wifi" ? Theme.primaryText : Theme.surfaceText
                     }
@@ -911,15 +912,15 @@ PanelWindow {
                     id: vpnTab
 
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1
-                    height: 34
-                    radius: 7
+                    Layout.preferredWidth: Theme.scaledSize(1, networkMenu.fontScale)
+                    height: Theme.scaledSize(34, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: selectedTab === "vpn" ? Theme.primary : vpnTabMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "VPN"
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                         font.bold: true
                         color: selectedTab === "vpn" ? Theme.primaryText : Theme.surfaceText
                     }
@@ -941,12 +942,12 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 10
+                spacing: Theme.scaledSize(10, networkMenu.fontScale)
                 visible: selectedTab === "ethernet"
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, networkMenu.fontScale)
 
                     Repeater {
                         model: networkMenu.ethernetDevices
@@ -958,11 +959,11 @@ PanelWindow {
                             readonly property bool isFallback: isCurrent && networkMenu.defaultRouteDevice !== "" && modelData.device !== networkMenu.defaultRouteDevice
 
                             Layout.fillWidth: true
-                            height: 56
-                            radius: 7
+                            height: Theme.scaledSize(56, networkMenu.fontScale)
+                            radius: Theme.scaledSize(7, networkMenu.fontScale)
                             color: ethItemMouse.containsMouse || isCurrent ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                             border.color: isDefaultRoute ? Theme.primary : (isFallback ? Theme.fallback : "transparent")
-                            border.width: isCurrent ? 1 : 0
+                            border.width: isCurrent ? Theme.scaledSize(1, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
 
                             MouseArea {
                                 id: ethItemMouse
@@ -977,46 +978,46 @@ PanelWindow {
 
                             RowLayout {
                                 anchors.fill: parent
-                                anchors.leftMargin: 12
-                                anchors.rightMargin: 8
-                                spacing: 8
+                                anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
+                                anchors.rightMargin: Theme.scaledSize(8, networkMenu.fontScale)
+                                spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                                 Text {
                                     text: "\uEB2F"
                                     font.family: materialSymbols.name
-                                    font.pixelSize: 12
+                                    font.pixelSize: Theme.scaledFont(12, networkMenu.fontScale)
                                     color: isFallback ? Theme.fallback : Theme.surfaceVariantText
                                 }
 
                                 ColumnLayout {
                                     Layout.fillWidth: true
-                                    spacing: 2
+                                    spacing: Theme.scaledSize(2, networkMenu.fontScale)
 
                                     Text {
                                         Layout.fillWidth: true
                                         text: modelData.device
                                         elide: Text.ElideRight
-                                        font.pixelSize: Theme.fontLabelMedium
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                         font.bold: true
                                         color: isFallback ? Theme.fallback : Theme.surfaceText
                                     }
 
                                     RowLayout {
                                         Layout.fillWidth: true
-                                        spacing: 6
+                                        spacing: Theme.scaledSize(6, networkMenu.fontScale)
 
                                         Rectangle {
                                             Layout.alignment: Qt.AlignVCenter
-                                            width: 6
-                                            height: 6
-                                            radius: 3
+                                            width: Theme.scaledSize(6, networkMenu.fontScale)
+                                            height: Theme.scaledSize(6, networkMenu.fontScale)
+                                            radius: Theme.scaledSize(3, networkMenu.fontScale)
                                             color: Theme.success
                                             visible: VpnService.connected && isCurrent && modelData.device === networkMenu.defaultRouteDevice
                                         }
 
                                         Text {
                                             text: networkMenu.connectingDev === modelData.device ? "Connecting..." : networkMenu.disconnectingDev === modelData.device ? "Disconnecting..." : isCurrent ? "Connected" : "Disconnected"
-                                            font.pixelSize: Theme.fontLabelSmall
+                                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                             color: networkMenu.connectingDev === modelData.device ? "#f9e2af" : networkMenu.disconnectingDev === modelData.device ? "#f9e2af" : isDefaultRoute ? Theme.primary : (isFallback ? Theme.fallback : Theme.surfaceVariantText)
                                         }
 
@@ -1042,7 +1043,7 @@ PanelWindow {
                                                 }
                                                 return false;
                                             }
-                                            font.pixelSize: Theme.fontLabelSmall
+                                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                             color: networkMenu.defaultRouteDevice === modelData.device && VpnService.connected ? Theme.success : modelData.device === networkMenu.defaultRouteDevice ? Theme.primary : (isCurrent ? Theme.fallback : Theme.surfaceVariantText)
                                         }
 
@@ -1051,19 +1052,19 @@ PanelWindow {
                                 }
 
                                 Item {
-                                    Layout.preferredWidth: 30
-                                    Layout.preferredHeight: 56
+                                    Layout.preferredWidth: Theme.scaledSize(30, networkMenu.fontScale)
+                                    Layout.preferredHeight: Theme.scaledSize(56, networkMenu.fontScale)
 
                                     Rectangle {
                                         anchors.fill: parent
-                                        radius: 7
+                                        radius: Theme.scaledSize(7, networkMenu.fontScale)
                                         color: ethMenuMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                                     }
 
                                     Text {
                                         anchors.centerIn: parent
                                         text: "..."
-                                        font.pixelSize: Theme.fontLabelLarge
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                                         font.bold: true
                                         color: ethMenuMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
                                     }
@@ -1125,16 +1126,16 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 10
+                spacing: Theme.scaledSize(10, networkMenu.fontScale)
                 visible: selectedTab === "wifi"
 
                 Rectangle {
                     Layout.fillWidth: true
-                    height: 56
-                    radius: 7
+                    height: Theme.scaledSize(56, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: wifiRadioCardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: networkMenu.wifiRadioEnabled ? Theme.primary : "transparent"
-                    border.width: networkMenu.wifiRadioEnabled ? 1 : 0
+                    border.width: networkMenu.wifiRadioEnabled ? Theme.scaledSize(1, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
 
                     MouseArea {
                         id: wifiRadioCardMouse
@@ -1147,26 +1148,26 @@ PanelWindow {
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 8
-                        spacing: 8
+                        anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(8, networkMenu.fontScale)
+                        spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                         Text {
                             text: networkMenu.wifiRadioEnabled ? "\uE63E" : "\uE648"
                             font.family: materialSymbols.name
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                             color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceVariantText
                         }
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 2
+                            spacing: Theme.scaledSize(2, networkMenu.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
                                 text: "WiFi enabled"
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                             }
@@ -1174,7 +1175,7 @@ PanelWindow {
                             Text {
                                 Layout.fillWidth: true
                                 text: networkMenu.wifiRadioEnabled ? "On" : "Off"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                 color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceVariantText
                             }
 
@@ -1185,18 +1186,18 @@ PanelWindow {
                         }
 
                         Rectangle {
-                            Layout.preferredWidth: 34
-                            Layout.preferredHeight: 20
+                            Layout.preferredWidth: Theme.scaledSize(34, networkMenu.fontScale)
+                            Layout.preferredHeight: Theme.scaledSize(20, networkMenu.fontScale)
                             Layout.alignment: Qt.AlignVCenter
-                            radius: 10
+                            radius: Theme.scaledSize(10, networkMenu.fontScale)
                             color: networkMenu.wifiRadioEnabled ? Theme.primary : Theme.surfaceContainerHigh
                             border.color: networkMenu.wifiRadioEnabled ? "transparent" : Theme.outlineVariant
-                            border.width: 1
+                            border.width: Theme.scaledSize(1, networkMenu.fontScale)
 
                             Rectangle {
-                                width: 16
-                                height: 16
-                                radius: 8
+                                width: Theme.scaledSize(16, networkMenu.fontScale)
+                                height: Theme.scaledSize(16, networkMenu.fontScale)
+                                radius: Theme.scaledSize(8, networkMenu.fontScale)
                                 x: networkMenu.wifiRadioEnabled ? parent.width - width - 2 : 2
                                 anchors.verticalCenter: parent.verticalCenter
                                 color: networkMenu.wifiRadioEnabled ? Theme.primaryText : Theme.surfaceVariantText
@@ -1227,21 +1228,21 @@ PanelWindow {
                     id: wifiList
 
                     Layout.fillWidth: true
-                    height: 300
+                    height: Theme.scaledSize(300, networkMenu.fontScale)
                     clip: true
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, networkMenu.fontScale)
                     boundsBehavior: Flickable.StopAtBounds
                     visible: networkMenu.wifiAccumulated.length > 0
                     model: networkMenu.wifiAccumulated
 
                     ScrollBar.vertical: ScrollBar {
                         policy: ScrollBar.AsNeeded
-                        width: 14
+                        width: Theme.scaledSize(14, networkMenu.fontScale)
                         minimumSize: 0.25
 
                         contentItem: Rectangle {
-                            implicitWidth: 14
-                            radius: 7
+                            implicitWidth: Theme.scaledSize(14, networkMenu.fontScale)
+                            radius: Theme.scaledSize(7, networkMenu.fontScale)
                             color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
                         }
 
@@ -1254,11 +1255,11 @@ PanelWindow {
                         readonly property bool isFallbackConnected: isActive && networkMenu.defaultRouteDevice !== "" && networkMenu.activeWifiDevice !== networkMenu.defaultRouteDevice
 
                         width: wifiList.width
-                        height: 56
-                        radius: 7
+                        height: Theme.scaledSize(56, networkMenu.fontScale)
+                        radius: Theme.scaledSize(7, networkMenu.fontScale)
                         color: wifiItemMouse.containsMouse || isActive ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                         border.color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : "transparent")
-                        border.width: isActive ? 1 : 0
+                        border.width: isActive ? Theme.scaledSize(1, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
 
                         MouseArea {
                             id: wifiItemMouse
@@ -1279,9 +1280,9 @@ PanelWindow {
 
                         RowLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: 12
-                            anchors.rightMargin: 8
-                            spacing: 8
+                            anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
+                            anchors.rightMargin: Theme.scaledSize(8, networkMenu.fontScale)
+                            spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                             Text {
                                 text: {
@@ -1295,13 +1296,13 @@ PanelWindow {
                                     return "\uE4CA";
                                 }
                                 font.family: materialSymbols.name
-                                font.pixelSize: 16
+                                font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                                 color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                             }
 
                             ColumnLayout {
                                 Layout.fillWidth: true
-                                spacing: 2
+                                spacing: Theme.scaledSize(2, networkMenu.fontScale)
 
                                 Item {
                                     Layout.fillWidth: true
@@ -1313,7 +1314,7 @@ PanelWindow {
                                         anchors.left: parent.left
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: modelData.ssid
-                                        font.pixelSize: Theme.fontLabelMedium
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                         font.bold: true
                                         color: Theme.surfaceText
                                     }
@@ -1322,10 +1323,10 @@ PanelWindow {
                                         id: wifiBandTag
 
                                         anchors.left: wifiSsidText.right
-                                        anchors.leftMargin: 6
+                                        anchors.leftMargin: Theme.scaledSize(6, networkMenu.fontScale)
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: "(" + (modelData.rate ? modelData.band + " · " + modelData.rate.replace("Mbit/s", "Mb/s") : modelData.band) + ")"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         font.bold: true
                                         color: isFallbackConnected ? Theme.fallback : (modelData.band === "5GHz" ? Theme.primary : Theme.surfaceVariantText)
                                     }
@@ -1334,52 +1335,52 @@ PanelWindow {
 
                                 RowLayout {
                                     Layout.fillWidth: true
-                                    spacing: 6
+                                    spacing: Theme.scaledSize(6, networkMenu.fontScale)
 
                                     Rectangle {
                                         Layout.alignment: Qt.AlignVCenter
-                                        width: 6
-                                        height: 6
-                                        radius: 3
+                                        width: Theme.scaledSize(6, networkMenu.fontScale)
+                                        height: Theme.scaledSize(6, networkMenu.fontScale)
+                                        radius: Theme.scaledSize(3, networkMenu.fontScale)
                                         color: Theme.success
                                         visible: VpnService.connected && isActive && networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice
                                     }
 
                                     Text {
                                         text: networkMenu.connectingSsid === modelData.ssid ? "Connecting..." : networkMenu.disconnectingWifiSsid === modelData.ssid ? "Disconnecting..." : isActive ? "Connected" : (modelData.security !== "" ? "Secure" : "Open")
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: networkMenu.connectingSsid === modelData.ssid ? "#f9e2af" : networkMenu.disconnectingWifiSsid === modelData.ssid ? "#f9e2af" : isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                                     }
 
                                     Text {
                                         text: "•"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
                                         visible: modelData.saved
                                     }
 
                                     Text {
                                         text: "Saved"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: isFallbackConnected ? Theme.fallback : Theme.primary
                                         visible: modelData.saved
                                     }
 
                                     Text {
                                         text: "•"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
                                     }
 
                                     Text {
                                         text: modelData.signal + "%"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: isDefaultRouteConnected ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                                     }
 
                                     Text {
                                         text: "•"
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText
                                         visible: {
                                             if (!isActive)
@@ -1406,7 +1407,7 @@ PanelWindow {
                                             return "";
                                         }
                                         visible: isActive
-                                        font.pixelSize: Theme.fontLabelSmall
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                         color: networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice && VpnService.connected ? Theme.success : networkMenu.activeWifiDevice === networkMenu.defaultRouteDevice ? Theme.primary : (isFallbackConnected ? Theme.fallback : Theme.surfaceVariantText)
                                     }
 
@@ -1415,19 +1416,19 @@ PanelWindow {
                             }
 
                             Item {
-                                Layout.preferredWidth: 30
-                                Layout.preferredHeight: 56
+                                Layout.preferredWidth: Theme.scaledSize(30, networkMenu.fontScale)
+                                Layout.preferredHeight: Theme.scaledSize(56, networkMenu.fontScale)
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    radius: 7
+                                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                                     color: wifiMenuMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                                 }
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: "..."
-                                    font.pixelSize: Theme.fontLabelLarge
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                                     font.bold: true
                                     color: isFallbackConnected ? Theme.fallback : (wifiMenuMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText)
                                 }
@@ -1515,24 +1516,24 @@ PanelWindow {
 
                 Item {
                     Layout.fillWidth: true
-                    height: 300
+                    height: Theme.scaledSize(300, networkMenu.fontScale)
                     visible: networkMenu.wifiAccumulated.length === 0
 
                     RowLayout {
                         anchors.centerIn: parent
-                        spacing: 10
+                        spacing: Theme.scaledSize(10, networkMenu.fontScale)
                         visible: networkMenu.wifiScanning && networkMenu.wifiRadioEnabled
 
                         BusyIndicator {
-                            Layout.preferredWidth: 26
-                            Layout.preferredHeight: 26
+                            Layout.preferredWidth: Theme.scaledSize(26, networkMenu.fontScale)
+                            Layout.preferredHeight: Theme.scaledSize(26, networkMenu.fontScale)
                             running: networkMenu.wifiScanning
                             palette.text: Theme.primary
                         }
 
                         Text {
                             text: "Searching for networks..."
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -1541,7 +1542,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: "No networks found"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                         color: Theme.surfaceVariantText
                         visible: !networkMenu.wifiScanning && networkMenu.wifiRadioEnabled
                     }
@@ -1549,7 +1550,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: "WiFi disabled"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                         color: Theme.surfaceVariantText
                         visible: !networkMenu.wifiRadioEnabled
                     }
@@ -1560,16 +1561,16 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 10
+                spacing: Theme.scaledSize(10, networkMenu.fontScale)
                 visible: selectedTab === "vpn"
 
                 Rectangle {
                     Layout.fillWidth: true
-                    height: 56
-                    radius: 7
+                    height: Theme.scaledSize(56, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: vpnCardMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: VpnService.connected ? Theme.success : "transparent"
-                    border.width: VpnService.connected ? 1 : 0
+                    border.width: VpnService.connected ? Theme.scaledSize(1, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
 
                     MouseArea {
                         id: vpnCardMouse
@@ -1582,26 +1583,26 @@ PanelWindow {
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 8
-                        spacing: 8
+                        anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(8, networkMenu.fontScale)
+                        spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                         Text {
                             text: "\uF3E7"
                             font.family: networkMenu.fontFamily
-                            font.pixelSize: 16
+                            font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                             color: VpnService.connected ? Theme.success : (VpnService.connecting ? "#f9e2af" : Theme.surfaceVariantText)
                         }
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 2
+                            spacing: Theme.scaledSize(2, networkMenu.fontScale)
 
                             Text {
                                 Layout.fillWidth: true
                                 text: "Cloudflare WARP"
                                 elide: Text.ElideRight
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceText
                             }
@@ -1614,7 +1615,7 @@ PanelWindow {
 
                                     return VpnService.connected ? "Connected" : "Disconnected";
                                 }
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, networkMenu.fontScale)
                                 color: VpnService.connected ? Theme.success : (VpnService.connecting ? "#f9e2af" : Theme.surfaceVariantText)
                             }
 
@@ -1625,18 +1626,18 @@ PanelWindow {
                         }
 
                         Rectangle {
-                            Layout.preferredWidth: 34
-                            Layout.preferredHeight: 20
+                            Layout.preferredWidth: Theme.scaledSize(34, networkMenu.fontScale)
+                            Layout.preferredHeight: Theme.scaledSize(20, networkMenu.fontScale)
                             Layout.alignment: Qt.AlignVCenter
-                            radius: 10
+                            radius: Theme.scaledSize(10, networkMenu.fontScale)
                             color: VpnService.connected ? Theme.success : Theme.surfaceContainerHigh
                             border.color: VpnService.connected ? "transparent" : Theme.outlineVariant
-                            border.width: 1
+                            border.width: Theme.scaledSize(1, networkMenu.fontScale)
 
                             Rectangle {
-                                width: 16
-                                height: 16
-                                radius: 8
+                                width: Theme.scaledSize(16, networkMenu.fontScale)
+                                height: Theme.scaledSize(16, networkMenu.fontScale)
+                                radius: Theme.scaledSize(8, networkMenu.fontScale)
                                 x: VpnService.connected ? parent.width - width - 2 : 2
                                 anchors.verticalCenter: parent.verticalCenter
                                 color: VpnService.connected ? Theme.primaryText : Theme.surfaceVariantText
@@ -1686,45 +1687,45 @@ PanelWindow {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    width: 420
-                    height: passCol.implicitHeight + 32
-                    radius: 12
+                    width: Theme.scaledSize(420, networkMenu.fontScale)
+                    height: passCol.implicitHeight + Theme.scaledSize(32, networkMenu.fontScale)
+                    radius: Theme.scaledSize(12, networkMenu.fontScale)
                     color: Theme.surfaceContainer
                     border.color: Theme.surfaceContainerHighest
-                    border.width: 1
+                    border.width: Theme.scaledSize(1, networkMenu.fontScale)
 
                     ColumnLayout {
                         id: passCol
 
                         anchors.fill: parent
-                        anchors.margins: 16
-                        spacing: 12
+                        anchors.margins: Theme.scaledSize(16, networkMenu.fontScale)
+                        spacing: Theme.scaledSize(12, networkMenu.fontScale)
 
                         Text {
                             Layout.fillWidth: true
                             text: "Connect to " + networkMenu.passwordTarget
                             elide: Text.ElideRight
-                            font.pixelSize: Theme.fontLabelLarge
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                             font.bold: true
                             color: Theme.surfaceText
                         }
 
                         Rectangle {
                             Layout.fillWidth: true
-                            height: 40
-                            radius: 7
+                            height: Theme.scaledSize(40, networkMenu.fontScale)
+                            radius: Theme.scaledSize(7, networkMenu.fontScale)
                             color: Theme.surfaceContainerHigh
                             border.color: passwordField.activeFocus ? Theme.primary : "transparent"
-                            border.width: 1
+                            border.width: Theme.scaledSize(1, networkMenu.fontScale)
 
                             TextInput {
                                 id: passwordField
 
                                 anchors.fill: parent
-                                anchors.leftMargin: 12
-                                anchors.rightMargin: 40
+                                anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
+                                anchors.rightMargin: Theme.scaledSize(40, networkMenu.fontScale)
                                 verticalAlignment: TextInput.AlignVCenter
-                                font.pixelSize: Theme.fontLabelLarge
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                                 color: Theme.surfaceText
                                 echoMode: networkMenu.showPassword ? TextInput.Normal : TextInput.Password
                                 text: networkMenu.passwordInput
@@ -1741,18 +1742,18 @@ PanelWindow {
                             }
 
                             Rectangle {
-                                width: 36
-                                height: 38
+                                width: Theme.scaledSize(36, networkMenu.fontScale)
+                                height: Theme.scaledSize(38, networkMenu.fontScale)
                                 anchors.right: parent.right
                                 anchors.verticalCenter: parent.verticalCenter
-                                radius: 7
+                                radius: Theme.scaledSize(7, networkMenu.fontScale)
                                 color: passEyeMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: networkMenu.showPassword ? "\uE8F4" : "\uE8F5"
                                     font.family: materialSymbols.name
-                                    font.pixelSize: 16
+                                    font.pixelSize: Theme.scaledFont(16, networkMenu.fontScale)
                                     color: passEyeMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
                                 }
 
@@ -1771,22 +1772,22 @@ PanelWindow {
 
                         RowLayout {
                             Layout.fillWidth: true
-                            spacing: 8
+                            spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                             Item {
                                 Layout.fillWidth: true
                             }
 
                             Rectangle {
-                                width: 120
-                                height: 38
-                                radius: 7
+                                width: Theme.scaledSize(120, networkMenu.fontScale)
+                                height: Theme.scaledSize(38, networkMenu.fontScale)
+                                radius: Theme.scaledSize(7, networkMenu.fontScale)
                                 color: cancelBtn.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: "Cancelar"
-                                    font.pixelSize: Theme.fontLabelMedium
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                     font.bold: true
                                     color: Theme.surfaceText
                                 }
@@ -1803,15 +1804,15 @@ PanelWindow {
                             }
 
                             Rectangle {
-                                width: 120
-                                height: 38
-                                radius: 7
+                                width: Theme.scaledSize(120, networkMenu.fontScale)
+                                height: Theme.scaledSize(38, networkMenu.fontScale)
+                                radius: Theme.scaledSize(7, networkMenu.fontScale)
                                 color: connectBtn.containsMouse ? Theme.primary : Theme.surfaceContainerHighest
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: "Connect"
-                                    font.pixelSize: Theme.fontLabelMedium
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                     font.bold: true
                                     color: connectBtn.containsMouse ? Theme.primaryText : Theme.surfaceText
                                 }
@@ -1865,35 +1866,35 @@ PanelWindow {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 590
-            height: modalCol.implicitHeight + 32
-            radius: 12
+            width: Theme.scaledSize(590, networkMenu.fontScale)
+            height: modalCol.implicitHeight + Theme.scaledSize(32, networkMenu.fontScale)
+            radius: Theme.scaledSize(12, networkMenu.fontScale)
             color: Theme.surfaceContainer
             border.color: Theme.surfaceContainerHighest
-            border.width: 1
+            border.width: Theme.scaledSize(1, networkMenu.fontScale)
 
             ColumnLayout {
                 id: modalCol
 
                 anchors.fill: parent
-                anchors.margins: 16
-                spacing: 12
+                anchors.margins: Theme.scaledSize(16, networkMenu.fontScale)
+                spacing: Theme.scaledSize(12, networkMenu.fontScale)
 
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: 8
+                    spacing: Theme.scaledSize(8, networkMenu.fontScale)
 
                     Text {
                         text: "\uE88E"
                         font.family: materialSymbols.name
-                        font.pixelSize: 18
+                        font.pixelSize: Theme.scaledFont(18, networkMenu.fontScale)
                         color: Theme.primary
                     }
 
                     Text {
                         Layout.fillWidth: true
                         text: "Network Information"
-                        font.pixelSize: 18
+                        font.pixelSize: Theme.scaledFont(18, networkMenu.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -1902,16 +1903,16 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    implicitHeight: infoRowsCol.implicitHeight + 12
-                    radius: 7
+                    implicitHeight: infoRowsCol.implicitHeight + Theme.scaledSize(12, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: Theme.surfaceContainerHigh
 
                     ColumnLayout {
                         id: infoRowsCol
 
                         anchors.fill: parent
-                        anchors.margins: 10
-                        spacing: 6
+                        anchors.margins: Theme.scaledSize(10, networkMenu.fontScale)
+                        spacing: Theme.scaledSize(6, networkMenu.fontScale)
 
                         Repeater {
                             model: networkMenu.infoModalRows
@@ -1921,29 +1922,29 @@ PanelWindow {
                                 required property var modelData
 
                                 Layout.fillWidth: true
-                                spacing: 6
+                                spacing: Theme.scaledSize(6, networkMenu.fontScale)
 
                                 Text {
                                     Layout.fillWidth: true
-                                    Layout.topMargin: modelData.section !== undefined && index > 0 ? 10 : 0
-                                    Layout.bottomMargin: modelData.section !== undefined ? 6 : 0
+                                    Layout.topMargin: modelData.section !== undefined && index > Theme.scaledSize(0, networkMenu.fontScale) ? Theme.scaledSize(10, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
+                                    Layout.bottomMargin: modelData.section !== undefined ? Theme.scaledSize(6, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
                                     visible: modelData.section !== undefined
                                     text: modelData.section
-                                    font.pixelSize: Theme.fontLabelMedium
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                                     font.bold: true
                                     color: Theme.primary
                                 }
 
                                 RowLayout {
                                     Layout.fillWidth: true
-                                    Layout.leftMargin: modelData.indent ? 12 : 0
+                                    Layout.leftMargin: modelData.indent ? Theme.scaledSize(12, networkMenu.fontScale) : Theme.scaledSize(0, networkMenu.fontScale)
                                     visible: modelData.section === undefined
-                                    spacing: 12
+                                    spacing: Theme.scaledSize(12, networkMenu.fontScale)
 
                                     Text {
                                         Layout.fillWidth: false
                                         text: modelData.label
-                                        font.pixelSize: Theme.fontLabelLarge
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                                         color: Theme.surfaceVariantText
                                     }
 
@@ -1952,7 +1953,7 @@ PanelWindow {
                                         text: modelData.value
                                         elide: Text.ElideRight
                                         horizontalAlignment: Text.AlignRight
-                                        font.pixelSize: Theme.fontLabelLarge
+                                        font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, networkMenu.fontScale)
                                         color: Theme.surfaceText
                                     }
 
@@ -1968,15 +1969,15 @@ PanelWindow {
 
                 Rectangle {
                     Layout.alignment: Qt.AlignRight
-                    width: 120
-                    height: 38
-                    radius: 7
+                    width: Theme.scaledSize(120, networkMenu.fontScale)
+                    height: Theme.scaledSize(38, networkMenu.fontScale)
+                    radius: Theme.scaledSize(7, networkMenu.fontScale)
                     color: closeBtn.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "Fechar"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -2028,24 +2029,24 @@ PanelWindow {
             open();
         }
 
-        width: 180
-        leftPadding: 4
-        rightPadding: 4
-        topPadding: 4
-        bottomPadding: 4
+        width: Theme.scaledSize(180, networkMenu.fontScale)
+        leftPadding: Theme.scaledSize(4, networkMenu.fontScale)
+        rightPadding: Theme.scaledSize(4, networkMenu.fontScale)
+        topPadding: Theme.scaledSize(4, networkMenu.fontScale)
+        bottomPadding: Theme.scaledSize(4, networkMenu.fontScale)
         modal: true
         dim: false
         closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh
-            radius: 10
+            radius: Theme.scaledSize(10, networkMenu.fontScale)
             border.color: Theme.outlineVariant
-            border.width: 1
+            border.width: Theme.scaledSize(1, networkMenu.fontScale)
         }
 
         contentItem: ColumnLayout {
-            spacing: 2
+            spacing: Theme.scaledSize(2, networkMenu.fontScale)
 
             Repeater {
                 model: rowMenu.items
@@ -2054,16 +2055,16 @@ PanelWindow {
                     required property var modelData
 
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 32
-                    radius: 6
+                    Layout.preferredHeight: Theme.scaledSize(32, networkMenu.fontScale)
+                    radius: Theme.scaledSize(6, networkMenu.fontScale)
                     color: rowMenuItemMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
 
                     Text {
                         anchors.left: parent.left
-                        anchors.leftMargin: 12
+                        anchors.leftMargin: Theme.scaledSize(12, networkMenu.fontScale)
                         anchors.verticalCenter: parent.verticalCenter
                         text: modelData.label
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, networkMenu.fontScale)
                         color: rowMenuItemMouse.containsMouse ? Theme.primary : Theme.surfaceText
                     }
 

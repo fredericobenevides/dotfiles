@@ -9,6 +9,7 @@ import qs.theme
 PanelWindow {
     id: systemInfoModal
 
+    property real fontScale: 1.0
     property var targetScreen: null
     property string processFilter: "all"
     property string sortField: "cpu"
@@ -128,13 +129,13 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 600
-        height: content.implicitHeight + 32
+        width: Theme.scaledSize(600, systemInfoModal.fontScale)
+        height: content.implicitHeight + Theme.scaledSize(32, systemInfoModal.fontScale)
         anchors.centerIn: parent
-        radius: 16
+        radius: Theme.scaledSize(16, systemInfoModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, systemInfoModal.fontScale)
         Keys.onPressed: (event) => {
             const filters = ["all", "user", "system"];
             const idx = filters.indexOf(systemInfoModal.processFilter);
@@ -161,24 +162,24 @@ PanelWindow {
             id: content
 
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 0
+            anchors.margins: Theme.scaledSize(16, systemInfoModal.fontScale)
+            spacing: Theme.scaledSize(0, systemInfoModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, systemInfoModal.fontScale)
 
                 Text {
                     text: "\uE8F8"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, systemInfoModal.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "System"
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, systemInfoModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
@@ -187,8 +188,8 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 15
-                spacing: 12
+                Layout.topMargin: Theme.scaledSize(15, systemInfoModal.fontScale)
+                spacing: Theme.scaledSize(12, systemInfoModal.fontScale)
 
                 Repeater {
                     model: [{
@@ -219,13 +220,13 @@ PanelWindow {
 
                     delegate: Item {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 148
+                        Layout.preferredHeight: Theme.scaledSize(148, systemInfoModal.fontScale)
 
                         Item {
                             id: ringWrap
 
-                            width: 108
-                            height: 108
+                            width: Theme.scaledSize(108, systemInfoModal.fontScale)
+                            height: Theme.scaledSize(108, systemInfoModal.fontScale)
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
 
@@ -256,12 +257,12 @@ PanelWindow {
 
                             ColumnLayout {
                                 anchors.centerIn: parent
-                                spacing: 0
+                                spacing: Theme.scaledSize(0, systemInfoModal.fontScale)
 
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
                                     text: modelData.display
-                                    font.pixelSize: 18
+                                    font.pixelSize: Theme.scaledFont(18, systemInfoModal.fontScale)
                                     font.bold: true
                                     color: modelData.hot ? (systemInfoModal._tempFlashOn ? "#ffffff" : Theme.error) : Theme.surfaceText
                                 }
@@ -269,7 +270,7 @@ PanelWindow {
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
                                     text: modelData.label
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                     color: Theme.surfaceVariantText
                                 }
 
@@ -280,20 +281,20 @@ PanelWindow {
                         Row {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: ringWrap.bottom
-                            anchors.topMargin: 4
-                            spacing: 3
+                            anchors.topMargin: Theme.scaledSize(4, systemInfoModal.fontScale)
+                            spacing: Theme.scaledSize(3, systemInfoModal.fontScale)
 
                             Text {
                                 text: modelData.icon
                                 font.family: materialSymbols.name
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.scaledFont(18, systemInfoModal.fontScale)
                                 color: modelData.hot ? Theme.error : Theme.primary
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
                             Text {
                                 text: modelData.label
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                 font.bold: true
                                 color: Theme.surfaceVariantText
                                 anchors.verticalCenter: parent.verticalCenter
@@ -309,21 +310,21 @@ PanelWindow {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 2
+                spacing: Theme.scaledSize(2, systemInfoModal.fontScale)
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "Info:"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: SystemInfoStats.hostname
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -334,29 +335,29 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                height: 1
+                Layout.topMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                height: Theme.scaledSize(1, systemInfoModal.fontScale)
                 color: Theme.outlineVariant
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                spacing: 2
+                Layout.topMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                spacing: Theme.scaledSize(2, systemInfoModal.fontScale)
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "Uptime:"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: SystemInfoStats.uptimeText
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -364,18 +365,18 @@ PanelWindow {
                 }
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "CPU Frequency:"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: SystemInfoStats.cpuFreqMHz > 0 ? (SystemInfoStats.cpuFreqMHz / 1000).toFixed(2) + " GHz" : "--"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -383,18 +384,18 @@ PanelWindow {
                 }
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "RAM Usage:"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: systemInfoModal.formatMem(SystemInfoStats.usedMemKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.totalMemKB)
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -402,18 +403,18 @@ PanelWindow {
                 }
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "Swap Usage:"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: systemInfoModal.formatMem(SystemInfoStats.usedSwapKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.totalSwapKB)
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -421,18 +422,18 @@ PanelWindow {
                 }
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "Processes:"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: SystemInfoStats.totalProcessCount
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -443,41 +444,41 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                height: 1
+                Layout.topMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                height: Theme.scaledSize(1, systemInfoModal.fontScale)
                 color: Theme.outlineVariant
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                spacing: 2
+                Layout.topMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                spacing: Theme.scaledSize(2, systemInfoModal.fontScale)
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "File systems:"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                 }
 
                 Row {
-                    spacing: 4
+                    spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
                     Layout.fillWidth: true
 
                     Text {
                         text: "/ :"
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
                     Text {
                         text: systemInfoModal.formatMem(SystemInfoStats.diskUsedKB) + " / " + systemInfoModal.formatMem(SystemInfoStats.diskTotalKB)
-                        font.pixelSize: Theme.fontLabelSmall
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                         font.bold: true
                         color: Theme.surfaceText
                     }
@@ -488,26 +489,26 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                height: 1
+                Layout.topMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                height: Theme.scaledSize(1, systemInfoModal.fontScale)
                 color: Theme.outlineVariant
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 15
-                spacing: 8
+                Layout.topMargin: Theme.scaledSize(15, systemInfoModal.fontScale)
+                spacing: Theme.scaledSize(8, systemInfoModal.fontScale)
 
                 Rectangle {
-                    Layout.preferredWidth: 48
-                    Layout.preferredHeight: 24
-                    radius: 12
+                    Layout.preferredWidth: Theme.scaledSize(48, systemInfoModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
+                    radius: Theme.scaledSize(12, systemInfoModal.fontScale)
                     color: systemInfoModal.processFilter === "all" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "ALL"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         font.bold: true
                         color: systemInfoModal.processFilter === "all" ? Theme.primaryText : Theme.surfaceVariantText
                     }
@@ -522,15 +523,15 @@ PanelWindow {
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 52
-                    Layout.preferredHeight: 24
-                    radius: 12
+                    Layout.preferredWidth: Theme.scaledSize(52, systemInfoModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
+                    radius: Theme.scaledSize(12, systemInfoModal.fontScale)
                     color: systemInfoModal.processFilter === "user" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "USER"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         font.bold: true
                         color: systemInfoModal.processFilter === "user" ? Theme.primaryText : Theme.surfaceVariantText
                     }
@@ -545,15 +546,15 @@ PanelWindow {
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 62
-                    Layout.preferredHeight: 24
-                    radius: 12
+                    Layout.preferredWidth: Theme.scaledSize(62, systemInfoModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
+                    radius: Theme.scaledSize(12, systemInfoModal.fontScale)
                     color: systemInfoModal.processFilter === "system" ? Theme.primary : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "System"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                         font.bold: true
                         color: systemInfoModal.processFilter === "system" ? Theme.primaryText : Theme.surfaceVariantText
                     }
@@ -572,36 +573,36 @@ PanelWindow {
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 220
-                    Layout.preferredHeight: 30
-                    radius: 15
+                    Layout.preferredWidth: Theme.scaledSize(220, systemInfoModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(30, systemInfoModal.fontScale)
+                    radius: Theme.scaledSize(15, systemInfoModal.fontScale)
                     color: Theme.surfaceContainerHigh
                     border.color: searchField.activeFocus ? Theme.primary : "transparent"
-                    border.width: 1
+                    border.width: Theme.scaledSize(1, systemInfoModal.fontScale)
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        spacing: 4
+                        anchors.leftMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                        anchors.rightMargin: Theme.scaledSize(8, systemInfoModal.fontScale)
+                        spacing: Theme.scaledSize(4, systemInfoModal.fontScale)
 
                         Text {
                             text: "\uE8B6"
                             font.family: materialSymbols.name
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.scaledFont(12, systemInfoModal.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
                         Item {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.left: parent.left
                                 anchors.verticalCenter: parent.verticalCenter
                                 text: "Search processes..."
-                                font.pixelSize: Theme.fontLabelLarge
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, systemInfoModal.fontScale)
                                 color: Theme.surfaceVariantText
                                 visible: searchField.text === "" && !searchField.activeFocus
                             }
@@ -613,7 +614,7 @@ PanelWindow {
                                 z: 1
                                 clip: true
                                 color: Theme.surfaceText
-                                font.pixelSize: Theme.fontLabelLarge
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelLarge, systemInfoModal.fontScale)
                                 selectByMouse: true
                                 verticalAlignment: Text.AlignVCenter
                                 onTextChanged: systemInfoModal.searchText = text
@@ -639,17 +640,17 @@ PanelWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 320
-                Layout.topMargin: 12
-                radius: 14
+                Layout.preferredHeight: Theme.scaledSize(320, systemInfoModal.fontScale)
+                Layout.topMargin: Theme.scaledSize(12, systemInfoModal.fontScale)
+                radius: Theme.scaledSize(14, systemInfoModal.fontScale)
                 color: Theme.surfaceContainerHigh
                 border.color: Theme.surfaceContainerHighest
-                border.width: 1
+                border.width: Theme.scaledSize(1, systemInfoModal.fontScale)
 
                 ColumnLayout {
                     anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 8
+                    anchors.margins: Theme.scaledSize(12, systemInfoModal.fontScale)
+                    spacing: Theme.scaledSize(8, systemInfoModal.fontScale)
 
                     RowLayout {
                         Layout.fillWidth: true
@@ -657,13 +658,13 @@ PanelWindow {
 
                         Item {
                             Layout.preferredWidth: systemInfoModal.colName
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.fill: parent
                                 text: "Name " + (systemInfoModal.sortField === "name" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                 font.bold: true
                                 color: systemInfoModal.sortField === "name" ? Theme.primary : Theme.surfaceVariantText
                             }
@@ -679,14 +680,14 @@ PanelWindow {
 
                         Item {
                             Layout.preferredWidth: systemInfoModal.colCpu
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -18
                                 text: "CPU " + (systemInfoModal.sortField === "cpu" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                 font.bold: true
                                 color: systemInfoModal.sortField === "cpu" ? Theme.primary : Theme.surfaceVariantText
                             }
@@ -702,19 +703,19 @@ PanelWindow {
 
                         Item {
                             Layout.preferredWidth: systemInfoModal.colGap
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                         }
 
                         Item {
                             Layout.preferredWidth: systemInfoModal.colMem
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -38
                                 text: "Memory " + (systemInfoModal.sortField === "mem" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                 font.bold: true
                                 color: systemInfoModal.sortField === "mem" ? Theme.primary : Theme.surfaceVariantText
                             }
@@ -730,14 +731,14 @@ PanelWindow {
 
                         Item {
                             Layout.preferredWidth: systemInfoModal.colPid
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                             Layout.alignment: Qt.AlignVCenter
 
                             Text {
                                 anchors.centerIn: parent
                                 anchors.horizontalCenterOffset: -16
                                 text: "PID " + (systemInfoModal.sortField === "pid" ? (systemInfoModal.sortAscending ? "\u25B4" : "\u25BE") : "")
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                 font.bold: true
                                 color: systemInfoModal.sortField === "pid" ? Theme.primary : Theme.surfaceVariantText
                             }
@@ -753,14 +754,14 @@ PanelWindow {
 
                         Item {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 24
+                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                         }
 
                     }
 
                     Rectangle {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 1
+                        Layout.preferredHeight: Theme.scaledSize(1, systemInfoModal.fontScale)
                         color: Theme.surfaceContainerHighest
                     }
 
@@ -773,16 +774,16 @@ PanelWindow {
                             clip: true
                             visible: !SystemInfoStats.processesLoading
                             model: systemInfoModal.visibleProcesses
-                            spacing: 2
+                            spacing: Theme.scaledSize(2, systemInfoModal.fontScale)
 
                             ScrollBar.vertical: ScrollBar {
                                 policy: ScrollBar.AsNeeded
-                                width: 14
+                                width: Theme.scaledSize(14, systemInfoModal.fontScale)
                                 minimumSize: 0.25
 
                                 contentItem: Rectangle {
-                                    implicitWidth: 14
-                                    radius: 7
+                                    implicitWidth: Theme.scaledSize(14, systemInfoModal.fontScale)
+                                    radius: Theme.scaledSize(7, systemInfoModal.fontScale)
                                     color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
                                 }
 
@@ -790,15 +791,15 @@ PanelWindow {
 
                             delegate: Column {
                                 width: ListView.view.width
-                                spacing: 2
+                                spacing: Theme.scaledSize(2, systemInfoModal.fontScale)
 
                                 Item {
                                     width: parent.width
-                                    height: 24
+                                    height: Theme.scaledSize(24, systemInfoModal.fontScale)
 
                                     RowLayout {
                                         width: parent.width
-                                        height: 24
+                                        height: Theme.scaledSize(24, systemInfoModal.fontScale)
                                         spacing: systemInfoModal.colSpacing
                                         z: rowMouse.containsMouse ? 1 : 0
 
@@ -806,21 +807,21 @@ PanelWindow {
                                             Layout.preferredWidth: systemInfoModal.colName
                                             Layout.alignment: Qt.AlignVCenter
                                             text: modelData.name
-                                            font.pixelSize: Theme.fontLabelMedium
+                                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                             color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceText
                                             elide: Text.ElideRight
                                         }
 
                                         Item {
                                             Layout.preferredWidth: systemInfoModal.colCpu
-                                            Layout.preferredHeight: 24
+                                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                                             Layout.alignment: Qt.AlignVCenter
 
                                             Text {
                                                 anchors.centerIn: parent
                                                 anchors.horizontalCenterOffset: -38
                                                 text: modelData.cpu.toFixed(1) + "%"
-                                                font.pixelSize: Theme.fontLabelMedium
+                                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                                 color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
                                             }
 
@@ -828,20 +829,20 @@ PanelWindow {
 
                                         Item {
                                             Layout.preferredWidth: systemInfoModal.colGap
-                                            Layout.preferredHeight: 24
+                                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                                             Layout.alignment: Qt.AlignVCenter
                                         }
 
                                         Item {
                                             Layout.preferredWidth: systemInfoModal.colMem
-                                            Layout.preferredHeight: 24
+                                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                                             Layout.alignment: Qt.AlignVCenter
 
                                             Text {
                                                 anchors.centerIn: parent
                                                 anchors.horizontalCenterOffset: -68
                                                 text: systemInfoModal.formatMem(modelData.rss)
-                                                font.pixelSize: Theme.fontLabelMedium
+                                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                                 color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceVariantText
                                             }
 
@@ -849,14 +850,14 @@ PanelWindow {
 
                                         Item {
                                             Layout.preferredWidth: systemInfoModal.colPid
-                                            Layout.preferredHeight: 24
+                                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                                             Layout.alignment: Qt.AlignVCenter
 
                                             Text {
                                                 anchors.centerIn: parent
                                                 anchors.horizontalCenterOffset: -46
                                                 text: modelData.pid
-                                                font.pixelSize: Theme.fontLabelMedium
+                                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                                 color: rowMouse.containsMouse ? Theme.primary : Theme.surfaceText
                                             }
 
@@ -864,7 +865,7 @@ PanelWindow {
 
                                         Item {
                                             Layout.fillWidth: true
-                                            Layout.preferredHeight: 24
+                                            Layout.preferredHeight: Theme.scaledSize(24, systemInfoModal.fontScale)
                                             Layout.alignment: Qt.AlignVCenter
 
                                             Text {
@@ -872,7 +873,7 @@ PanelWindow {
                                                 anchors.horizontalCenterOffset: -18
                                                 text: systemInfoModal.expandedPid === modelData.pid ? "\uE5CE" : "\uE5CF"
                                                 font.family: materialSymbols.name
-                                                font.pixelSize: 14
+                                                font.pixelSize: Theme.scaledFont(14, systemInfoModal.fontScale)
                                                 color: systemInfoModal.expandedPid === modelData.pid ? Theme.primary : Theme.surfaceVariantText
                                                 horizontalAlignment: Text.AlignHCenter
                                                 verticalAlignment: Text.AlignVCenter
@@ -891,7 +892,7 @@ PanelWindow {
 
                                     Rectangle {
                                         anchors.fill: parent
-                                        radius: 4
+                                        radius: Theme.scaledSize(4, systemInfoModal.fontScale)
                                         color: rowMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                                         z: -1
                                     }
@@ -910,53 +911,53 @@ PanelWindow {
                                 Rectangle {
                                     width: parent.width
                                     visible: systemInfoModal.expandedPid === modelData.pid
-                                    radius: 8
+                                    radius: Theme.scaledSize(8, systemInfoModal.fontScale)
                                     color: Theme.surfaceContainer
                                     border.color: Theme.surfaceContainerHighest
-                                    border.width: 1
-                                    implicitHeight: expandedContent.implicitHeight + 24
+                                    border.width: Theme.scaledSize(1, systemInfoModal.fontScale)
+                                    implicitHeight: expandedContent.implicitHeight + Theme.scaledSize(24, systemInfoModal.fontScale)
 
                                     RowLayout {
                                         id: expandedContent
 
                                         anchors.fill: parent
-                                        anchors.margins: 14
-                                        spacing: 16
+                                        anchors.margins: Theme.scaledSize(14, systemInfoModal.fontScale)
+                                        spacing: Theme.scaledSize(16, systemInfoModal.fontScale)
 
                                         ColumnLayout {
                                             Layout.fillWidth: true
                                             Layout.fillHeight: true
                                             Layout.alignment: Qt.AlignVCenter
-                                            spacing: 6
+                                            spacing: Theme.scaledSize(6, systemInfoModal.fontScale)
 
                                             Text {
                                                 Layout.fillWidth: true
                                                 text: "<b>Full command:</b> " + (modelData.fullCommand || modelData.name)
                                                 textFormat: Text.RichText
-                                                font.pixelSize: Theme.fontLabelSmall
+                                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                                 color: Theme.surfaceText
                                                 wrapMode: Text.Wrap
                                             }
 
                                             Item {
-                                                Layout.preferredHeight: 2
+                                                Layout.preferredHeight: Theme.scaledSize(2, systemInfoModal.fontScale)
                                             }
 
                                             RowLayout {
                                                 Layout.fillWidth: true
-                                                spacing: 16
+                                                spacing: Theme.scaledSize(16, systemInfoModal.fontScale)
 
                                                 Text {
                                                     text: "<b>PPID:</b> " + modelData.ppid
                                                     textFormat: Text.RichText
-                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                                     color: Theme.surfaceVariantText
                                                 }
 
                                                 Text {
                                                     text: "<b>Memory:</b> " + (SystemInfoStats.totalMemKB > 0 ? ((modelData.rss / SystemInfoStats.totalMemKB) * 100).toFixed(1) + "%" : "--")
                                                     textFormat: Text.RichText
-                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                                     color: Theme.surfaceVariantText
                                                 }
 
@@ -971,18 +972,18 @@ PanelWindow {
                                         RowLayout {
                                             Layout.fillHeight: true
                                             Layout.alignment: Qt.AlignVCenter
-                                            spacing: 6
+                                            spacing: Theme.scaledSize(6, systemInfoModal.fontScale)
 
                                             Rectangle {
-                                                Layout.preferredWidth: 48
-                                                Layout.preferredHeight: 22
-                                                radius: 11
+                                                Layout.preferredWidth: Theme.scaledSize(48, systemInfoModal.fontScale)
+                                                Layout.preferredHeight: Theme.scaledSize(22, systemInfoModal.fontScale)
+                                                radius: Theme.scaledSize(11, systemInfoModal.fontScale)
                                                 color: killMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                                                 Text {
                                                     anchors.centerIn: parent
                                                     text: "Kill"
-                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                                     font.bold: true
                                                     color: Theme.surfaceText
                                                 }
@@ -999,15 +1000,15 @@ PanelWindow {
                                             }
 
                                             Rectangle {
-                                                Layout.preferredWidth: 76
-                                                Layout.preferredHeight: 22
-                                                radius: 11
+                                                Layout.preferredWidth: Theme.scaledSize(76, systemInfoModal.fontScale)
+                                                Layout.preferredHeight: Theme.scaledSize(22, systemInfoModal.fontScale)
+                                                radius: Theme.scaledSize(11, systemInfoModal.fontScale)
                                                 color: forceMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                                                 Text {
                                                     anchors.centerIn: parent
                                                     text: "Force kill"
-                                                    font.pixelSize: Theme.fontLabelSmall
+                                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemInfoModal.fontScale)
                                                     font.bold: true
                                                     color: Theme.error
                                                 }
@@ -1035,19 +1036,19 @@ PanelWindow {
 
                         RowLayout {
                             anchors.centerIn: parent
-                            spacing: 10
+                            spacing: Theme.scaledSize(10, systemInfoModal.fontScale)
                             visible: SystemInfoStats.processesLoading
 
                             BusyIndicator {
-                                Layout.preferredWidth: 26
-                                Layout.preferredHeight: 26
+                                Layout.preferredWidth: Theme.scaledSize(26, systemInfoModal.fontScale)
+                                Layout.preferredHeight: Theme.scaledSize(26, systemInfoModal.fontScale)
                                 running: SystemInfoStats.processesLoading
                                 palette.text: Theme.primary
                             }
 
                             Text {
                                 text: "Loading processes..."
-                                font.pixelSize: Theme.fontLabelMedium
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemInfoModal.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 

@@ -149,7 +149,8 @@ ShellRoot {
             required property var modelData
 
                 screen: modelData
-            implicitHeight: 45
+            readonly property real fontScale: Theme.fontScaleForScreen(modelData)
+            implicitHeight: Theme.scaledSize(45, topBar.fontScale)
             anchors.top: true
             anchors.left: true
             anchors.right: true
@@ -162,30 +163,32 @@ ShellRoot {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 5
-                anchors.leftMargin: 5
-                anchors.rightMargin: 5
+                anchors.topMargin: Theme.scaledSize(5, topBar.fontScale)
+                anchors.leftMargin: Theme.scaledSize(5, topBar.fontScale)
+                anchors.rightMargin: Theme.scaledSize(5, topBar.fontScale)
                 color: Theme.surfaceContainer
                 radius: 5
                 opacity: 0.9
 
                 Item {
                     anchors.fill: parent
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
+                    anchors.leftMargin: Theme.scaledSize(10, topBar.fontScale)
+                    anchors.rightMargin: Theme.scaledSize(10, topBar.fontScale)
 
                     // Left side
                     RowLayout {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 8
+                        spacing: Theme.scaledSize(8, topBar.fontScale)
 
                         AppLauncherButton {
                             modal: launcherMenu
+                            fontScale: topBar.fontScale
                         }
 
                         WorkspacesPanel {
                             currentMonitor: topBar.modelData
+                            fontScale: topBar.fontScale
                         }
 
                         SystemInfoButton {
@@ -193,7 +196,8 @@ ShellRoot {
 
                             modal: systemInfoModal
                             targetScreen: topBar.modelData
-                            Layout.leftMargin: 8
+                            fontScale: topBar.fontScale
+                            Layout.leftMargin: Theme.scaledSize(8, topBar.fontScale)
                             visible: !topBar.compact
                         }
 
@@ -202,8 +206,9 @@ ShellRoot {
 
                             modal: systemUpdatesModal
                             targetScreen: topBar.modelData
-                            Layout.leftMargin: 5
-                            Layout.rightMargin: 5
+                            fontScale: topBar.fontScale
+                            Layout.leftMargin: Theme.scaledSize(5, topBar.fontScale)
+                            Layout.rightMargin: Theme.scaledSize(5, topBar.fontScale)
                             visible: !topBar.compact
                         }
 
@@ -214,6 +219,7 @@ ShellRoot {
                         id: mediaPlayerButton
 
                         modal: mediaPlayerModal
+                        fontScale: topBar.fontScale
                         anchors.centerIn: parent
                     }
 
@@ -221,11 +227,12 @@ ShellRoot {
                     RowLayout {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 8
+                        spacing: Theme.scaledSize(8, topBar.fontScale)
 
                         IdleInhibitorButton {
                             id: idleInhibitor
 
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
@@ -233,47 +240,53 @@ ShellRoot {
                             id: nightLight
 
                             modal: nightLightMenu
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
                         NetworkSpeedButton {
                             modal: networkMenu
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
                         DevicesButton {
                             bluetoothModal: bluetoothMenu
                             volumeModal: volumeMenu
+                            fontScale: topBar.fontScale
                         }
 
                         WeatherButton {
                             modal: weatherModal
                             targetScreen: topBar.modelData
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
                         RecorderButton {
                             modal: recorderModal
                             targetScreen: topBar.modelData
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
                         ClipboardButton {
                             modal: clipboardModal
+                            fontScale: topBar.fontScale
                             visible: !topBar.compact
                         }
 
                         Rectangle {
                             visible: topBar.compact
-                            implicitWidth: 24
-                            implicitHeight: 24
-                            radius: 12
+                            implicitWidth: Theme.scaledSize(24, topBar.fontScale)
+                            implicitHeight: Theme.scaledSize(24, topBar.fontScale)
+                            radius: Theme.scaledSize(12, topBar.fontScale)
                             color: compactControlsMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "▦"
-                                font.pixelSize: 16
+                                font.pixelSize: Theme.scaledFont(16, topBar.fontScale)
                                 color: Theme.surfaceVariantText
                             }
 
@@ -285,6 +298,7 @@ ShellRoot {
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
                                     compactControlsModal.targetScreen = topBar.modelData;
+                                    compactControlsModal.fontScale = topBar.fontScale;
                                     shell.toggleMenu(compactControlsModal);
                                 }
                             }
@@ -292,14 +306,17 @@ ShellRoot {
 
                         NotificationButton {
                             modal: notificationsModal
+                            fontScale: topBar.fontScale
                         }
 
                         ClockButton {
                             modal: clockMenu
+                            fontScale: topBar.fontScale
                         }
 
                         PowerButton {
                             modal: powerMenu
+                            fontScale: topBar.fontScale
                         }
 
                     }

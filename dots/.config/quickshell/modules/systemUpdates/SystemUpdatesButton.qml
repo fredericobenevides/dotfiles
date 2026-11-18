@@ -6,12 +6,13 @@ import qs.theme
 Item {
     id: root
 
+    property real fontScale: 1.0
     property var modal
     property var targetScreen
     property bool hovered: false
 
-    implicitWidth: contentRow.implicitWidth + 20
-    implicitHeight: 24
+    implicitWidth: contentRow.implicitWidth + Theme.scaledSize(20, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
     visible: SystemUpdatesService.available
 
     FontLoader {
@@ -22,7 +23,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: 12
+        radius: Theme.scaledSize(12, root.fontScale)
         color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
         Behavior on color {
@@ -38,19 +39,19 @@ Item {
         id: contentRow
 
         anchors.centerIn: parent
-        spacing: 4
+        spacing: Theme.scaledSize(4, root.fontScale)
 
         Text {
             text: "\uE923"
             font.family: materialSymbols.name
-            font.pixelSize: 14
+            font.pixelSize: Theme.scaledFont(14, root.fontScale)
             color: Theme.primary
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             text: SystemUpdatesService.count
-            font.pixelSize: Theme.fontLabelMedium
+            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, root.fontScale)
             font.bold: true
             color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
             anchors.verticalCenter: parent.verticalCenter
@@ -69,6 +70,7 @@ Item {
                 return ;
 
             root.modal.targetScreen = root.targetScreen;
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

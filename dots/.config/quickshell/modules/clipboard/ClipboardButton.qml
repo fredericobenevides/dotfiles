@@ -7,12 +7,13 @@ import qs.theme
 Rectangle {
     id: root
 
+    property real fontScale: 1.0
     property var modal
     property bool hovered: false
 
-    implicitWidth: 24
-    implicitHeight: 24
-    radius: 12
+    implicitWidth: Theme.scaledSize(24, root.fontScale)
+    implicitHeight: Theme.scaledSize(24, root.fontScale)
+    radius: Theme.scaledSize(12, root.fontScale)
     color: root.hovered ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
     FontLoader {
@@ -25,7 +26,7 @@ Rectangle {
         anchors.centerIn: parent
         text: "\uE14F"
         font.family: materialSymbols.name
-        font.pixelSize: 15
+        font.pixelSize: Theme.scaledFont(15, root.fontScale)
         color: root.hovered ? Theme.surfaceText : Theme.surfaceVariantText
     }
 
@@ -39,6 +40,7 @@ Rectangle {
             if (!root.modal)
                 return ;
 
+            root.modal.fontScale = root.fontScale;
             root.modal.visible = !root.modal.visible;
             if (root.modal.visible && root.modal.open)
                 root.modal.open();

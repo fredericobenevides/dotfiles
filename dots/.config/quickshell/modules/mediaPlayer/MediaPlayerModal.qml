@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: mediaPlayerModal
 
+    property real fontScale: 1.0
     property Item anchorItem: null
     readonly property var player: MprisController.activePlayer
     readonly property string title: MprisController.stableTitle || (player ? player.trackTitle : "No media")
@@ -52,15 +53,15 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 580
-        height: 140
+        width: Theme.scaledSize(580, mediaPlayerModal.fontScale)
+        height: Theme.scaledSize(140, mediaPlayerModal.fontScale)
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: Theme.scaledSize(6, mediaPlayerModal.fontScale)
         anchors.horizontalCenter: parent.horizontalCenter
-        radius: 20
+        radius: Theme.scaledSize(20, mediaPlayerModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, mediaPlayerModal.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 mediaPlayerModal.closeModal();
@@ -92,16 +93,16 @@ PanelWindow {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
-            anchors.topMargin: 0
-            anchors.bottomMargin: 0
-            spacing: 0
+            anchors.leftMargin: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+            anchors.rightMargin: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+            anchors.topMargin: Theme.scaledSize(0, mediaPlayerModal.fontScale)
+            anchors.bottomMargin: Theme.scaledSize(0, mediaPlayerModal.fontScale)
+            spacing: Theme.scaledSize(0, mediaPlayerModal.fontScale)
 
             Rectangle {
-                Layout.preferredWidth: 120
-                Layout.preferredHeight: 120
-                radius: 20
+                Layout.preferredWidth: Theme.scaledSize(120, mediaPlayerModal.fontScale)
+                Layout.preferredHeight: Theme.scaledSize(120, mediaPlayerModal.fontScale)
+                radius: Theme.scaledSize(20, mediaPlayerModal.fontScale)
                 color: Theme.surfaceContainerHigh
                 clip: true
 
@@ -120,7 +121,7 @@ PanelWindow {
                     anchors.centerIn: parent
                     text: "\uE405"
                     font.family: materialSymbols.name
-                    font.pixelSize: 32
+                    font.pixelSize: Theme.scaledFont(32, mediaPlayerModal.fontScale)
                     color: Theme.surfaceVariantText
                     visible: !artworkImage.visible
                 }
@@ -128,48 +129,49 @@ PanelWindow {
             }
 
             Item {
-                width: 12
+                width: Theme.scaledSize(12, mediaPlayerModal.fontScale)
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.topMargin: 0
-                spacing: 2
+                Layout.topMargin: Theme.scaledSize(0, mediaPlayerModal.fontScale)
+                spacing: Theme.scaledSize(2, mediaPlayerModal.fontScale)
 
                 MarqueeText {
                     Layout.fillWidth: true
                     text: mediaPlayerModal.title
                     fontSize: 15
+                    fontScale: mediaPlayerModal.fontScale
                     bold: true
                 }
 
                 Item {
-                    Layout.preferredHeight: 4
+                    Layout.preferredHeight: Theme.scaledSize(4, mediaPlayerModal.fontScale)
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: mediaPlayerModal.artist
-                    font.pixelSize: 12
+                    font.pixelSize: Theme.scaledFont(12, mediaPlayerModal.fontScale)
                     color: Theme.surfaceVariantText
                     elide: Text.ElideRight
                 }
 
                 Item {
-                    Layout.preferredHeight: 18
+                    Layout.preferredHeight: Theme.scaledSize(18, mediaPlayerModal.fontScale)
                 }
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 5
-                    radius: 5
+                    Layout.preferredHeight: Theme.scaledSize(5, mediaPlayerModal.fontScale)
+                    radius: Theme.scaledSize(5, mediaPlayerModal.fontScale)
                     color: Theme.surfaceContainerHigh
 
                     Rectangle {
                         width: (mediaPlayerModal.player && mediaPlayerModal.player.lengthSupported && mediaPlayerModal.player.length > 0) ? Math.max(10, parent.width * Math.max(0, Math.min(1, mediaPlayerModal.player.position / mediaPlayerModal.player.length))) : 0
                         height: parent.height
-                        radius: 5
+                        radius: Theme.scaledSize(5, mediaPlayerModal.fontScale)
                         color: Theme.primary
                     }
 
@@ -185,8 +187,8 @@ PanelWindow {
                         }
 
                         anchors.fill: parent
-                        anchors.topMargin: -8
-                        anchors.bottomMargin: -8
+                        anchors.topMargin: -Theme.scaledSize(8, mediaPlayerModal.fontScale)
+                        anchors.bottomMargin: -Theme.scaledSize(8, mediaPlayerModal.fontScale)
                         cursorShape: Qt.PointingHandCursor
                         onClicked: seekTo(mouse.x)
                         onPositionChanged: {
@@ -199,16 +201,16 @@ PanelWindow {
                 }
 
                 Item {
-                    Layout.preferredHeight: 8
+                    Layout.preferredHeight: Theme.scaledSize(8, mediaPlayerModal.fontScale)
                 }
 
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: 8
+                    spacing: Theme.scaledSize(8, mediaPlayerModal.fontScale)
 
                     Text {
                         text: MprisController.positionText
-                        font.pixelSize: 11
+                        font.pixelSize: Theme.scaledFont(11, mediaPlayerModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
@@ -217,9 +219,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 16
-                        height: 16
-                        radius: 8
+                        width: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        height: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        radius: Theme.scaledSize(8, mediaPlayerModal.fontScale)
                         color: prevMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.canGoPrevious ? 1 : 0.45
 
@@ -227,7 +229,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE045"
                             font.family: materialSymbols.name
-                            font.pixelSize: 15
+                            font.pixelSize: Theme.scaledFont(15, mediaPlayerModal.fontScale)
                             color: Theme.surfaceText
                         }
 
@@ -244,9 +246,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 16
-                        height: 16
-                        radius: 8
+                        width: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        height: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        radius: Theme.scaledSize(8, mediaPlayerModal.fontScale)
                         color: rewindModalMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported ? (rewindModalMouse.containsMouse ? 1 : 0.7) : 0.3
 
@@ -254,7 +256,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE020"
                             font.family: materialSymbols.name
-                            font.pixelSize: 15
+                            font.pixelSize: Theme.scaledFont(15, mediaPlayerModal.fontScale)
                             color: Theme.surfaceText
                         }
 
@@ -271,9 +273,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 24
-                        height: 24
-                        radius: 12
+                        width: Theme.scaledSize(24, mediaPlayerModal.fontScale)
+                        height: Theme.scaledSize(24, mediaPlayerModal.fontScale)
+                        radius: Theme.scaledSize(12, mediaPlayerModal.fontScale)
                         color: playMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.primary
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.canTogglePlaying ? 1 : 0.55
 
@@ -281,7 +283,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: mediaPlayerModal.player && mediaPlayerModal.player.playbackState === MprisPlaybackState.Playing ? "\uE034" : "\uE037"
                             font.family: materialSymbols.name
-                            font.pixelSize: 17
+                            font.pixelSize: Theme.scaledFont(17, mediaPlayerModal.fontScale)
                             color: Theme.surfaceContainer
                         }
 
@@ -298,9 +300,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 16
-                        height: 16
-                        radius: 8
+                        width: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        height: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        radius: Theme.scaledSize(8, mediaPlayerModal.fontScale)
                         color: forwardModalMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.positionSupported ? (forwardModalMouse.containsMouse ? 1 : 0.7) : 0.3
 
@@ -308,7 +310,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE01F"
                             font.family: materialSymbols.name
-                            font.pixelSize: 15
+                            font.pixelSize: Theme.scaledFont(15, mediaPlayerModal.fontScale)
                             color: Theme.surfaceText
                         }
 
@@ -325,9 +327,9 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 16
-                        height: 16
-                        radius: 8
+                        width: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        height: Theme.scaledSize(16, mediaPlayerModal.fontScale)
+                        radius: Theme.scaledSize(8, mediaPlayerModal.fontScale)
                         color: nextMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                         opacity: mediaPlayerModal.player && mediaPlayerModal.player.canGoNext ? 1 : 0.45
 
@@ -335,7 +337,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "\uE044"
                             font.family: materialSymbols.name
-                            font.pixelSize: 15
+                            font.pixelSize: Theme.scaledFont(15, mediaPlayerModal.fontScale)
                             color: Theme.surfaceText
                         }
 
@@ -357,7 +359,7 @@ PanelWindow {
 
                     Text {
                         text: MprisController.lengthText
-                        font.pixelSize: 11
+                        font.pixelSize: Theme.scaledFont(11, mediaPlayerModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 

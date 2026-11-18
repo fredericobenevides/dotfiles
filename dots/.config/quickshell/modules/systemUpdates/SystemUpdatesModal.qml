@@ -10,6 +10,7 @@ import qs.theme
 PanelWindow {
     id: systemUpdatesModal
 
+    property real fontScale: 1.0
     property var targetScreen: null
     property bool showRepo: false
     property bool showAur: false
@@ -59,13 +60,13 @@ PanelWindow {
     Rectangle {
         id: bg
 
-        width: 640
-        implicitHeight: contentColumn.implicitHeight + 24
+        width: Theme.scaledSize(640, systemUpdatesModal.fontScale)
+        implicitHeight: contentColumn.implicitHeight + Theme.scaledSize(24, systemUpdatesModal.fontScale)
         anchors.centerIn: parent
-        radius: 20
+        radius: Theme.scaledSize(20, systemUpdatesModal.fontScale)
         color: Theme.surfaceContainer
         border.color: Theme.surfaceContainerHighest
-        border.width: 1
+        border.width: Theme.scaledSize(1, systemUpdatesModal.fontScale)
         Keys.onPressed: (event) => {
             if (event.key === Qt.Key_Escape) {
                 systemUpdatesModal.closeModal();
@@ -102,39 +103,39 @@ PanelWindow {
             id: contentColumn
 
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 12
+            anchors.margins: Theme.scaledSize(16, systemUpdatesModal.fontScale)
+            spacing: Theme.scaledSize(12, systemUpdatesModal.fontScale)
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, systemUpdatesModal.fontScale)
 
                 Text {
                     text: "\uE923"
                     font.family: materialSymbols.name
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.scaledFont(18, systemUpdatesModal.fontScale)
                     color: Theme.primary
                 }
 
                 Text {
                     Layout.fillWidth: true
                     text: "System Updates"
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.scaledFont(16, systemUpdatesModal.fontScale)
                     font.bold: true
                     color: Theme.surfaceText
                 }
 
                 Rectangle {
-                    Layout.preferredWidth: 24
-                    Layout.preferredHeight: 24
-                    radius: 12
+                    Layout.preferredWidth: Theme.scaledSize(24, systemUpdatesModal.fontScale)
+                    Layout.preferredHeight: Theme.scaledSize(24, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(12, systemUpdatesModal.fontScale)
                     color: closeMouse.containsMouse ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
 
                     Text {
                         anchors.centerIn: parent
                         text: "\uE5CD"
                         font.family: materialSymbols.name
-                        font.pixelSize: 14
+                        font.pixelSize: Theme.scaledFont(14, systemUpdatesModal.fontScale)
                         color: Theme.surfaceVariantText
                     }
 
@@ -153,22 +154,22 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 8
-                spacing: 8
+                Layout.topMargin: Theme.scaledSize(8, systemUpdatesModal.fontScale)
+                spacing: Theme.scaledSize(8, systemUpdatesModal.fontScale)
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 26
-                    radius: 13
+                    Layout.preferredHeight: Theme.scaledSize(26, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(13, systemUpdatesModal.fontScale)
                     color: Theme.primary
 
                     Row {
                         anchors.centerIn: parent
-                        spacing: 5
+                        spacing: Theme.scaledSize(5, systemUpdatesModal.fontScale)
 
                         Text {
                             text: "Repo:"
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                             font.bold: true
                             color: Theme.primaryText
                             anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +177,7 @@ PanelWindow {
 
                         Text {
                             text: SystemUpdatesService.repoCount
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                             font.bold: true
                             color: Theme.primaryText
                             anchors.verticalCenter: parent.verticalCenter
@@ -188,17 +189,17 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 26
-                    radius: 13
+                    Layout.preferredHeight: Theme.scaledSize(26, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(13, systemUpdatesModal.fontScale)
                     color: Theme.primary
 
                     Row {
                         anchors.centerIn: parent
-                        spacing: 5
+                        spacing: Theme.scaledSize(5, systemUpdatesModal.fontScale)
 
                         Text {
                             text: "AUR:"
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                             font.bold: true
                             color: Theme.primaryText
                             anchors.verticalCenter: parent.verticalCenter
@@ -206,7 +207,7 @@ PanelWindow {
 
                         Text {
                             text: SystemUpdatesService.aurCount
-                            font.pixelSize: Theme.fontLabelMedium
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                             font.bold: true
                             color: Theme.primaryText
                             anchors.verticalCenter: parent.verticalCenter
@@ -223,31 +224,31 @@ PanelWindow {
                 height: systemUpdatesModal.packageBoxHeight
                 implicitHeight: systemUpdatesModal.packageBoxHeight
                 visible: systemUpdatesModal.showRepo || systemUpdatesModal.showAur
-                radius: 12
+                radius: Theme.scaledSize(12, systemUpdatesModal.fontScale)
                 color: Theme.surfaceContainerHigh
                 clip: true
 
                 Row {
                     anchors.fill: parent
-                    anchors.topMargin: 10
-                    anchors.bottomMargin: 10
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
-                    spacing: 10
+                    anchors.topMargin: Theme.scaledSize(10, systemUpdatesModal.fontScale)
+                    anchors.bottomMargin: Theme.scaledSize(10, systemUpdatesModal.fontScale)
+                    anchors.leftMargin: Theme.scaledSize(10, systemUpdatesModal.fontScale)
+                    anchors.rightMargin: Theme.scaledSize(10, systemUpdatesModal.fontScale)
+                    spacing: Theme.scaledSize(10, systemUpdatesModal.fontScale)
 
                     Column {
                         width: (parent.width - 10) / 2
                         height: parent.height
-                        spacing: 4
+                        spacing: Theme.scaledSize(4, systemUpdatesModal.fontScale)
 
                         RowLayout {
                             width: parent.width
-                            height: 16
-                            spacing: 8
+                            height: Theme.scaledSize(16, systemUpdatesModal.fontScale)
+                            spacing: Theme.scaledSize(8, systemUpdatesModal.fontScale)
 
                             Text {
                                 text: "Repo (" + SystemUpdatesService.repoPackages.length + ")"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                                 font.bold: true
                                 color: Theme.primary
                             }
@@ -255,7 +256,7 @@ PanelWindow {
                             Rectangle {
                                 Layout.fillWidth: true
                                 Layout.alignment: Qt.AlignVCenter
-                                height: 1
+                                height: Theme.scaledSize(1, systemUpdatesModal.fontScale)
                                 color: Theme.surfaceContainerHighest
                             }
 
@@ -264,7 +265,7 @@ PanelWindow {
                         Text {
                             visible: systemUpdatesModal.showRepo && SystemUpdatesService.repoLoading
                             text: "Loading..."
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -277,12 +278,12 @@ PanelWindow {
 
                             ScrollBar.vertical: ScrollBar {
                                 policy: ScrollBar.AsNeeded
-                                width: 14
+                                width: Theme.scaledSize(14, systemUpdatesModal.fontScale)
                                 minimumSize: 0.25
 
                                 contentItem: Rectangle {
-                                    implicitWidth: 14
-                                    radius: 7
+                                    implicitWidth: Theme.scaledSize(14, systemUpdatesModal.fontScale)
+                                    radius: Theme.scaledSize(7, systemUpdatesModal.fontScale)
                                     color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
                                 }
 
@@ -290,10 +291,10 @@ PanelWindow {
 
                             delegate: Text {
                                 width: ListView.view.width
-                                height: 22
+                                height: Theme.scaledSize(22, systemUpdatesModal.fontScale)
                                 verticalAlignment: Text.AlignVCenter
                                 text: "• " + modelData
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                                 color: Theme.surfaceVariantText
                                 elide: Text.ElideRight
                             }
@@ -303,8 +304,8 @@ PanelWindow {
                     }
 
                     Rectangle {
-                        width: 1
-                        height: parent.height - 20
+                        width: Theme.scaledSize(1, systemUpdatesModal.fontScale)
+                        height: parent.height - Theme.scaledSize(20, systemUpdatesModal.fontScale)
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.surfaceContainerHighest
                     }
@@ -312,16 +313,16 @@ PanelWindow {
                     Column {
                         width: (parent.width - 10) / 2
                         height: parent.height
-                        spacing: 4
+                        spacing: Theme.scaledSize(4, systemUpdatesModal.fontScale)
 
                         RowLayout {
                             width: parent.width
-                            height: 16
-                            spacing: 8
+                            height: Theme.scaledSize(16, systemUpdatesModal.fontScale)
+                            spacing: Theme.scaledSize(8, systemUpdatesModal.fontScale)
 
                             Text {
                                 text: "AUR (" + SystemUpdatesService.aurPackages.length + ")"
-                                font.pixelSize: Theme.fontLabelSmall
+                                font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                                 font.bold: true
                                 color: Theme.primary
                             }
@@ -329,7 +330,7 @@ PanelWindow {
                             Rectangle {
                                 Layout.fillWidth: true
                                 Layout.alignment: Qt.AlignVCenter
-                                height: 1
+                                height: Theme.scaledSize(1, systemUpdatesModal.fontScale)
                                 color: Theme.surfaceContainerHighest
                             }
 
@@ -338,7 +339,7 @@ PanelWindow {
                         Text {
                             visible: systemUpdatesModal.showAur && SystemUpdatesService.aurLoading
                             text: "Loading..."
-                            font.pixelSize: Theme.fontLabelSmall
+                            font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                             color: Theme.surfaceVariantText
                         }
 
@@ -351,12 +352,12 @@ PanelWindow {
 
                             ScrollBar.vertical: ScrollBar {
                                 policy: ScrollBar.AsNeeded
-                                width: 14
+                                width: Theme.scaledSize(14, systemUpdatesModal.fontScale)
                                 minimumSize: 0.25
 
                                 contentItem: Rectangle {
-                                    implicitWidth: 14
-                                    radius: 7
+                                    implicitWidth: Theme.scaledSize(14, systemUpdatesModal.fontScale)
+                                    radius: Theme.scaledSize(7, systemUpdatesModal.fontScale)
                                     color: parent.pressed ? Theme.surfaceVariant : Theme.surfaceContainerHighest
                                 }
 
@@ -364,21 +365,21 @@ PanelWindow {
 
                             delegate: Item {
                                 width: ListView.view.width
-                                height: 22
+                                height: Theme.scaledSize(22, systemUpdatesModal.fontScale)
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    radius: 4
+                                    radius: Theme.scaledSize(4, systemUpdatesModal.fontScale)
                                     color: aurMouse.containsMouse ? Theme.surfaceContainerHighest : "transparent"
                                 }
 
                                 Text {
                                     anchors.left: parent.left
                                     anchors.right: parent.right
-                                    anchors.leftMargin: 4
+                                    anchors.leftMargin: Theme.scaledSize(4, systemUpdatesModal.fontScale)
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: "• " + modelData
-                                    font.pixelSize: Theme.fontLabelSmall
+                                    font.pixelSize: Theme.scaledFont(Theme.fontLabelSmall, systemUpdatesModal.fontScale)
                                     color: aurMouse.containsMouse ? Theme.primary : Theme.surfaceText
                                     elide: Text.ElideRight
                                 }
@@ -404,20 +405,20 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 8
+                spacing: Theme.scaledSize(8, systemUpdatesModal.fontScale)
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 52
-                    radius: 12
+                    Layout.preferredHeight: Theme.scaledSize(52, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(12, systemUpdatesModal.fontScale)
                     color: (systemUpdatesModal.selectedButton === 0 || pacmanMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: systemUpdatesModal.selectedButton === 0 ? Theme.primary : "transparent"
-                    border.width: systemUpdatesModal.selectedButton === 0 ? 1 : 0
+                    border.width: systemUpdatesModal.selectedButton === Theme.scaledSize(0, systemUpdatesModal.fontScale) ? Theme.scaledSize(1, systemUpdatesModal.fontScale) : Theme.scaledSize(0, systemUpdatesModal.fontScale)
 
                     Text {
                         anchors.centerIn: parent
                         text: "Repo"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                         font.bold: true
                         color: systemUpdatesModal.selectedButton === 0 ? Theme.primary : Theme.surfaceText
                     }
@@ -438,16 +439,16 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 52
-                    radius: 12
+                    Layout.preferredHeight: Theme.scaledSize(52, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(12, systemUpdatesModal.fontScale)
                     color: (systemUpdatesModal.selectedButton === 1 || yayMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: systemUpdatesModal.selectedButton === 1 ? Theme.primary : "transparent"
-                    border.width: systemUpdatesModal.selectedButton === 1 ? 1 : 0
+                    border.width: systemUpdatesModal.selectedButton === Theme.scaledSize(1, systemUpdatesModal.fontScale) ? Theme.scaledSize(1, systemUpdatesModal.fontScale) : Theme.scaledSize(0, systemUpdatesModal.fontScale)
 
                     Text {
                         anchors.centerIn: parent
                         text: "AUR"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                         font.bold: true
                         color: systemUpdatesModal.selectedButton === 1 ? Theme.primary : Theme.surfaceText
                     }
@@ -468,16 +469,16 @@ PanelWindow {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 52
-                    radius: 12
+                    Layout.preferredHeight: Theme.scaledSize(52, systemUpdatesModal.fontScale)
+                    radius: Theme.scaledSize(12, systemUpdatesModal.fontScale)
                     color: (systemUpdatesModal.selectedButton === 2 || fullMouse.containsMouse) ? Theme.surfaceContainerHighest : Theme.surfaceContainerHigh
                     border.color: systemUpdatesModal.selectedButton === 2 ? Theme.primary : "transparent"
-                    border.width: systemUpdatesModal.selectedButton === 2 ? 1 : 0
+                    border.width: systemUpdatesModal.selectedButton === Theme.scaledSize(2, systemUpdatesModal.fontScale) ? Theme.scaledSize(1, systemUpdatesModal.fontScale) : Theme.scaledSize(0, systemUpdatesModal.fontScale)
 
                     Text {
                         anchors.centerIn: parent
                         text: "Repo+AUR"
-                        font.pixelSize: Theme.fontLabelMedium
+                        font.pixelSize: Theme.scaledFont(Theme.fontLabelMedium, systemUpdatesModal.fontScale)
                         font.bold: true
                         color: systemUpdatesModal.selectedButton === 2 ? Theme.primary : Theme.surfaceText
                     }
